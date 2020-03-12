@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="8px" viewBox="0 0 14 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>xiala</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 0.0243247863 7.97367521 0.0243247863 7.97367521 13.9145673 0 13.9145673"></polygon>
+    </defs>
+    <g id="AD患者之家4.0" stroke="none" stroke-width="1" >
+        <g id="注册-填写信息-用户隐私条款" transform="translate(-314.000000, -283.000000)">
+            <g id="xiala" transform="translate(321.000000, 287.000000) rotate(-270.000000) translate(-321.000000, -287.000000) translate(317.000000, 280.000000)">
+                <!-- <mask fill="red">
+                    <use xlink:href="#path-1"></use>
+                </mask> -->
+                <g id="Clip-2"></g>
+                <path d="M7.11323077,7.59647863 L0.172136752,0.999521368 C-0.0574358974,0.77008547 -0.0574358974,0.42591453 0.172136752,0.196478632 C0.40157265,-0.0330598291 0.745709402,-0.0330598291 0.975145299,0.196478632 L7.9162735,6.79329915 L7.11323077,7.59647863 Z"></path>
+                <path d="M0.516307692,13.7918291 C0.286871795,13.5624274 0.286871795,13.2182564 0.516307692,12.9886838 L7.11323077,6.04758974 L7.97367521,6.85073504 L1.31945299,13.7345641 C1.08988034,13.964 0.745709402,13.964 0.516307692,13.7918291 Z" ></path>
+            </g>
+        </g>
+    </g>
+</svg>

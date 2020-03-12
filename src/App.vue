@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <!-- <img src="./assets/logo.png"> -->
+    <svg-icon iconClass='xiala' className='icon'></svg-icon>
+
+    <router-view />
   </div>
 </template>
 
@@ -11,14 +13,21 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@import "./common/font/font.css";
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
+.icon {
+  width: 14px!important;
+  height: 8px!important;
+  color: red!important;
 
+  fill: red!important;
+}
 </style>
