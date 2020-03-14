@@ -9,8 +9,18 @@ import './assets/icons'
 import MintUI from 'mint-ui'
 
 import 'mint-ui/lib/style.css'
+import VueWechatTitle from 'vue-wechat-title'
 
 Vue.use(MintUI)
+
+Vue.use(VueWechatTitle)
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    window.document.title = to.meta.title
+  }
+  next()
+
+})
 
 Vue.config.productionTip = false
 
@@ -19,6 +29,8 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
+  components: {
+    App
+  },
   template: '<App/>'
 })

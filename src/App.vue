@@ -1,8 +1,5 @@
 <template>
-  <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <svg-icon iconClass='xiala' className='icon'></svg-icon>
-
+  <div id="app">   
     <router-view />
   </div>
 </template>

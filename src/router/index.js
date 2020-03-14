@@ -10,6 +10,14 @@ export default new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path: '/hospitalMap',
+      component: () => import('@/views/medicationGuidance/hospitalMap'),
+      name: 'HospitalMap',
+      meta: {
+        title: '医院地图'
+      }
     }
   ]
 })
