@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="instructionsItem">
-            <div class="top">
+            <div class="top" @click="ClickInstructionItem()">
                 <div class="left">
                     <div class="title">fhsadfa</div>
                     <div class="content">sdfdksfasfsahungjkkie</div>
@@ -41,8 +41,22 @@ export default {
                     icon: 'like-o'
                 });
             }
+        },
+        ClickInstructionItem(){
+            this.$router.push({ path: '/medicationInstructions/itemInfo' })
         }
-    }
+    },
+    watch: {
+　　　'$route' (to, from) {
+　　　　let isBack = this.$router.isBack  //  监听路由变化时的状态为前进还是后退
+　　　　　　if(isBack) {
+　　　　　　　　this.transitionName = 'slide-right'
+　　　　　　} else {
+　　　　　　    this.transitionName = 'slide-left'
+　　　　　  }
+　　    this.$router.isBack = false
+　　    }
+　  }
 }
 </script>
 <style lang="less">

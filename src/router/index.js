@@ -25,8 +25,20 @@ export default new Router({
                 import ('@/views/medicationGuidance/medicationInstructions'),
             name: 'MedicationInstructions',
             meta: {
-                title: '用药说明'
+                title: '用药说明',
+                index: 1,
             }
-        }
+        },
+        {
+            path: '/medicationInstructions/itemInfo',
+            component: () =>
+                import ('@/views/medicationGuidance/medicationInstructions/components/itemInfo'),
+            name: 'itemInfo',
+            meta: {
+                title: '用药说明',
+                index: 2,
+            }
+
+        },
     ]
 })
