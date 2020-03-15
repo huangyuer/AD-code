@@ -23,11 +23,17 @@
                     <radio-box @nextToPageradiobox="nextToPageradiobox"></radio-box>
                 </van-swipe-item>
                 <van-swipe-item>
-                    <div class="swipediv">2.您皮肤瘙痒的程度？</div>
+                    <div class="swipediv">3.您皮肤瘙痒的程度？</div>
                     <slider-box @nextToPageslider="nextToPageslider"></slider-box>
                 </van-swipe-item>
-                <van-swipe-item>4</van-swipe-item>
-                <div class="custom-indicator" slot="indicator">
+                <van-swipe-item>
+                    <div class="swipediv">3.您皮肤瘙痒的程度？</div>
+                    <slider-box @nextToPageslider="nextToPageslider"></slider-box>
+                </van-swipe-item>
+                <van-swipe-item>
+                    <result-info></result-info>
+                </van-swipe-item>
+                <div class="custom-indicator" slot="indicator" v-if="current+1<=4">
                     {{ current + 1 }}<b>/4</b>
                 </div>
             </van-swipe>
@@ -38,6 +44,7 @@
 import CheckBox from "./components/checkbox"
 import RadioBox from "./components/radiobox"
 import SliderBox from "./components/sliderbox"
+import ResultInfo from "./components/resultInfo"
 export default {
     data(){
         return{
@@ -58,7 +65,7 @@ export default {
             this.current = this.current+1;
         }
     },
-    components:{CheckBox,RadioBox,SliderBox}
+    components:{CheckBox,RadioBox,SliderBox,ResultInfo}
 }
 </script>
 <style lang="less" scoped>
