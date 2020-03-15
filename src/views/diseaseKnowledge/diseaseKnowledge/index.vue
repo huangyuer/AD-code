@@ -18,20 +18,20 @@
     </div>
     <div class="patient-like">
       <div v-for="item in diseaseInfo" :key="item.id">
-        <like-item :info="item" @likeBtn="likeBtn"></like-item>
+        <like-info :info="item" @likeBtn="likeBtn"></like-info>
       </div>
     </div>
   </div>
 </template>
 <script>
-import LikeItem from "@/components/LikeItem";
+import LikeInfo from "@/components/LikeInfo";
 import SearchInput from "@/components/SearchInput";
 import DropdownMenu from "@/components/DropdownMenu";
 import { Toast } from "vant";
 
 export default {
   name: "DiseaseKnowledge",
-  components: { LikeItem, SearchInput, DropdownMenu },
+  components: { LikeInfo, SearchInput, DropdownMenu },
   data() {
     return {
       value: "0",

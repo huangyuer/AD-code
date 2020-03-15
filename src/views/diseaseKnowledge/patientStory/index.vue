@@ -7,19 +7,19 @@
     ></search-input>
     <div class="patient-like">
       <div v-for="item in diseaseInfo" :key="item.id">
-        <like-item :info="item" @likeBtn="likeBtn"></like-item>
+        <like-info :info="item" @likeBtn="likeBtn"></like-info>
       </div>
     </div>
   </div>
 </template>
 <script>
-import LikeItem from "@/components/LikeItem";
+import LikeInfo from "@/components/LikeInfo";
 import SearchInput from "@/components/SearchInput";
 import { Toast } from "vant";
 
 export default {
   name: "PatientStory",
-  components: { LikeItem, SearchInput},
+  components: { LikeInfo, SearchInput},
   data() {
     return {
       category: ["特应性皮炎", "银屑病"],
