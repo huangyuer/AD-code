@@ -54,13 +54,13 @@ export default {
         border:0;
         background-image: url("../assets/up.png");
         background-size:100%;
-        transform: rotate(0);
+        transform: rotate(180deg);
         top:calc( 50% - 0.05rem);
         right:-.1rem;
     }
     &.van-dropdown-menu__title--down::after{
         margin-top: -1px;
-        transform: rotate(180deg);
+        transform: rotate(0);
         top: calc(50% - 0.15rem);
         background-image: url("../assets/upgreen.png");
     }    
