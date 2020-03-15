@@ -48,5 +48,15 @@ export default new Router({
                 index: 1,
             }
         },
+        {
+            path: '/diseaseTest',
+            component: () =>
+                import ('@/views/patientManagement/diseaseTest'),
+            name: 'diseaseTest',
+            meta: {
+                title: '疾病自测',
+                index: 1,
+            }
+        }
     ]
 })

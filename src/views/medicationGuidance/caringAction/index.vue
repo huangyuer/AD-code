@@ -1,6 +1,6 @@
 <template>
     <div class="caringList">
-        <div class="caringItem" @click="pageInfo()">
+        <div class="caringItem">
             <div class="header">
                 <div class="left">fsddfsafsafasfsfsdfsfsdfsdfdsfsafsfsfsdfdsfsdfdsfsffds</div>
                 <div class="right">
@@ -9,7 +9,7 @@
                     </span>
                 </div>
             </div>
-            <div class="center">
+            <div class="center"  @click="pageInfo()">
                 <van-image
                         width="100%"
                         height="2.6rem"
@@ -53,8 +53,8 @@ export default {
     justify-content: center;
     align-items: center;
 .heart-icon{
-    width: 15px!important;
-    height: 15px!important;
+    width: .32rem!important;
+    height: .28rem!important;
     fill:#9A979B!important;
     margin-right: 0.06rem;
     &.iconactive{
