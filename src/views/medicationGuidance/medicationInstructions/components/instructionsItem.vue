@@ -3,8 +3,8 @@
         <div class="instructionsItem">
             <div class="top" @click="ClickInstructionItem()">
                 <div class="left">
-                    <div class="title">fhsadfa</div>
-                    <div class="content">sdfdksfasfsahungjkkie</div>
+                    <div class="title">打发时时间算法黄打发时间算法黄打发时间算法黄打发时时间</div>
+                    <div class="content">sdfdk黄打发时间算法黄打发时间算法黄打发时间算法黄打发时间算法黄打发时间算法黄打发时时间算法黄打发时间算法黄打发时间算法黄打发时时间算法黄打发时间算法黄打发时间算法黄打发时时间算法黄打发时间算法黄打发时间算法黄打发时时间算法黄打发时间算法黄打发时间算法黄打发时间算法黄打发时间算法黄打发时间算法黄打发时间算法</div>
                 </div>
                 <div class="right">
                     <van-image
@@ -61,8 +61,8 @@ export default {
 </script>
 <style lang="less">
 .heart-icon{
-    width: 15px!important;
-    height: 15px!important;
+    width: .32rem!important;
+    height: .28rem!important;
     fill:#9A979B!important;
     &.iconactive{
         fill:#FF765D!important;
@@ -75,17 +75,31 @@ export default {
         display: flex;
         .left{
             flex: 2;
+            width: 4.68rem;
+            padding-right: 0.26rem;
             .title{
                 color: #050F2B;
                 font-size: .3rem;
                 text-align: left;
                 font-family: 'PingFangSC-Regular';  
+                font-weight: 500;
+                overflow: hidden;
+                text-overflow:ellipsis;
+                white-space: nowrap;
+                margin-bottom: 0.12rem;
+                line-height: initial;
             }
             .content{
                 color: #666666;
                 font-size: .28rem;
                 text-align: left;
-                font-family: 'PingFangSC-Regular';  
+                font-family: 'PingFangSC-Regular'; 
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
+                overflow: hidden; 
+                line-height: 0.45rem;
+                font-weight: 400;
             }
         }
         .right{
@@ -100,10 +114,12 @@ export default {
         text-align: left;
         color: #999999;
         font-family: 'PingFangSC-Regular';  
+        font-weight: 400;
         .time{
             font-size: .3rem;
             color: #ACADAF;
             padding-right: 0.28rem;
+            font-weight: 400;
         }
     }
     &:not(:last-child){

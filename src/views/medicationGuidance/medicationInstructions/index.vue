@@ -1,13 +1,17 @@
 <template>
     <div>
-        <dropdown-menu 
-        :option="option" 
-        :value="value"  
-        :option2="option2" 
-        :value2="value2"
-        @DropdownchangeValue="DropdownchangeValue"
-        @DropdownchangeValue2="DropdownchangeValue2"
-        ></dropdown-menu>
+        <div class="dropdownwapper">
+            <dropdown-menu 
+            :option="option" 
+            :value="value"  
+            @DropdownchangeValue="DropdownchangeValue"
+            ></dropdown-menu>
+            <dropdown-menu 
+            :option="option2" 
+            :value="value2"
+            @DropdownchangeValue="DropdownchangeValue2"
+            ></dropdown-menu>
+        </div>
         <instructions-item></instructions-item>
     </div>
 </template>
@@ -17,17 +21,17 @@ import InstructionsItem from "./components/instructionsitem"
 export default {
     data(){
         return {
-            value:0,
-            value2:0,
+            value:'0',
+            value2:'0',
             option: [
-                { text: '全部商品', value: 0 },
-                { text: '新款商品', value: 1 },
-                { text: '活动商品', value: 2 }
+                { text: '全部商品', value: '0' },
+                { text: '新款商品', value: '1' },
+                { text: '活动商品', value: '2' }
             ],
             option2: [
-                { text: '默认排序', value: 0 },
-                { text: '好评排序', value: 1 },
-                { text: '销量排序', value: 2 },
+                { text: '默认排序', value: '0' },
+                { text: '好评排序', value: '1' },
+                { text: '销量排序', value: '2' },
             ],
         }
     },
@@ -43,5 +47,7 @@ export default {
 }
 </script>
 <style scoped lang="less">
-
+.dropdownwapper{
+    overflow: hidden;
+}
 </style>
