@@ -52,7 +52,7 @@ export default new Router({
         {
             path: "/DetailInfo",
             component: () =>
-                import ("@/components/itemInfo"),
+                import ("@/components/DetailInfo"),
             name: "DetailInfo",
             meta: {
                 index: 2
