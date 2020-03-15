@@ -30,15 +30,23 @@ export default new Router({
             }
         },
         {
-            path: '/medicationInstructions/itemInfo',
+            path: '/itemInfo',
             component: () =>
-                import ('@/views/medicationGuidance/medicationInstructions/components/itemInfo'),
+                import ('@/components/itemInfo'),
             name: 'itemInfo',
             meta: {
-                title: '用药说明',
                 index: 2,
             }
-
+        },
+        {
+            path: '/caringAction',
+            component: () =>
+                import ('@/views/medicationGuidance/caringAction'),
+            name: 'caringAction',
+            meta: {
+                title: '关爱行动',
+                index: 1,
+            }
         },
     ]
 })

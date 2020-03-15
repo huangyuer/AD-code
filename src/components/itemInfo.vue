@@ -9,6 +9,9 @@
         </div>
     </div>
 </template>
+<script>
+
+</script>
 <style lang="less" scoped>
 .wapperItemInfo{
     width: 100%;
