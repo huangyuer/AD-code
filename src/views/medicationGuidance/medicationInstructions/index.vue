@@ -1,5 +1,6 @@
 <template>
     <div>
+        <search-input class="searchinput" :value="searchinputvalue" :placeholder="placeholder"></search-input>
         <div class="dropdownwapper">
             <dropdown-menu 
             :option="option" 
@@ -16,11 +17,14 @@
     </div>
 </template>
 <script>
+import SearchInput from "@/components/SearchInput"
 import DropdownMenu from "@/components/DropdownMenu"
 import InstructionsItem from "./components/instructionsitem"
 export default {
     data(){
         return {
+            placeholder:'搜索关键字',
+            searchinputvalue:'',
             value:'0',
             value2:'0',
             option: [
@@ -43,10 +47,13 @@ export default {
             this.value2=value;
         }
     },
-    components:{DropdownMenu,InstructionsItem}
+    components:{SearchInput,DropdownMenu,InstructionsItem}
 }
 </script>
 <style scoped lang="less">
+.searchinput{
+    margin: 0.28rem 0;
+}
 .dropdownwapper{
     overflow: hidden;
 }
