@@ -1,4 +1,3 @@
-
 <!-- 
 props: value:'',placeholder:'',recentSearch:{type:"最近输入位置",data:[]}
 event:recentClear,onChange 
@@ -9,12 +8,11 @@ event:recentClear,onChange
       v-model="value"
       :placeholder="placeholder"
       class="seach-input"
-      :clearable="false"
       @search="onSearch"
       @change="onChange"
       @focus="onFocus"
     />
-    <div class="recent-search" v-if="recentSearch&&recentFlag">
+    <div class="recent-search" v-if="recentSearch.type && recentFlag">
       <div class="recent-search-title">
         <span>{{ recentSearch.type }}</span>
         <span class="clear" @click="recentClear">清除</span>
@@ -51,7 +49,7 @@ export default {
   data() {
     return {
       value: "",
-      recentFlag:false,
+      recentFlag: false
     };
   },
   methods: {
@@ -63,14 +61,14 @@ export default {
       console.log("--2-", this.value);
       this.$emit("onChange", this.value);
     },
-    onFocus(){
-      this.recentFlag=true
+    onFocus() {
+      this.recentFlag = true;
     },
-    recentItem(item){
-      this.value=item
-      this.recentFlag=false
+    recentItem(item) {
+      this.value = item;
+      this.recentFlag = false;
     },
-    recentClear(){
+    recentClear() {
       this.$emit("recentClear");
     }
   }
@@ -152,12 +150,24 @@ export default {
     content: "\e68f";
   }
 }
-@{aaa} .van-icon {
-  font-family: "iconfont" !important;
-  font-size: 0.36rem;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #8e8e93;
+@{aaa} .van-field__value {
+  .van-icon {
+    position: relative;
+    display: inline-block;
+    font: normal normal normal 14px/1 vant-icon;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+@{aaa} .van-field__left-icon {
+  .van-icon {
+    font-family: "iconfont" !important;
+    font-size: 0.36rem;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #8e8e93;
+  }
 }
 </style>
