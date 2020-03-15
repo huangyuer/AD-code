@@ -54,6 +54,7 @@ export default {
   float: left;
   /deep/.van-dropdown-menu__item{
         padding-right: 0.3rem;
+        font-family: 'PingFangSC-Medium'; 
         /deep/.van-dropdown-menu__title{
         font-size: 0.28rem;
         padding: 0 0.32rem;
@@ -86,6 +87,7 @@ export default {
 /deep/.van-cell{
   font-size: 0.28rem;
   padding: 0.16rem 0.32rem;
+  font-family: 'PingFangSC-Regular';  
   }
 }
 

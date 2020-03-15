@@ -8,10 +8,12 @@
         @DropdownchangeValue="DropdownchangeValue"
         @DropdownchangeValue2="DropdownchangeValue2"
         ></dropdown-menu>
+        <instructions-item></instructions-item>
     </div>
 </template>
 <script>
 import DropdownMenu from "@/components/DropdownMenu"
+import InstructionsItem from "./components/instructionsitem"
 export default {
     data(){
         return {
@@ -37,7 +39,7 @@ export default {
             this.value2=value;
         }
     },
-    components:{DropdownMenu}
+    components:{DropdownMenu,InstructionsItem}
 }
 </script>
 <style scoped lang="less">
