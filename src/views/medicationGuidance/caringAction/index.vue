@@ -42,7 +42,7 @@ export default {
             }
         },
     pageInfo(){
-        this.$router.push({ path: '/itemInfo' })
+        this.$router.push({ path: '/DetailInfo' })
         }
     }
 }

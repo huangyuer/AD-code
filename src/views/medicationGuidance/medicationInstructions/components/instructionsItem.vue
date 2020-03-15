@@ -43,7 +43,7 @@ export default {
             }
         },
         ClickInstructionItem(){
-            this.$router.push({ path: '/itemInfo' })
+            this.$router.push({ path: '/DetailInfo' })
         }
     },
     watch: {
