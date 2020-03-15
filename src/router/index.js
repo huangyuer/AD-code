@@ -20,6 +20,24 @@ export default new Router({
             }
         },
         {
+            path: "/diseaseKnowledge",
+            component: () => import("@/views/diseaseKnowledge/diseaseKnowledge"),
+            name: "DiseaseKnowledge",
+            meta: {
+              title: "疾病知识",
+              index: 1
+            }
+          },
+          {
+            path: "/patientStory",
+            component: () => import("@/views/diseaseKnowledge/patientStory"),
+            name: "PatientStory",
+            meta: {
+              title: "患者故事",
+              index: 1
+            }
+          },
+        {
             path: '/medicationInstructions',
             component: () =>
                 import ('@/views/medicationGuidance/medicationInstructions'),
