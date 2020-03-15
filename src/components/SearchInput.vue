@@ -1,26 +1,163 @@
+
+<!-- 
+props: value:'',placeholder:'',recentSearch:{type:"最近输入位置",data:[]}
+event:recentClear,onChange 
+-->
 <template>
-  <mt-search v-model="value">
-    <mt-cell v-for="item in result" :key="item.id" :title="item.title" :value="item.value"></mt-cell>
-  </mt-search>
+  <div>
+    <van-search
+      v-model="value"
+      :placeholder="placeholder"
+      class="seach-input"
+      :clearable="false"
+      @search="onSearch"
+      @change="onChange"
+      @focus="onFocus"
+    />
+    <div class="recent-search" v-if="recentSearch&&recentFlag">
+      <div class="recent-search-title">
+        <span>{{ recentSearch.type }}</span>
+        <span class="clear" @click="recentClear">清除</span>
+      </div>
+      <div
+        v-for="item in recentSearch.data"
+        :key="item.id"
+        class="recent-search-li"
+        @click="recentItem(item)"
+      >
+        <svg-icon iconClass="search" className="icon"></svg-icon>
+        <span>{{ item }}</span>
+      </div>
+    </div>
+    <!-- <svg-icon iconClass='search' className='icon'></svg-icon> -->
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'SearchInput',
+  name: "SearchInput",
   props: {
-    result: {
-      type: Array,
-      default: function () {
-        return {}
+    placeholder: {
+      type: String,
+      default: ""
+    },
+    recentSearch: {
+      type: Object,
+      default: function() {
+        return {};
       }
     }
   },
-  data(){
+  data() {
     return {
-      value:"ddd"
+      value: "",
+      recentFlag:false,
+    };
+  },
+  methods: {
+    onSearch() {
+      console.log("-", this.value);
+      this.$emit("onSearch", this.value);
+    },
+    onChange() {
+      console.log("--2-", this.value);
+      this.$emit("onChange", this.value);
+    },
+    onFocus(){
+      this.recentFlag=true
+    },
+    recentItem(item){
+      this.value=item
+      this.recentFlag=false
+    },
+    recentClear(){
+      this.$emit("recentClear");
+    }
+  }
+};
+</script>
+
+<style scoped lang="less">
+@aaa: ~">>>";
+.seach-input {
+  background: rgba(249, 249, 249, 1);
+  border-radius: 0.51rem;
+  height: 0.72rem;
+  margin: 0 0.32rem;
+  padding: 0px;
+}
+.recent-search {
+  padding: 0 0.32rem;
+  .recent-search-title {
+    padding-top: 0.12rem;
+    height: 0.74rem;
+    line-height: 0.74rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.02rem solid #e5e5e5;
+    span {
+      font-size: 0.3rem;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: rgba(51, 51, 51, 1);
+      &.clear {
+        font-size: 0.28rem;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
+      }
+    }
+  }
+  .recent-search-li {
+    border-bottom: 0.02rem solid #e5e5e5;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    display: flex;
+    align-items: center;
+    .icon {
+      width: 0.32rem;
+      height: 0.32rem;
+      margin-right: 0.16rem;
+    }
+    span {
+      font-size: 0.28rem;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(102, 102, 102, 1);
     }
   }
 }
-</script>
-
-<style scoped lang="less"></style>
+@{aaa} .van-search__content {
+  padding-left: 0.32rem;
+  border-radius: 0.51rem;
+}
+@{aaa} .van-field__left-icon {
+  margin-right: 0.16rem;
+}
+@{aaa} input {
+  font-size: 0.28rem;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  &::-webkit-input-placeholder {
+    font-size: 0.28rem;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(102, 102, 102, 1);
+  }
+}
+@{aaa} .van-icon-search {
+  &::before {
+    content: "\e68f";
+  }
+}
+@{aaa} .van-icon {
+  font-family: "iconfont" !important;
+  font-size: 0.36rem;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #8e8e93;
+}
+</style>

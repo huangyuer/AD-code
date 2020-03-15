@@ -10,6 +10,10 @@ import 'vant/lib/index.css';
 
 import VueWechatTitle from 'vue-wechat-title'
 
+import "./assets/font_1686774_85lo9chzwmt/iconfont.css"
+import {Icon} from "vant"
+Vue.use(Icon)
+
 Vue.use(Vant);
 
 Vue.use(VueWechatTitle)
