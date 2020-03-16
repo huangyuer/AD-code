@@ -107,6 +107,42 @@ export default new Router({
         title: "我的兑换",
         index: 2
       }
+    },
+    {
+      path: "/personalCenter",
+      component: () =>
+        import("@/views/patientManagement/personalCenter"),
+      meta: {
+        title: "个人中心",
+        index: 1
+      }
+    },
+    {
+      path: "/personalInfo",
+      component: () =>
+        import("@/views/patientManagement/personalCenter/components/personalInfo"),
+      meta: {
+        title: "我的信息",
+        index: 2
+      }
+    },
+    {
+      path: "/editpersonalInfo",
+      component: () =>
+        import("@/views/patientManagement/personalCenter/components/editpersonalInfo"),
+      meta: {
+        title: "编辑个人信息",
+        index: 3
+      }
+    },
+    {
+      path: "/editaddressInfo",
+      component: () =>
+        import("@/components/editaddressInfo"),
+      meta: {
+        title: "编辑收货地址",
+        index: 3
+      }
     }
   ]
 });
