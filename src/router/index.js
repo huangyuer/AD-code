@@ -77,6 +77,16 @@ export default new Router({
                 title: "疾病自测",
                 index: 1
             }
+        },
+        {
+            path: "/integralExchange",
+            component: () =>
+                import ("@/views/patientManagement/integralExchange"),
+            name: "integralExchange",
+            meta: {
+                title: "积分兑换",
+                index: 1
+            }
         }
     ]
 });
