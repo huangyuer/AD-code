@@ -5,33 +5,37 @@ event:likeBtn,forwardBtn
 
 <template>
   <div class="like-forward">
-    <svg-icon iconClass="like-btn" className="like-icon" v-if="like" @likeBtn="likeBtn"></svg-icon>
-    <svg-icon iconClass="forward-btn" className="forward-icon" v-if="forward" @forwardBtn="forwardBtn"></svg-icon>
+    <div v-if="like" @click="likeBtn">
+      <svg-icon iconClass="like-btn" className="like-icon"></svg-icon>
+    </div>
+    <div v-if="forward" @click="forwardBtn">
+      <svg-icon iconClass="forward-btn" className="forward-icon"></svg-icon>
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: "LikeAndForward",
-  props:{
-      like:{
-          type: Boolean,
-          default:false,
-      },
-      forward:{
-          type: Boolean,
-          default:false,
-      }
+  props: {
+    like: {
+      type: Boolean,
+      default: false
+    },
+    forward: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {};
   },
-  methods:{
-      likeBtn(){
-        this.$emit("likeBtn")
-      },
-      forwardBtn(){
-        this.$emit("forwardBtn")
-      }
+  methods: {
+    likeBtn() {
+      this.$emit("likeBtn");
+    },
+    forwardBtn() {
+      this.$emit("forwardBtn");
+    }
   }
 };
 </script>
