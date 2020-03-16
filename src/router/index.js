@@ -87,6 +87,26 @@ export default new Router({
         title: "积分兑换",
         index: 1
       }
+    },
+    {
+      path: "/productInfo",
+      component: () =>
+        import("@/views/patientManagement/integralExchange/components/ProductInfo"),
+      name: "ProductInfo",
+      meta: {
+        title: "商品详情",
+        index: 2
+      }
+    },
+    {
+      path: "/myexchange",
+      component: () =>
+        import("@/views/patientManagement/integralExchange/components/myexchange"),
+      name: "myexchange",
+      meta: {
+        title: "我的兑换",
+        index: 2
+      }
     }
   ]
 });
