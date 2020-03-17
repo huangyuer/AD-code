@@ -1,7 +1,7 @@
 
 const getters = {
 
-  // avatar: state => state.user.avatar,
+  token: state => state.register.token,
 
 }
 export default getters

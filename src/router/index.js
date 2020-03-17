@@ -21,8 +21,7 @@ export default new Router({
     },
     {
       path: "/diseaseKnowledge",
-      component: () =>
-        import("@/views/diseaseKnowledge/diseaseKnowledge"),
+      component: () => import("@/views/diseaseKnowledge/diseaseKnowledge"),
       name: "DiseaseKnowledge",
       meta: {
         title: "疾病知识",
@@ -30,13 +29,48 @@ export default new Router({
       }
     },
     {
-      path: "/patientStory",
+      path: "/diseaseKnowledge/detail",
       component: () =>
-        import("@/views/diseaseKnowledge/patientStory"),
+        import(
+          "@/views/diseaseKnowledge/diseaseKnowledge/components/diseaseDetail.vue"
+        ),
+      name: "DiseaseDetail",
+      meta: {
+        title: "疾病知识",
+        index: 2
+      }
+    },
+    {
+      path: "/patientStory",
+      component: () => import("@/views/diseaseKnowledge/patientStory"),
       name: "PatientStory",
       meta: {
         title: "患者故事",
         index: 1
+      }
+    },
+    {
+      path: "/messageBoard",
+      component: () =>
+        import(
+          "@/views/diseaseKnowledge/messageBoard"
+        ),
+      name: "MessageBoard",
+      meta: {
+        title: "留言板",
+        index: 1
+      }
+    },
+    {
+      path: "/messageBoard/leaveMessage",
+      component: () =>
+        import(
+          "@/views/diseaseKnowledge/messageBoard/components/leaveMessage.vue"
+        ),
+      name: "LeaveMessage",
+      meta: {
+        title: "留言填写",
+        index: 2
       }
     },
     {
