@@ -153,5 +153,14 @@ export default new Router({
         index: 2
       }
     },
+    {
+      path: "/assesshistory",
+      component: () =>
+        import("@/views/patientManagement/personalCenter/components/assesshistory"),
+      meta: {
+        title: "评估历史",
+        index: 2
+      }
+    }
   ]
 });
