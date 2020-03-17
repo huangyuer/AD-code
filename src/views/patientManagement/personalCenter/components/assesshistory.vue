@@ -1,13 +1,41 @@
 <template>
-  <div id="myChart" style="width：6.48rem;height:4.2rem;margin:0 auto"></div>
+  <div>
+    <div class="timeBtnList">
+      <div
+        :class="{ timeBtn: true, activeTime: currentTime == item }"
+        v-for="(item, key) in timeBtn"
+        :key="key"
+        @click="thisTimeBtn(item)"
+      >
+        {{ item }}
+      </div>
+    </div>
+    <div id="myChart" style="width：6.48rem;height:4.2rem;margin:0 auto"></div>
+    <div class="assessList">
+      <div class="headerassess">评估列表</div>
+      <div class="assessItem">
+        <div class="left">
+          <div class="deg">fsdfdsf</div>
+          <div class="time">fsdfsfasf</div>
+        </div>
+        <div class="right">
+          <star-scale :scale="scale" />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import echarts from "echarts";
+import StarScale from "@/components/StarScale";
 export default {
   name: "hello",
+  components: { StarScale },
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
+      timeBtn: ["近一个月", "近三个月", "近半年"],
+      currentTime: "",
+      scale: 5
     };
   },
   mounted() {
@@ -15,6 +43,9 @@ export default {
   },
 
   methods: {
+    thisTimeBtn(item) {
+      this.currentTime = item;
+    },
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = echarts.init(document.getElementById("myChart"));
@@ -26,8 +57,10 @@ export default {
         ["07.10", 8.33],
         ["08.10", 9.96]
       ];
+      myChart.clear();
+      console.log("fsdsdf");
       myChart.setOption({
-        grid: [{ x: "7%", y: "7%", width: "80%", height: "80%" }],
+        grid: [{ x: "7%", y: "7%", width: "80%", height: "80%", left: "10%" }],
         xAxis: [
           {
             gridIndex: 0,
@@ -61,6 +94,7 @@ export default {
             gridIndex: 0,
             min: 0,
             max: 15,
+            splitNumber: 4,
             axisLine: {
               show: false,
               symbol: [
@@ -74,15 +108,17 @@ export default {
               }
             },
             axisLabel: {
+              show: false,
               color: "#999999",
               showMinLabel: false
             },
             axisTick: { show: false }
           },
           {
-            gridIndex: 0,
-            min: 0,
-            max: 15,
+            // gridIndex: 0,
+            // min: "无",
+            // max: "重",
+            position: "left",
             axisLine: {
               symbol: [
                 "none",
@@ -96,7 +132,7 @@ export default {
             },
             axisLabel: {
               color: "#999999",
-              showMinLabel: false
+              showMinLabel: true
             },
             data: ["无", "轻", "中", "重"],
             axisTick: { show: false }
@@ -125,4 +161,71 @@ export default {
   }
 };
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.timeBtnList {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.32rem 0.3rem;
+  .timeBtn {
+    width: 2rem;
+    height: 0.56rem;
+    background: rgba(247, 247, 247, 1);
+    border-radius: 0.28rem;
+    font-size: 0.28rem;
+    font-family: "PingFangSC-Medium";
+    font-weight: 500;
+    color: rgba(0, 153, 102, 1);
+    line-height: 0.56rem;
+    text-align: center;
+    &.activeTime {
+      background: rgba(0, 153, 102, 1);
+      color: #ffffff;
+    }
+  }
+}
+.assessList {
+  padding: 0 0.32rem;
+  .headerassess {
+    font-size: 0.3rem;
+    font-family: "PingFangSC-Medium";
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+    line-height: initial;
+    padding-top: 0.4rem;
+    padding-bottom: 0.16rem;
+    border-bottom: 0.02rem solid rgba(229, 229, 229, 1);
+  }
+  .assessItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem 0;
+    border-bottom: 0.02rem solid rgba(229, 229, 229, 1);
+    .left {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: column;
+      .deg {
+        font-size: 0.3rem;
+        font-family: "PingFangSC-Regular";
+        font-weight: 400;
+        color: rgba(5, 15, 43, 1);
+        line-height: initial;
+      }
+      .time {
+        font-size: 0.3rem;
+        font-family: "PingFangSC-Regular";
+        font-weight: 400;
+        color: rgba(172, 173, 175, 1);
+        line-height: initial;
+      }
+    }
+    .right {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+</style>
