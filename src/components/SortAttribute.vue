@@ -1,3 +1,4 @@
+ <!-- props:name名字   $emit---sortway{"arc"为升序-----------“des”为降序} -->
 <template>
   <div class="shaixuanitem" ref="shaixuanitem" @click="sort()">
     {{name}}
