@@ -95,7 +95,7 @@ export default new Router({
       name: "ProductInfo",
       meta: {
         title: "商品详情",
-        index: 2
+        index: 3
       }
     },
     {
@@ -143,6 +143,15 @@ export default new Router({
         title: "编辑收货地址",
         index: 3
       }
-    }
+    },
+    {
+      path: "/myCollect",
+      component: () =>
+        import("@/views/patientManagement/personalCenter/components/mycollect"),
+      meta: {
+        title: "我的收藏",
+        index: 2
+      }
+    },
   ]
 });

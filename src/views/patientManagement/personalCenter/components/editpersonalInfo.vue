@@ -2,10 +2,17 @@
   <div class>
     <div class="baseinfo">基础信息</div>
     <van-field v-model="form.name" label="姓名" placeholder="输入框内容右对齐" input-align="right" />
-    <van-field v-model="form.tel" label="手机号" placeholder="输入框内容右对齐" input-align="right" />
+    <van-field v-model="form.tel" label="手机号" placeholder="输入框内容右对齐" input-align="right" readonly />
     <van-field v-model="form.sex" label="性别" placeholder="输入框内容右对齐" input-align="right" />
     <van-field v-model="form.birth" label="出生年月" placeholder="输入框内容右对齐" input-align="right" />
-    <van-field
+    <van-areas
+      :formvalue="form.place"
+      :formlabel="'所在地区（省，市）'"
+      :formplaceholder="'点击选择省市区'"
+      :forminputalign="'right'"
+      @IsshowArea="IsshowArea"
+    ></van-areas>
+    <!-- <van-field
       readonly
       clickable
       name="area"
@@ -14,10 +21,10 @@
       placeholder="点击选择省市区"
       @click="form.showArea = true"
       input-align="right"
-    />
+    >
     <van-popup v-model="form.showArea" position="bottom">
       <van-area :area-list="areaList" @confirm="onConfirm" @cancel="form.showArea = false" />
-    </van-popup>
+    </van-popup>-->
     <div class="baseinfo margin52">疾病信息</div>
     <van-field v-model="form.time" label="首次诊断时间" placeholder="输入框内容右对齐" input-align="right" />
     <div class="selecthistory">
@@ -66,12 +73,13 @@
   </div>
 </template>
 <script>
+import VanAreas from "@/components/vanareas.vue";
 export default {
   data() {
     return {
       form: {
         name: "",
-        tel: "",
+        tel: "123455667",
         sex: "",
         birth: "",
         place: "",
@@ -80,14 +88,16 @@ export default {
         level: 0
       },
       result: [],
-      areaList: {}, // 数据格式见 Area 组件文档,
       isSelectmedical: false
     };
   },
   methods: {
-    onConfirm(values) {
-      this.form.place = values.map(item => item.name).join("/");
-      this.form.showArea = false;
+    // onConfirm(values) {
+    //   this.form.place = values.map(item => item.name).join("/");
+    //   this.form.showArea = false;
+    // },
+    IsshowArea(value) {
+      this.$set(this.form, "showArea", value);
     },
     onChange(value) {
       // Toast('当前值：' + value);
@@ -98,7 +108,8 @@ export default {
     saveEdit() {
       this.isSelectmedical = false;
     }
-  }
+  },
+  components: { VanAreas }
 };
 </script>
 <style lang="less" scoped>
@@ -123,10 +134,8 @@ export default {
 }
 .sliderbox {
   margin-top: 0.2rem;
-
   padding-bottom: 0.34rem;
   border-bottom: 0.02rem solid rgba(229, 229, 229, 1) !important;
-
   .header {
     display: flex;
     justify-content: space-between;
