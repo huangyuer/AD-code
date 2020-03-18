@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </template>
 </template>
 <script>
 import echarts from "echarts";
@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       timeBtn: ["近一个月", "近三个月", "近半年"],
-      currentTime: "",
+      currentTime: "近一个月",
       scale: 5
     };
   },
@@ -82,7 +82,7 @@ export default {
               }
             },
             axisLabel: {
-              color: "#999999",
+              color: "#666666",
               showMinLabel: true
             },
             data: ["03.10", "04.10", "05.10", "06.10", "07.10", "08.10"],
