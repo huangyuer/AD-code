@@ -195,6 +195,15 @@ export default new Router({
         title: "评估历史",
         index: 2
       }
+    },
+    {
+      path: "/scienceVideo",
+      component: () =>
+        import("@/views/diseaseKnowledge/scienceVideo"),
+      meta: {
+        title: "视频动态",
+        index: 1
+      }
     }
   ]
 });

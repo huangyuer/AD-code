@@ -1,6 +1,6 @@
 <template>
   <div class="myexchangeWapper">
-    <div class="excahngeItem" v-for="(item,index) in itemlist" :key="index">
+    <div class="excahngeItem" v-for="(item, index) in itemlist" :key="index">
       <div class="vanimge">
         <van-image
           width=".72rem"
@@ -10,10 +10,10 @@
         />
       </div>
       <div class="center">
-        <div class="title">{{item.title}}</div>
+        <div class="title">{{ item.title }}</div>
         <div class="card">
-          <span>{{item.card}}</span>
-          <span class="cardtime">| {{item.cardtime}}</span>
+          <span>{{ item.card }}</span>
+          <span class="cardtime">| {{ item.cardtime }}</span>
         </div>
       </div>
       <div class="rightBtn" @click="checkcode(item.id)">立即兑换</div>
