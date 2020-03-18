@@ -204,6 +204,23 @@ export default new Router({
         title: "视频动态",
         index: 1
       }
+    }, {
+      path: "/scienceVideo/videoList",
+      component: () =>
+        import("@/views/diseaseKnowledge/scienceVideo/components/videoList"),
+      meta: {
+        title: "科普视频",
+        index: 2
+      }
+    },
+    {
+      path: "/scienceVideo/videoList/videoDetail",
+      component: () =>
+        import("@/views/diseaseKnowledge/scienceVideo/components/videoDetail"),
+      meta: {
+        title: "科普视频",
+        index: 3
+      }
     }
   ]
 });

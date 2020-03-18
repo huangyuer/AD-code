@@ -1,7 +1,7 @@
- <!-- props:name名字   $emit---sortway{"arc"为升序-----------“des”为降序} -->
+<!-- props:name名字   $emit---sortway{"arc"为升序-----------“des”为降序} -->
 <template>
   <div class="shaixuanitem" ref="shaixuanitem" @click="sort()">
-    {{name}}
+    {{ name }}
     <img class="shaixuan" src="../assets/shaixuan@2x.png" />
   </div>
 </template>
@@ -39,6 +39,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  float: left;
+  margin-right: 0.4rem;
   .shaixuan {
     width: 0.12rem;
     height: 0.24rem;

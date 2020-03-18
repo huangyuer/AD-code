@@ -1,6 +1,11 @@
 <template>
   <div class="sciencelist">
-    <div class="scienceitem" v-for="(item, key) in itemlist" :key="key">
+    <div
+      class="scienceitem"
+      v-for="(item, key) in itemlist"
+      :key="key"
+      @click="toPageVideodetail(item.id)"
+    >
       <van-image width="100%" height="1.8rem" fit="cover" :src="item.src" />
       <div class="saveicon" @click="iconcolorchange(key)">
         <svg-icon iconClass="heart" className="heart-icon" />
@@ -40,6 +45,9 @@ export default {
         });
         this.$emit("iconcolorchange", key, false);
       }
+    },
+    toPageVideodetail(id) {
+      this.$emit("toPageVideodetail", id);
     }
   },
   props: {
