@@ -119,7 +119,7 @@ export default new Router({
       name: "integralExchange",
       meta: {
         title: "积分兑换",
-        index: 1
+        index: 2
       }
     },
     {
@@ -129,7 +129,7 @@ export default new Router({
       name: "ProductInfo",
       meta: {
         title: "商品详情",
-        index: 3
+        index: 4
       }
     },
     {
@@ -139,7 +139,7 @@ export default new Router({
       name: "myexchange",
       meta: {
         title: "我的兑换",
-        index: 2
+        index: 3
       }
     },
     {
