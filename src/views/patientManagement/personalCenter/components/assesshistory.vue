@@ -6,9 +6,7 @@
         v-for="(item, key) in timeBtn"
         :key="key"
         @click="thisTimeBtn(item)"
-      >
-        {{ item }}
-      </div>
+      >{{ item }}</div>
     </div>
     <div id="myChart" style="width：6.48rem;height:4.2rem;margin:0 auto"></div>
     <div class="assessList">
@@ -23,7 +21,7 @@
         </div>
       </div>
     </div>
-  </template>
+  </div>
 </template>
 <script>
 import echarts from "echarts";
