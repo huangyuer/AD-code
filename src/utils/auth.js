@@ -14,16 +14,16 @@ export function removeToken() {
   return Cookies.remove(TokenKey)
 }
 
-const CodeKey = 'Admin-Code'
+const OpenIdKey = 'Admin-OpenId'
 
-export function getCode() {
-  return Cookies.get(CodeKey)
+export function getOpenId() {
+  return Cookies.get(OpenIdKey)
 }
 
-export function setCode(Code) {
-  return Cookies.set(CodeKey, Code)
+export function setOpenId(OpenId) {
+  return Cookies.set(OpenIdKey, OpenId)
 }
 
-export function removeCode() {
-  return Cookies.remove(CodeKey)
+export function removeOpenId() {
+  return Cookies.remove(OpenIdKey)
 }

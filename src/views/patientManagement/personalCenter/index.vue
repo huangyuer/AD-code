@@ -1,5 +1,19 @@
 <template>
   <div class="personalCenter">
+    <Dialog
+      :show="diaLogShow"
+      :title="'恭喜！您已完成注册！'"
+      :content="
+        '【关爱自己，从自我评估开始，拥抱AD专业资讯】是否进一步了解您的皮肤状况？'
+      "
+      :isClose="false"
+    >
+      <div slot="confirmButton" class="dialog-confirm" @confirmBtn="confirmBtn" >前往自我评估</div>
+      <div slot="closeButton" @click="closeBtn">
+        <svg-icon iconClass="register-close" className="close-icon"></svg-icon>
+      </div>
+    </Dialog>
+
     <div class="header">
       <div class="top">
         <div class="left">
@@ -136,8 +150,25 @@
   </div>
 </template>
 <script>
+import Dialog from "@/components/Dialog";
+
 export default {
+  components: { Dialog },
+  data() {
+    return {
+      diaLogShow: this.$route.params.diaLogShow
+    };
+  },
   methods: {
+    closeBtn() {
+      this.diaLogShow = false;
+    },
+    confirmBtn() {
+      this.diaLogShow = false;
+      this.$router.push({
+        path: "/diseaseTest"
+      });
+    },
     toPagepersonalInfo() {
       this.$router.push({ path: "/personalInfo" });
     },
@@ -155,6 +186,31 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@aaa: ~">>>";
+@{aaa} .dialog {
+  padding: 0.4rem 0.3rem 0.6rem 0.3rem !important;
+}
+.close-icon {
+  position: fixed;
+  z-index: 99999;
+  top: 62.5%;
+  left: calc(50% - 0.2rem);
+  width: 0.4rem !important;
+  height: 0.4rem !important;
+}
+.dialog-confirm {
+  width: 3rem;
+  height: 0.6rem;
+  line-height: 0.6rem;
+  background: rgba(0, 153, 102, 1);
+  border-radius: 30px;
+  font-size: 0.28rem;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  margin: 0.32rem auto 0 auto;
+}
 .personalCenter {
   padding-top: 0.4rem;
   .header {

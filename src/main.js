@@ -15,7 +15,7 @@ Vue.prototype.$qs = qs;
 
 import "./assets/font_1686774_85lo9chzwmt/iconfont.css";
 import { Icon } from "vant";
-import { setCode, getCode,removeCode } from "@/utils/auth";
+import { setOpenId, getOpenId,removeOpenId } from "@/utils/auth";
 Vue.use(Icon);
 
 Vue.use(Vant);
@@ -33,6 +33,8 @@ router.beforeEach((to, from, next) => {
 });
 
 Vue.config.productionTip = false;
+
+
   // const AppId = "wx23922f116d0212aa"; // 测试公众号平台的APPID，第1步那个链接里
   // const { code = "" } = qs.parse(window.location.search); // 获取当前页面地址中的code参数的值
   // const local = window.location.href; // 对当前地址用encodeURIComponent进行编码
@@ -44,11 +46,11 @@ Vue.config.productionTip = false;
   //     local,
   //     "UTF-8"
   //   )}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect`;
-  //   removeCode()
-  //   setCode(code);   
+  //   removeOpenId()
+  //   setOpenId(code);   
   // } else {
-  //   removeCode()
-  //   setCode(code);
+  //   removeOpenId()
+  //   setOpenId(code);
   // }
 
 /* eslint-disable no-new */
@@ -61,3 +63,10 @@ new Vue({
   },
   template: "<App/>"
 });
+
+if(!getOpenId()){
+  store.dispatch('register/getOpenIdApi')
+}else{
+  store.commit('register/SET_OPENID',getOpenId())
+
+}

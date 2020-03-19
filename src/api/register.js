@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getOpenId(data) {
+export function getOpenIdApi(data) {
   return request({
     url: '/getOpenId',
     method: 'post',
@@ -8,5 +8,19 @@ export function getOpenId(data) {
   })
 }
 
+export function sendValidateCode(data) {
+  return request({
+    url: '/sendValidateCode',
+    method: 'post',
+    data
+  })
+}
+export function register(data) {
+  return request({
+    url: '/register',
+    method: 'post',
+    data
+  })
+}
 
 

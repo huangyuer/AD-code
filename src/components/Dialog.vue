@@ -1,21 +1,31 @@
 <template>
-  <van-dialog
+<div v-if="show">
+   <van-dialog
     v-model="show"
     :title="title"
     :showConfirmButton="false"
     className="dialog"
   >
-    <div @click="closeBtn">
+    <div @click="closeBtn" v-if="isClose">
       <svg-icon iconClass="close" className="icon"></svg-icon>
     </div>
-
     <div class="dialog-content">{{ content }}</div>
+    <slot name="confirmButton"></slot>
   </van-dialog>
+  <slot name="closeButton">
+  </slot>
+
+</div>
+ 
 </template>
 <script>
 export default {
   name: "Dialog",
   props: {
+    isClose:{
+      type: Boolean,
+      default: true
+    },
     show: {
       type: Boolean,
       default: false
@@ -37,7 +47,7 @@ export default {
   methods: {
     closeBtn() {
       this.$emit("closeBtn")
-    }
+    },
   }
 };
 </script>

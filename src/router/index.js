@@ -11,6 +11,15 @@ export default new Router({
       component: HelloWorld
     },
     {
+      path: "/register",
+      component: () =>
+        import("@/views/register"),
+      name: "Register",
+      meta: {
+        title: "注册"
+      }
+    },
+    {
       path: "/hospitalMap",
       component: () =>
         import("@/views/medicationGuidance/hospitalMap"),
@@ -108,7 +117,7 @@ export default new Router({
         import("@/views/patientManagement/diseaseTest"),
       name: "diseaseTest",
       meta: {
-        title: "疾病自测",
+        title: "自我评估",
         index: 1
       }
     },
@@ -144,6 +153,7 @@ export default new Router({
     },
     {
       path: "/personalCenter",
+      name:'personalCenter',
       component: () =>
         import("@/views/patientManagement/personalCenter"),
       meta: {
