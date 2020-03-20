@@ -1,37 +1,88 @@
 <template>
   <div class="caringList">
-    <div class="caringItem">
-      <div class="header">
-        <div class="left">
-          fsddfsafsafasfsfsdfsfsdfsdfdsfsafsfsfsdfdsfsdfdsfsffds
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <div class="caringItem" v-for="(item, index) in acticalList" :key="index">
+        <div class="header">
+          <div class="left">
+            {{ item.title }}
+          </div>
+          <div class="right">
+            <span class="saveicon" @click="iconcolorchange()">
+              <svg-icon
+                iconClass="heart"
+                :class="{ 'heart-icon': true, iconactive: index.isStar }"
+              />
+              收藏
+            </span>
+          </div>
         </div>
-        <div class="right">
-          <span class="saveicon" @click="iconcolorchange()">
-            <svg-icon iconClass="heart" className="heart-icon" /> 收藏
-          </span>
+        <div class="center" @click="pageInfo(item)">
+          <van-image
+            width="100%"
+            height="2.6rem"
+            :src="item.coverImg[0].httpUrl"
+            fit="cover"
+          />
+        </div>
+        <div class="bottom">
+          {{ item.date }}
         </div>
       </div>
-      <div class="center" @click="pageInfo()">
-        <van-image
-          width="100%"
-          height="2.6rem"
-          src="https://img.yzcdn.cn/vant/cat.jpeg"
-          fit="cover"
-        />
-      </div>
-      <div class="bottom">
-        2020-02-26
-      </div>
-    </div>
+    </van-list>
   </div>
 </template>
 <script>
 import { Toast } from "vant";
 export default {
   data() {
-    return {};
+    return {
+      acticalList: [],
+      form: {
+        menu: this.$route.meta.title,
+        childMenu: String,
+        tag: String,
+        title: String,
+        page: 1,
+        limit: 15
+      },
+      total: 0
+    };
+  },
+  mounted() {
+    this.getArticles();
   },
   methods: {
+    getArticles() {
+      this.$store
+        .dispatch("common/getArticles", this.form)
+        .then(data => {
+          if (this.acticalList != null) {
+            this.acticalList = this.acticalList.concat(
+              this.$store.getters.articlesList.articles
+            );
+          } else {
+            this.acticalList = this.$store.getters.articlesList.articles;
+          }
+          this.total = this.$store.getters.articlesList.total;
+          this.loading = false;
+          if (this.acticalList.length >= this.total) {
+            // 加载状态结束
+            this.loading = false;
+            this.finished = true;
+            return;
+          } else {
+            this.form.page = this.form.page + 1;
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     iconcolorchange() {
       var hearticon = document.getElementsByClassName("heart-icon")[0];
       if (!hearticon.classList.contains("iconactive")) {
@@ -48,8 +99,12 @@ export default {
         });
       }
     },
-    pageInfo() {
-      this.$router.push({ path: "/DetailInfo" });
+    pageInfo(item) {
+      if (item.link) {
+        window.location.href = item.link;
+      } else {
+        this.$router.push({ path: "/DetailInfo?id=" + item._id });
+      }
     }
   }
 };

@@ -3,7 +3,6 @@
     <van-tabs
       line-width="1.4rem"
       @change="change"
-      @rendered="change"
       v-model="active"
       title-active-color="#009966"
     >
@@ -16,13 +15,13 @@
           <div
             :class="{
               'vans-tableContent': true,
-              activeTag: activeTag !== '' && activeTag == k
+              activeTag: current[key] == item
             }"
             v-for="(item, k) in index.tags"
             :key="k"
-            @click="tocurrentTag(item, k)"
+            @click="tocurrentTag(item, k, key)"
           >
-            外用糖皮质激素{{ item }}
+            {{ item }}
           </div>
         </div>
       </van-tab>
@@ -35,26 +34,8 @@ export default {
     return {
       active: "",
       activeTag: "",
-      itemTabcontent: [
-        // {
-        //   _id: "5e69a5e431ee627724a44d22",
-        //   createdAt: "2020-03-12T11:00:52.204+08:00",
-        //   menu: "疾病知识",
-        //   no: 0,
-        //   tags: ["fdsf", "fsdfsd", "dfsfsdf"],
-        //   type: "疾病知识", // ⽂章分类
-        //   updatedAt: "2020-03-12T11:00:52.204+08:00"
-        // },
-        // {
-        //   _id: "5e6f25433f31d473fc7ad7ab",
-        //   createdAt: "2020-03-12T11:00:52.204+08:00",
-        //   menu: "疾病知识",
-        //   no: 0,
-        //   tags: ["fsfsd"],
-        //   type: "治疗指南", // ⽂章分类
-        //   updatedAt: "2020-03-12T11:00:52.204+08:00"
-        // }
-      ]
+      itemTabcontent: [],
+      current: []
     };
   },
   mounted() {
@@ -66,9 +47,16 @@ export default {
     },
     getMenuSelect() {
       this.$store
-        .dispatch("common/getMenuSelect", "疾病知识")
+        .dispatch("common/getMenuSelect", this.$route.meta.title)
         .then(data => {
-          if (this.$store.getters.menuList.selects.length != 0) {
+          if (
+            this.$store.getters.menuList.selects != "null" &&
+            this.$store.getters.menuList.selects.length != 0
+          ) {
+            this.$emit(
+              "currentFuc",
+              this.$store.getters.menuList.selects.length
+            );
             this.itemTabcontent = this.$store.getters.menuList.selects;
           }
         })
@@ -76,11 +64,15 @@ export default {
           console.log(e);
         });
     },
-    tocurrentTag(item, k) {
+    tocurrentTag(item, k, key) {
       this.activeTag = k;
+      this.current.length = this.itemTabcontent.length;
+      this.$set(this.current, key, item);
       this.$emit("tocurrentTag", item);
+      this.$emit("currentFuc", this.itemTabcontent.length, item, key);
     }
-  }
+  },
+  watch: {}
 };
 </script>
 <style lang="less" scoped>

@@ -8,7 +8,11 @@
         :placeholder="placeholder"
       ></search-input>
       <div class="dropdownwapper">
-        <tabs-list @change="change"></tabs-list>
+        <tabs-list
+          @change="change"
+          @tocurrentTag="tocurrentTag"
+          @currentFuc="currentFuc"
+        ></tabs-list>
       </div>
     </div>
     <!-- </van-sticky> -->
@@ -39,20 +43,18 @@ export default {
       finished: false,
       acticalList: [],
       form: {
-        menu: "疾病知识",
+        menu: this.$route.meta.title,
         childMenu: String,
-        tags: String,
+        tag: String,
         title: String,
         page: 1,
-        limit: 2
+        limit: 15
       },
-      total: 0
+      total: 0,
+      current: []
     };
   },
-  mounted() {
-    this.$set(this.form, "page", 1);
-    // this.getArticles();
-  },
+  mounted() {},
   methods: {
     isStar(value, key) {
       this.$set(this.acticalList.articles[key], "isStar", value);
@@ -61,9 +63,19 @@ export default {
       this.acticalList = null;
       this.finished = false;
       this.form.childMenu = title;
+      this.form.tag = this.current[name];
       this.form.page = 1;
     },
-    tocurrentTag(item) {},
+    tocurrentTag(item) {
+      this.acticalList = null;
+      this.finished = false;
+      this.form.tag = item;
+      this.form.page = 1;
+    },
+    currentFuc(length, item, key) {
+      this.current.length = length;
+      if (item) this.$set(this.current, key, item);
+    },
     getArticles() {
       this.$store
         .dispatch("common/getArticles", this.form)
@@ -76,24 +88,21 @@ export default {
             this.acticalList = this.$store.getters.articlesList.articles;
           }
           this.total = this.$store.getters.articlesList.total;
-          this.form.page = this.form.page + 1;
           this.loading = false;
+          if (this.acticalList.length >= this.total) {
+            // 加载状态结束
+            this.loading = false;
+            this.finished = true;
+            return;
+          } else {
+            this.form.page = this.form.page + 1;
+          }
         })
         .catch(e => {
           console.log(e);
         });
     },
     onLoad() {
-      if (
-        this.total != 0 &&
-        this.acticalList != null &&
-        this.acticalList.length >= this.total
-      ) {
-        // 加载状态结束
-        this.loading = false;
-        this.finished = true;
-        return;
-      }
       this.getArticles();
     }
   },
