@@ -88,7 +88,7 @@ export default new Router({
         import("@/views/medicationGuidance/medicationInstructions"),
       name: "MedicationInstructions",
       meta: {
-        title: "用药说明",
+        title: "诊疗方法",
         index: 1
       }
     },
@@ -98,6 +98,7 @@ export default new Router({
         import("@/components/DetailInfo"),
       name: "DetailInfo",
       meta: {
+        title: "诊疗方法",
         index: 2
       }
     },
@@ -153,7 +154,7 @@ export default new Router({
     },
     {
       path: "/personalCenter",
-      name:'personalCenter',
+      name: 'personalCenter',
       component: () =>
         import("@/views/patientManagement/personalCenter"),
       meta: {
