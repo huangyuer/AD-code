@@ -55,7 +55,7 @@ const actions = {
       getArticles({
           menu: question.menu,
           childMenu: question.childMenu,
-          tags: question.tags,
+          tag: question.tag,
           title: question.title,
           page: question.page,
           limit: question.limit
