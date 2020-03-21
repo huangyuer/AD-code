@@ -20,6 +20,15 @@ export default new Router({
       }
     },
     {
+      path: "/userTerms",
+      component: () =>
+        import("@/views/register/userTerms"),
+      name: "UserTerms",
+      meta: {
+        title: "用户知情同意书"
+      }
+    },
+    {
       path: "/hospitalMap",
       component: () =>
         import("@/views/medicationGuidance/hospitalMap"),
@@ -38,7 +47,7 @@ export default new Router({
       }
     },
     {
-      path: "/diseaseKnowledge/detail",
+      path: "/diseaseDetail",
       component: () =>
         import(
           "@/views/diseaseKnowledge/diseaseKnowledge/components/diseaseDetail.vue"

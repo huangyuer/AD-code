@@ -3,6 +3,7 @@ import {
   getArticles,
   getArticle,
   star,
+  unStar,
 } from "@/api/common";
 import axios from "axios";
 
@@ -79,7 +80,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       star({
           menu: question.menu,
-          starId: question.id
+          starId: question.starId
         })
         .then(response => {
           const {
@@ -87,6 +88,26 @@ const actions = {
             data
           } = response;
           commit("SET_STARSAVE", data);
+          resolve(msg);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  
+  unStar({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      unStar({
+          starId: question.starId
+        })
+        .then(response => {
+          const {
+            msg,
+            data
+          } = response;
           resolve(msg);
         })
         .catch(error => {

@@ -2,6 +2,10 @@ import {
   getVideos,
   upVideoClickNum,
   getLive,
+  uploadFile,
+  getLeaveMsgList,
+  addLeaveMsg,
+  delLeaveMsg
 } from "@/api/diseaseKnowledge";
 
 const state = {
@@ -78,6 +82,94 @@ const actions = {
             data
           } = response;
           commit("SET_GETLIVE", data);
+          resolve(msg);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  uploadFile({
+    commit
+  }, file) {
+    let form = new FormData();
+    form.append("file", file);
+    return new Promise((resolve, reject) => {
+      uploadFile({
+        file: file
+      })
+        .then(response => {
+          const {
+            msg,
+            data
+          } = response;
+          resolve(msg);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  getLeaveMsgList({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      getLeaveMsgList({
+        page:params.page,
+        limit:params.limit
+      })
+        .then(response => {
+          const {
+            msg,
+            data
+          } = response;
+          resolve(data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  addLeaveMsg({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      addLeaveMsg({
+        sex:params.sex,
+        age:params.age,
+        description:params.description,
+        tag:params.tag,
+        level:params.level,
+        images:params.images,
+      })
+        .then(response => {
+          const {
+            msg,
+            data
+          } = response;
+          resolve(msg);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  delLeaveMsg({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      delLeaveMsg({
+        id:params.id,
+      })
+        .then(response => {
+          const {
+            msg,
+            data
+          } = response;
           resolve(msg);
         })
         .catch(error => {

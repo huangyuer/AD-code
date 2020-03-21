@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>shoucang1-hui</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-27.3%" y="-27.3%" width="154.5%" height="154.5%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="4" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <polygon id="path-2" points="0.00214634146 0.0134203077 21.978465 0.0134203077 21.978465 20.3803434 0.00214634146 20.3803434"></polygon>
+    </defs>
+    <g id="AD患者之家5.0" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="患者故事详情页-" transform="translate(-305.000000, -435.000000)">
+            <g id="shoucang1-hui" transform="translate(315.000000, 439.000000)">
+                <g id="下载">
+                    <circle id="椭圆形" fill="#C8C8C8" opacity="0.300000012" filter="url(#filter-1)" cx="22" cy="28" r="22"></circle>
+                    <circle id="椭圆形" fill="#FFFFFF" opacity="0.900000036" cx="22" cy="22" r="22"></circle>
+                    <g id="shoucang" transform="translate(11.000000, 12.000000)">
+                        <g id="分组">
+                            <mask id="mask-3" fill="white">
+                                <use xlink:href="#path-2"></use>
+                            </mask>
+                            <g id="Clip-2"></g>
+                        </g>
+                        <path d="M18.5994081,11.7455889 C16.4563935,14.7334277 11.9233561,18.1598892 11.7035707,18.3243951 C11.4837496,18.4889366 11.2365626,18.5711717 10.9892325,18.5711717 C10.7420455,18.5711717 10.4947154,18.4889366 10.2748943,18.3243951 C10.055252,18.1598892 5.60452683,14.7060874 3.37923577,11.6085305 C2.66489756,10.4846511 1.51095285,9.08665477 1.51095285,7.11297723 C1.51095285,3.79623385 3.37923577,1.438864 6.40128455,1.438864 C8.10454959,1.438864 9.9452878,3.05604677 10.9618667,4.45404308 C12.0058114,3.05604677 13.8190407,1.438864 15.522413,1.438864 C18.5718634,1.438864 20.5499675,3.76878646 20.5499675,7.11297723 C20.5773333,9.08665477 19.3135675,10.6491569 18.5994081,11.7455889 Z" id="Fill-3" fill="#999999"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

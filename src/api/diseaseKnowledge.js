@@ -20,3 +20,34 @@ export function getLive(data) {
     data
   })
 }
+
+export function uploadFile(data) {
+  return request({
+    url: '/uploadFile',
+    method: 'post',
+    data
+  })
+}
+export function getLeaveMsgList(data) {
+  return request({
+    url: '/getLeaveMsgList',
+    method: 'post',
+    data
+  })
+}
+
+export function addLeaveMsg(data) {
+  return request({
+    url: '/addLeaveMsg',
+    method: 'post',
+    data
+  })
+}
+
+export function delLeaveMsg(data) {
+  return request({
+    url: '/delLeaveMsg',
+    method: 'post',
+    data
+  })
+}

@@ -7,7 +7,7 @@
     ></search-input>
     <div class="patient-like">
       <div v-for="item in diseaseInfo" :key="item.id">
-        <like-info :info="item" @likeBtn="likeBtn"></like-info>
+        <like-info :info="item" @likeBtn="likeBtn" @likeItem="likeItem"></like-info>
       </div>
     </div>
   </div>
@@ -87,24 +87,38 @@ export default {
       ]
     };
   },
+  created() {
+    this.getArticles()
+  },
   methods: {
     onChange(val) {},
-    likeBtn(val) {
-      console.log("--ss--d", val);
-      if (!val.isHeart) {
-        Toast({
-          message: "收藏成功",
-          icon: "like-o"
-        });
-      } else {
-        Toast({
-          message: "取消收藏",
-          icon: "like-o"
-        });
-      }
+    getArticles(){
+ this.diseaseInfo = [];
 
-      val.isHeart = !val.isHeart;
-    }
+      let params = {
+        menu: this.$route.meta.title,
+        page: 1,
+        limit: 10
+      };
+      this.$store
+        .dispatch("common/getArticles", params)
+        .then(() => {
+          this.diseaseInfo = this.$store.getters.articlesList.articles;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    likeBtn(val) {
+      // this.changeTab(this.curTab)
+      val.isStar=!val.isStar
+      // this.$set(this.diseaseInfo,'isStar',!this.diseaseInfo.isStar)
+      // this.diseaseInfo.isStar=!this.diseaseInfo.isStar
+    },
+        likeItem(info){
+      console.log("======",info)
+      this.$router.push({ path: "/diseaseDetail",name:"DiseaseDetail",params:{id:info._id,like:true,forward:true,isStar:info.isStar} });
+    },
   }
 };
 </script>

@@ -17,7 +17,9 @@
             :class="{ active: flag }"
           ></svg-icon>
         </div>
-        <div class="agree-tip"><span>我已阅读并同意</span>用户知情同意书</div>
+        <div class="agree-tip">
+          我已阅读并同意<span @click="termsBtn">用户知情同意书</span>
+        </div>
       </div>
       <div class="register-btn" @click="registerBtn">注册</div>
     </div>
@@ -40,13 +42,18 @@ export default {
       tel: "",
       sms: "",
       invite: "",
-      flag: false,
+      flag: false || this.$route.params.userTerm,
       timer: null,
       count: "",
-      show: true,
+      show: true
     };
   },
   methods: {
+    termsBtn() {
+      this.$router.push({
+        path: "/userTerms"
+      });
+    },
     getOpenId() {
       const TIME_COUNT = 60;
       if (!this.timer) {
@@ -142,9 +149,9 @@ export default {
         font-size: 0.28rem;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
-        color: #009966;
+        color: #999999;
         span {
-          color: #999999;
+          color: #009966;
         }
       }
     }

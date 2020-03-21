@@ -27,3 +27,10 @@ export function star(data) {
     data
   })
 }
+export function unStar(data) {
+  return request({
+    url: '/unStar',
+    method: 'post',
+    data
+  })
+}

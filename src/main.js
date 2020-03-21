@@ -15,7 +15,7 @@ Vue.prototype.$qs = qs;
 
 import "./assets/font_1686774_85lo9chzwmt/iconfont.css";
 import { Icon } from "vant";
-import { setOpenId, getOpenId,removeOpenId } from "@/utils/auth";
+import { setOpenId, getOpenId,removeOpenId,setToken } from "@/utils/auth";
 Vue.use(Icon);
 
 Vue.use(Vant);
@@ -65,7 +65,9 @@ new Vue({
 });
 
 if(!getOpenId()){
-  store.dispatch('register/getOpenIdApi')
+  setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
+  setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wMy0yNyAwNjozMjowMiIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTcyMzBlMmY0YzBkMTRhOTE0NTk3OWUifQ.VHgVgG_nnf0o6QDaF2TZ-bZb4BewqAyLJwiUR15OmOI')
+  // store.dispatch('register/getOpenIdApi')
 }else{
   store.commit('register/SET_OPENID',getOpenId())
 

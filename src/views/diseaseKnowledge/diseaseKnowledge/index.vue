@@ -5,7 +5,9 @@
         :placeholder="'搜索关键字'"
         @onChange="onChange"
       ></search-input>
-      <div class="category-box">
+
+      <!-- <div class="category-box">
+
         <dropdown-menu
           :option="option"
           :value="value"
@@ -14,12 +16,22 @@
         <div v-for="item in category" :key="item.id" class="category-li">
           {{ item }}
         </div>
-      </div>
+      </div> -->
     </div>
-    <div class="patient-like">
-      <div v-for="item in diseaseInfo" :key="item.id">
-        <like-info :info="item" @likeBtn="likeBtn"></like-info>
-      </div>
+    <div class="category-box">
+      <van-tabs sticky @click="changeTab">
+        <van-tab
+          v-for="item in itemTabcontent"
+          :title="item.type"
+          :key="item.id"
+        >
+        </van-tab>
+        <div class="patient-like">
+          <div v-for="item in diseaseInfo" :key="item.id">
+            <like-info :info="item" @likeBtn="likeBtn" @likeItem="likeItem"></like-info>
+          </div>
+        </div>
+      </van-tabs>
     </div>
   </div>
 </template>
@@ -27,6 +39,7 @@
 import LikeInfo from "@/components/LikeInfo";
 import SearchInput from "@/components/SearchInput";
 import DropdownMenu from "@/components/DropdownMenu";
+
 import { Toast } from "vant";
 
 export default {
@@ -35,6 +48,8 @@ export default {
   data() {
     return {
       value: "0",
+      itemTabcontent: [],
+      curTab:'',
       category: ["特应性皮炎", "银屑病"],
       diseaseInfo: [
         {
@@ -95,31 +110,57 @@ export default {
       ]
     };
   },
+  created() {
+    this.$store
+      .dispatch("common/getMenuSelect", this.$route.meta.title)
+      .then(() => {
+        this.itemTabcontent = this.$store.getters.menuList.selects;
+      this.changeTab(null,this.itemTabcontent[0].type)
+
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    console.log("------ss", this.$route.meta.title);
+  },
   methods: {
+    likeItem(info){
+      console.log("======",info)
+      this.$router.push({ path: "/diseaseDetail",name:"DiseaseDetail",params:{id:info._id,like:true,forward:true,isStar:info.isStar} });
+    },
+    changeTab(name,title) {
+        this.diseaseInfo = [];
+
+      let params = {
+        menu: this.$route.meta.title,
+        childMenu: title,
+        page: 1,
+        limit: 10
+      };
+      this.$store
+        .dispatch("common/getArticles", params)
+        .then(() => {
+          this.diseaseInfo = this.$store.getters.articlesList.articles;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     onChange(val) {},
     DropdownchangeValue(val) {
       console.log("----d", val);
     },
     likeBtn(val) {
-      console.log("--ss--d", val);
-      if (!val.isHeart) {
-        Toast({
-          message: "收藏成功",
-          icon: "like-o"
-        });
-      } else {
-        Toast({
-          message: "取消收藏",
-          icon: "like-o"
-        });
-      }
-
-      val.isHeart = !val.isHeart;
+      // this.changeTab(this.curTab)
+      val.isStar=!val.isStar
+      // this.$set(this.diseaseInfo,'isStar',!this.diseaseInfo.isStar)
+      // this.diseaseInfo.isStar=!this.diseaseInfo.isStar
     }
   }
 };
 </script>
 <style lang="less" scoped>
+@aaa: ~">>>";
 .disease-content {
   overflow: hidden;
   height: 100vh;
@@ -136,6 +177,38 @@ export default {
   overflow: auto;
 }
 .category-box {
+  @{aaa} .van-sticky {
+    margin-top: 0.1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  @{aaa} .van-hairline--top-bottom {
+    &::after {
+      border-width: 0px;
+      border-bottom: 6px solid rgba(216, 216, 216, 1);
+      margin: 0 0.32rem;
+    }
+  }
+  @{aaa} .van-tab {
+    font-size: 0.3rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+  }
+  @{aaa} .van-tab--active {
+    font-size: 0.3rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: rgba(0, 153, 102, 1);
+  }
+  @{aaa} .van-tabs__line {
+    width: 3.42rem !important;
+    height: 0.06rem;
+    background: rgba(0, 153, 102, 1);
+    border-radius: 0.03rem;
+  }
+}
+.category-box1 {
   display: flex;
   align-items: center;
   height: 1rem;
