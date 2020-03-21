@@ -1,8 +1,8 @@
 <template>
-  <div class="wapperItemInfo">
+  <div class="wapperItemInfo" v-if="videoitem">
     <div class="header">
-      <div class="title">huhfusdjfkssfsa</div>
-      <div class="time">time</div>
+      <div class="title">{{ videoitem.title }}</div>
+      <div class="time">{{ videoitem.date }}</div>
     </div>
     <div class="content">
       <div class="LinkItem">
@@ -22,13 +22,37 @@
       </div>
       <div class="content-title">
         <div class="titlepos">视频介绍</div>
-        fsfsadfasfasfasfsafasfsafsafsafaffasfdasfsafasdfsfasfsfsfffsdfdsaffasdfsfhjksdahfsakjhfsahfsjafdjasfjsfhjksdhfsadfhskjafkjasfdskjfhsdkjfhsjdfhsdfsjfhj
+        {{ videoitem.introduction }}
       </div>
     </div>
   </div>
 </template>
 <script>
-export default {};
+import "./json2";
+export default {
+  data() {
+    return {
+      videoitem: ""
+    };
+  },
+  created() {},
+  mounted() {
+    if (this.$store.getters.videoList.videos != undefined) {
+      this.videoitem = this.$store.getters.videoList.videos[
+        this.$route.query.key
+      ];
+      localStorage.setItem("videoitem", JSON.stringify(this.videoitem));
+      localStorage.setItem("videoitemkey", this.$route.query.key);
+    } else if (
+      this.$store.getters.videoList.videos == undefined &&
+      localStorage.getItem("videoitemkey") != this.$route.query.key
+    ) {
+      this.videoitem = "";
+    } else {
+      this.videoitem = JSON.parse(localStorage.getItem("videoitem"));
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 .wapperItemInfo {

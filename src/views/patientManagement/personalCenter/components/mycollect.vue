@@ -2,14 +2,21 @@
   <div class="disease-content">
     <div class="disease-search">
       <div class="category-box">
-        <dropdown-menu :option="option" :value="value" @DropdownchangeValue="DropdownchangeValue"></dropdown-menu>
+        <dropdown-menu
+          v-if="getstarmenus.length!=0"
+          :value="value"
+          :option="getstarmenus"
+          @DropdownchangeValue="DropdownchangeValue"
+        ></dropdown-menu>
         <sort-attribute :name="'收藏时间'" @sortway="sortway"></sort-attribute>
       </div>
     </div>
     <div class="patient-like">
-      <div v-for="item in diseaseInfo" :key="item.id">
-        <like-info :info="item" @likeBtn="likeBtn"></like-info>
-      </div>
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <div v-for="item in diseaseInfo" :key="item.id">
+          <like-info :info="item" @likeBtn="likeBtn"></like-info>
+        </div>
+      </van-list>
     </div>
   </div>
 </template>
@@ -24,7 +31,7 @@ export default {
   components: { LikeInfo, DropdownMenu, SortAttribute },
   data() {
     return {
-      value: "0",
+      value: "",
       category: ["特应性皮炎", "银屑病"],
       diseaseInfo: [
         {
@@ -88,28 +95,39 @@ export default {
           isHeart: true
         }
       ],
-      option: [
-        { text: "全部商品", value: "0" },
-        { text: "新款商品", value: "1" },
-        { text: "活动商品", value: "2" }
-      ]
+      getstarmenus: [],
+      getmystars: [],
+      keylist: {
+        menu: String,
+        page: 1,
+        limit: 10,
+        desc: Boolean
+      },
+      total: 0,
+      loading: false,
+      finished: false
     };
+  },
+  mounted() {
+    this.getStarMenus();
   },
   methods: {
     onChange(val) {},
     DropdownchangeValue(val) {
-      console.log("----d", val);
+      this.$set(this.keylist, "menu", this.getstarmenus[val].text);
+      this.$set(this.keylist, "page", 1);
+      this.finished = false;
     },
     sortway(val) {
       console.log("------------val", val);
       if (val == "asc") {
-        this.diseaseInfo.sort(function(a, b) {
-          return a.id - b.id;
-        });
+        this.$set(this.keylist, "desc", false);
+        this.$set(this.keylist, "page", 1);
+        this.finished = false;
       } else {
-        this.diseaseInfo.sort(function(a, b) {
-          return b.id - a.id;
-        });
+        this.$set(this.keylist, "desc", true);
+        this.$set(this.keylist, "page", 1);
+        this.finished = false;
       }
     },
     likeBtn(val) {
@@ -125,6 +143,52 @@ export default {
         });
       }
       val.isHeart = !val.isHeart;
+    },
+    getStarMenus() {
+      this.$store
+        .dispatch("patientManagement/getStarMenus")
+        .then(data => {
+          let menus = this.$store.getters.getstarmenus.menus;
+          for (var i = 0; i < menus.length; i++) {
+            let obj = {};
+            obj["text"] = menus[i];
+            obj["value"] = i.toString();
+            this.getstarmenus.push(obj);
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getMyStars() {
+      this.$store
+        .dispatch("patientManagement/getMyStars", this.keylist)
+        .then(data => {
+          this.getmystars = this.$store.getters.getmystars.stars;
+          if (this.getmystars != null) {
+            this.getmystars = this.getmystars.concat(
+              this.$store.getters.getmystars.stars
+            );
+          } else {
+            this.getmystars = this.$store.getters.getmystars.stars;
+          }
+          this.total = this.$store.getters.getmystars.total;
+          this.loading = false;
+          if (this.getmystars.length >= this.total) {
+            // 加载状态结束
+            this.loading = false;
+            this.finished = true;
+            return;
+          } else {
+            this.keylist.page = this.keylist.page + 1;
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    onLoad() {
+      this.getMyStars();
     }
   }
 };

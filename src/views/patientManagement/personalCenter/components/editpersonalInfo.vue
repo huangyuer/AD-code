@@ -37,19 +37,17 @@
           </div>
         </div>
         <div class="medicinallist">
-          <div class="medicinalitem">炉甘石洗剂</div>
-          <div class="medicinalitem">炉甘石洗剂</div>
-          <div class="medicinalitem">炉甘石洗剂</div>
-          <div class="medicinalitem">炉甘石洗剂</div>
+          <div class="medicinalitem" v-for="(index,key) in medications" :key="key">{{index.name}}</div>
         </div>
       </div>
       <div class="selecthistoryinner" v-else>
         <div class="title">1.您是否有使用以下几种药物？</div>
         <van-checkbox-group v-model="result" direction="horizontal">
-          <van-checkbox name="a">炉甘石洗剂</van-checkbox>
-          <van-checkbox name="b">糠酸莫米松乳膏</van-checkbox>
-          <van-checkbox name="c">糖皮质激素</van-checkbox>
-          <van-checkbox name="d">薄荷酚液</van-checkbox>
+          <van-checkbox
+            v-for="(index,key) in medications"
+            :key="key"
+            :name="index.name"
+          >{{index.name}}</van-checkbox>
         </van-checkbox-group>
       </div>
     </div>
@@ -88,8 +86,12 @@ export default {
         level: 0
       },
       result: [],
-      isSelectmedical: false
+      isSelectmedical: false,
+      medications: []
     };
+  },
+  mounted() {
+    this.getMedications();
   },
   methods: {
     // onConfirm(values) {
@@ -107,6 +109,16 @@ export default {
     },
     saveEdit() {
       this.isSelectmedical = false;
+    },
+    getMedications() {
+      this.$store
+        .dispatch("patientManagement/getMedications")
+        .then(data => {
+          this.medications = this.$store.getters.getmedications.medications;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   },
   components: { VanAreas }

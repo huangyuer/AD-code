@@ -24,11 +24,11 @@ export default {
       if (classlist.contains("asc")) {
         this.sortwayc = "asc";
         classlist.remove("asc");
-        this.$emit("sortway", this.sortwayc);
+        this.$emit("sortway", this.sortwayc, this.name);
       } else {
         this.sortwayc = "des";
         classlist.add("asc");
-        this.$emit("sortway", this.sortwayc);
+        this.$emit("sortway", this.sortwayc, this.name);
       }
     }
   }

@@ -48,16 +48,16 @@ export default {
         tag: String,
         title: String,
         page: 1,
-        limit: 15
+        limit: 10
       },
-      total: 0
+      total: 0,
+      loading: false,
+      finished: false
     };
   },
-  mounted() {
-    this.getArticles();
-  },
+  mounted() {},
   methods: {
-    getArticles() {
+    onLoad() {
       this.$store
         .dispatch("common/getArticles", this.form)
         .then(data => {

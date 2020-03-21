@@ -9,6 +9,22 @@ const getters = {
   //文章详情
   articleDetail: state => state.common.articleDetail,
   //收藏
-  Star: state => state.common.Star
+  Star: state => state.common.Star,
+  //视频列表
+  videoList: state => state.diseaseKnowledge.videoList,
+  //观看次数加1
+  upvideoclicknum: state => state.diseaseKnowledge.upvideoclicknum,
+  //获取视频直播列表
+  LiveList: state => state.diseaseKnowledge.LiveList,
+  //获取个人信息
+  getmyinfo: state => state.patientManagement.getmyinfo,
+  //编辑个人信息获取药物列表
+  getmedications: state => state.patientManagement.getmedications,
+  //获取我的收藏分类
+  getstarmenus: state => state.patientManagement.getstarmenus,
+  //获取我的收藏
+  getmystars: state => state.patientManagement.getmystars,
+  //自我评估
+  getquesion: state => state.patientManagement.getquesion,
 }
 export default getters

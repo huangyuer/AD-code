@@ -60,7 +60,11 @@ export default {
       }
     },
     ClickInstructionItem(index) {
-      this.$router.push({ path: "/DetailInfo?id=" + index._id });
+      if (index.link) {
+        window.location.link = index.link;
+      } else {
+        this.$router.push({ path: "/DetailInfo?id=" + index._id });
+      }
     }
   },
   watch: {

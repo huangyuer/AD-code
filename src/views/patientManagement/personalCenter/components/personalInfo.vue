@@ -6,7 +6,7 @@
           width="100%"
           height="100%"
           fit="cover"
-          :src="require('../../../../assets/change.png')"
+          :src="require('../../../../assets/myinfobg.png')"
         />
       </div>
       <div class="headercontent">
@@ -15,14 +15,18 @@
             width="1.32rem"
             height="1.32rem"
             fit="cover"
-            :src="require('../../../../assets/change.png')"
+            :src="
+              getmyinfo.headImg != ''
+                ? getmyinfo.headImg
+                : require('../../../../assets/change.png')
+            "
           />
         </div>
-        <div class="name">fsdfffs</div>
-        <div class="tel">123456</div>
+        <div class="name">{{ getmyinfo.name }}</div>
+        <div class="tel">{{ getmyinfo.phone }}</div>
         <div class="invitcode">
           邀请码：
-          <b>fsdfsf</b>
+          <b>{{getmyinfo.invCode}}</b>
         </div>
       </div>
       <div class="cancelaccount">注销账号</div>
@@ -70,7 +74,25 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      getmyinfo: {}
+    };
+  },
+  mounted() {
+    this.getMyInfo();
+  },
   methods: {
+    getMyInfo() {
+      this.$store
+        .dispatch("patientManagement/getMyInfo")
+        .then(data => {
+          this.getmyinfo = this.$store.getters.getmyinfo.user;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     myinfopageEdit() {
       this.$router.push({ path: "/editpersonalInfo" });
     },
@@ -114,6 +136,7 @@ export default {
         font-weight: 500;
         color: rgba(255, 255, 255, 1);
         line-height: initial;
+        margin: 0.05rem 0;
       }
       .invitcode {
         width: 2.48rem;

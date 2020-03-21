@@ -1,11 +1,11 @@
 <template>
   <div class="resultWapper">
-    <div class="degtitle">中毒</div>
+    <div class="degtitle">{{dataresult.level}}</div>
     <star-scale :scale="scale" />
     <div class="time">2020-03-10</div>
-    <div class="content">
-      根据您的打分结果，发现您的疾病程度存在一定风险，建议您到附近医院就医。您的疾病程度较重，推荐您每周自测一次，以随时监测您的身体情况，如遇问题可及时就医。
-    </div>
+    <div
+      class="content"
+    >根据您的打分结果，发现您的疾病程度存在一定风险，建议您到附近医院就医。您的疾病程度较重，推荐您每周自测一次，以随时监测您的身体情况，如遇问题可及时就医。</div>
     <div class="groupnext">关闭</div>
   </div>
 </template>
@@ -13,9 +13,17 @@
 import StarScale from "@/components/StarScale";
 export default {
   components: { StarScale },
+  props: {
+    dataresult: {
+      type: Object,
+      default: function() {
+        return {};
+      }
+    }
+  },
   data() {
     return {
-      scale: 5
+      scale: 0
     };
   },
   mounted() {}

@@ -4,19 +4,24 @@
       class="scienceitem"
       v-for="(item, key) in itemlist"
       :key="key"
-      @click="toPageVideodetail(item.id)"
+      @click="toPageVideodetail(item, key)"
     >
-      <van-image width="100%" height="1.8rem" fit="cover" :src="item.src" />
+      <van-image
+        width="100%"
+        height="1.8rem"
+        fit="cover"
+        src="https://img.yzcdn.cn/vant/cat.jpeg"
+      />
       <div class="saveicon" @click="iconcolorchange(key)">
         <svg-icon iconClass="heart" className="heart-icon" />
       </div>
       <div>
         <div class="title">{{ item.title }}</div>
         <div class="chakancontent">
-          <span>{{ item.timer }}</span>
+          <span>{{ item.date }}</span>
           <span
             ><img src="../../../../assets/chakan@2x.png" alt="" />{{
-              item.time
+              item.clickNum
             }}</span
           >
         </div>
@@ -46,8 +51,8 @@ export default {
         this.$emit("iconcolorchange", key, false);
       }
     },
-    toPageVideodetail(id) {
-      this.$emit("toPageVideodetail", id);
+    toPageVideodetail(item, key) {
+      this.$emit("toPageVideodetail", item, key);
     }
   },
   props: {
