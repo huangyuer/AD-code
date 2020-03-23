@@ -4,6 +4,7 @@
       <div class="category-box">
         <dropdown-menu
           v-if="getstarmenus.length!=0"
+          :title="'收藏分类'"
           :value="value"
           :option="getstarmenus"
           @DropdownchangeValue="DropdownchangeValue"

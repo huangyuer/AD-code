@@ -1,64 +1,36 @@
 <template>
   <div class="productinfowapper" style="color:#000000">
-    <div class="imageheader">
+    <!-- <div class="imageheader">
       <van-image width="3rem" height="3rem" fit="cover" :src="item.goodsImg[0].httpUrl" />
     </div>
     <div class="contentheader">
       <div class="credit">{{item.score}}积分</div>
       <div class="title">{{item.name}}</div>
     </div>
-    <div class="contentlist">{{item.introduction}}</div>
-    <div class="changeBtn" @click="changeItemBtn(item._id)">立即兑换</div>
+    <div class="contentlist">{{item.introduction}}</div>-->
+    <div class="changeBtn" @click="changeItemBtn()">立即兑换</div>
   </div>
 </template>
 <script>
 import { Toast } from "vant";
 export default {
-  name: "ProductInfo",
+  name: "ExchangeInfo",
   data() {
     return {
-      item: {},
-      score: {}
+      id: "",
+      exchangeitem: {}
     };
   },
-  created() {
-    console.log("this.$route.params.item", this.$route.params.item);
-    console.log("this.$route.params.id", this.$route.params.score);
-    this.item = this.$route.params.item;
-    this.score = this.$route.params.score;
-    // this.getMyAddress()
+  created() {},
+  mounted() {
+    this.getExchangeDetail();
   },
   methods: {
-    changeItemBtn(id) {
-      // if (this.score.nowScore < this.item.score) {
-      //   Toast("积分不足");
-      //   return;
-      // }
-      if (this.item.type == "实物") {
-        this.$router.push({ path: "/editaddressInfo" });
-      } else {
-        this.$router.push({
-          path: "/exchangeInfo",
-          name: "ExchangeInfo",
-          params: { id: id }
-        });
-      }
-    },
-    // getMyAddress() {
-    //   this.$store
-    //     .dispatch("patientManagement/getMyAddress")
-    //     .then(data => {
-    //       var address = this.$store.getters.getmyaddress.address;
-    //       console.log("this.address", address);
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // },
-    exchangeGoods() {
-      // this.address = this.address
+    getExchangeDetail() {
+      this.id = this.$route.params.id;
+      console.log("this.$route.params.id", this.$route.params.id);
       this.$store
-        .dispatch("patientManagement/exchangeGoods")
+        .dispatch("patientManagement/getExchangeDetail", this.$route.params.id)
         .then(response => {
           console.log("response", response);
           // this.goods = response.data.goods;
@@ -66,14 +38,6 @@ export default {
         .catch(e => {
           console.log(e);
         });
-      // console.log("this.address");
-    }
-  },
-  watch: {
-    $route(to, from) {
-      console.log("from", from, "to", to);
-      // from 对象中要 router 来源信息.
-      // do your want
     }
   }
 };

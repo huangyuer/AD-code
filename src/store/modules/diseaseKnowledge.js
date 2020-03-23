@@ -1,5 +1,6 @@
 import {
   getVideos,
+  getVideo,
   upVideoClickNum,
   getLive,
   uploadFile,
@@ -45,6 +46,21 @@ const actions = {
           } = response;
           commit("SET_VIDEOLIST", data);
           resolve(msg);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getVideo({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      getVideo({
+          id: question
+        })
+        .then(response => {
+          resolve(response);
         })
         .catch(error => {
           reject(error);
@@ -97,8 +113,8 @@ const actions = {
     form.append("file", file);
     return new Promise((resolve, reject) => {
       uploadFile({
-        file: file
-      })
+          file: file
+        })
         .then(response => {
           const {
             msg,
@@ -117,9 +133,9 @@ const actions = {
   }, params) {
     return new Promise((resolve, reject) => {
       getLeaveMsgList({
-        page:params.page,
-        limit:params.limit
-      })
+          page: params.page,
+          limit: params.limit
+        })
         .then(response => {
           const {
             msg,
@@ -138,13 +154,13 @@ const actions = {
   }, params) {
     return new Promise((resolve, reject) => {
       addLeaveMsg({
-        sex:params.sex,
-        age:params.age,
-        description:params.description,
-        tag:params.tag,
-        level:params.level,
-        images:params.images,
-      })
+          sex: params.sex,
+          age: params.age,
+          description: params.description,
+          tag: params.tag,
+          level: params.level,
+          images: params.images,
+        })
         .then(response => {
           const {
             msg,
@@ -163,8 +179,8 @@ const actions = {
   }, params) {
     return new Promise((resolve, reject) => {
       delLeaveMsg({
-        id:params.id,
-      })
+          id: params.id,
+        })
         .then(response => {
           const {
             msg,

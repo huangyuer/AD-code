@@ -1,32 +1,42 @@
 <template>
-  <div class>
+  <div class v-if="Object.keys(user).length!=0">
     <div class="baseinfo">基础信息</div>
     <van-field v-model="form.name" label="姓名" placeholder="输入框内容右对齐" input-align="right" />
     <van-field v-model="form.tel" label="手机号" placeholder="输入框内容右对齐" input-align="right" readonly />
-    <van-field v-model="form.sex" label="性别" placeholder="输入框内容右对齐" input-align="right" />
-    <van-field v-model="form.birth" label="出生年月" placeholder="输入框内容右对齐" input-align="right" />
+    <van-SexPicker
+      :formvalue="form.sex"
+      :formtype="'year-month'"
+      :formlabel="'性别'"
+      :formplaceholder="'输入框内容右对齐'"
+      :forminputalign="'right'"
+      @IsshowSex="IsshowSex"
+    ></van-SexPicker>
+    <van-time-picker
+      :formvalue="form.birth"
+      :formtype="'year-month'"
+      :formlabel="'出生年月'"
+      :formplaceholder="'点击选择出生年月'"
+      :forminputalign="'right'"
+      @IsshowTime="IsshowTime"
+    ></van-time-picker>
     <van-areas
-      :formvalue="form.place"
+      :formvalue="form.province+form.area"
       :formlabel="'所在地区（省，市）'"
       :formplaceholder="'点击选择省市区'"
       :forminputalign="'right'"
+      :columnsnum="2"
       @IsshowArea="IsshowArea"
+      @onConfirm="onConfirmplace"
     ></van-areas>
-    <!-- <van-field
-      readonly
-      clickable
-      name="area"
-      :value="form.place"
-      label="所在地区（省，市）"
-      placeholder="点击选择省市区"
-      @click="form.showArea = true"
-      input-align="right"
-    >
-    <van-popup v-model="form.showArea" position="bottom">
-      <van-area :area-list="areaList" @confirm="onConfirm" @cancel="form.showArea = false" />
-    </van-popup>-->
     <div class="baseinfo margin52">疾病信息</div>
-    <van-field v-model="form.time" label="首次诊断时间" placeholder="输入框内容右对齐" input-align="right" />
+    <van-time-picker
+      :formvalue="form.time"
+      :formtype="'date'"
+      :formlabel="'首次诊断时间'"
+      :formplaceholder="'输入框内容右对齐'"
+      :forminputalign="'right'"
+      @IsshowTime="IsdiaTime"
+    ></van-time-picker>
     <div class="selecthistory">
       <div v-if="!isSelectmedical">
         <div class="baseinfo history">
@@ -37,7 +47,12 @@
           </div>
         </div>
         <div class="medicinallist">
-          <div class="medicinalitem" v-for="(index,key) in medications" :key="key">{{index.name}}</div>
+          <div
+            class="medicinalitem"
+            v-if="user.medications"
+            v-for="(index,key) in user.medications"
+            :key="key"
+          >{{index}}</div>
         </div>
       </div>
       <div class="selecthistoryinner" v-else>
@@ -61,54 +76,117 @@
       </div>
       <van-slider
         :step="33"
-        v-model="form.level"
+        v-model="level"
         bar-height="4px"
         active-color="linear-gradient(90deg,rgba(0, 153, 102, 1) 0%,rgba(242, 169, 0, 1) 52%,rgba(255, 63, 15, 1) 100%);"
         @change="onChange"
       />
     </div>
-    <div class="saveEdit" @click="saveEdit()">保存修改</div>
+    <div class="saveEdit" @click="upMyInfo()">保存修改</div>
   </div>
 </template>
 <script>
 import VanAreas from "@/components/vanareas.vue";
+import VanTimePicker from "@/components/vantimepicker.vue";
+import VanSexPicker from "@/components/vansexpicker";
 export default {
   data() {
     return {
       form: {
         name: "",
-        tel: "123455667",
+        tel: "",
         sex: "",
         birth: "",
-        place: "",
+        privince: "",
+        area: "",
         showArea: false,
         time: "",
-        level: 0
+        level: "无"
       },
+      level: 0,
+      showtime: false,
       result: [],
       isSelectmedical: false,
-      medications: []
+      medications: [],
+      address: {},
+      user: {}
     };
   },
   mounted() {
+    this.getMyInfo();
     this.getMedications();
+    // this.getMyAddress();
   },
   methods: {
-    // onConfirm(values) {
-    //   this.form.place = values.map(item => item.name).join("/");
-    //   this.form.showArea = false;
-    // },
+    init() {
+      console.log("this.user", this.user);
+      this.$set(this.form, "name", this.user.name);
+      this.$set(this.form, "tel", this.user.phone);
+      this.$set(this.form, "sex", this.user.sex);
+      this.$set(this.form, "birth", this.user.birthday);
+      this.$set(this.form, "province", this.user.province);
+      this.$set(this.form, "area", this.user.city);
+      this.$set(this.form, "time", this.user.diaTime);
+      if (this.user.level == "无") {
+        this.level = 0;
+      } else if (this.user.level == "轻度") {
+        this.level = 33;
+      } else if (this.user.level == "中度") {
+        this.level = 66;
+      } else {
+        this.level = 99;
+      }
+    },
+    onConfirmplace(values) {
+      this.$set(this.form, "province", values[0].name);
+      this.$set(this.form, "area", values[1].name);
+    },
+    IsshowTime(value) {
+      this.$set(this.form, "birth", value);
+    },
+    IsdiaTime(value) {
+      this.$set(this.form, "time", value);
+    },
+    IsshowSex(value) {
+      this.$set(this.form, "sex", value);
+    },
     IsshowArea(value) {
       this.$set(this.form, "showArea", value);
     },
     onChange(value) {
-      // Toast('当前值：' + value);
+      if (value == 0) {
+        this.$set(this.form, "level", "无");
+      } else if (value == 33) {
+        this.$set(this.form, "level", "轻度");
+      } else if (value == 66) {
+        this.$set(this.form, "level", "中度");
+      } else {
+        this.$set(this.form, "level", "重度");
+      }
     },
     editmedicinalhistory() {
       this.isSelectmedical = true;
     },
-    saveEdit() {
-      this.isSelectmedical = false;
+    upMyInfo() {
+      // this.isSelectmedical = false;
+      var upmyinfo = {
+        name: this.form.name,
+        sex: this.form.sex,
+        birthday: this.form.birth,
+        province: this.form.province,
+        city: this.form.area,
+        diaTime: this.form.time,
+        medications: this.result,
+        level: this.form.level
+      };
+      this.$store
+        .dispatch("patientManagement/upMyInfo", upmyinfo)
+        .then(data => {
+          console.log("data", data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
     getMedications() {
       this.$store
@@ -119,9 +197,23 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+    getMyInfo() {
+      this.$store
+        .dispatch("patientManagement/getMyInfo")
+        .then(data => {
+          this.user = this.$store.getters.getmyinfo.user;
+          if (this.user.medications) {
+            this.result = this.user.medications;
+          }
+          this.init();
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   },
-  components: { VanAreas }
+  components: { VanAreas, VanTimePicker, VanSexPicker }
 };
 </script>
 <style lang="less" scoped>

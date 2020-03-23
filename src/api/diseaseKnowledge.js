@@ -6,6 +6,14 @@ export function getVideos(data) {
     data
   })
 }
+// 获取视频详情
+export function getVideo(data) {
+  return request({
+    url: '/getVideo',
+    method: 'post',
+    data
+  })
+}
 export function upVideoClickNum(data) {
   return request({
     url: '/upVideoClickNum',

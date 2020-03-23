@@ -2,7 +2,12 @@
   <div>
     <search-input class="searchinput" :value="searchinputvalue" :placeholder="placeholder"></search-input>
     <div class="dropdownwapper">
-      <dropdown-menu :option="option" :value="value" @DropdownchangeValue="DropdownchangeValue"></dropdown-menu>
+      <dropdown-menu
+        :option="option"
+        :title="'视频分类'"
+        :value="value"
+        @DropdownchangeValue="DropdownchangeValue"
+      ></dropdown-menu>
       <sort-attribute :name="'发布时间'" @sortway="sortway"></sort-attribute>
       <sort-attribute :name="'点击次数'" @sortway="sortway"></sort-attribute>
     </div>
@@ -27,12 +32,7 @@ export default {
       placeholder: "搜索关键字",
       searchinputvalue: "",
       value: "",
-      option: [
-        { text: "视频分类", value: "" },
-        { text: "我的故事", value: "0" },
-        { text: "医学大咖", value: "1" },
-        { text: "家园活动", value: "2" }
-      ],
+      option: [],
       form: {
         tag: String,
         page: 1,
@@ -43,56 +43,21 @@ export default {
       total: 0,
       loading: false,
       finished: false,
-      videoList: [
-        // {
-        //   id: 1,
-        //   src: "https://img.yzcdn.cn/vant/cat.jpeg",
-        //   title: "fsdfdsffsadf",
-        //   timer: "2019-02-08",
-        //   time: 3,
-        //   like: false
-        // },
-        // {
-        //   id: 2,
-        //   src: "https://img.yzcdn.cn/vant/cat.jpeg",
-        //   title: "fsdfdsffsadf",
-        //   timer: "2019-02-08",
-        //   time: 3,
-        //   like: false
-        // },
-        // {
-        //   id: 3,
-        //   src: "https://img.yzcdn.cn/vant/cat.jpeg",
-        //   title: "fsdfdsffsadf",
-        //   timer: "2019-02-08",
-        //   like: false,
-        //   time: 3
-        // },
-        // {
-        //   id: 4,
-        //   src: "https://img.yzcdn.cn/vant/cat.jpeg",
-        //   title: "fsdfdsffsadf",
-        //   timer: "2019-02-08",
-        //   time: 3,
-        //   like: false
-        // },
-        // {
-        //   id: 5,
-        //   src: "https://img.yzcdn.cn/vant/cat.jpeg",
-        //   title: "fsdfdsffsadf",
-        //   timer: "2019-02-08",
-        //   time: 3,
-        //   like: false
-        // }
-      ]
+      videoList: []
     };
   },
   mounted() {
     // this.getArticles();
+    this.getMenuSelect();
   },
   methods: {
     DropdownchangeValue(val) {
       console.log("----d", val);
+      console.log("fsdfdsf", val);
+      this.$set(this.form, "tag", this.option[val].text);
+      this.videoList = [];
+      this.$set(this.form, "page", 1);
+      this.finished = false;
     },
     sortway(val, name) {
       console.log("------------val", val);
@@ -123,6 +88,23 @@ export default {
         }
       }
     },
+    getMenuSelect() {
+      this.$store
+        .dispatch("common/getMenuSelect", this.$route.meta.title)
+        .then(data => {
+          let menus = this.$store.getters.menuList.selects[0].tags;
+          console.log("menu", this.$store.getters.menuList.selects);
+          for (var i = 0; i < menus.length; i++) {
+            let obj = {};
+            obj["text"] = menus[i];
+            obj["value"] = i.toString();
+            this.option.push(obj);
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     onLoad() {
       this.$store
         .dispatch("diseaseKnowledge/getVideos", this.form)
@@ -146,7 +128,9 @@ export default {
           }
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
+
+          // console.log(e);
         });
     },
     iconcolorchange(val, bool) {
@@ -154,7 +138,7 @@ export default {
     },
     toPageVideodetail(item, key) {
       this.$router.push({
-        path: "/scienceVideo/videoList/videoDetail?key=" + key
+        path: "/scienceVideo/videoList/videoDetail?id=" + item._id
       });
     }
   }

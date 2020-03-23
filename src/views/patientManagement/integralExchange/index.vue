@@ -15,25 +15,20 @@
       </div>
     </div>
     <div class="integrallist">
-      <div class="integralItem" v-for="(item,index) in itemlist" :key="index">
+      <div class="integralItem" v-for="(item,index) in goods" :key="index">
+        <van-image width="100%" height="1.8rem" fit="cover" :src="item.coverImg[0].httpUrl" />
         <!-- <van-image
-            width=".48rem"
-            height=".48rem"
-            fit="cover"
-            :src="require('@/assets/change.png')"
-        />-->
-        <van-image
           width="100%"
           height="1.8rem"
           fit="cover"
           src="https://img.yzcdn.cn/vant/cat.jpeg"
-        />
+        />-->
         <div class="bottom">
           <div class="left">
-            <div class="title">{{item.title}}</div>
-            <div class="card">{{item.card}}积分</div>
+            <div class="title">{{item.name}}</div>
+            <div class="card">{{item.score}}积分</div>
           </div>
-          <div class="btnchange" @click="changeBtn(item.id)">立即兑换</div>
+          <div class="btnchange" @click="changeBtn(item)">立即兑换</div>
         </div>
       </div>
     </div>
@@ -70,16 +65,48 @@ export default {
           title: "黄丹法fdsfdsf黄丹萨芬撒",
           card: "13"
         }
-      ]
+      ],
+      goods: [],
+      score: {}
     };
+  },
+  mounted() {
+    this.getGoods();
+    this.getMyScore();
   },
   methods: {
     headerpageto() {
       this.$router.push({ path: "myexchange" });
     },
-    changeBtn(id) {
-      console.log("id", id);
-      this.$router.push({ path: "/ProductInfo?id=" + id });
+    changeBtn(item) {
+      // console.log("id", item);
+      this.$router.push({
+        path: "/ProductInfo",
+        name: "ProductInfo",
+        params: { item: item, score: this.score }
+      });
+    },
+    getGoods() {
+      this.$store
+        .dispatch("patientManagement/getGoods")
+        .then(response => {
+          console.log("response", response);
+          this.goods = response.data.goods;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getMyScore() {
+      this.$store
+        .dispatch("patientManagement/getMyScore")
+        .then(response => {
+          console.log("responsestore", response);
+          this.score = response.data.score;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };

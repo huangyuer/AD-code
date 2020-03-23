@@ -6,7 +6,7 @@
     <div
       class="content"
     >根据您的打分结果，发现您的疾病程度存在一定风险，建议您到附近医院就医。您的疾病程度较重，推荐您每周自测一次，以随时监测您的身体情况，如遇问题可及时就医。</div>
-    <div class="groupnext">关闭</div>
+    <div class="groupnext" @click="topagePersonalCenter()">关闭</div>
   </div>
 </template>
 <script>
@@ -26,7 +26,12 @@ export default {
       scale: 0
     };
   },
-  mounted() {}
+  mounted() {},
+  methods: {
+    topagePersonalCenter() {
+      this.$router.push({ path: "/personalCenter" });
+    }
+  }
 };
 </script>
 <style lang="less" scoped>

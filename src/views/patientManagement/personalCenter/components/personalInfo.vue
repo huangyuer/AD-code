@@ -29,12 +29,12 @@
           <b>{{getmyinfo.invCode}}</b>
         </div>
       </div>
-      <div class="cancelaccount">注销账号</div>
+      <div class="cancelaccount" @click="delMyInfo()">注销账号</div>
     </div>
     <div class="infolist">
       <div class="myinfolist">
         <div class="header">
-          <div class="left">fsdffsad</div>
+          <div class="left">我的信息</div>
           <div class="right" @click="myinfopageEdit()">
             编辑
             <img :src="require('../../../../assets/up.png')" />
@@ -42,20 +42,20 @@
         </div>
         <div class="infoitem">
           <div class="margin6">
-            <span class="colordeep">liuyuming</span>
-            <span class="colormiddle">12344556</span>
+            <span class="colordeep">{{ getmyinfo.name==''?'未填写':getmyinfo.name }}</span>
+            <span class="colormiddle">{{ getmyinfo.phone }}</span>
           </div>
           <div>
-            <span class="colordeep font28">性别：</span>
-            <span class="colorshallow">未填写</span>
-            <span class="colordeep font28">出生年月：</span>
-            <span class="colorshallow">未填写</span>
+            <span class="colordeep font28">性别:</span>
+            <span class="colorshallow">{{ getmyinfo.sex==''?'未填写':getmyinfo.sex }}</span>
+            <span class="colordeep font28" style="margin-left:.24rem">出生年月:</span>
+            <span class="colorshallow">{{ getmyinfo.birthday==''?'未填写':getmyinfo.birthday }}</span>
           </div>
         </div>
       </div>
       <div class="addresslist">
         <div class="header">
-          <div class="left">fsdffsad</div>
+          <div class="left">我的地址</div>
           <div class="right" @click="addressinfoEdit()">
             编辑
             <img :src="require('../../../../assets/up.png')" />
@@ -63,10 +63,12 @@
         </div>
         <div class="address">
           <div class="margin6">
-            <span class="colordeep">liuyuming</span>
-            <span class="colormiddle">12344556</span>
+            <span class="colordeep">{{ address.recipient!=''?address.recipient:'未填写' }}</span>
+            <span class="colormiddle">{{ address.phone!=''?address.phone:'未填写' }}</span>
           </div>
-          <div class="colorshallow">上海市长宁区武夷路196号</div>
+          <div
+            class="colorshallow"
+          >{{ address.province==''?'未填写':address.province+address.city+getmyinfo.area+address.detail }}</div>
         </div>
       </div>
     </div>
@@ -76,11 +78,13 @@
 export default {
   data() {
     return {
-      getmyinfo: {}
+      getmyinfo: {},
+      address: {}
     };
   },
   mounted() {
     this.getMyInfo();
+    this.getMyAddress();
   },
   methods: {
     getMyInfo() {
@@ -88,6 +92,26 @@ export default {
         .dispatch("patientManagement/getMyInfo")
         .then(data => {
           this.getmyinfo = this.$store.getters.getmyinfo.user;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getMyAddress() {
+      this.$store
+        .dispatch("patientManagement/getMyAddress")
+        .then(data => {
+          this.address = this.$store.getters.getmyaddress.address;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    delMyInfo() {
+      this.$store
+        .dispatch("patientManagement/delMyInfo")
+        .then(data => {
+          console.log("fsdfaf");
         })
         .catch(e => {
           console.log(e);

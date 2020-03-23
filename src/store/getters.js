@@ -26,5 +26,7 @@ const getters = {
   getmystars: state => state.patientManagement.getmystars,
   //自我评估
   getquesion: state => state.patientManagement.getquesion,
+  //获得我的地址
+  getmyaddress: state => state.patientManagement.getmyaddress,
 }
 export default getters

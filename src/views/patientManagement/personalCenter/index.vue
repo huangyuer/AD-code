@@ -8,9 +8,9 @@
       "
       :isClose="false"
     >
-      <div slot="confirmButton" class="dialog-confirm" @confirmBtn="confirmBtn" >前往自我评估</div>
+      <div slot="confirmButton" class="dialog-confirm" @confirmBtn="confirmBtn">前往自我评估</div>
       <div slot="closeButton" @click="closeBtn">
-        <svg-icon iconClass="register-close" className="close-icon"></svg-icon>
+        <svg-icon iconClass="register-close" class="close-icon"></svg-icon>
       </div>
     </Dialog>
 
@@ -33,8 +33,9 @@
           </div>
         </div>
         <div class="right">
-          <span>最近评估：</span><span class="deg">中</span>
-          <img src="@/assets/jiantou@2x.png" alt="" />
+          <span>最近评估：</span>
+          <span class="deg">中</span>
+          <img src="@/assets/jiantou@2x.png" alt />
         </div>
       </div>
       <div class="bottom">
@@ -80,9 +81,10 @@
       <div class="tipitem">
         <div class="tipitem-header">
           <span>我的收藏</span>
-          <span @click="toPagemycollect()"
-            >更多<img :src="require('@/assets/up.png')"
-          /></span>
+          <span @click="toPagemycollect()">
+            更多
+            <img :src="require('@/assets/up.png')" />
+          </span>
         </div>
         <div class="itemlist">
           <div class="iteminner fmregular">
@@ -105,16 +107,18 @@
       <div class="tipitem">
         <div class="tipitem-header">
           <span>自我评估</span>
-          <span @click="toPagetesthistory()"
-            >查看历史<img :src="require('@/assets/up.png')"
-          /></span>
+          <span @click="toPagetesthistory()">
+            查看历史
+            <img :src="require('@/assets/up.png')" />
+          </span>
         </div>
         <div class="itemlist">
           <div class="iteminner">
             <div class="color52 font-size28">
               <div class="color3 font-size30 fmmedium">liuyuyu</div>
               <div class="color3 font-size28 fmregular">
-                ningzuijingfsafd<b class="color009966 fmmedium">zhongdu</b>
+                ningzuijingfsafd
+                <b class="color009966 fmmedium">zhongdu</b>
               </div>
             </div>
             <div class="btnpage">去评估</div>
@@ -132,14 +136,12 @@
           <div class="iteminner">
             <div class="color52 font-size28">
               <div class="color3 font-size30 fmmedium">
-                liuyuyu<span
-                  style="margin-left:.16rem"
-                  class="color6 font-size28 fmregular"
-                  >28岁</span
-                >
+                liuyuyu
+                <span style="margin-left:.16rem" class="color6 font-size28 fmregular">28岁</span>
               </div>
               <div class="color3 font-size28 fmregular">
-                ningzuijingfsafd<b class="color009966 fmmedium">zhongdu</b>
+                ningzuijingfsafd
+                <b class="color009966 fmmedium">zhongdu</b>
               </div>
             </div>
             <div class="btnpage" @click="toPageleavemessage()">去留言</div>
@@ -156,8 +158,12 @@ export default {
   components: { Dialog },
   data() {
     return {
-      diaLogShow: this.$route.params.diaLogShow
+      diaLogShow: this.$route.params.diaLogShow,
+      tasks: []
     };
+  },
+  mounted() {
+    this.getTasks();
   },
   methods: {
     closeBtn() {
@@ -178,9 +184,23 @@ export default {
     toPagemycollect() {
       this.$router.push({ path: "/myCollect" });
     },
-    toPagetesthistory() {},
+    toPagetesthistory() {
+      this.$router.push({ path: "/assesshistory" });
+    },
     toPageleavemessage() {
       this.$router.push({ path: "/messageBoard/leaveMessage" });
+    },
+    getTasks() {
+      this.$store
+        .dispatch("patientManagement/getTasks")
+        .then(response => {
+          console.log("response", response);
+          this.tasks = response.data.tasks;
+          // this.goods = response.data.goods;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };

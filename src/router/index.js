@@ -152,6 +152,16 @@ export default new Router({
       }
     },
     {
+      path: "/exchangeInfo",
+      component: () =>
+        import("@/views/patientManagement/integralExchange/components/exchangeInfo"),
+      name: 'ExchangeInfo',
+      meta: {
+        title: "兑换详情",
+        index: 5
+      }
+    },
+    {
       path: "/myexchange",
       component: () =>
         import("@/views/patientManagement/integralExchange/components/myexchange"),

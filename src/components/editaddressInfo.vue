@@ -1,33 +1,83 @@
 <template>
   <div>
-    <van-field v-model="form.name" placeholder="收货人" input-align="left" />
+    <van-field v-model="form.recipient" placeholder="收货人" input-align="left" />
     <van-field v-model="form.phone" placeholder="手机号码" input-align="left" />
     <van-areas
-      :formvalue="form.place"
+      :formvalue="form.province + form.city + form.area"
       :formplaceholder="'所在地区'"
       :forminputalign="'left'"
+      :columnsnum="3"
       @IsshowArea="IsshowArea"
     ></van-areas>
-    <van-field v-model="form.address" input-align="left" placeholder="详细地址：如道路、门牌号、小区、楼洞号，单元" />
-    <div class="saveEdit" @click="saveEdit()">保存</div>
+    <van-field v-model="form.detail" input-align="left" placeholder="详细地址：如道路、门牌号、小区、楼洞号，单元" />
+    <div class="saveEdit" @click="BtnupMyAddress()">保存</div>
   </div>
 </template>
 <script>
 import VanAreas from "@/components/vanareas.vue";
+import { Toast } from "vant";
 export default {
   data() {
     return {
       form: {
-        name: "",
+        recipient: "",
         phone: "",
-        place: "",
-        address: ""
-      }
+        province: "",
+        city: "",
+        area: "",
+        detail: ""
+      },
+      address: {}
     };
+  },
+  mounted() {
+    this.getMyAddress();
   },
   methods: {
     IsshowArea(value) {
       console.log(value);
+    },
+    getMyAddress() {
+      this.$store
+        .dispatch("patientManagement/getMyAddress")
+        .then(data => {
+          this.address = this.$store.getters.getmyaddress.address;
+          if (this.address.recipient == "") {
+            this.$route.meta.title = "添加收货地址";
+          } else {
+            this.$route.meta.title = "编辑收货地址";
+          }
+          this.form.recipient = this.address.recipient;
+          this.form.phone = this.address.phone;
+          this.form.province = this.address.province;
+          this.form.city = this.address.city;
+          this.form.area = this.address.area;
+          this.form.detail = this.address.detail;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    BtnupMyAddress() {
+      if (this.form.recipient == "") {
+        Toast("请填写收货人");
+        return;
+      }
+      if (this.form.phone == "") {
+        Toast("请填写手机号");
+        return;
+      }
+      this.$store
+        .dispatch("patientManagement/upMyAddress", this.form)
+        .then(data => {
+          Toast("保存成功");
+          // this.$router.push({ path: "/personalInfo" });
+          this.$router.go(-1);
+        })
+        .catch(e => {
+          console.log(e);
+          Toast(e);
+        });
     }
   },
   components: { VanAreas }

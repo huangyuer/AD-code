@@ -5,13 +5,25 @@ import {
   getMyStars,
   getQuestions,
   submitAnswer,
+  getAnswerLogs,
+  getMyAddress,
+  upMyInfo,
+  upMyAddress,
+  delMyInfo,
+  getGoods,
+  exchangeGoods,
+  getExchangeLogs,
+  getExchangeDetail,
+  getTasks,
+  getMyScore,
 } from "@/api/patientManagement";
 const state = {
-  getmyinfo: '',
+  getmyinfo: {},
   getmedications: [],
   getstarmenus: [],
   getmystars: [],
   getquesion: [],
+  getmyaddress: '',
 };
 
 const mutations = {
@@ -29,6 +41,9 @@ const mutations = {
   },
   GET_QUESTION: (state, getquesion) => {
     state.getquesion = getquesion;
+  },
+  GET_MYADDRESS: (state, getmyaddress) => {
+    state.getmyaddress = getmyaddress;
   },
 };
 
@@ -135,6 +150,184 @@ const actions = {
       submitAnswer({
           detail: question
         })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getAnswerLogs({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      getAnswerLogs({
+          page: question.page,
+          limit: question.limit,
+          startDate: question.startDate,
+          endDate: question.endDate,
+          isChart: question.isChart,
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getMyAddress({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      getMyAddress()
+        .then(response => {
+          const {
+            msg,
+            data
+          } = response;
+          commit("GET_MYADDRESS", data);
+          resolve(msg);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  upMyInfo({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      upMyInfo({
+          name: question.name,
+          sex: question.sex,
+          birthday: question.birthday,
+          province: question.province,
+          city: question.city,
+          diaTime: question.diaTime,
+          medications: question.medications,
+          level: question.level
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  upMyAddress({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      upMyAddress({
+          recipient: question.recipient,
+          phone: question.phone,
+          province: question.province,
+          city: question.city,
+          area: question.area,
+          detail: question.detail
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  delMyInfo({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      delMyInfo()
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getGoods({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      getGoods()
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  exchangeGoods({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      exchangeGoods({
+          goods: question.goods,
+          address: question.address
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getExchangeLogs({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      getExchangeLogs({
+          page: question.page,
+          limit: question.limit
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getExchangeDetail({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      getExchangeDetail({
+          id: question.id,
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getTasks({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      getTasks()
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getMyScore({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      getMyScore()
         .then(response => {
           resolve(response);
         })

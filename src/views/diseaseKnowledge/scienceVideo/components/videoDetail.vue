@@ -1,17 +1,27 @@
 <template>
-  <div class="wapperItemInfo" v-if="videoitem">
+  <div class="wapperItemInfo" v-if="Object.keys(videoitem).length!=0">
     <div class="header">
       <div class="title">{{ videoitem.title }}</div>
       <div class="time">{{ videoitem.date }}</div>
     </div>
     <div class="content">
-      <div class="LinkItem">
-        <van-image
-          width="100%"
-          height="2.8rem"
-          fit="cover"
-          src="https://img.yzcdn.cn/vant/cat.jpeg"
-        />
+      <div class="LinkItem" @click="isIframe">
+        <div ref="container" class="container" v-if="!isvideo">
+          <div v-html="tt"></div>
+          <!-- <van-image
+            width="100%"
+            height="100%"
+            fit="cover"
+            src="https://img.yzcdn.cn/vant/cat.jpeg"
+          />-->
+        </div>
+        <video
+          v-else
+          :src="videoitem.video[0].httpUrl"
+          controls="controls"
+          autoplay
+          style
+        >您的浏览器不支持 video 标签。</video>
         <van-image
           class="playicon"
           width=".48rem"
@@ -29,27 +39,42 @@
 </template>
 <script>
 import "./json2";
+import { Toast } from "vant";
 export default {
   data() {
     return {
-      videoitem: ""
+      videoitem: {},
+      isvideo: false,
+      iframe: "",
+      tt:
+        '<iframe src="http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=fbfb41f76f9858f2ce0cc6ffefc8947b&tvId=9396656400&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&rel=0&amp;autoplay=1&height=100%&width=100%" frameborder="0" allowfullscreen="true" autoplay="true" width="100%" height="100%"></iframe>'
     };
   },
   created() {},
   mounted() {
-    if (this.$store.getters.videoList.videos != undefined) {
-      this.videoitem = this.$store.getters.videoList.videos[
-        this.$route.query.key
-      ];
-      localStorage.setItem("videoitem", JSON.stringify(this.videoitem));
-      localStorage.setItem("videoitemkey", this.$route.query.key);
-    } else if (
-      this.$store.getters.videoList.videos == undefined &&
-      localStorage.getItem("videoitemkey") != this.$route.query.key
-    ) {
-      this.videoitem = "";
-    } else {
-      this.videoitem = JSON.parse(localStorage.getItem("videoitem"));
+    this.getVideo();
+  },
+  methods: {
+    getVideo() {
+      this.$store
+        .dispatch("diseaseKnowledge/getVideo", this.$route.query.id)
+        .then(response => {
+          this.videoitem = response.data.video;
+          this.iframe = this.videoitem.video[0].httpUrl;
+        })
+        .catch(e => {
+          // Toast(e);
+        });
+    },
+    isIframe() {
+      if (this.iframe.indexOf("iframe") != -1) {
+        this.isvideo = false;
+        document.getElementsByClassName("container")[0].innerHTML = this.iframe;
+        document.getElementsByClassName("playicon")[0].style.display = "none";
+      } else {
+        document.getElementsByClassName("playicon")[0].style.display = "none";
+        this.isvideo = true;
+      }
     }
   }
 };
@@ -81,6 +106,14 @@ export default {
     .LinkItem {
       position: relative;
       margin-bottom: 0.54rem;
+      video {
+        width: 100%;
+        height: 2.8rem;
+        object-fit: cover;
+      }
+      .container {
+        height: 3.8rem;
+      }
       .playicon {
         position: absolute;
         top: calc(50% - 0.24rem);

@@ -2,9 +2,10 @@
   <div class="sciencevideo">
     <div class="header1">
       <span>科普视频</span>
-      <span @click="toPagemore()"
-        >更多<img :src="require('@/assets/up.png')"
-      /></span>
+      <span @click="toPagemore()">
+        更多
+        <img :src="require('@/assets/up.png')" />
+      </span>
     </div>
     <science-item
       :itemlist="videoList"
@@ -68,7 +69,7 @@ export default {
         .dispatch("diseaseKnowledge/upVideoClickNum", item._id)
         .then(data => {
           this.$router.push({
-            path: "/scienceVideo/videoList/videoDetail?key=" + key
+            path: "/scienceVideo/videoList/videoDetail?id=" + item._id
           });
         })
         .catch(e => {
