@@ -61,6 +61,7 @@ export default {
   display: flex;
   align-items: center;
   padding-left: 0.32rem;
+  box-sizing: border-box;
 }
 .user-terms-body {
   padding: 0.32rem;

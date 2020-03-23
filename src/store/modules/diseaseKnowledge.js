@@ -112,15 +112,15 @@ const actions = {
     let form = new FormData();
     form.append("file", file);
     return new Promise((resolve, reject) => {
-      uploadFile({
-          file: file
-        })
+      uploadFile(
+        form
+      )
         .then(response => {
           const {
             msg,
             data
           } = response;
-          resolve(msg);
+          resolve(data);
         })
         .catch(error => {
           reject(error);

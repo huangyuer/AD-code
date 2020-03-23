@@ -8,6 +8,7 @@ import "./assets/icons";
 import Vant from "vant";
 import "vant/lib/index.css";
 import Axios from "axios";
+import { Toast } from "vant";
 
 import VueWechatTitle from "vue-wechat-title";
 import qs from "qs";
@@ -66,8 +67,10 @@ new Vue({
 
 if(!getOpenId()){
   setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
-  setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wMy0yNyAwNjozMjowMiIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTcyMzBlMmY0YzBkMTRhOTE0NTk3OWUifQ.VHgVgG_nnf0o6QDaF2TZ-bZb4BewqAyLJwiUR15OmOI')
-  // store.dispatch('register/getOpenIdApi')
+  setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wMy0zMSAxOToxNzo1NiIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.zIezI7w5EJZsbTazPKODEQ_DwYrdwcJ2kB7XJwr4H14')
+  // store.dispatch('register/getOpenIdApi').catch(e=>{
+  //   Toast(e);
+  // })
 }else{
   store.commit('register/SET_OPENID',getOpenId())
 

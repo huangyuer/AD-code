@@ -1,5 +1,6 @@
 <template>
-  <div class="message-info">
+<van-swipe-cell>
+   <div class="message-info">
     <div class="message-top">
       <div class="avatar-box">
         <img src="@/assets/avatar.png" alt="" />
@@ -18,6 +19,16 @@
       <div>中度</div>
     </div>
   </div>
+  <template #right>
+    <van-button
+      square
+      text="删除"
+      type="danger"
+      class="delete-button"
+    />
+  </template>
+</van-swipe-cell>
+
 </template>
 <script>
 export default {
@@ -28,6 +39,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@aaa: ~">>>";
+@{aaa} .van-button--danger{
+    height: 100%;
+}
 .message-info {
   height: 2.8rem;
   background: rgba(255, 255, 255, 1);

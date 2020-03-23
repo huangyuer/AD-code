@@ -38,7 +38,7 @@ const actions = {
     window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${AppId}&redirect_uri=${encodeURIComponent(
       local,
       "UTF-8"
-    )}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect`;
+    )}&response_type=code&scope=snsapi_base#wechat_redirect`;
 
   } else {
     return new Promise((resolve, reject) => {

@@ -11,20 +11,74 @@
         :border="false"
         show-word-limit
       />
-      <van-uploader v-model="fileList" multiple max-count="4" />
+      <van-uploader
+        v-model="fileList"
+        multiple
+        max-count="4"
+        :after-read="afterRead"
+        @delete="uploadDel"
+      />
       <div class="van-field__word-limit picture-limit">
-        <span class="van-field__word-num">{{ fileList.length }}</span
-        >/4
+        <span class="van-field__word-num">{{ fileList.length }}</span>/4
       </div>
     </div>
     <div class="select-box">
-      <dropdown-menu
-        :option="option"
-        :value="value"
-        @DropdownchangeValue="DropdownchangeValue"
-      ></dropdown-menu>
+      <div class="box_1">
+        <van-field
+          readonly
+          clickable
+          name="picker"
+          :value="sexValue"
+          placeholder="请选择性别"
+          @click="showPicker = true"
+        />
+        <van-popup v-model="showPicker" position="bottom">
+          <van-picker
+            show-toolbar
+            :columns="sexColumns"
+            @confirm="onConfirm"
+            @cancel="showPicker = false"
+          />
+        </van-popup>
+        <van-field v-model="age" type="digit" placeholder="请输入你的年龄" />
+      </div>
+      <div class="box_2">
+        <van-field
+          readonly
+          clickable
+          name="picker"
+          :value="typeValue"
+          placeholder="疾病种类"
+          @click="showPicker = true"
+        />
+        <van-popup v-model="showPicker" position="bottom">
+          <van-picker
+            show-toolbar
+            :columns="typeColumns"
+            @confirm="onConfirm"
+            @cancel="showPicker = false"
+          />
+        </van-popup>
+        <van-field
+          readonly
+          clickable
+          name="picker"
+          :value="levelValue"
+          placeholder="疾病程度"
+          @click="showPicker = true"
+        />
+        <van-popup v-model="showPicker" position="bottom">
+          <van-picker
+            show-toolbar
+            :columns="levelColumns"
+            @confirm="onConfirm"
+            @cancel="showPicker = false"
+          />
+        </van-popup>
+      </div>
     </div>
     <div class="commit-btn" @click="commitBtn">提交</div>
+    <div class="tips">*请勿包含医生，药品等敏感词语</div>
     <Dialog
       :show="show"
       :title="'留言审核提示'"
@@ -36,26 +90,58 @@
   </div>
 </template>
 <script>
-import DropdownMenu from "@/components/DropdownMenu";
+// import DropdownMenu from "@/components/DropdownMenu";
 import Dialog from "@/components/Dialog";
 
 export default {
   name: "LeaveMessage",
-  components: { DropdownMenu, Dialog },
+  components: { Dialog },
   data() {
     return {
+      age: "",
       message: "",
       fileList: [],
-      value: "0",
+
       show: false,
-      option: [
-        { text: "请选择性别", value: "0" },
-        { text: "男", value: "1" },
-        { text: "女", value: "2" }
-      ]
+      showPicker: false,
+      sexValue: "",
+      typeValue: "",
+      levelValue: "",
+      sexColumns: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
+      typeColumns: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
+      levelColumns: ["杭州", "宁波", "温州", "嘉兴", "湖州"]
     };
   },
   methods: {
+    onConfirm(value) {
+      this.sexValue = value;
+      this.showPicker = false;
+    },
+    afterRead(file, name) {
+      console.log("----", file.file);
+      this.$store
+        .dispatch("diseaseKnowledge/uploadFile", file.file)
+        .then(data => {
+          console.log("-----s1", data, this.fileList);
+          file.images = data.fileId;
+        });
+    },
+    uploadDel(file, name) {
+      console.log("-----s2");
+
+      console.log("-----s2", file, this.fileList);
+    },
+    asyncBeforeRead(file) {
+      console.log("-----s");
+      return new Promise((resolve, reject) => {
+        if (file.type !== "image/jpeg") {
+          Toast("请上传 jpg 格式图片");
+          reject();
+        } else {
+          resolve();
+        }
+      });
+    },
     DropdownchangeValue() {},
     commitBtn() {
       this.show = true;
@@ -74,16 +160,80 @@ export default {
   padding-right: 0.6rem;
   padding-bottom: 0.54rem;
 }
+.tips {
+  font-size: 0.28rem;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 117, 90, 1);
+  margin-top: 2.22rem;
+  display: flex;
+  justify-content: center;
+}
 .message-edit {
   background: rgba(255, 255, 255, 1);
   border-radius: 0.04rem 0.04rem 0 0;
   border: 0.02rem solid rgba(229, 229, 229, 1);
+  @{aaa} .van-cell {
+    padding: 0.28rem 0.28rem;
+  }
 }
 .picture-limit {
   margin-right: 0.28rem;
   margin-bottom: 0.24rem;
 }
 .select-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .box_1 {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    border-right: 0.02rem solid rgba(229, 229, 229, 1);
+    border-left: 0.02rem solid rgba(229, 229, 229, 1);
+    @{aaa} .van-cell {
+      &:first-child {
+        border-right: 0.02rem solid rgba(229, 229, 229, 1);
+      }
+    }
+  }
+  .box_2 {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    @{aaa} .van-cell {
+      background: rgba(247, 247, 247, 1);
+      &:first-child {
+        border-right: 0.02rem solid rgba(229, 229, 229, 1);
+      }
+      &:last-child {
+        &::after {
+          content: "";
+        }
+      }
+    }
+  }
+  @{aaa} .van-cell {
+    padding: 0;
+    height: 1rem;
+    line-height: 1rem;
+    padding-left: 0.24rem;
+    position: relative;
+    width: 100%;
+    &::after {
+      border: none;
+      background-image: url("../../../../assets/downGrey.png");
+      background-size: 100%;
+      height: 0.16rem;
+      width: 0.26rem;
+      background-repeat: no-repeat;
+      position: absolute;
+      right: 0.38rem;
+      top: 0.4rem;
+      left: unset;
+      transform: none;
+    }
+  }
 }
 .commit-btn {
   width: 6.4rem;
@@ -98,9 +248,6 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 0.8rem;
-}
-@{aaa} .van-cell {
-  padding: 0.28rem 0.28rem;
 }
 @{aaa} .van-field__word-limit {
   font-size: 0.24rem;

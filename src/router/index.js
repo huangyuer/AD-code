@@ -251,6 +251,15 @@ export default new Router({
         title: "科普视频",
         index: 3
       }
+    },
+    {
+      path: "/aboutUs",
+      component: () =>
+      import("@/views/patientManagement/aboutUs"),
+      meta: {
+        title: "关于我们",
+        index: 1
+      }
     }
   ]
 });

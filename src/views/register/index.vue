@@ -84,16 +84,6 @@ export default {
         });
     },
     registerBtn() {
-      this.$router.push({
-        name: "personalCenter",
-        path: "/personalCenter",
-        params: {
-          diaLogShow: true
-        }
-      });
-
-      return;
-
       if (!this.flag) {
         this.$toast("注册需勾选用户知情同意书");
         return;
