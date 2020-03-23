@@ -59,3 +59,10 @@ export function delLeaveMsg(data) {
     data
   })
 }
+
+export function getLvMsgSelect() {
+  return request({
+    url: '/getLvMsgSelect',
+    method: 'post'
+  })
+}

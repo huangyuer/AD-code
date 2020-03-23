@@ -107,10 +107,19 @@ export default {
       sexValue: "",
       typeValue: "",
       levelValue: "",
-      sexColumns: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
-      typeColumns: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
-      levelColumns: ["杭州", "宁波", "温州", "嘉兴", "湖州"]
+      sexColumns: ['男','女'],
+      typeColumns: [],
+      levelColumns: []
     };
+  },
+  created(){
+    
+    this.$store
+        .dispatch("diseaseKnowledge/getLvMsgSelect").then(data=>{
+          this.typeColumns=data.type,
+          this.levelColumns=data.level
+          console.log("------ss",data)
+        })
   },
   methods: {
     onConfirm(value) {

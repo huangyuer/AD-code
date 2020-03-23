@@ -6,7 +6,8 @@ import {
   uploadFile,
   getLeaveMsgList,
   addLeaveMsg,
-  delLeaveMsg
+  delLeaveMsg,
+  getLvMsgSelect
 } from "@/api/diseaseKnowledge";
 
 const state = {
@@ -187,6 +188,24 @@ const actions = {
             data
           } = response;
           resolve(msg);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  getLvMsgSelect({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      getLvMsgSelect()
+        .then(response => {
+          const {
+            msg,
+            data
+          } = response;
+          resolve(data);
         })
         .catch(error => {
           reject(error);
