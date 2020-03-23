@@ -2,7 +2,7 @@
   <div class="leave-message">
     <div class="message-edit">
       <van-field
-        v-model="message"
+        v-model="description"
         rows="2"
         :autosize="{ minHeight: 84 }"
         type="textarea"
@@ -16,7 +16,6 @@
         multiple
         max-count="4"
         :after-read="afterRead"
-        @delete="uploadDel"
       />
       <div class="van-field__word-limit picture-limit">
         <span class="van-field__word-num">{{ fileList.length }}</span>/4
@@ -30,17 +29,18 @@
           name="picker"
           :value="sexValue"
           placeholder="请选择性别"
-          @click="showPicker = true"
+          @click="sexPicker = true"
         />
-        <van-popup v-model="showPicker" position="bottom">
+        <van-popup v-model="sexPicker" position="bottom">
           <van-picker
             show-toolbar
             :columns="sexColumns"
-            @confirm="onConfirm"
-            @cancel="showPicker = false"
+            @confirm="sexConfirm"
+            @cancel="sexPicker = false"
+            visible-item-count="4"
           />
         </van-popup>
-        <van-field v-model="age" type="digit" placeholder="请输入你的年龄" />
+        <van-field v-model="ageValue" type="digit" placeholder="请输入你的年龄" />
       </div>
       <div class="box_2">
         <van-field
@@ -49,14 +49,15 @@
           name="picker"
           :value="typeValue"
           placeholder="疾病种类"
-          @click="showPicker = true"
+          @click="typePicker = true"
         />
-        <van-popup v-model="showPicker" position="bottom">
+        <van-popup v-model="typePicker" position="bottom">
           <van-picker
             show-toolbar
             :columns="typeColumns"
-            @confirm="onConfirm"
-            @cancel="showPicker = false"
+            @confirm="typeConfirm"
+            @cancel="typePicker = false"
+            visible-item-count="4"
           />
         </van-popup>
         <van-field
@@ -65,14 +66,15 @@
           name="picker"
           :value="levelValue"
           placeholder="疾病程度"
-          @click="showPicker = true"
+          @click="levelPicker = true"
         />
-        <van-popup v-model="showPicker" position="bottom">
+        <van-popup v-model="levelPicker" position="bottom">
           <van-picker
             show-toolbar
             :columns="levelColumns"
-            @confirm="onConfirm"
-            @cancel="showPicker = false"
+            @confirm="levelConfirm"
+            @cancel="levelPicker = false"
+            visible-item-count="4"
           />
         </van-popup>
       </div>
@@ -92,53 +94,55 @@
 <script>
 // import DropdownMenu from "@/components/DropdownMenu";
 import Dialog from "@/components/Dialog";
+import { Toast } from 'vant';
+import qs from 'qs'
 
 export default {
   name: "LeaveMessage",
   components: { Dialog },
   data() {
     return {
-      age: "",
-      message: "",
+      ageValue: "",
+      description: "",
       fileList: [],
-
       show: false,
-      showPicker: false,
+      sexPicker: false,
+      typePicker: false,
+      levelPicker: false,
       sexValue: "",
       typeValue: "",
       levelValue: "",
-      sexColumns: ['男','女'],
+      sexColumns: ["男", "女"],
       typeColumns: [],
       levelColumns: []
     };
   },
-  created(){
-    
-    this.$store
-        .dispatch("diseaseKnowledge/getLvMsgSelect").then(data=>{
-          this.typeColumns=data.type,
-          this.levelColumns=data.level
-          console.log("------ss",data)
-        })
+  created() {
+    this.$store.dispatch("diseaseKnowledge/getLvMsgSelect").then(data => {
+      (this.typeColumns = data.type), (this.levelColumns = data.level);
+      console.log("------ss", data);
+    });
   },
   methods: {
-    onConfirm(value) {
+    sexConfirm(value) {
       this.sexValue = value;
-      this.showPicker = false;
+      this.sexPicker = false;
+    },
+       typeConfirm(value) {
+      this.typeValue = value;
+      this.typePicker = false;
+    },
+          levelConfirm(value) {
+      this.levelValue = value;
+      this.levelPicker = false;
     },
     afterRead(file, name) {
-      console.log("----", file.file);
       this.$store
         .dispatch("diseaseKnowledge/uploadFile", file.file)
         .then(data => {
           console.log("-----s1", data, this.fileList);
           file.images = data.fileId;
         });
-    },
-    uploadDel(file, name) {
-      console.log("-----s2");
-
-      console.log("-----s2", file, this.fileList);
     },
     asyncBeforeRead(file) {
       console.log("-----s");
@@ -153,7 +157,28 @@ export default {
     },
     DropdownchangeValue() {},
     commitBtn() {
-      this.show = true;
+      let images=[]
+      for (const key in this.fileList) {
+        if (this.fileList.hasOwnProperty(key)) {
+          images.push(this.fileList[key].images)
+        }
+      }
+      let params={
+        sex:this.sexValue,
+        age:this.ageValue,
+        description:this.description,
+        tag:this.typeValue,
+        level:this.levelValue,
+        images:images
+      }
+       this.$store
+        .dispatch("diseaseKnowledge/addLeaveMsg",params)
+        .then(data => {
+          this.show = true;
+        }).catch(e=>{
+          Toast(e)
+        });
+      
     },
     closeBtn() {
       this.show = false;
@@ -194,6 +219,26 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
+  @{aaa} .van-picker__toolbar {
+    &::after {
+      border: none;
+    }
+  }
+  @{aaa} .van-picker {
+    height: 4.16rem;
+  }
+  @{aaa} .van-picker__frame {
+    &::after {
+      border: none;
+    }
+  }
+  @{aaa} .van-picker__cancel,
+  @{aaa}.van-picker__confirm {
+    font-size: 0.28rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: rgba(0, 153, 102, 1);
+  }
   .box_1 {
     display: flex;
     flex-direction: row;

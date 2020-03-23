@@ -154,14 +154,16 @@ const actions = {
     commit
   }, params) {
     return new Promise((resolve, reject) => {
-      addLeaveMsg({
-          sex: params.sex,
-          age: params.age,
-          description: params.description,
-          tag: params.tag,
-          level: params.level,
-          images: params.images,
-        })
+      let form = new FormData();
+      form.append("sex", params.sex);
+      form.append("age", params.age);
+      form.append("description", params.description);
+      form.append("tag", params.tag);
+      form.append("level", params.level);
+      for (var i = 0; i < params.images.length; i++) {
+        form.append('images'+[],params.images[i])
+       }
+      addLeaveMsg(form)
         .then(response => {
           const {
             msg,
