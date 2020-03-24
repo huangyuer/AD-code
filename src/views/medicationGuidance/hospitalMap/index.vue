@@ -66,7 +66,9 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+    this.getMyLocation();
+  },
   mounted() {
     // this.getLocation();
     // 百度地图API功能
@@ -104,6 +106,11 @@ export default {
       this.showNav = val;
       this.showDetail = !val;
     },
+    getMyLocation() {
+      this.$store.dispatch("medicationGuidance/getMyLocation").then(res => {
+        console.log("fsdfdsfsd", res);
+      });
+    },
     onChange(val) {
       this.search = val;
       console.log("--3-", val);
@@ -132,7 +139,6 @@ export default {
         alert("浏览器不支持GeoLocation!");
       }
     },
-
     // 获取成功
     onSuccess(position) {
       console.log("positon", position);
@@ -174,7 +180,6 @@ export default {
         alert("经度:" + longitude + ", 纬度:" + latitude);
       });
     },
-
     // 获取失败
     onError(error) {
       switch (error.code) {
