@@ -1,4 +1,6 @@
 <template>
+  <div class="message-detail">
+    <van-image-preview v-model="show" :images="images" @change="onChange"></van-image-preview>
     <div class="message-info">
       <div class="message-top">
         <div class="avatar-box">
@@ -10,32 +12,62 @@
         </div>
         <span>{{item.before}}</span>
       </div>
-      <div class="message-body">{{item.description}}</div>
       <div class="message-footer">
         <div>{{item.tag}}</div>
         <div>{{item.level}}</div>
       </div>
+      <div class="message-body">{{item.description}}</div>
+      <div class="message-img">
+        <img
+          v-for="(img,index) in item.images"
+          :key="img.id"
+          :src="img.httpUrl"
+          @click="privewPic(index)"
+          alt
+        />
+      </div>
     </div>
+  </div>
 </template>
 <script>
 export default {
-   name:'MessageDeatil',
-   data() {
-      return {
-          item:this.$route.params.msgItem
+  name: "MessageDetail",
+  data() {
+    return {
+      item: this.$route.params.msgItem,
+      show: false,
+      index: 0,
+      images: []
+    };
+  },
+  created() {
+    for (const key in this.item.images) {
+      if (this.item.images.hasOwnProperty(key)) {
+        this.images.push(this.item.images[key].httpUrl);
       }
-   },
-}
+    }
+  },
+  methods: {
+    onChange(index) {
+      this.index = index;
+    },
+    privewPic(index) {
+      this.index = index;
+      this.show = true;
+    }
+  }
+};
 </script>
 <style lang='less' scoped>
+.message-detail {
+}
 .message-info {
   height: 2.8rem;
   background: rgba(255, 255, 255, 1);
   border-top: 0.02rem solid rgba(243, 243, 243, 1);
   margin-bottom: 0.2rem;
-
   .message-top {
-    padding: 0.2rem 0.32rem 0.12rem 0.32rem;
+    padding: 0.4rem 0.32rem 0.12rem 0.32rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -71,17 +103,12 @@ export default {
     }
   }
   .message-body {
-    height: 0.88rem;
     font-size: 0.28rem;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: rgba(102, 102, 102, 1);
     padding: 0 0.32rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    padding-top: 0.28rem;
   }
   .message-footer {
     display: flex;
@@ -103,6 +130,16 @@ export default {
         background: rgba(255, 240, 206, 1);
         margin-left: 0.2rem;
       }
+    }
+  }
+  .message-img {
+    display: flex;
+    margin-top: 0.32rem;
+    margin-left: 0.17rem;
+    img {
+      width: 3.28rem;
+      height: 2.4rem;
+      margin: 0 0.15rem;
     }
   }
 }

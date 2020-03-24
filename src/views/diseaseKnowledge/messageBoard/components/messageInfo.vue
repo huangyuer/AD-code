@@ -1,6 +1,6 @@
 <template>
   <van-swipe-cell>
-    <div class="message-info" @click="messageDeatil">
+    <div class="message-info" @click="MessageDetail">
       <div class="message-top">
         <div class="avatar-box">
           <img :src="item.headImg" alt />
@@ -41,9 +41,9 @@ export default {
     delLeaveMsg(){
       this.$emit("delLeaveMsg",this.item._id )
     },
-    messageDeatil(){
+    MessageDetail(){
       this.$router.push({
-        path: "/messageDeatil",name:'MessageDeatil',params:{msgItem:this.item}
+        path: "/MessageDetail",name:'MessageDetail',params:{msgItem:this.item}
       });
     }
   }

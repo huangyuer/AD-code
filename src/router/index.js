@@ -83,9 +83,9 @@ export default new Router({
       path: "/mssageDeatil",
       component: () =>
         import(
-          "@/views/diseaseKnowledge/messageBoard/components/messageDeatil.vue"
+          "@/views/diseaseKnowledge/messageBoard/components/MessageDetail.vue"
         ),
-      name: "MessageDeatil",
+      name: "MessageDetail",
       meta: {
         title: "留言详情",
         index: 2
