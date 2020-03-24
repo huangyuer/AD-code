@@ -1,16 +1,19 @@
 <template>
   <div class="areacomponent">
     <van-field
+      :class="{ color3: !isFirstEnter, color9: isFirstEnter }"
+      readonly
       clickable
       :value="value"
       :label="formlabel"
       :placeholder="formplaceholder"
       :input-align="forminputalign"
-      @click="showdate = true"
+      @click="isFirstEnter ? (showdate = true) : (showdate = false)"
     />
-    <img src="../assets/up.png" />
+    <img v-if="isFirstEnter" src="../assets/up.png" />
     <van-popup v-model="showdate" position="bottom">
       <van-datetime-picker
+        :class="{ year: formtype == 'year' }"
         v-model="currentDate"
         @cancel="showdate = false"
         @confirm="onConfirm"
@@ -47,6 +50,10 @@ export default {
     formtype: {
       type: String,
       default: ""
+    },
+    isFirstEnter: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -79,10 +86,11 @@ export default {
           "-" +
           (d.getDate() < 10 ? "0" + d.getDate() : d.getDate());
       } else {
-        var datetime =
-          d.getFullYear() +
-          "-" +
-          (d.getMonth() + 1 < 10 ? "0" + (d.getMonth() + 1) : d.getMonth() + 1);
+        // var datetime =
+        //   d.getFullYear() +
+        //   "-" +
+        //   (d.getMonth() + 1 < 10 ? "0" + (d.getMonth() + 1) : d.getMonth() + 1);
+        var datetime = d.getFullYear();
       }
 
       this.showdate = false;
@@ -93,5 +101,11 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@aaa: ~">>>";
 @import "./picker.less";
+.year {
+  @{aaa}.van-picker-column:not(:first-child) {
+    display: none;
+  }
+}
 </style>

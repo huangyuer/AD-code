@@ -25,7 +25,7 @@
       <instructions-item
         v-if="acticalList"
         :articles="acticalList"
-        @isStar="isStar"
+        @likeBtn="likeBtn"
       ></instructions-item>
     </van-list>
   </div>
@@ -56,8 +56,8 @@ export default {
   },
   mounted() {},
   methods: {
-    isStar(value, key) {
-      this.$set(this.acticalList.articles[key], "isStar", value);
+    likeBtn(value) {
+      value.isStar = !value.isStar;
     },
     change(name, title) {
       this.acticalList = null;
@@ -99,7 +99,7 @@ export default {
           }
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     onLoad() {

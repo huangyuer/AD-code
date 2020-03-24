@@ -14,6 +14,7 @@
           <van-image
             width="1.32rem"
             height="1.32rem"
+            round
             fit="cover"
             :src="
               getmyinfo.headImg != ''
@@ -22,11 +23,13 @@
             "
           />
         </div>
-        <div class="name">{{ getmyinfo.name }}</div>
+        <div class="name">
+          {{ getmyinfo.name == "" ? getmyinfo.nickName : getmyinfo.name }}
+        </div>
         <div class="tel">{{ getmyinfo.phone }}</div>
-        <div class="invitcode">
+        <div id="myInvCode" class="invitcode" @click="clipbroad()">
           邀请码：
-          <b>{{getmyinfo.invCode}}</b>
+          <b ref="myInvCode">{{ getmyinfo.myInvCode }}</b>
         </div>
       </div>
       <div class="cancelaccount" @click="delMyInfo()">注销账号</div>
@@ -42,14 +45,22 @@
         </div>
         <div class="infoitem">
           <div class="margin6">
-            <span class="colordeep">{{ getmyinfo.name==''?'未填写':getmyinfo.name }}</span>
+            <span class="colordeep">{{
+              getmyinfo.name == "" ? getmyinfo.nickName : getmyinfo.name
+            }}</span>
             <span class="colormiddle">{{ getmyinfo.phone }}</span>
           </div>
           <div>
             <span class="colordeep font28">性别:</span>
-            <span class="colorshallow">{{ getmyinfo.sex==''?'未填写':getmyinfo.sex }}</span>
-            <span class="colordeep font28" style="margin-left:.24rem">出生年月:</span>
-            <span class="colorshallow">{{ getmyinfo.birthday==''?'未填写':getmyinfo.birthday }}</span>
+            <span class="colorshallow">{{
+              getmyinfo.sex == "" ? "未填写" : getmyinfo.sex
+            }}</span>
+            <span class="colordeep font28" style="margin-left:.24rem"
+              >出生年月:</span
+            >
+            <span class="colorshallow">{{
+              getmyinfo.birthday == "" ? "未填写" : getmyinfo.birthday
+            }}</span>
           </div>
         </div>
       </div>
@@ -63,18 +74,30 @@
         </div>
         <div class="address">
           <div class="margin6">
-            <span class="colordeep">{{ address.recipient!=''?address.recipient:'未填写' }}</span>
-            <span class="colormiddle">{{ address.phone!=''?address.phone:'未填写' }}</span>
+            <span class="colordeep">{{
+              address.recipient != "" ? address.recipient : "姓名未填写"
+            }}</span>
+            <span class="colormiddle">{{
+              address.phone != "" ? address.phone : "电话未填写"
+            }}</span>
           </div>
-          <div
-            class="colorshallow"
-          >{{ address.province==''?'未填写':address.province+address.city+getmyinfo.area+address.detail }}</div>
+          <div class="colorshallow">
+            {{
+              address.province == "" && address.detail == ""
+                ? "地址未填写"
+                : address.province != ""
+                ? address.province + address.city + getmyinfo.area
+                : "" + address.detail
+            }}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import Clipboard from "clipboard";
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -122,6 +145,25 @@ export default {
     },
     addressinfoEdit() {
       this.$router.push({ path: "/editaddressInfo" });
+    },
+    clipbroad() {
+      var _this = this;
+      var clipboard = new Clipboard("#myInvCode", {
+        text: function() {
+          return _this.getmyinfo.myInvCode;
+        }
+      });
+      clipboard.on("success", e => {
+        Toast("复制成功");
+        // 释放内存
+        clipboard.destroy();
+      });
+      clipboard.on("error", e => {
+        // 不支持复制
+        Toast("复制失败");
+        // 释放内存
+        clipboard.destroy();
+      });
     }
   }
 };
@@ -145,7 +187,8 @@ export default {
       flex-direction: column;
       align-items: center;
       .vanhead {
-        margin: 0.38rem 0 0.15rem 0;
+        // margin: 0.38rem 0 0.15rem 0;
+        margin: 0.38rem 0 0 0;
       }
       .name {
         font-size: 0.3rem;

@@ -1,5 +1,5 @@
 <template>
-  <div class="wapperItemInfo" v-if="Object.keys(videoitem).length!=0">
+  <div class="wapperItemInfo" v-if="Object.keys(videoitem).length != 0">
     <div class="header">
       <div class="title">{{ videoitem.title }}</div>
       <div class="time">{{ videoitem.date }}</div>
@@ -21,7 +21,9 @@
           controls="controls"
           autoplay
           style
-        >您的浏览器不支持 video 标签。</video>
+        >
+          您的浏览器不支持 video 标签。
+        </video>
         <van-image
           class="playicon"
           width=".48rem"
@@ -35,12 +37,22 @@
         {{ videoitem.introduction }}
       </div>
     </div>
+    <like-and-forward
+      :like="this.$route.params.like"
+      :forward="this.$route.params.forward"
+      :starId="this.$route.params.id"
+      :isStar="this.$route.params.isStar"
+      @likeBtn="likeBtn"
+      @forwardBtn="forwardBtn"
+    ></like-and-forward>
   </div>
 </template>
 <script>
 import "./json2";
 import { Toast } from "vant";
+import LikeAndForward from "@/components/LikeAndForward";
 export default {
+  components: { LikeAndForward },
   data() {
     return {
       videoitem: {},
@@ -57,13 +69,17 @@ export default {
   methods: {
     getVideo() {
       this.$store
-        .dispatch("diseaseKnowledge/getVideo", this.$route.query.id)
+        .dispatch("diseaseKnowledge/getVideo", this.$route.params.id)
         .then(response => {
+          if (response.code == 1) {
+            Toast(response.msg);
+            return;
+          }
           this.videoitem = response.data.video;
           this.iframe = this.videoitem.video[0].httpUrl;
         })
         .catch(e => {
-          // Toast(e);
+          console.log(e);
         });
     },
     isIframe() {
@@ -75,6 +91,12 @@ export default {
         document.getElementsByClassName("playicon")[0].style.display = "none";
         this.isvideo = true;
       }
+    },
+    likeBtn() {
+      console.log("-----d");
+    },
+    forwardBtn() {
+      console.log("-----dss");
     }
   }
 };

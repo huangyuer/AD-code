@@ -259,6 +259,7 @@ export default new Router({
       path: "/scienceVideo/videoList/videoDetail",
       component: () =>
         import("@/views/diseaseKnowledge/scienceVideo/components/videoDetail"),
+      name: "videoDetail",
       meta: {
         title: "科普视频",
         index: 3

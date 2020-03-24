@@ -9,7 +9,7 @@
     </div>
     <science-item
       :itemlist="videoList"
-      @iconcolorchange="iconcolorchange"
+      @likeBtn="likeBtn"
       @toPageVideodetail="toPageVideodetail"
     ></science-item>
     <div v-if="LiveList">
@@ -61,8 +61,8 @@ export default {
     this.getLive();
   },
   methods: {
-    iconcolorchange(val, bool) {
-      this.$set(this.videoList[val], "like", bool);
+    likeBtn(val) {
+      val.isStar = !val.isStar;
     },
     toPageVideodetail(item, key) {
       this.$store

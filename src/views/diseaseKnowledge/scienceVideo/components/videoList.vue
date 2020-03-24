@@ -1,6 +1,10 @@
 <template>
   <div>
-    <search-input class="searchinput" :value="searchinputvalue" :placeholder="placeholder"></search-input>
+    <search-input
+      class="searchinput"
+      :value="searchinputvalue"
+      :placeholder="placeholder"
+    ></search-input>
     <div class="dropdownwapper">
       <dropdown-menu
         :option="option"
@@ -11,10 +15,15 @@
       <sort-attribute :name="'发布时间'" @sortway="sortway"></sort-attribute>
       <sort-attribute :name="'点击次数'" @sortway="sortway"></sort-attribute>
     </div>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
       <science-item
         :itemlist="videoList"
-        @iconcolorchange="iconcolorchange"
+        @likeBtn="likeBtn"
         @toPageVideodetail="toPageVideodetail"
       ></science-item>
     </van-list>
@@ -133,12 +142,19 @@ export default {
           // console.log(e);
         });
     },
-    iconcolorchange(val, bool) {
-      this.$set(this.videoList[val], "like", bool);
+    likeBtn(val) {
+      val.isStar = !val.isStar;
     },
     toPageVideodetail(item, key) {
       this.$router.push({
-        path: "/scienceVideo/videoList/videoDetail?id=" + item._id
+        path: "/scienceVideo/videoList/videoDetail",
+        name: "videoDetail",
+        params: {
+          id: item._id,
+          like: true,
+          forward: true,
+          isStar: item.isStar
+        }
       });
     }
   }

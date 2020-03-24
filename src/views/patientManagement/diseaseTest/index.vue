@@ -91,7 +91,7 @@ export default {
           this.levelresult = response.data;
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     onChange(index) {

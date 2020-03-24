@@ -1,6 +1,8 @@
 <template>
   <div class="areacomponent">
     <van-field
+      :class="{ color3: !isFirstEnter, color9: isFirstEnter }"
+      readonly
       clickable
       name="area"
       :value="value"
@@ -47,6 +49,10 @@ export default {
     columnsnum: {
       type: Number,
       default: 2
+    },
+    isFirstEnter: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -75,5 +81,14 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@aaa: ~">>>";
 @import "./picker.less";
+.areacomponent {
+  @{aaa}.van-field__control--right {
+    font-size: 0.28rem;
+    color: #333333;
+    font-family: "PingFangSC-Medium";
+    font-weight: 500;
+  }
+}
 </style>

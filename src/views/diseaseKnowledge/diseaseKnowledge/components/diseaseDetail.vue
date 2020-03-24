@@ -42,7 +42,6 @@ export default {
   mounted() {},
   methods: {
     likeBtn() {
-      this.de
       console.log("-----d");
     },
     forwardBtn() {

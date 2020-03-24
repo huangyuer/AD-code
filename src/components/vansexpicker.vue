@@ -1,20 +1,21 @@
 <template>
   <div class="areacomponent">
     <van-field
+      :class="{ color3: !isFirstEnter, color9: isFirstEnter }"
+      readonly
       clickable
       :value="value"
       :label="formlabel"
       :placeholder="formplaceholder"
       :input-align="forminputalign"
-      @click="showSex= true"
+      @click="isFirstEnter ? (showSex = true) : (showSex = false)"
     />
-    <img src="../assets/up.png" />
+    <img v-if="isFirstEnter" src="../assets/up.png" />
     <van-popup v-model="showSex" position="bottom">
       <van-picker
         show-toolbar
-        title="选择性别"
         :columns="columns"
-        @cancel="showSex= false"
+        @cancel="showSex = false"
         @confirm="onConfirm"
       />
     </van-popup>
@@ -38,6 +39,10 @@ export default {
     forminputalign: {
       type: String,
       default: ""
+    },
+    isFirstEnter: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

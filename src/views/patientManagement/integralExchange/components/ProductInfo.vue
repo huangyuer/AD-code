@@ -1,13 +1,22 @@
 <template>
   <div class="productinfowapper" style="color:#000000">
     <div class="imageheader">
-      <van-image width="3rem" height="3rem" fit="cover" :src="item.goodsImg[0].httpUrl" />
+      <van-image
+        width="3rem"
+        height="3rem"
+        fit="cover"
+        :src="
+          item.goodsImg.length != 0
+            ? item.goodsImg[0].httpUrl
+            : item.coverImg[0].httpUrl
+        "
+      />
     </div>
     <div class="contentheader">
-      <div class="credit">{{item.score}}积分</div>
-      <div class="title">{{item.name}}</div>
+      <div class="credit">{{ item.score }}积分</div>
+      <div class="title">{{ item.name }}</div>
     </div>
-    <div class="contentlist">{{item.introduction}}</div>
+    <div class="contentlist">{{ item.introduction }}</div>
     <div class="changeBtn" @click="changeItemBtn(item._id)">立即兑换</div>
   </div>
 </template>
@@ -44,17 +53,6 @@ export default {
         });
       }
     },
-    // getMyAddress() {
-    //   this.$store
-    //     .dispatch("patientManagement/getMyAddress")
-    //     .then(data => {
-    //       var address = this.$store.getters.getmyaddress.address;
-    //       console.log("this.address", address);
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // },
     exchangeGoods() {
       // this.address = this.address
       this.$store

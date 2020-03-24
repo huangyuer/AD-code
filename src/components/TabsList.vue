@@ -1,16 +1,7 @@
 <template>
   <div>
-    <van-tabs
-      line-width="1.4rem"
-      @change="change"
-      v-model="active"
-      title-active-color="#009966"
-    >
-      <van-tab
-        v-for="(index, key) in itemTabcontent"
-        :key="key"
-        :title="index.type"
-      >
+    <van-tabs line-width="1.4rem" @change="change" v-model="active" title-active-color="#009966">
+      <van-tab v-for="(index, key) in itemTabcontent" :key="key" :title="index.type">
         <div class="vansList">
           <div
             :class="{
@@ -20,9 +11,7 @@
             v-for="(item, k) in index.tags"
             :key="k"
             @click="tocurrentTag(item, k, key)"
-          >
-            {{ item }}
-          </div>
+          >{{ item }}</div>
         </div>
       </van-tab>
     </van-tabs>
@@ -84,7 +73,7 @@ export default {
   flex: none;
 }
 @{aaa}.van-tabs__nav {
-  margin-left: -0.1rem;
+  // margin-left: -0.1rem;
 }
 @{aaa}.van-tabs__line {
   background-color: #009966;
@@ -100,6 +89,37 @@ export default {
     border-top: 0;
   }
 }
+// .category-box {
+@{aaa} .van-sticky {
+  margin-top: 0.1rem;
+  margin-bottom: 0.4rem;
+}
+
+@{aaa} .van-hairline--top-bottom {
+  &::after {
+    border-width: 0px;
+    border-bottom: 6px solid rgba(216, 216, 216, 1);
+    margin: 0 0.32rem;
+  }
+}
+@{aaa} .van-tab {
+  font-size: 0.3rem;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+}
+@{aaa} .van-tab--active {
+  font-size: 0.3rem;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(0, 153, 102, 1);
+}
+@{aaa} .van-tabs__line {
+  height: 0.06rem;
+  background: rgba(0, 153, 102, 1);
+  border-radius: 0.03rem;
+}
+// }
 .vansList {
   overflow: hidden;
   .vans-tableContent {

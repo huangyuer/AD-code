@@ -1,26 +1,34 @@
 <template>
   <div class="myexchangeWapper">
-    <div class="excahngeItem" v-for="(item, index) in itemlist" :key="index">
-      <div class="vanimge">
-        <van-image
-          width=".72rem"
-          height=".72rem"
-          fit="cover"
-          :src="require('@/assets/change.png')"
-        />
-      </div>
-      <div class="center">
-        <div class="title">{{ item.title }}</div>
-        <div class="card">
-          <span>{{ item.card }}</span>
-          <span class="cardtime">| {{ item.cardtime }}</span>
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <div class="excahngeItem" v-for="(item, index) in itemlist" :key="index">
+        <div class="vanimge">
+          <van-image
+            width=".72rem"
+            height=".72rem"
+            fit="cover"
+            :src="require('@/assets/change.png')"
+          />
         </div>
+        <div class="center">
+          <div class="title">{{ item.title }}</div>
+          <div class="card">
+            <span>{{ item.card }}</span>
+            <span class="cardtime">| {{ item.cardtime }}</span>
+          </div>
+        </div>
+        <div class="rightBtn" @click="checkcode(item.id)">立即兑换</div>
       </div>
-      <div class="rightBtn" @click="checkcode(item.id)">立即兑换</div>
-    </div>
+    </van-list>
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -31,12 +39,56 @@ export default {
           cardtime: "2010-08-09",
           id: 1
         }
-      ]
+      ],
+      logs: [],
+      total: 0,
+      loading: false,
+      finished: false,
+      logsform: {
+        page: 1,
+        limit: 10
+      }
     };
+  },
+  created() {
+    this.getExchangeLogs();
   },
   methods: {
     checkcode(id) {
       this.$router.push({ path: "/productInfo?id=" + id });
+    },
+    onLoad() {
+      this.$store
+        .dispatch("patientManagement/getExchangeLogs", this.logsform)
+        .then(response => {
+          if (response.code == 1) {
+            Toast(response.msg);
+            return;
+          }
+          if (response.data.logs.length == 0) {
+            this.loading = false;
+            this.finished = true;
+            return;
+          }
+          if (this.logs.length != 0) {
+            this.logs = this.logs.concat(response.data.logs);
+          } else {
+            this.logs = response.data.logs;
+          }
+          this.total = response.data.total;
+          this.loading = false;
+          if (this.logs.length >= this.total) {
+            // 加载状态结束
+            this.loading = false;
+            this.finished = true;
+            return;
+          } else {
+            this.logsform.page = this.logsform.page + 1;
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };

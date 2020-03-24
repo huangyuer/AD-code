@@ -9,15 +9,19 @@
       {{ this.article.contentHtml }}
     </div>
     <like-and-forward
-      :like="true"
-      :forward="false"
+      :like="this.$route.params.like"
+      :forward="this.$route.params.forward"
+      :starId="this.$route.params.id"
+      :isStar="this.$route.params.isStar"
       @likeBtn="likeBtn"
+      @forwardBtn="forwardBtn"
     ></like-and-forward>
   </div>
 </template>
 <script>
 import LikeAndForward from "@/components/LikeAndForward";
 export default {
+  name: "DiseaseDetail",
   components: { LikeAndForward },
   data() {
     return {
@@ -27,7 +31,7 @@ export default {
   },
   created() {
     this.$store
-      .dispatch("common/getArticle", this.$route.query.id)
+      .dispatch("common/getArticle", this.$route.params.id)
       .then(data => {
         this.article = this.$store.getters.articleDetail.article;
       })
@@ -38,7 +42,11 @@ export default {
   mounted() {},
   methods: {
     likeBtn() {
+      this.de;
       console.log("-----d");
+    },
+    forwardBtn() {
+      console.log("-----dss");
     }
   }
 };

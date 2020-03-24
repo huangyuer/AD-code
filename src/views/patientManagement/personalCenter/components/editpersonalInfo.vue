@@ -1,40 +1,66 @@
 <template>
-  <div class v-if="Object.keys(user).length!=0">
+  <div class v-if="Object.keys(user).length != 0">
     <div class="baseinfo">基础信息</div>
-    <van-field v-model="form.name" label="姓名" placeholder="输入框内容右对齐" input-align="right" />
-    <van-field v-model="form.tel" label="手机号" placeholder="输入框内容右对齐" input-align="right" readonly />
+    <van-field
+      :class="{ color3: !isFirstEnter, color9: isFirstEnter }"
+      :readonly="!isFirstEnter"
+      v-model="form.name"
+      label="姓名"
+      placeholder=""
+      input-align="right"
+    />
+    <van-field
+      :class="{ color3: !isFirstEnter, color9: isFirstEnter }"
+      v-model="form.tel"
+      label="手机号"
+      placeholder=""
+      input-align="right"
+      readonly
+    />
     <van-SexPicker
       :formvalue="form.sex"
       :formtype="'year-month'"
       :formlabel="'性别'"
-      :formplaceholder="'输入框内容右对齐'"
+      :formplaceholder="''"
       :forminputalign="'right'"
+      :isFirstEnter="isFirstEnter"
       @IsshowSex="IsshowSex"
     ></van-SexPicker>
     <van-time-picker
       :formvalue="form.birth"
-      :formtype="'year-month'"
-      :formlabel="'出生年月'"
-      :formplaceholder="'点击选择出生年月'"
+      :formtype="'date'"
+      :formlabel="'出生年月日'"
+      :formplaceholder="''"
       :forminputalign="'right'"
+      :isFirstEnter="isFirstEnter"
       @IsshowTime="IsshowTime"
     ></van-time-picker>
     <van-areas
-      :formvalue="form.province+form.area"
+      :formvalue="form.province + form.area"
       :formlabel="'所在地区（省，市）'"
-      :formplaceholder="'点击选择省市区'"
+      :formplaceholder="''"
       :forminputalign="'right'"
       :columnsnum="2"
+      :isFirstEnter="isFirstEnter"
       @IsshowArea="IsshowArea"
       @onConfirm="onConfirmplace"
     ></van-areas>
     <div class="baseinfo margin52">疾病信息</div>
+    <van-field
+      :class="{ color3: !isFirstEnter, color9: isFirstEnter }"
+      :readonly="!isFirstEnter"
+      v-model="form.disease"
+      label="确诊疾病"
+      placeholder=""
+      input-align="right"
+    />
     <van-time-picker
       :formvalue="form.time"
-      :formtype="'date'"
-      :formlabel="'首次诊断时间'"
-      :formplaceholder="'输入框内容右对齐'"
+      :formtype="'year'"
+      :formlabel="'首次确诊年份'"
+      :formplaceholder="''"
       :forminputalign="'right'"
+      :isFirstEnter="isFirstEnter"
       @IsshowTime="IsdiaTime"
     ></van-time-picker>
     <div class="selecthistory">
@@ -50,32 +76,36 @@
           <div
             class="medicinalitem"
             v-if="user.medications"
-            v-for="(index,key) in user.medications"
+            v-for="(index, key) in user.medications"
             :key="key"
-          >{{index}}</div>
+          >
+            {{ index }}
+          </div>
         </div>
       </div>
       <div class="selecthistoryinner" v-else>
-        <div class="title">1.您是否有使用以下几种药物？</div>
+        <div class="title">近半年治疗该疾病使用过的药物？</div>
         <van-checkbox-group v-model="result" direction="horizontal">
           <van-checkbox
-            v-for="(index,key) in medications"
+            v-for="(index, key) in medications"
             :key="key"
             :name="index.name"
-          >{{index.name}}</van-checkbox>
+            >{{ index.name }}</van-checkbox
+          >
         </van-checkbox-group>
       </div>
     </div>
-    <div class="baseinfo">疾病严重程度</div>
+    <div class="baseinfo">您近两个月疾病严重度是？</div>
     <div class="sliderbox">
       <div class="header">
         <span>无</span>
         <span>轻度</span>
         <span>中度</span>
-        <span>重度</span>
+        <span>严重</span>
+        <span>非常严重</span>
       </div>
       <van-slider
-        :step="33"
+        :step="25"
         v-model="level"
         bar-height="4px"
         active-color="linear-gradient(90deg,rgba(0, 153, 102, 1) 0%,rgba(242, 169, 0, 1) 52%,rgba(255, 63, 15, 1) 100%);"
@@ -100,6 +130,7 @@ export default {
         privince: "",
         area: "",
         showArea: false,
+        disease: "",
         time: "",
         level: "无"
       },
@@ -107,6 +138,7 @@ export default {
       showtime: false,
       result: [],
       isSelectmedical: false,
+      isFirstEnter: false,
       medications: [],
       address: {},
       user: {}
@@ -206,6 +238,11 @@ export default {
           if (this.user.medications) {
             this.result = this.user.medications;
           }
+          if (this.user.createdAt == this.user.updatedAt) {
+            this.isFirstEnter = true;
+          } else {
+            this.isFirstEnter = false;
+          }
           this.init();
         })
         .catch(e => {
@@ -218,14 +255,27 @@ export default {
 </script>
 <style lang="less" scoped>
 @aaa: ~">>>";
-@{aaa}.van-field__label {
-  width: 2.6rem;
-  font-size: 0.28rem;
-  font-family: "PingFangSC-Regular";
-  font-weight: 400;
-  color: rgba(51, 51, 51, 1);
-  line-height: initial;
+.color3 {
+  @{aaa}.van-field__label {
+    width: 2.6rem;
+    font-size: 0.28rem;
+    font-family: "PingFangSC-Regular";
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    line-height: initial;
+  }
 }
+.color9 {
+  @{aaa}.van-field__label {
+    width: 2.6rem;
+    font-size: 0.28rem;
+    font-family: "PingFangSC-Regular";
+    font-weight: 400;
+    color: #999999;
+    line-height: initial;
+  }
+}
+
 // @{aaa}.van-cell:not(:last-child)::after {
 //   border: 0.02rem solid rgba(229, 229, 229, 1);
 // }
@@ -235,6 +285,11 @@ export default {
 @{aaa}.van-cell::after {
   left: 0.32rem !important;
   border: 0.02rem solid rgba(229, 229, 229, 1) !important;
+}
+@{aaa}.van-field__control {
+  color: #999999;
+  font-size: 0.28rem;
+  font-family: "PingFangSC-Medium";
 }
 .sliderbox {
   margin-top: 0.2rem;
@@ -354,7 +409,7 @@ export default {
     box-sizing: border-box;
     .title {
       font-size: 0.3rem;
-      font-family: "PingFangSC-Regular";
+      font-family: "PingFangSC-Medium";
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       line-height: initial;
@@ -364,6 +419,7 @@ export default {
 @{aaa}.van-checkbox {
   margin-top: 0.12rem;
   margin-bottom: 0.12rem;
+  width: 100%;
 }
 @{aaa}.van-checkbox__icon .van-icon {
   background: RGBA(206, 206, 206, 1);

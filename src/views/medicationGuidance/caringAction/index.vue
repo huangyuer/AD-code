@@ -12,13 +12,17 @@
             {{ item.title }}
           </div>
           <div class="right">
-            <span class="saveicon" @click="iconcolorchange()">
-              <svg-icon
-                iconClass="heart"
-                :class="{ 'heart-icon': true, iconactive: index.isStar }"
-              />
-              收藏
-            </span>
+            <div class="like-btn">
+              <div @click.stop="likeBtn(item)">
+                <svg-icon
+                  iconClass="heart"
+                  className="icon"
+                  v-if="item.isStar"
+                ></svg-icon>
+                <svg-icon iconClass="heart" className="grey" v-else></svg-icon>
+                <span>收藏</span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="center" @click="pageInfo(item)">
@@ -83,19 +87,27 @@ export default {
           console.log(e);
         });
     },
-    iconcolorchange() {
-      var hearticon = document.getElementsByClassName("heart-icon")[0];
-      if (!hearticon.classList.contains("iconactive")) {
-        hearticon.classList.add("iconactive");
-        Toast({
-          message: "收藏成功",
-          icon: "like-o"
+    likeBtn(index) {
+      if (!index.isStar) {
+        let params = {
+          menu: this.$route.meta.title,
+          starId: index._id
+        };
+        this.$store.dispatch("common/star", params).then(res => {
+          Toast({
+            message: res,
+            icon: "like-o"
+          });
+          index.isStar = !index.isStar;
         });
       } else {
-        hearticon.classList.remove("iconactive");
-        Toast({
-          message: "取消收藏",
-          icon: "like-o"
+        let params = { starId: index._id };
+        this.$store.dispatch("common/unStar", params).then(res => {
+          Toast({
+            message: res,
+            icon: "like-o"
+          });
+          index.isStar = !index.isStar;
         });
       }
     },
@@ -103,25 +115,41 @@ export default {
       if (item.link) {
         window.location.href = item.link;
       } else {
-        this.$router.push({ path: "/DetailInfo?id=" + item._id });
+        this.$router.push({
+          path: "/DetailInfo",
+          name: "DetailInfo",
+          params: {
+            id: item._id,
+            like: true,
+            forward: false,
+            isStar: item.isStar
+          }
+        });
       }
     }
   }
 };
 </script>
 <style lang="less" scoped>
-.saveicon {
+.like-btn {
   display: flex;
   justify-content: center;
-  align-items: center;
-  .heart-icon {
-    width: 0.32rem !important;
-    height: 0.28rem !important;
+  align-items: flex-end;
+  .icon {
+    fill: #ff7559 !important;
+    width: 0.32rem;
+    height: 0.28rem;
+  }
+  .grey {
     fill: #9a979b !important;
-    margin-right: 0.06rem;
-    &.iconactive {
-      fill: #ff765d !important;
-    }
+    width: 0.32rem;
+    height: 0.28rem;
+  }
+  span {
+    font-size: 0.28rem;
+    font-family: "PingFangSC-Regular";
+    font-weight: 400;
+    color: rgba(153, 153, 153, 1);
   }
 }
 .caringList {
