@@ -7,13 +7,17 @@
     <div class="content">
       <div class="LinkItem" @click="isIframe">
         <div ref="container" class="container" v-if="!isvideo">
-          <div v-html="tt"></div>
-          <!-- <van-image
+          <!-- <div v-html="tt"></div> -->
+          <van-image
             width="100%"
             height="100%"
             fit="cover"
-            src="https://img.yzcdn.cn/vant/cat.jpeg"
-          />-->
+            :src="
+              videoitem.coverImg != []
+                ? videoitem.coverImg[0].httpUrl
+                : 'https://img.yzcdn.cn/vant/cat.jpeg'
+            "
+          />
         </div>
         <video
           v-else
@@ -29,7 +33,7 @@
           width=".48rem"
           height=".48rem"
           fit="cover"
-          src="https://img.yzcdn.cn/vant/cat.jpeg"
+          :src="require('../../../../assets/play.png')"
         />
       </div>
       <div class="content-title">
@@ -57,9 +61,7 @@ export default {
     return {
       videoitem: {},
       isvideo: false,
-      iframe: "",
-      tt:
-        '<iframe src="http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=fbfb41f76f9858f2ce0cc6ffefc8947b&tvId=9396656400&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&rel=0&amp;autoplay=1&height=100%&width=100%" frameborder="0" allowfullscreen="true" autoplay="true" width="100%" height="100%"></iframe>'
+      iframe: ""
     };
   },
   created() {},

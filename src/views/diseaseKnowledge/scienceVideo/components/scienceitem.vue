@@ -4,7 +4,7 @@
       class="scienceitem"
       v-for="(item, key) in itemlist"
       :key="key"
-      @click="toPageVideodetail(item, key)"
+      @click="toPageVideodetail(item)"
     >
       <van-image
         width="100%"
@@ -64,8 +64,8 @@ export default {
         });
       }
     },
-    toPageVideodetail(item, key) {
-      this.$emit("toPageVideodetail", item, key);
+    toPageVideodetail(item) {
+      this.$emit("toPageVideodetail", item);
     }
   },
   props: {

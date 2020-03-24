@@ -31,7 +31,7 @@
             width=".48rem"
             height=".48rem"
             fit="cover"
-            src="https://img.yzcdn.cn/vant/cat.jpeg"
+            :src="require('@/assets/play.png')"
           />
         </div>
       </div>
@@ -69,7 +69,14 @@ export default {
         .dispatch("diseaseKnowledge/upVideoClickNum", item._id)
         .then(data => {
           this.$router.push({
-            path: "/scienceVideo/videoList/videoDetail?id=" + item._id
+            path: "/scienceVideo/videoList/videoDetail",
+            name: "videoDetail",
+            params: {
+              id: item._id,
+              like: true,
+              forward: true,
+              isStar: item.isStar
+            }
           });
         })
         .catch(e => {
@@ -111,7 +118,6 @@ export default {
         .dispatch("diseaseKnowledge/getLive")
         .then(data => {
           this.LiveList = this.$store.getters.LiveList.live;
-          console.log("LiveList.coverImg", this.LiveList.coverImg);
         })
         .catch(e => {
           console.log(e);

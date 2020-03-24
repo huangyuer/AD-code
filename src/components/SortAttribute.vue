@@ -2,10 +2,26 @@
 <template>
   <div class="shaixuanitem" ref="shaixuanitem" @click="sort()">
     {{ name }}
-    <img class="shaixuan" src="../assets/shaixuan@2x.png" />
+    <img
+      class="shaixuan"
+      v-if="sortwayc === ''"
+      src="../assets/shaixuan@2x.png"
+    />
+    <img
+      class="shaixuan"
+      v-else-if="sortwayc === 'des'"
+      src="../assets/shaixuan-toptobottom@2x.png"
+    />
+    <img
+      class="shaixuan"
+      v-else-if="sortwayc === 'asc'"
+      style="transform:rotate(180deg)"
+      src="../assets/shaixuan-toptobottom@2x.png"
+    />
   </div>
 </template>
 <script>
+import { mapState, mapMutations, mapGetters } from "vuex";
 export default {
   props: {
     name: {
@@ -30,6 +46,12 @@ export default {
         classlist.add("asc");
         this.$emit("sortway", this.sortwayc, this.name);
       }
+    }
+  },
+  watch: {
+    sortwayc(val, oldVal) {
+      //普通的watch监听
+      console.log("a: " + val, oldVal);
     }
   }
 };

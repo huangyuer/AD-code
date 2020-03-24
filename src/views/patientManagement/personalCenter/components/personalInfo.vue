@@ -86,7 +86,10 @@
               address.province == "" && address.detail == ""
                 ? "地址未填写"
                 : address.province != ""
-                ? address.province + address.city + getmyinfo.area
+                ? address.province +
+                  address.city +
+                  address.area +
+                  address.detail
                 : "" + address.detail
             }}
           </div>

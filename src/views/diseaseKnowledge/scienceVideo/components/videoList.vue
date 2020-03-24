@@ -34,6 +34,7 @@ import SearchInput from "@/components/SearchInput";
 import DropdownMenu from "@/components/DropdownMenu";
 import SortAttribute from "@/components/SortAttribute";
 import ScienceItem from "./scienceitem";
+import { Toast } from "vant";
 export default {
   components: { SearchInput, DropdownMenu, SortAttribute, ScienceItem },
   data() {
@@ -62,7 +63,6 @@ export default {
   methods: {
     DropdownchangeValue(val) {
       console.log("----d", val);
-      console.log("fsdfdsf", val);
       this.$set(this.form, "tag", this.option[val].text);
       this.videoList = [];
       this.$set(this.form, "page", 1);
@@ -111,7 +111,7 @@ export default {
           }
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     onLoad() {
@@ -138,24 +138,29 @@ export default {
         })
         .catch(e => {
           Toast(e);
-
-          // console.log(e);
         });
     },
     likeBtn(val) {
       val.isStar = !val.isStar;
     },
-    toPageVideodetail(item, key) {
-      this.$router.push({
-        path: "/scienceVideo/videoList/videoDetail",
-        name: "videoDetail",
-        params: {
-          id: item._id,
-          like: true,
-          forward: true,
-          isStar: item.isStar
-        }
-      });
+    toPageVideodetail(item) {
+      this.$store
+        .dispatch("diseaseKnowledge/upVideoClickNum", item._id)
+        .then(data => {
+          this.$router.push({
+            path: "/scienceVideo/videoList/videoDetail",
+            name: "videoDetail",
+            params: {
+              id: item._id,
+              like: true,
+              forward: true,
+              isStar: item.isStar
+            }
+          });
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };

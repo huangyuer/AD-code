@@ -114,8 +114,8 @@ const actions = {
     form.append("file", file);
     return new Promise((resolve, reject) => {
       uploadFile(
-        form
-      )
+          form
+        )
         .then(response => {
           const {
             msg,
@@ -161,8 +161,8 @@ const actions = {
       form.append("tag", params.tag);
       form.append("level", params.level);
       for (var i = 0; i < params.images.length; i++) {
-        form.append('images'+[],params.images[i])
-       }
+        form.append('images' + [], params.images[i])
+      }
       addLeaveMsg(form)
         .then(response => {
           const {

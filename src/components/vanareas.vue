@@ -77,6 +77,11 @@ export default {
       this.$emit("onConfirm", values);
       this.$emit("IsshowArea", false);
     }
+  },
+  watch: {
+    formvalue(newVal, val) {
+      this.value = newVal;
+    }
   }
 };
 </script>

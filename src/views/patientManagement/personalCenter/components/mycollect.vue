@@ -3,7 +3,7 @@
     <div class="disease-search">
       <div class="category-box">
         <dropdown-menu
-          v-if="getstarmenus.length!=0"
+          v-if="getstarmenus.length != 0"
           :title="'收藏分类'"
           :value="value"
           :option="getstarmenus"
@@ -13,9 +13,25 @@
       </div>
     </div>
     <div class="patient-like">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <div v-for="item in diseaseInfo" :key="item.id">
-          <like-info :info="item" @likeBtn="likeBtn"></like-info>
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <div v-for="item in getmystars" :key="item.id">
+          <div class="like-item">
+            <div class="like-content">
+              <div class="like-text">{{ item.title }}</div>
+              <div class="like-btn">
+                <div>
+                  <svg-icon iconClass="heart" className="icon"></svg-icon>
+                  <span>收藏</span>
+                </div>
+              </div>
+            </div>
+            <div class="like-time">{{ item.date }}</div>
+          </div>
         </div>
       </van-list>
     </div>
@@ -33,69 +49,6 @@ export default {
   data() {
     return {
       value: "",
-      category: ["特应性皮炎", "银屑病"],
-      diseaseInfo: [
-        {
-          id: 1,
-          title: "中毒性表皮坏死松解型药疹1",
-          time: "2020-02-26",
-          isHeart: true
-        },
-        {
-          id: 2,
-          title: "中毒性表皮坏死松解型药疹2",
-          time: "2020-02-26",
-          isHeart: true
-        },
-        {
-          id: 3,
-          title: "中毒性表皮坏死松解型药疹3",
-          time: "2020-02-26",
-          isHeart: true
-        },
-        {
-          id: 5,
-          title: "中毒性表皮坏死松解型药疹5",
-          time: "2020-02-26",
-          isHeart: true
-        },
-        {
-          id: 4,
-          title: "中毒性表皮坏死松解型药疹4",
-          time: "2020-02-26",
-          isHeart: true
-        },
-        {
-          id: 6,
-          title: "中毒性表皮坏死松解型药疹",
-          time: "2020-02-26",
-          isHeart: true
-        },
-        {
-          id: 7,
-          title: "中毒性表皮坏死松解型药疹",
-          time: "2020-02-26",
-          isHeart: true
-        },
-        {
-          id: 8,
-          title: "中毒性表皮坏死松解型药疹",
-          time: "2020-02-26",
-          isHeart: true
-        },
-        {
-          id: 9,
-          title: "中毒性表皮坏死松解型药疹",
-          time: "2020-02-26",
-          isHeart: true
-        },
-        {
-          id: 10,
-          title: "中毒性表皮坏死松解型药疹",
-          time: "2020-02-26",
-          isHeart: true
-        }
-      ],
       getstarmenus: [],
       getmystars: [],
       keylist: {
@@ -115,6 +68,7 @@ export default {
   methods: {
     onChange(val) {},
     DropdownchangeValue(val) {
+      this.getmystars = [];
       this.$set(this.keylist, "menu", this.getstarmenus[val].text);
       this.$set(this.keylist, "page", 1);
       this.finished = false;
@@ -132,18 +86,7 @@ export default {
       }
     },
     likeBtn(val) {
-      if (!val.isHeart) {
-        Toast({
-          message: "收藏成功",
-          icon: "like-o"
-        });
-      } else {
-        Toast({
-          message: "取消收藏",
-          icon: "like-o"
-        });
-      }
-      val.isHeart = !val.isHeart;
+      val.isStar = !val.isStar;
     },
     getStarMenus() {
       this.$store
@@ -165,7 +108,6 @@ export default {
       this.$store
         .dispatch("patientManagement/getMyStars", this.keylist)
         .then(data => {
-          this.getmystars = this.$store.getters.getmystars.stars;
           if (this.getmystars != null) {
             this.getmystars = this.getmystars.concat(
               this.$store.getters.getmystars.stars
@@ -228,6 +170,67 @@ export default {
     &:last-child {
       margin-left: 0.4rem;
     }
+  }
+}
+.like-item {
+  height: 1.32rem;
+  border-top: 0.02rem solid rgba(243, 243, 243, 1);
+
+  border-bottom: 0.02rem solid rgba(243, 243, 243, 1);
+  position: relative;
+  padding: 0 0.32rem;
+  margin-bottom: 0.2rem;
+  &::before {
+    position: absolute;
+    left: 0;
+    right: 0;
+    content: "";
+    /* height: 8px; */
+    width: 0.08rem;
+    height: 0.8rem;
+    background: rgba(0, 153, 102, 1);
+    border-radius: 4px;
+  }
+  .like-content {
+    display: flex;
+    justify-content: space-between;
+    height: 0.8rem;
+    .like-text {
+      font-size: 0.3rem;
+      font-family: "PingFangSC-Regular";
+      font-weight: 400;
+      color: rgba(5, 15, 43, 1);
+      height: 0.8rem;
+      line-height: 0.8rem;
+    }
+    .like-btn {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      .icon {
+        fill: #ff7559 !important;
+        width: 0.32rem;
+        height: 0.28rem;
+      }
+      .grey {
+        fill: #9a979b !important;
+        width: 0.32rem;
+        height: 0.28rem;
+      }
+      span {
+        font-size: 0.28rem;
+        font-family: "PingFangSC-Regular";
+        font-weight: 400;
+        color: rgba(153, 153, 153, 1);
+      }
+    }
+  }
+  .like-time {
+    font-size: 0.3rem;
+    font-family: "PingFangSC-Regular";
+    font-weight: 400;
+    color: rgba(172, 173, 175, 1);
+    line-height: 1;
   }
 }
 </style>

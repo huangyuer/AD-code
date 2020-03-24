@@ -1,15 +1,24 @@
 <template>
   <div>
-    <van-field v-model="form.recipient" placeholder="收货人" input-align="left" />
+    <van-field
+      v-model="form.recipient"
+      placeholder="收货人"
+      input-align="left"
+    />
     <van-field v-model="form.phone" placeholder="手机号码" input-align="left" />
     <van-areas
-      :formvalue="form.province + form.city + form.area"
+      :formvalue="place"
       :formplaceholder="'所在地区'"
       :forminputalign="'left'"
       :columnsnum="3"
       @IsshowArea="IsshowArea"
+      @onConfirm="onConfirm"
     ></van-areas>
-    <van-field v-model="form.detail" input-align="left" placeholder="详细地址：如道路、门牌号、小区、楼洞号，单元" />
+    <van-field
+      v-model="form.detail"
+      input-align="left"
+      placeholder="详细地址：如道路、门牌号、小区、楼洞号，单元"
+    />
     <div class="saveEdit" @click="BtnupMyAddress()">保存</div>
   </div>
 </template>
@@ -27,15 +36,23 @@ export default {
         area: "",
         detail: ""
       },
+      place: "",
       address: {}
     };
   },
-  mounted() {
+  created() {
     this.getMyAddress();
   },
+  mounted() {},
   methods: {
     IsshowArea(value) {
       console.log(value);
+    },
+    onConfirm(value) {
+      this.form.province = value[0].name;
+      this.form.city = value[1].name;
+      this.form.area = value[2].name;
+      console.log("form", this.form);
     },
     getMyAddress() {
       this.$store
@@ -52,10 +69,12 @@ export default {
           this.form.province = this.address.province;
           this.form.city = this.address.city;
           this.form.area = this.address.area;
+          this.place = this.form.province + this.form.city + this.form.area;
           this.form.detail = this.address.detail;
         })
         .catch(e => {
-          console.log(e);
+          // console.log(e);
+          Toast(e);
         });
     },
     BtnupMyAddress() {
@@ -115,7 +134,10 @@ export default {
   border: 0;
 }
 @{aaa}.van-field__control {
-  color: #333333;
+  font-size: 0.28rem;
+  font-family: "PingFangSC-Regular";
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
 }
 .saveEdit {
   text-align: center;

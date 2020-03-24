@@ -1,6 +1,11 @@
 <template>
   <van-dropdown-menu active-color="#009966">
-    <van-dropdown-item :title="title" v-model="valueinner" :options="option" @change="changeValue" />
+    <van-dropdown-item
+      :title="title"
+      v-model="valueinner"
+      :options="option"
+      @change="changeValue"
+    />
     <!-- <van-dropdown-item v-if="option2!=[]" v-model="value2inner" @change="changeValue2" :options="option2" /> -->
   </van-dropdown-menu>
 </template>
@@ -75,6 +80,9 @@ export default {
     content: "";
     border: 0;
   }
+}
+@{aaa}.van-overlay {
+  top: 1px;
 }
 @{aaa} .van-cell:not(:last-child)::after {
   border: 0;

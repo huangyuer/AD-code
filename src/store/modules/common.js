@@ -12,6 +12,8 @@ const state = {
   articlesList: [],
   articleDetail: '',
   Star: false,
+  sortwayctypetime: '',
+  sortwayctypeclick: '',
 };
 const mutations = {
   SET_MENU: (state, menuList) => {
@@ -25,6 +27,12 @@ const mutations = {
   },
   SET_STARSAVE: (state, Star) => {
     state.Star = Star;
+  },
+  getsortwayctypetime: (state, value) => {
+    state.sortwayctypetime = value;
+  },
+  getsortwayctypeclick: (state, value) => {
+    state.sortwayctypeclick = value;
   },
 };
 const actions = {
@@ -95,7 +103,7 @@ const actions = {
         });
     });
   },
-  
+
   unStar({
     commit
   }, question) {
