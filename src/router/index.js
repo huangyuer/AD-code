@@ -140,7 +140,7 @@ export default new Router({
       name: "diseaseTest",
       meta: {
         title: "自我评估",
-        index: 1
+        index: 2
       }
     },
     {
@@ -267,7 +267,7 @@ export default new Router({
     {
       path: "/aboutUs",
       component: () =>
-      import("@/views/patientManagement/aboutUs"),
+        import("@/views/patientManagement/aboutUs"),
       meta: {
         title: "关于我们",
         index: 1
