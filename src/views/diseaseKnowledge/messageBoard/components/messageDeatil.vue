@@ -1,6 +1,5 @@
 <template>
-  <van-swipe-cell>
-    <div class="message-info" @click="messageDeatil">
+    <div class="message-info">
       <div class="message-top">
         <div class="avatar-box">
           <img :src="item.headImg" alt />
@@ -17,65 +16,24 @@
         <div>{{item.level}}</div>
       </div>
     </div>
-    <template #right>
-      <van-button square text="删除" type="danger" class="delete-button" @click="delLeaveMsg" />
-    </template>
-  </van-swipe-cell>
 </template>
 <script>
-import { Toast } from "vant";
 export default {
-  name: "messageInfo",
-  data() {
-    return {};
-  },
-  props: {
-    item: {
-      type: Object,
-      default: function() {
-        return {};
+   name:'MessageDeatil',
+   data() {
+      return {
+          item:this.$route.params.msgItem
       }
-    }
-  },
-  methods: {
-    delLeaveMsg(){
-      this.$emit("delLeaveMsg",this.item._id )
-    },
-    messageDeatil(){
-      this.$router.push({
-        path: "/messageDeatil",name:'MessageDeatil',params:{msgItem:this.item}
-      });
-    }
-  }
-};
+   },
+}
 </script>
-<style lang="less" scoped>
-@aaa: ~">>>";
-@{aaa} .van-swipe-cell__right {
-  background: rgba(255, 117, 90, 1);
-}
-@{aaa} .van-button--danger {
-  height: 100%;
-  font-size: 0.28rem;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 1);
-}
+<style lang='less' scoped>
 .message-info {
   height: 2.8rem;
   background: rgba(255, 255, 255, 1);
   border-top: 0.02rem solid rgba(243, 243, 243, 1);
-  border-bottom: 0.02rem solid rgba(243, 243, 243, 1);
   margin-bottom: 0.2rem;
-  position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    width: 0.08rem;
-    height: 0.8rem;
-    background: rgba(0, 153, 102, 1);
-    border-radius: 4px;
-  }
+
   .message-top {
     padding: 0.2rem 0.32rem 0.12rem 0.32rem;
     display: flex;

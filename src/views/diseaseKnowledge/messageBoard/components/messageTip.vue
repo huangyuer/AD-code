@@ -1,7 +1,8 @@
 <template>
   <div class="message-tip">
     <svg-icon iconClass="notice" className="icon"></svg-icon>
-    <span>您有1篇留言在审核中</span>
+    <span v-if="ckNum>0">您有{{ckNum}}篇留言在审核中</span>
+    <span v-else>您有{{failNum}}篇留言未通过审核</span>
   </div>
 </template>
 <script>
@@ -9,6 +10,16 @@ export default {
   name: "messageTip",
   data() {
     return {};
+  },
+  props:{
+    ckNum:{
+      type:Number,
+      default:0
+    },
+    failNum:{
+      type:Number,
+      default:0
+    }
   }
 };
 </script>

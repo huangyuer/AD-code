@@ -80,6 +80,18 @@ export default new Router({
       }
     },
     {
+      path: "/mssageDeatil",
+      component: () =>
+        import(
+          "@/views/diseaseKnowledge/messageBoard/components/messageDeatil.vue"
+        ),
+      name: "MessageDeatil",
+      meta: {
+        title: "留言详情",
+        index: 2
+      }
+    },
+    {
       path: "/messageBoard/leaveMessage",
       component: () =>
         import(

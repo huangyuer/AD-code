@@ -11,12 +11,7 @@
         :border="false"
         show-word-limit
       />
-      <van-uploader
-        v-model="fileList"
-        multiple
-        max-count="4"
-        :after-read="afterRead"
-      />
+      <van-uploader v-model="fileList" multiple max-count="4" :after-read="afterRead" />
       <div class="van-field__word-limit picture-limit">
         <span class="van-field__word-num">{{ fileList.length }}</span>/4
       </div>
@@ -94,8 +89,8 @@
 <script>
 // import DropdownMenu from "@/components/DropdownMenu";
 import Dialog from "@/components/Dialog";
-import { Toast } from 'vant';
-import qs from 'qs'
+import { Toast } from "vant";
+import qs from "qs";
 
 export default {
   name: "LeaveMessage",
@@ -119,7 +114,8 @@ export default {
   },
   created() {
     this.$store.dispatch("diseaseKnowledge/getLvMsgSelect").then(data => {
-      (this.typeColumns = data.type), (this.levelColumns = data.level);
+      this.typeColumns = data.type;
+      this.levelColumns = data.level;
       console.log("------ss", data);
     });
   },
@@ -128,11 +124,11 @@ export default {
       this.sexValue = value;
       this.sexPicker = false;
     },
-       typeConfirm(value) {
+    typeConfirm(value) {
       this.typeValue = value;
       this.typePicker = false;
     },
-          levelConfirm(value) {
+    levelConfirm(value) {
       this.levelValue = value;
       this.levelPicker = false;
     },
@@ -157,28 +153,28 @@ export default {
     },
     DropdownchangeValue() {},
     commitBtn() {
-      let images=[]
+      let images = [];
       for (const key in this.fileList) {
         if (this.fileList.hasOwnProperty(key)) {
-          images.push(this.fileList[key].images)
+          images.push(this.fileList[key].images);
         }
       }
-      let params={
-        sex:this.sexValue,
-        age:this.ageValue,
-        description:this.description,
-        tag:this.typeValue,
-        level:this.levelValue,
-        images:images
-      }
-       this.$store
-        .dispatch("diseaseKnowledge/addLeaveMsg",params)
+      let params = {
+        sex: this.sexValue,
+        age: this.ageValue,
+        description: this.description,
+        tag: this.typeValue,
+        level: this.levelValue,
+        images: images
+      };
+      this.$store
+        .dispatch("diseaseKnowledge/addLeaveMsg", params)
         .then(data => {
           this.show = true;
-        }).catch(e=>{
-          Toast(e)
+        })
+        .catch(e => {
+          Toast(e);
         });
-      
     },
     closeBtn() {
       this.show = false;
