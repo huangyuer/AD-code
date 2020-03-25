@@ -24,11 +24,17 @@
       <transition name="van-slide-up">
         <hospital-list
           :show="show"
+          :typeValue="typeValue"
           @toHostipalDetail="toHostipalDetail"
+          @typePickeropen="typePickeropen"
         ></hospital-list>
       </transition>
       <transition name="van-slide-up">
-        <hospital-detail :show="showDetail" @goNav="goNav"></hospital-detail>
+        <hospital-detail
+          :show="showDetail"
+          @goNav="goNav"
+          @closedetailNav="closedetailNav"
+        ></hospital-detail>
       </transition>
       <transition name="van-slide-up">
         <navgation-hospital
@@ -36,6 +42,15 @@
           @closeNav="closeNav"
         ></navgation-hospital>
       </transition>
+      <van-popup class="distancetip" v-model="typePicker" position="bottom">
+        <van-picker
+          show-toolbar
+          :columns="typeColumns"
+          @confirm="typeConfirm"
+          @cancel="typePicker = false"
+          visible-item-count="3"
+        />
+      </van-popup>
     </div>
   </div>
 </template>
@@ -55,6 +70,10 @@ export default {
   },
   data() {
     return {
+      typePicker: false,
+      typeValue: "",
+      distancediv: "",
+      typeColumns: ["1公里以内", "3公里以内", "5公里以内"], //
       ii: false,
       show: false,
       showDetail: false,
@@ -86,6 +105,15 @@ export default {
     this.show = true;
   },
   methods: {
+    typePickeropen() {
+      this.typePicker = true;
+    },
+    typeConfirm(value) {
+      this.typeValue = value;
+      this.typePicker = false;
+      // this.distancediv =
+      // this.$refs.distancediv.innerHTML = value;
+    },
     showPopup() {
       this.ii = true;
     },
@@ -102,14 +130,24 @@ export default {
       this.showDetail = val;
       this.showNav = true;
     },
+    closedetailNav(val) {
+      this.showDetail = val;
+      this.show = true;
+    },
     closeNav(val) {
       this.showNav = val;
       this.showDetail = !val;
     },
     getMyLocation() {
-      this.$store.dispatch("medicationGuidance/getMyLocation").then(res => {
-        console.log("fsdfdsfsd", res);
-      });
+      this.$store
+        .dispatch("medicationGuidance/getMyLocation")
+        .then(res => {
+          console.log("fsdfdsfsd", res);
+        })
+        .catch(e => {
+          alert(e);
+          console.log(e);
+        });
     },
     onChange(val) {
       this.search = val;
@@ -205,6 +243,14 @@ export default {
 </script>
 
 <style scoped lang="less">
+@aaa: ~">>>";
+
+/deep/.distancetip.van-popup.van-popup--bottom {
+  z-index: 3000 !important;
+}
+/deep/.van-overlay {
+  z-index: 2999 !important;
+}
 .HospitalMapWapper {
   position: relative;
   .MapCenter {
@@ -226,5 +272,28 @@ export default {
   height: 100vh;
   overflow: hidden;
   margin: 0;
+}
+.distancetip {
+  @{aaa} .van-picker__toolbar {
+    &::after {
+      border: none;
+    }
+  }
+  @{aaa} .van-picker {
+    height: 4.16rem;
+  }
+  @{aaa} .van-picker__frame {
+    &::after {
+      border: none;
+    }
+  }
+
+  @{aaa} .van-picker__cancel,
+  @{aaa}.van-picker__confirm {
+    font-size: 0.28rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: rgba(0, 153, 102, 1);
+  }
 }
 </style>

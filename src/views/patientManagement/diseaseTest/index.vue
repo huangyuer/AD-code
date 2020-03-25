@@ -15,20 +15,21 @@
         :loop="false"
         :show-indicator="false"
         :touchable="false"
+        :initial-swipe="3"
         indicator-color="white"
         @change="onChange"
       >
-        <van-swipe-item v-for="(item,index) in questions" :key="index">
-          <div class="swipediv">{{item.no + "." + item.title}}</div>
+        <van-swipe-item v-for="(item, index) in questions" :key="index">
+          <div class="swipediv">{{ item.no + "." + item.title }}</div>
           <radio-box
-            v-if="item.type=='radio' && !item.isSpecial"
+            v-if="item.type == 'radio' && !item.isSpecial"
             :list="item.options"
             :title="item._id"
             :type="item.type"
             @nextToPageradiobox="nextToPageradiobox"
           ></radio-box>
           <check-box
-            v-if="item.type=='checkbox' && !item.isSpecial"
+            v-if="item.type == 'checkbox' && !item.isSpecial"
             :list="item.options"
             :title="item._id"
             :type="item.type"
@@ -41,15 +42,31 @@
             :type="'slider'"
             @nextToPageslider="nextToPageslider"
           ></slider-box>
-          <div v-if="current+1<total" class="groupnext" @click="groupNextBtn()">下一题</div>
-          <div v-if="current+1==total" class="groupnext" @click="uptoCommit()">提交</div>
+          <div
+            v-if="current + 1 < total"
+            class="groupnext"
+            @click="groupNextBtn()"
+          >
+            下一题
+          </div>
+          <div
+            v-if="current + 1 == total"
+            class="groupnext"
+            @click="uptoCommit()"
+          >
+            提交
+          </div>
         </van-swipe-item>
         <van-swipe-item>
           <result-info :dataresult="levelresult"></result-info>
         </van-swipe-item>
-        <div class="custom-indicator" slot="indicator" v-if="current+1<=total">
+        <div
+          class="custom-indicator"
+          slot="indicator"
+          v-if="current + 1 <= total"
+        >
           {{ current + 1 }}
-          <b>/{{total}}</b>
+          <b>/{{ total }}</b>
         </div>
       </van-swipe>
     </div>

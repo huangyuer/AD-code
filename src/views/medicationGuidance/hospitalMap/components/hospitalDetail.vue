@@ -14,24 +14,25 @@
     >
       <!-- <div class="whiteskr"></div> -->
       <div class="exceptwhite">
-        <van-sticky><div class="tip"></div></van-sticky>
+        <div class="headerTol">
+          <div class="tip" @click="clicktip()"></div>
+        </div>
         <div class="hospitalContent">
-          <div class="hospitalContentname">上海市皮肤病医院</div>
+          <div class="hospitalContentname">医院详情</div>
           <div class="todaohangItem">
-            <van-image
+            <!-- <van-image
               width="2.8rem"
               height="2rem"
               fit="cover"
               src="https://img.yzcdn.cn/vant/cat.jpeg"
-            />
+            /> -->
             <div class="right">
               <div class="hp-address">上海市长宁区武夷路196号</div>
               <div class="hp-phone">电话：(021)57687676</div>
               <div class="hp-distance">距离您569m</div>
-              <div class="hp-btn" @click="goNav()">
-                <svg-icon iconClass="daohang" className="daohang"></svg-icon
-                >导航
-              </div>
+            </div>
+            <div class="hp-btn" @click="goNav()">
+              <svg-icon iconClass="daohang" className="daohang"></svg-icon>导航
             </div>
           </div>
           <div class="hospitalContentname">医生列表</div>
@@ -51,11 +52,7 @@
                 />
                 <div class="doc-detail">
                   <div class="doc-name">
-                    胡光
-                    <svg-icon
-                      iconClass="topicon"
-                      className="topicon"
-                    ></svg-icon>
+                    胡光 | 男
                   </div>
                   <div class="doc-work">pifuke | zhurenyishi</div>
                 </div>
@@ -82,7 +79,7 @@ export default {
   data() {
     return {
       isShow: false,
-      doctoritem: [{}, {}, {}, {}, {}, {}, {}, {}, {}]
+      doctoritem: [{}, {}, {}, {}, {}]
     };
   },
   mounted() {
@@ -97,11 +94,19 @@ export default {
     goNav() {
       this.$emit("goNav", false);
     },
+    clicktip() {
+      var vanpopup = document.getElementsByClassName("van-popup")[0];
+      let scrollTop = vanpopup.scrollTop;
+      var bottom = document.getElementsByClassName("van-popup--bottom")[0];
+      console.log(bottom.style.top);
+      this.isShow = false;
+      this.$emit("closedetailNav", false);
+    },
     touchstart(e) {
-      touchstart(e);
+      // touchstart(e);
     },
     touchmove(e) {
-      touchmove(e);
+      // touchmove(e);
     }
   }
 };
@@ -118,24 +123,33 @@ export default {
   .exceptwhite {
     background: #ffffff;
     padding: 0 0.32rem;
-    .tip {
-      width: 100%;
-      height: 0.3rem;
+    .headerTol {
+      position: fixed;
+      width: calc(100% - 0.64rem);
       background: #ffffff;
-      position: relative;
-      &:after {
-        content: "";
-        position: absolute;
-        left: calc(50% - 0.4rem);
-        bottom: 0;
-        width: 0.8rem;
-        height: 0.1rem;
-        background: rgba(216, 216, 216, 1);
-        border-radius: 0.11rem;
+      z-index: 2;
+      .tip {
+        width: 100%;
+        height: 0.56rem;
+        background: #ffffff;
+        position: fixed;
+        width: calc(100% - 0.64rem);
+        background: #ffffff;
+        z-index: 2;
+        &:after {
+          content: "";
+          position: absolute;
+          left: calc(50% - 0.4rem);
+          bottom: 0.24rem;
+          width: 0.8rem;
+          height: 0.1rem;
+          background: rgba(216, 216, 216, 1);
+          border-radius: 0.11rem;
+        }
       }
     }
     .hospitalContent {
-      padding-top: 0.24rem;
+      padding-top: 0.56rem;
       .hospitalContentname {
         font-size: 0.3rem;
         font-family: "PingFangSC-Medium";
@@ -147,11 +161,11 @@ export default {
       }
       .todaohangItem {
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
         padding: 0.22rem 0;
         .right {
-          padding-left: 0.2rem;
+          // padding-left: 0.2rem;
           display: flex;
           justify-content: center;
           align-items: flex-start;
@@ -178,25 +192,27 @@ export default {
             color: rgba(84, 84, 84, 1);
             line-height: initial;
           }
-          .hp-btn {
-            width: 1.4rem;
-            height: 0.44rem;
-            border-radius: 0.4rem;
-            border: 0.02rem solid rgba(0, 153, 102, 1);
-            font-size: 0.24rem;
-            font-family: "PingFangSC-Medium";
-            font-weight: 500;
-            color: rgba(0, 153, 102, 1);
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 0.2rem;
-            .daohang {
-              margin-right: 0.12rem;
-              width: 0.24rem;
-              height: 0.24rem;
-            }
+        }
+        .hp-btn {
+          width: 1.4rem;
+          height: 0.44rem;
+          border-radius: 0.4rem;
+          border: 0.02rem solid rgba(0, 153, 102, 1);
+          font-size: 0.24rem;
+          font-family: "PingFangSC-Medium";
+          font-weight: 500;
+          color: #ffffff;
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 0.2rem;
+          background: #009d75;
+          .daohang {
+            margin-right: 0.12rem;
+            width: 0.24rem;
+            height: 0.24rem;
+            fill: #ffffff !important;
           }
         }
       }
@@ -255,5 +271,8 @@ export default {
 .ss.van-action-sheet {
   max-height: 100%;
   height: 100vh;
+}
+.van-popup--bottom {
+  top: 0;
 }
 </style>

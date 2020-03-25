@@ -22,7 +22,7 @@
             <div>234m</div>
           </div>
           <div class="go-right">
-            <svg-icon iconClass="daohang" className="dao-hang"></svg-icon>
+            <svg-icon iconClass="daohang" className="daohang"></svg-icon>
             出发
           </div>
         </div>
@@ -170,12 +170,11 @@ export default {
         color: rgba(255, 255, 255, 1);
         line-height: 0.52rem;
         text-align: center;
-        // .dao-hang2 {
-        //   margin-right: 0.12rem;
-        //   width: 0.24rem;
-        //   height: 0.24rem;
-        //   fill: #9a979b !important;
-        // }
+        .daohang {
+          width: 0.24rem;
+          height: 0.24rem;
+          fill: #ffffff !important;
+        }
       }
     }
   }

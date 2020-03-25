@@ -14,11 +14,27 @@
       @touchmove="touchmove"
     >
       <div class="headerTol">
-        <div class="tip"></div>
+        <div class="tip" @click="clicktip()"></div>
         <!-- <van-sticky :container="container"> -->
         <div class="headertop">
           <div>附近医院</div>
-          <div>位置距离</div>
+          <div class="distance">
+            <!-- <van-field
+              readonly
+              clickable
+              name="picker"
+              :value="typeValue"
+              placeholder="位置距离"
+              @click="typePicker = true"
+            /> -->
+            <div @click="toopen()" class="distancediv">
+              <span ref="distancediv">位置距离</span>
+              <img
+                style="width:.24rem;height:.24rem;margin-top:.12rem;margin-left:.08rem"
+                :src="require('../../../../assets/downGrey.png')"
+              />
+            </div>
+          </div>
         </div>
         <!-- </van-sticky> -->
       </div>
@@ -32,7 +48,8 @@
           <div class="left">
             <div class="hospitalname">
               上海市皮肤病医院
-              <svg-icon iconClass="topicon" className="topicon"></svg-icon>
+              <span class="top">首推</span>
+              <span class="hot">热门</span>
             </div>
             <div class="hospitaladdress">上海市长宁区武夷路196号</div>
           </div>
@@ -52,11 +69,16 @@ export default {
     show: {
       type: Boolean,
       default: false
+    },
+    typeValue: {
+      type: String,
+      default: ""
     }
   },
   data() {
     return {
       isShow: false,
+      typePicker: false,
       itemlist: [
         {},
         {},
@@ -89,20 +111,41 @@ export default {
     document.body.style.overflow = "";
   },
   methods: {
+    toopen() {
+      this.typePicker = true;
+      this.$emit("typePickeropen", true);
+    },
     toPageDetail(item) {
       this.isShow = false;
       this.$emit("toHostipalDetail", item, false);
     },
+    clicktip() {
+      var vanpopup = document.getElementsByClassName("van-popup")[0];
+      let scrollTop = vanpopup.scrollTop;
+      var bottom = document.getElementsByClassName("van-popup--bottom")[0];
+      console.log(bottom.style.top);
+      if (bottom.style.top == "50%") {
+        vanpopup.style.scrollTop = 0;
+        bottom.style.top = "0";
+        bottom.style.transition = "0.3s";
+      } else {
+        bottom.style.top = "50%";
+        bottom.style.transition = "0.3s";
+      }
+    },
     touchstart(e) {
-      touchstart(e);
+      // touchstart(e);
     },
     touchmove(e) {
-      touchmove(e);
+      // touchmove(e);
     }
   },
   watch: {
     show: function(val) {
       this.isShow = val;
+    },
+    typeValue: function(val) {
+      this.$refs.distancediv.innerHTML = val;
     }
   }
 };
@@ -156,6 +199,12 @@ export default {
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: initial;
+        .distancediv {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+        }
       }
     }
   }
@@ -184,6 +233,41 @@ export default {
             height: 0.32rem;
             margin-left: 0.12rem;
           }
+          .top {
+            width: 0.8rem;
+            height: 0.36rem;
+            background: linear-gradient(
+              270deg,
+              rgba(50, 209, 157, 1) 0%,
+              rgba(0, 153, 102, 1) 100%
+            );
+            font-size: 0.24rem;
+            font-family: "PingFangSC-Medium";
+            font-weight: 500;
+            color: rgba(255, 255, 255, 1);
+            padding: 0 0.16rem;
+            border-top-left-radius: 0.3rem;
+            border-top-right-radius: 0.2rem;
+            border-bottom-right-radius: 0.2rem;
+            margin-left: 0.2rem;
+          }
+          .hot {
+            width: 0.8rem;
+            height: 0.36rem;
+            background: linear-gradient(
+              270deg,
+              rgba(250, 212, 0, 1) 0%,
+              rgba(242, 169, 0, 1) 100%
+            );
+            font-size: 0.24rem;
+            font-family: "PingFangSC-Medium";
+            font-weight: 500;
+            color: rgba(255, 255, 255, 1);
+            padding: 0 0.16rem;
+            border-top-left-radius: 0.3rem;
+            border-top-right-radius: 0.2rem;
+            border-bottom-right-radius: 0.2rem;
+          }
         }
         .hospitaladdress {
           font-size: 0.28rem;
@@ -207,6 +291,7 @@ export default {
           margin-right: 0.08rem;
           width: 0.24rem;
           height: 0.24rem;
+          fill: #009966 !important;
         }
       }
     }
@@ -218,8 +303,8 @@ export default {
 }
 .van-popup {
   //   max-height: 50%;
-  height: 100vh;
-  -webkit-overflow-scrolling: touch;
+  // height: 100vh;
+  // -webkit-overflow-scrolling: touch;
 }
 .van-popup--bottom {
   top: 50%;
