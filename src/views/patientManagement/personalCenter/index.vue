@@ -8,9 +8,7 @@
       "
       :isClose="false"
     >
-      <div slot="confirmButton" class="dialog-confirm" @click="confirmBtn">
-        前往自我评估
-      </div>
+      <div slot="confirmButton" class="dialog-confirm" @click="confirmBtn">前往自我评估</div>
       <div slot="closeButton" @click="closeBtn">
         <svg-icon iconClass="register-close" class="close-icon"></svg-icon>
       </div>
@@ -19,17 +17,14 @@
     <div class="header">
       <div class="top">
         <div class="left">
-          <van-image
-            round
-            fit="cover"
-            width="1.32rem"
-            height="1.32rem"
-            :src="user.headImg"
-          />
+          <van-image round fit="cover" width="1.32rem" height="1.32rem" :src="user.headImg" />
           <div class="nameitem">
             <div class="name">
               {{ user.name != "" ? user.name : user.nickName }}
-              <span class="pagetoinfo" @click="toPagepersonalInfo()">查看</span>
+              <span
+                class="pagetoinfo"
+                @click="toPagepersonalInfo()"
+              >查看</span>
             </div>
             <div class="phone">{{ user.phone }}</div>
           </div>
@@ -70,9 +65,7 @@
                 color3: item.status == '未完成',
                 'font-size28': true
               }"
-            >
-              {{ item.name }}（{{ item.num }}/{{ item.limit }}）
-            </div>
+            >{{ item.name }}（{{ item.num }}/{{ item.limit }}）</div>
             <div class="btnpage whitenone">{{ item.status }}</div>
           </div>
         </div>
@@ -96,9 +89,7 @@
             :key="index"
           >
             <div class="color52 font-size28">{{ item.stars.title }}</div>
-            <div class="coloracadaf font-size30">
-              {{ item.stars.date }}2020-02-26
-            </div>
+            <div class="coloracadaf font-size30">{{ item.stars.date }}2020-02-26</div>
           </div>
           <!-- <div class="iteminner fmregular">
             <div class="color52 font-size28">fsadfasfsafa</div>
@@ -124,12 +115,12 @@
         <div class="itemlist">
           <div class="iteminner" v-if="answerLogs.length != 0">
             <div class="color52 font-size28">
-              <div class="color3 font-size30 fmmedium">
-                {{ user.name != "" ? user.name : user.nickName }}
-              </div>
+              <div
+                class="color3 font-size30 fmmedium"
+              >{{ user.name != "" ? user.name : user.nickName }}</div>
               <div class="color3 font-size28 fmregular">
                 您最近一次评估程度为
-                <b class="color009966 fmmedium">{{ answerLogs }}</b>
+                <b class="color009966 fmmedium">{{ answerLogs }}分</b>
               </div>
             </div>
             <div class="btnpage" @click="todiseaseTest()">去评估</div>
@@ -151,8 +142,7 @@
                 <span
                   style="margin-left:.16rem"
                   class="color6 font-size28 fmregular"
-                  >{{ msglist.age }}岁</span
-                >
+                >{{ msglist.age }}岁</span>
               </div>
               <div class="color3 font-size28 fmregular">
                 您最近一次留言时间为
@@ -275,7 +265,7 @@ export default {
         .then(response => {
           console.log("response", response);
           this.answerLogs =
-            response.data.answerLogs[response.data.answerLogs.length - 1].level;
+            response.data.answerLogs[response.data.answerLogs.length - 1].score;
         })
         .catch(e => {
           console.log("fsdfsdf", e);

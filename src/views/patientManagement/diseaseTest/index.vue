@@ -15,7 +15,7 @@
         :loop="false"
         :show-indicator="false"
         :touchable="false"
-        :initial-swipe="3"
+        :initial-swipe="0"
         indicator-color="white"
         @change="onChange"
       >
@@ -42,31 +42,15 @@
             :type="'slider'"
             @nextToPageslider="nextToPageslider"
           ></slider-box>
-          <div
-            v-if="current + 1 < total"
-            class="groupnext"
-            @click="groupNextBtn()"
-          >
-            下一题
-          </div>
-          <div
-            v-if="current + 1 == total"
-            class="groupnext"
-            @click="uptoCommit()"
-          >
-            提交
-          </div>
+          <div v-if="current + 1 < total" class="groupnext" @click="groupNextBtn()">下一题</div>
+          <div v-if="current + 1 == total" class="groupnext" @click="uptoCommit()">提交</div>
         </van-swipe-item>
         <van-swipe-item>
           <result-info :dataresult="levelresult"></result-info>
         </van-swipe-item>
-        <div
-          class="custom-indicator"
-          slot="indicator"
-          v-if="current + 1 <= total"
-        >
+        <div class="custom-indicator" slot="indicator" v-if="current + 1 <= total">
           {{ current + 1 }}
-          <b>/{{ total }}</b>
+          <b>/ {{ total }}</b>
         </div>
       </van-swipe>
     </div>
@@ -178,6 +162,13 @@ export default {
         .then(data => {
           this.questions = this.$store.getters.getquesion.questions;
           this.total = this.$store.getters.getquesion.total;
+          if (this.questions[0].isSpecial == true) {
+            this.nextToPageslider(
+              this.questions[0].options[0],
+              this.questions[0]._id,
+              "slider"
+            );
+          }
         })
         .catch(e => {
           console.log(e);
@@ -258,7 +249,7 @@ export default {
     font-weight: 500;
     color: rgba(255, 255, 255, 1);
     line-height: 0.8rem;
-    margin-top: 2.96rem;
+    margin-top: 0.6rem;
   }
 }
 </style>

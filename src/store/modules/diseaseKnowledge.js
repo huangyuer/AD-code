@@ -36,6 +36,7 @@ const actions = {
       getVideos({
           page: question.page,
           limit: question.limit,
+          title:question.title,
           tag: question.tag,
           sort: question.sort,
           desc: question.desc

@@ -41,22 +41,28 @@
       <div class="hospitalContent">
         <div
           class="hospitalItem"
-          v-for="(item, key) in itemlist"
+          v-if="itemlist!=[]"
+          v-for="(itemss, key) in itemlist"
           :key="key"
-          @click="toPageDetail(item)"
+          @click="toPageDetail(itemss)"
         >
+        <!-- <template v-for='items in item'>
+          <template  v-for='(itemss, indexs) in items'> -->
+            <!-- <td>{{itemss}}</td> -->
+          
           <div class="left">
-            <div class="hospitalname">
-              上海市皮肤病医院
-              <span class="top">首推</span>
-              <span class="hot">热门</span>
+            <div class="hospitalname">{{itemss.name}}
+              <span class="top" v-if="itemss.isAd">首推</span>
+              <span class="hot" v-if="itemss.isZd && !itemss.isAd">热门</span>
             </div>
-            <div class="hospitaladdress">上海市长宁区武夷路196号</div>
+            <div class="hospitaladdress">{{itemss.address}}</div>
           </div>
           <div class="right">
             <svg-icon iconClass="daohang" className="dao-hang"></svg-icon
-            ><span>787m</span>
+            ><span>{{itemss.distance}}</span>
           </div>
+          <!-- </template>
+        </template> -->
         </div>
       </div>
     </div>
@@ -73,34 +79,20 @@ export default {
     typeValue: {
       type: String,
       default: ""
+    },
+    hospitals:{
+      type:Array,
+      default:[],
     }
   },
   data() {
     return {
       isShow: false,
       typePicker: false,
-      itemlist: [
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {}
-      ],
       container: null,
       startx: 0,
-      starty: 0
+      starty: 0,
+      itemlist:[],
     };
   },
   mounted() {
@@ -124,7 +116,7 @@ export default {
       let scrollTop = vanpopup.scrollTop;
       var bottom = document.getElementsByClassName("van-popup--bottom")[0];
       console.log(bottom.style.top);
-      if (bottom.style.top == "50%") {
+      if (bottom.style.top == "50%" || bottom.style.top=='') {
         vanpopup.style.scrollTop = 0;
         bottom.style.top = "0";
         bottom.style.transition = "0.3s";
@@ -146,7 +138,10 @@ export default {
     },
     typeValue: function(val) {
       this.$refs.distancediv.innerHTML = val;
-    }
+    },
+    hospitals:function(val) {
+      this.itemlist = val;
+    },
   }
 };
 </script>
@@ -217,6 +212,7 @@ export default {
       align-items: center;
       padding: 0.2rem 0;
       border-bottom: 0.02rem solid #e5e5e5;
+      position:relative;
       .left {
         display: flex;
         flex-direction: column;
@@ -249,7 +245,7 @@ export default {
             border-top-left-radius: 0.3rem;
             border-top-right-radius: 0.2rem;
             border-bottom-right-radius: 0.2rem;
-            margin-left: 0.2rem;
+            margin-left: 0.1rem;
           }
           .hot {
             width: 0.8rem;
@@ -275,6 +271,10 @@ export default {
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: initial;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width:5.5rem;
         }
       }
       .right {
@@ -287,6 +287,9 @@ export default {
         color: rgba(84, 84, 84, 1);
         line-height: initial;
         margin-top: 0.4rem;
+        position: absolute;
+        right: 0;
+        bottom: .2rem;
         .dao-hang {
           margin-right: 0.08rem;
           width: 0.24rem;

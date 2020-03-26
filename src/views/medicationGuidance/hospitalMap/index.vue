@@ -2,22 +2,12 @@
   <div class="HospitalMapWapper">
     <!-- <svg-icon iconClass='xiala' className='icon'></svg-icon> -->
     <div class="MapCenter">
-      <search-input
-        :placeholder="'输入我的位置'"
-        :recentSearch="recentSearch"
-        @onChange="onChange"
-        @recentClear="recentClear"
-      ></search-input>
-      <!-- <div><div id="container" style="width:100%;height:100vh"></div></div> -->
-      <div id="allmap"></div>
-      <div>
-        <div
-          @click="openHospitalList()"
-          style="background:green;width:100%;heigth:.3rem"
-        >
-          fsdfsfsaf
-        </div>
+      <!-- <div class="searchdiv" @click="searchpage()"></div> -->
+      <div style="padding-top:.4rem"></div>
+      <div class="searchwapper" v-if="isExitSearch" @click="searchpage()">
+        <search-input :readonly="true" :placeholder="'输入我的位置'"></search-input>
       </div>
+      <div id="allmap"></div>
     </div>
     <!-- <van-cell is-link @click="showPopup">展示弹出层</!-->
     <div class="listDoctorAndHospital">
@@ -25,6 +15,7 @@
         <hospital-list
           :show="show"
           :typeValue="typeValue"
+          :hospitals="hospitals"
           @toHostipalDetail="toHostipalDetail"
           @typePickeropen="typePickeropen"
         ></hospital-list>
@@ -32,6 +23,8 @@
       <transition name="van-slide-up">
         <hospital-detail
           :show="showDetail"
+          :doctors="doctors"
+          :hispitalDetail="hispitalDetail"
           @goNav="goNav"
           @closedetailNav="closedetailNav"
         ></hospital-detail>
@@ -39,6 +32,10 @@
       <transition name="van-slide-up">
         <navgation-hospital
           :show="showNav"
+          :x="x"
+          :y="y"
+          :hispitalDetail="hispitalDetail"
+          @togoNavPART="togoNavPART"
           @closeNav="closeNav"
         ></navgation-hospital>
       </transition>
@@ -60,6 +57,8 @@ import SearchInput from "@/components/SearchInput";
 import HospitalDetail from "./components/hospitalDetail";
 import HospitalList from "./components/hospitalList";
 import NavgationHospital from "./components/navgationHospital";
+var map = new BMap.Map("allmap");
+import { Toast } from "vant";
 export default {
   name: "HospitalMap",
   components: {
@@ -70,173 +69,251 @@ export default {
   },
   data() {
     return {
+      isExitSearch: true,
       typePicker: false,
       typeValue: "",
       distancediv: "",
-      typeColumns: ["1公里以内", "3公里以内", "5公里以内"], //
+      typeColumns: ["3公里以内", "5公里以内", "10公里以内"], //
       ii: false,
       show: false,
       showDetail: false,
       showNav: false,
       search: "",
-      recentSearch: {
-        type: "最近输入位置",
-        data: ["上海市皮肤病医院", "上海江城皮肤病医院"]
-      }
+      x: 0,
+      y: 0,
+      params: {
+        x: String,
+        y: String,
+        address: String,
+        distance: Number
+      },
+      hospitals: [],
+      hispitalDetail: {},
+      doctors: []
     };
   },
   created() {
     this.getMyLocation();
+    console.log(this.$route.params.item);
+    if (this.$route.params.item != undefined) {
+      var address =
+        this.$route.params.item.province +
+        this.$route.params.item.city +
+        this.$route.params.item.address;
+      this.$set(this.params, "address", address);
+      this.getNearHospitals();
+    }
   },
   mounted() {
-    // this.getLocation();
-    // 百度地图API功能
-    var map = new BMap.Map("allmap");
-    var point = new BMap.Point(121.612682, 31.176923);
-    map.centerAndZoom(point, 19);
-    //创建标注点
-    var pt = new BMap.Point(121.612682, 31.176923);
-    var myIcon = new BMap.Icon(
-      require("../../../assets/up.png"),
-      new BMap.Size(32, 32)
-    );
-    var marker2 = new BMap.Marker(pt, { icon: myIcon }); // 创建标注
-    map.addOverlay(marker2); // 将标注添加到地图中
     this.show = true;
   },
   methods: {
+    searchpage() {
+      this.$router.push({ path: "/searchPage" });
+    },
+    searchByStationName(localSearch) {
+      //拿到医院名字，得到经纬度
+      var keyword = this.hispitalDetail.name;
+      var _this = this;
+      localSearch.setSearchCompleteCallback(function(searchResult) {
+        var poi = searchResult.getPoi(0);
+        var PointArr = new Array();
+        var point0 = new BMap.Point(_this.x, _this.y); //创建一个地理点坐标
+        var point1 = new BMap.Point(poi.point.lng, poi.point.lat); //创建一个地理点坐标
+        PointArr.push(point0);
+        PointArr.push(point1);
+        var convertor = new BMap.Convertor();
+        convertor.translate(PointArr, 1, 5, _this.translateCallback);
+      });
+      localSearch.search(keyword);
+    },
+    translateCallback(data) {
+      console.log("translateCallback", data);
+      var map = new BMap.Map("allmap");
+      map.centerAndZoom(data.points[0], 12);
+      //创建自定义图标
+      var myIcon = new BMap.Icon(
+        require("../../../assets/dingwei.png"),
+        new BMap.Size(32, 62)
+      );
+      // 创建标注
+      var marker2 = new BMap.Marker(data.points[0], { icon: myIcon });
+      // 将标注添加到地图中
+      map.addOverlay(marker2);
+      // 创建polyline对象
+      var polyline = new BMap.Polyline(data.points, {
+        enableEditing: false, //是否启用线编辑，默认为false
+        enableClicking: true, //是否响应点击事件，默认为true
+        strokeWeight: "10", //折线的宽度，以像素为单位
+        strokeColor: "#90ADFF" //折线颜色
+      });
+      map.addOverlay(polyline);
+    },
+    accSub(arg1, arg2) {
+      var r1, r2, m, n;
+      try {
+        r1 = arg1.toString().split(".")[1].length;
+      } catch (e) {
+        r1 = 0;
+      }
+      try {
+        r2 = arg2.toString().split(".")[1].length;
+      } catch (e) {
+        r2 = 0;
+      }
+      m = Math.pow(10, Math.max(r1, r2)); //last modify by deeka //动态控制精度长度
+      n = r1 >= r2 ? r1 : r2;
+      return ((arg1 * m - arg2 * m) / m).toFixed(n);
+    },
+    map() {
+      // 百度地图API功能
+      var map = new BMap.Map("allmap");
+      var x = this.accSub(this.x, 0.0005);
+      var y = this.accSub(this.y, 0.0003);
+      var point = new BMap.Point(x, y);
+      map.centerAndZoom(point, 20);
+      //创建标注点
+      var pt = new BMap.Point(this.x, this.y);
+      var content = "我的位置";
+      var xlable = this.accSub(this.x, 0.0002);
+      var labelpt = new BMap.Point(xlable, this.y);
+      var label = new BMap.Label(content, {
+        // 创建文本标注
+        position: labelpt, // 设置标注的地理位置
+        offset: new BMap.Size(0, 0) // 设置标注的偏移量
+      });
+      map.addOverlay(label);
+      label.setStyle({
+        // 设置label的样式
+        color: "#030303",
+        fontSize: ".2rem",
+        border: "0",
+        background: "transparent",
+        "font-family": "PingFangSC-Medium",
+        transform: "rotate(35deg)"
+      });
+      var myIcon = new BMap.Icon(
+        require("../../../assets/dingwei.png"),
+        new BMap.Size(32, 62)
+      );
+      var marker2 = new BMap.Marker(pt, { icon: myIcon }); // 创建标注
+      map.addOverlay(marker2); // 将标注添加到地图中
+    },
+    //跳转第三方
+    togoNavPART() {
+      var url =
+        "http://api.map.baidu.com/direction?origin=latlng:" +
+        this.y +
+        "," +
+        this.x +
+        "|name:我的位置&destination=" +
+        this.hispitalDetail.name +
+        "&mode=driving&region=上海&output=html&src=webapp.baidu.openAPIdemo";
+      window.location.href = url;
+    },
+    //选择距离范围
     typePickeropen() {
       this.typePicker = true;
     },
+    //距离范围确定
     typeConfirm(value) {
       this.typeValue = value;
       this.typePicker = false;
-      // this.distancediv =
-      // this.$refs.distancediv.innerHTML = value;
+      var distance = parseInt(value.split("公里")[0]);
+      this.$set(this.params, "distance", distance * 1000);
+      this.getNearHospitals();
     },
-    showPopup() {
-      this.ii = true;
-    },
-    openHospitalList() {
-      this.show = true;
-    },
+    //打开医院详情
     toHostipalDetail(val, bool) {
+      document.title = "医院详情";
+      this.$route.meta.title = "医院详情";
       this.show = bool;
+      this.hispitalDetail = val;
+      this.getDoctors(val.hospital);
       setTimeout(() => {
         this.showDetail = !this.show;
       }, 300);
     },
-    goNav(val) {
+    //导航框显示并拿到目的医院的经纬度
+    goNav(val, name) {
+      this.isExitSearch = false;
+      document.title = "导航";
+      this.$route.meta.title = "导航";
       this.showDetail = val;
       this.showNav = true;
+      var map = new BMap.Map("allmap");
+      //拿到经纬度医院的
+      var localSearch = new BMap.LocalSearch(map, {
+        renderOptions: {
+          pageCapacity: 8,
+          autoViewport: true,
+          selectFirstResult: false
+        }
+      });
+      localSearch.enableAutoViewport();
+      this.searchByStationName(localSearch);
+    },
+    showPopup() {
+      this.ii = true;
     },
     closedetailNav(val) {
-      this.showDetail = val;
+      this.showDetail = false;
       this.show = true;
+      document.title = "医院地图";
+      this.$route.meta.title = "医院地图";
     },
     closeNav(val) {
       this.showNav = val;
       this.showDetail = !val;
+      this.isExitSearch = true;
+      document.title = "医院详情";
+      this.$route.meta.title = "医院详情";
+      this.map();
     },
+    //获取我的地址
     getMyLocation() {
       this.$store
         .dispatch("medicationGuidance/getMyLocation")
         .then(res => {
-          console.log("fsdfdsfsd", res);
+          this.x = parseFloat(res.data.location.x);
+          this.y = parseFloat(res.data.location.y);
+          this.$set(this.params, "x", res.data.location.x);
+          this.$set(this.params, "y", res.data.location.y);
+          this.map();
+          this.getNearHospitals();
         })
         .catch(e => {
           alert(e);
           console.log(e);
         });
     },
-    onChange(val) {
-      this.search = val;
-      console.log("--3-", val);
+    //获取附近医院
+    getNearHospitals() {
+      this.$store
+        .dispatch("medicationGuidance/getNearHospitals", this.params)
+        .then(res => {
+          this.hospitals = res.data.hospitals;
+          this.vloading = false;
+        })
+        .catch(e => {
+          Toast({
+            message: e,
+            position: "top"
+          });
+          // Toast(e);
+        });
     },
-    recentClear() {
-      this.$set(this.recentSearch, "data", []);
-    },
-    getLocation() {
-      document.getElementById("container").innerHTML =
-        "正在搜寻中，请稍候。。。";
-
-      var options = {
-        enableHighAccuracy: true,
-        maximumAge: 1000
-      };
-
-      if (navigator.geolocation) {
-        //浏览器支持geolocation
-        navigator.geolocation.getCurrentPosition(
-          this.onSuccess,
-          this.onError,
-          options
-        );
-      } else {
-        //浏览器不支持geolocation
-        alert("浏览器不支持GeoLocation!");
-      }
-    },
-    // 获取成功
-    onSuccess(position) {
-      console.log("positon", position);
-      // 经度
-      var longitude = position.coords.longitude;
-
-      // 纬度
-      var latitude = position.coords.latitude;
-
-      // 使用百度地图API创建地图实例
-      var map = new BMap.Map("container");
-
-      // 创建一个坐标
-      var point = new BMap.Point(longitude, latitude);
-
-      // 地图初始化，设置中心点坐标和地图级别
-      map.centerAndZoom(point, 16);
-
-      // 设置标注的图标,可自己定义图标
-      var icon = new BMap.Icon(
-        "http://api.map.baidu.com/img/markers.png",
-        new BMap.Size(23, 25),
-        {
-          offset: new BMap.Size(10, 25), // 定位图标尺寸
-          imageOffset: new BMap.Size(0, 0 - 11 * 25) // 设置图片偏移
-        }
-      );
-
-      // 设置标注的经纬度
-      var marker = new BMap.Marker(new BMap.Point(longitude, latitude), {
-        icon: icon
-      });
-
-      // 把标注添加到地图上
-      map.addOverlay(marker);
-
-      // 设置点击事件
-      marker.addEventListener("click", function() {
-        alert("经度:" + longitude + ", 纬度:" + latitude);
-      });
-    },
-    // 获取失败
-    onError(error) {
-      switch (error.code) {
-        case 1:
-          alert("位置服务被拒绝");
-          break;
-
-        case 2:
-          alert("暂时获取不到位置信息");
-          break;
-
-        case 3:
-          alert("获取信息超时");
-          break;
-
-        case 4:
-          alert("未知错误");
-          break;
-      }
+    //获取医院医生
+    getDoctors(id) {
+      this.$store
+        .dispatch("medicationGuidance/getDoctors", id)
+        .then(res => {
+          this.doctors = res.data.doctors;
+        })
+        .catch(e => {
+          alert(e);
+          console.log(e);
+        });
     }
   }
 };
@@ -253,11 +330,19 @@ export default {
 }
 .HospitalMapWapper {
   position: relative;
+  padding-top: 0.4rem;
   .MapCenter {
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
+    .searchwapper {
+      position: fixed;
+      z-index: 1;
+      width: 100%;
+      background: #ffffff;
+      padding-bottom: 0.24rem;
+    }
   }
   .listDoctorAndHospital {
     width: 100%;
@@ -268,10 +353,12 @@ export default {
   }
 }
 #allmap {
-  width: 100%;
+  // width: 100%;
   height: 100vh;
   overflow: hidden;
-  margin: 0;
+  margin: 0 0.32rem;
+  box-sizing: border-box;
+  background: #ffffff;
 }
 .distancetip {
   @{aaa} .van-picker__toolbar {

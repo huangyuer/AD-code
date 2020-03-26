@@ -7,7 +7,7 @@
     </div>
     <van-slider
       v-model="value"
-      :step="33"
+      :step="50"
       bar-height="4px"
       active-color="linear-gradient(90deg,rgba(0,153,102,1) 0%,rgba(242,169,0,1) 100%)"
       @change="onChange"
@@ -42,10 +42,8 @@ export default {
       console.log("value", value);
       var val = "";
       if (value == 0) {
-        val = "无";
-      } else if (value == 33) {
         val = "轻度";
-      } else if (value == 66) {
+      } else if (value == 50) {
         val = "中度";
       } else {
         val = "重度";

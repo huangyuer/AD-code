@@ -20,3 +20,10 @@ export function getDoctors(data) {
     data
   })
 }
+export function searchAddress(data){
+   return request({
+    url: '/searchAddress',
+    method: 'post',
+    data
+  })
+}

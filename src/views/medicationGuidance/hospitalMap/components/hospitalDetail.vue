@@ -20,16 +20,10 @@
         <div class="hospitalContent">
           <div class="hospitalContentname">医院详情</div>
           <div class="todaohangItem">
-            <!-- <van-image
-              width="2.8rem"
-              height="2rem"
-              fit="cover"
-              src="https://img.yzcdn.cn/vant/cat.jpeg"
-            /> -->
             <div class="right">
-              <div class="hp-address">上海市长宁区武夷路196号</div>
-              <div class="hp-phone">电话：(021)57687676</div>
-              <div class="hp-distance">距离您569m</div>
+              <div class="hp-address">{{hispitalItem.address}}上海市长宁区武夷路196号</div>
+              <div class="hp-phone">电话：{{hispitalItem.distance}}</div>
+              <div class="hp-distance">距离您{{hispitalItem.duration}}</div>
             </div>
             <div class="hp-btn" @click="goNav()">
               <svg-icon iconClass="daohang" className="daohang"></svg-icon>导航
@@ -52,13 +46,13 @@
                 />
                 <div class="doc-detail">
                   <div class="doc-name">
-                    胡光 | 男
+                    {{item.name}} | 男
                   </div>
-                  <div class="doc-work">pifuke | zhurenyishi</div>
+                  <div class="doc-work">{{item.department}} | {{item.position}}</div>
                 </div>
               </div>
               <div class="doc-major">
-                <b>擅长领域：</b>皮癣，银屑病，特应性皮炎
+                <b>擅长领域：</b>{{item.skill}}
               </div>
             </div>
           </div>
@@ -74,12 +68,23 @@ export default {
     show: {
       type: Boolean,
       default: false
+    },
+    doctors:{
+      type:Array,
+      default:[],
+    },
+    hispitalDetail:{
+      type:Object,
+      default: function() {
+        return {};
+      }
     }
   },
   data() {
     return {
       isShow: false,
-      doctoritem: [{}, {}, {}, {}, {}]
+      doctoritem: [],
+      hispitalItem:{},
     };
   },
   mounted() {
@@ -88,19 +93,25 @@ export default {
   watch: {
     show: function(val) {
       this.isShow = val;
-    }
+    },
+    doctors: function(val) {
+      this.doctoritem = val;
+    },
+    hispitalDetail: function(val) {
+      this.hispitalItem = val;
+      console.log("val",val);
+    },
   },
   methods: {
     goNav() {
-      this.$emit("goNav", false);
+      this.$emit("goNav", false,this.hispitalItem.name);
     },
     clicktip() {
       var vanpopup = document.getElementsByClassName("van-popup")[0];
       let scrollTop = vanpopup.scrollTop;
       var bottom = document.getElementsByClassName("van-popup--bottom")[0];
-      console.log(bottom.style.top);
       this.isShow = false;
-      this.$emit("closedetailNav", false);
+      this.$emit("closedetailNav");
     },
     touchstart(e) {
       // touchstart(e);

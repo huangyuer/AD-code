@@ -3,30 +3,30 @@ props: value:'',placeholder:'',recentSearch:{type:"最近输入位置",data:[]}
 event:recentClear,onChange 
 -->
 <template>
-  <div>
+  <div class="searchpage">
     <van-search
       v-model="value"
-      :readonly="readonly"
-      :placeholder="placeholder"
+      placeholder="输入我的位置"
       class="seach-input"
+      autofocus
       @search="onSearch"
       @change="onChange"
       @focus="onFocus"
       @clear="onClear"
     />
-    <div class="recent-search" v-if="recentSearch.type && recentFlag">
+    <div class="recent-search" v-if="recentFlag">
       <div class="recent-search-title">
         <span>{{ recentSearch.type }}</span>
-        <span class="clear" @click="recentClear">清除</span>
+        <span class="clear" @click="recentClear" v-if="recentSearch.type!='搜索结果'">清除</span>
       </div>
       <div
-        v-for="item in recentSearch.data"
-        :key="item.id"
+        v-for="item in searchResult"
+        :key="item"
         class="recent-search-li"
         @click="recentItem(item)"
       >
         <svg-icon iconClass="search" class="icon"></svg-icon>
-        <span>{{ item }}</span>
+        <span>{{ item.province + item.city + item.address }}</span>
       </div>
     </div>
     <!-- <svg-icon iconClass='search' className='icon'></svg-icon> -->
@@ -36,32 +36,38 @@ event:recentClear,onChange
 <script>
 export default {
   name: "SearchInput",
-  props: {
-    placeholder: {
-      type: String,
-      default: ""
-    },
-    recentSearch: {
-      type: Object,
-      default: function() {
-        return {};
-      }
-    },
-    readonly: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
       value: "",
-      recentFlag: false
+      recentFlag: false,
+      recentSearch: {
+        type: "最近输入位置",
+        data: [] //"上海市皮肤病医院", "上海江城皮肤病医院"
+      },
+      searchResult: [],
+      list: []
     };
+  },
+  created() {
+    if (localStorage.getItem("recentSearch") != null) {
+      this.searchResult = JSON.parse(localStorage.getItem("recentSearch"));
+      this.recentFlag = true;
+    }
   },
   methods: {
     onSearch() {
-      console.log("-", this.value);
-      this.$emit("onSearch", this.value);
+      // console.log("-", this.value);
+      if (this.value == "") {
+        if (localStorage.getItem("recentSearch") != null) {
+          this.searchResult = JSON.parse(localStorage.getItem("recentSearch"));
+          this.recentFlag = true;
+        } else {
+          this.searchResult = [];
+        }
+        this.recentSearch.type = "最近输入位置";
+      } else {
+        this.searchAddress();
+      }
     },
     onChange() {
       console.log("--2-", this.value);
@@ -74,17 +80,55 @@ export default {
       this.$emit("onClear");
     },
     recentItem(item) {
-      this.value = item;
+      // this.value = item;
       this.recentFlag = false;
+      this.recentSearch.data.push(item);
+      if (localStorage.getItem("recentSearch") != null) {
+        localStorage.setItem(
+          "recentSearch",
+          JSON.stringify(
+            this.recentSearch.data.concat(
+              JSON.parse(localStorage.getItem("recentSearch"))
+            )
+          )
+        );
+      } else {
+        localStorage.setItem(
+          "recentSearch",
+          JSON.stringify(this.recentSearch.data)
+        );
+      }
+      this.$router.push({
+        path: "/hospitalMap",
+        name: "HospitalMap",
+        params: { item: item }
+      });
     },
     recentClear() {
-      this.$emit("recentClear");
+      localStorage.removeItem("recentSearch");
+      this.searchResult = [];
+    },
+    searchAddress() {
+      this.$store
+        .dispatch("medicationGuidance/searchAddress", this.value)
+        .then(res => {
+          this.searchResult = res.data.address;
+          this.recentSearch.type = "搜索结果";
+          this.recentFlag = true;
+          console.log(res);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   },
   watch: {
     value: function(val, oldval) {
       if (val == "" && oldval != "") {
-        this.$emit("onClear");
+        if (localStorage.getItem("recentSearch") != null) {
+          this.searchResult = JSON.parse(localStorage.getItem("recentSearch"));
+        }
+        this.recentSearch.type = "最近输入位置";
       }
     }
   }
@@ -93,6 +137,9 @@ export default {
 
 <style scoped lang="less">
 @aaa: ~">>>";
+.searchpage {
+  padding-top: 0.4rem;
+}
 .seach-input {
   background: rgba(249, 249, 249, 1);
   border-radius: 0.51rem;
@@ -129,6 +176,7 @@ export default {
     line-height: 0.8rem;
     display: flex;
     align-items: center;
+
     .icon {
       width: 0.32rem;
       height: 0.32rem;
@@ -139,6 +187,9 @@ export default {
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }

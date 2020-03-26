@@ -1,10 +1,12 @@
 <template>
   <div>
     <search-input
-      class="searchinput"
-      :value="searchinputvalue"
-      :placeholder="placeholder"
-    ></search-input>
+        class="searchinput"
+        :value="searchinputvalue"
+        :placeholder="placeholder"
+        @onSearch="onSearch"
+        @onClear="onClear"
+      ></search-input>
     <div class="dropdownwapper">
       <dropdown-menu
         :option="option"
@@ -47,6 +49,7 @@ export default {
         tag: String,
         page: 1,
         limit: 10,
+        title:String,
         sort: String,
         desc: false
       },
@@ -57,10 +60,21 @@ export default {
     };
   },
   mounted() {
-    // this.getArticles();
     this.getMenuSelect();
   },
   methods: {
+    onSearch(value){
+      this.form.title = value;
+      this.videoList = null;
+      this.form.page = 1;
+      this.finished = false;
+    },
+    onClear(){
+      this.form.title = '';
+      this.videoList = null;
+      this.form.page = 1;
+      this.finished = false;
+    },
     DropdownchangeValue(val) {
       console.log("----d", val);
       this.$set(this.form, "tag", this.option[val].text);

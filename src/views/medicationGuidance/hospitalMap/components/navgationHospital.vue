@@ -1,34 +1,38 @@
 <template>
-  <van-action-sheet class="ss" v-model="isShow" :overlay="false" :round="false">
+  <div
+    data-v-0c38f854
+    data-v-6f539d17
+    class="van-popup van-popup--bottom"
+    style="z-index: 2008;"
+    v-if="isShow"
+    ref="vanpopup"
+  >
     <div class="hospitalDetailWapper" ref="container">
       <div class="headerTol">
-        <div class="tip"></div>
+        <div class="tip" @click="clicktip()"></div>
       </div>
       <div class="hospitalContent">
         <div class="hospitalItem">
           <div class="left">
-            <div class="hospitalname">
-              终点：上海市皮肤病医院
-            </div>
+            <div class="hospitalname">终点：{{hispitalItem.name}}</div>
             <div class="hospitaladdress">起点：我的位置</div>
           </div>
           <div class="closeicon" @click="closeNav()">
-            <svg-icon iconClass="close" className="icon"></svg-icon>
+            <svg-icon iconClass="close" class="icon"></svg-icon>
           </div>
         </div>
         <div class="bottom">
           <div class="go-left">
-            <div>10分钟</div>
-            <div>234m</div>
+            <div>{{hispitalItem.duration}}</div>
+            <div>{{hispitalItem.distance}}</div>
           </div>
-          <div class="go-right">
-            <svg-icon iconClass="daohang" className="daohang"></svg-icon>
-            出发
+          <div class="go-right" @click="togoNavPART()">
+            <svg-icon iconClass="daohang" class="daohang"></svg-icon>出发
           </div>
         </div>
       </div>
     </div>
-  </van-action-sheet>
+  </div>
 </template>
 <script>
 export default {
@@ -36,11 +40,28 @@ export default {
     show: {
       type: Boolean,
       default: false
+    },
+    hispitalDetail: {
+      type: Object,
+      default: function() {
+        return {};
+      }
+    },
+    x: {
+      type: Number,
+      default: 0
+    },
+    y: {
+      type: Number,
+      default: 0
     }
   },
   data() {
     return {
-      isShow: false
+      isShow: false,
+      hispitalItem: {},
+      myX: 0,
+      myY: 0
     };
   },
   mounted() {
@@ -50,11 +71,37 @@ export default {
     closeNav() {
       this.isShow = false;
       this.$emit("closeNav", false);
+    },
+    togoNavPART() {
+      this.$emit("togoNavPART");
+    },
+    clicktip() {
+      var vanpopup = document.getElementsByClassName("van-popup")[0];
+      let scrollTop = vanpopup.scrollTop;
+      var bottom = document.getElementsByClassName("van-popup--bottom")[0];
+      if (bottom.style.top == "68%" || bottom.style.top == "") {
+        vanpopup.style.scrollTop = 0;
+        bottom.style.top = "0";
+        bottom.style.transition = "0.3s";
+      } else {
+        bottom.style.top = "68%";
+        bottom.style.transition = "0.3s";
+      }
     }
   },
   watch: {
     show: function(val) {
       this.isShow = val;
+    },
+    hispitalDetail: function(val) {
+      this.hispitalItem = val;
+      console.log("val", val);
+    },
+    x: function(val) {
+      this.myX = val;
+    },
+    y: function(val) {
+      this.myY = val;
     }
   }
 };
@@ -182,5 +229,8 @@ export default {
 .ss.van-action-sheet {
   max-height: 32%;
   height: 32%;
+}
+.van-popup--bottom {
+  top: 68%;
 }
 </style>

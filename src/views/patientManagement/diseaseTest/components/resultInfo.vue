@@ -1,28 +1,28 @@
 <template>
-  <div class="resultWapper">
+  <div class="resultWapper" v-if="Object.keys(result).length!=0">
     <div class="degtitle">
-      <div>7<b>分</b></div>
-      <span class="spanlevel"></span>
-      <span class="spanup">+1</span>
-      <span class="spandown">-2</span>
-      {{ dataresult.level }}
+      <div>
+        {{ result.score }}
+        <b>分</b>
+      </div>
+      <span v-if="level=='peace'" class="spanlevel"></span>
+      <span v-else-if="level=='up'" class="spanup">+1</span>
+      <span v-else-if="level=='down'" class="spandown">-2</span>
     </div>
     <!-- <star-scale
       v-if="Object.keys(dataresult).length != 0"
       :scale="dataresult.star"
-    /> -->
-    <div class="time">2020-03-10</div>
+    />-->
+    <div class="time">{{result.date}}</div>
     <div class="content">
       <div class="header">评估建议</div>
-      {{ dataresult.msg }}
+      {{ result.msg }}
     </div>
     <div class="groupnext" @click="topagePersonalCenter()">关闭</div>
   </div>
 </template>
 <script>
-// import StarScale from "@/components/StarScale";
 export default {
-  // components: { StarScale },
   props: {
     dataresult: {
       type: Object,
@@ -33,13 +33,32 @@ export default {
   },
   data() {
     return {
-      scale: 0
+      level: "",
+      result: {}
     };
   },
+  created() {},
   mounted() {},
   methods: {
     topagePersonalCenter() {
       this.$router.push({ path: "/personalCenter" });
+    }
+  },
+  watch: {
+    dataresult: function(val, oldval) {
+      this.result = val;
+      if (localStorage.getItem("score") != null) {
+        this.level = "peace";
+        localStorage.setItem("score", this.result.score);
+      } else {
+        if (localStorage.getItem("score") < this.result.score) {
+          this.level = "down";
+          localStorage.setItem("score", this.result.score);
+        } else {
+          this.level = "up";
+          localStorage.setItem("score", this.result.score);
+        }
+      }
     }
   }
 };
@@ -128,7 +147,7 @@ export default {
     font-weight: 400;
     color: rgba(102, 102, 102, 1);
     line-height: 0.4rem;
-    text-align: left;
+    text-align: center;
     .header {
       font-size: 0.3rem;
       font-family: "PingFangSC-Medium";

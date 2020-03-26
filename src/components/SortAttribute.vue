@@ -1,6 +1,6 @@
 <!-- props:name名字   $emit---sortway{"arc"为升序-----------“des”为降序} -->
 <template>
-  <div class="shaixuanitem" ref="shaixuanitem" @click="sort()">
+  <div :class="{shaixuanitem:true,colorgreen:sortwayc != '',asc:sortwayc == 'des'}" ref="shaixuanitem" @click="sort()">
     {{ name }}
     <img
       class="shaixuan"
@@ -67,6 +67,9 @@ export default {
     width: 0.12rem;
     height: 0.24rem;
     margin-left: 0.12rem;
+  }
+  &.colorgreen{
+    color:#009966;
   }
 }
 </style>

@@ -6,27 +6,16 @@
         class="searchinput"
         :value="searchinputvalue"
         :placeholder="placeholder"
+        @onSearch="onSearch"
+        @onClear="onClear"
       ></search-input>
       <div class="dropdownwapper">
-        <tabs-list
-          @change="change"
-          @tocurrentTag="tocurrentTag"
-          @currentFuc="currentFuc"
-        ></tabs-list>
+        <tabs-list @change="change" @tocurrentTag="tocurrentTag" @currentFuc="currentFuc"></tabs-list>
       </div>
     </div>
     <!-- </van-sticky> -->
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <instructions-item
-        v-if="acticalList"
-        :articles="acticalList"
-        @likeBtn="likeBtn"
-      ></instructions-item>
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <instructions-item v-if="acticalList" :articles="acticalList" @likeBtn="likeBtn"></instructions-item>
     </van-list>
   </div>
 </template>
@@ -58,6 +47,18 @@ export default {
   methods: {
     likeBtn(value) {
       value.isStar = !value.isStar;
+    },
+    onSearch(value) {
+      this.form.title = value;
+      this.acticalList = null;
+      this.form.page = 1;
+      this.finished = false;
+    },
+    onClear() {
+      this.form.title = "";
+      this.acticalList = null;
+      this.form.page = 1;
+      this.finished = false;
     },
     change(name, title) {
       this.acticalList = null;
