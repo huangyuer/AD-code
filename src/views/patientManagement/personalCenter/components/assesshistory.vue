@@ -73,7 +73,15 @@ export default {
     }
   },
   methods: {
-    toDetailassess(item) {},
+    toDetailassess(item) {
+      this.$router.push({
+        path: "/assesshistory/assessDetail",
+        query: {
+          id: item._id,
+          date: item.date
+        }
+      });
+    },
     thisTimeBtn(item) {
       this.currentTime = item;
       if (this.currentTime == "近一个月") {

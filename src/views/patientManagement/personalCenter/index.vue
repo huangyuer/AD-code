@@ -84,12 +84,12 @@
         <div class="itemlist">
           <div
             class="iteminner fmregular"
-            v-if="stars.length != 0"
+            v-if="stars!=[] && index < 3"
             v-for="(item, index) in stars"
             :key="index"
           >
-            <div class="color52 font-size28">{{ item.stars.title }}</div>
-            <div class="coloracadaf font-size30">{{ item.stars.date }}2020-02-26</div>
+            <div class="color52 font-size28">{{ item.title }}</div>
+            <div class="coloracadaf font-size30">{{ item.date }}</div>
           </div>
           <!-- <div class="iteminner fmregular">
             <div class="color52 font-size28">fsadfasfsafa</div>
@@ -242,8 +242,8 @@ export default {
       this.$store
         .dispatch("patientManagement/getMyStars", form)
         .then(response => {
-          console.log("response", response);
-          this.stars = response.data.stars;
+          console.log("response=====================>star", response);
+          this.stars = this.$store.getters.getmystars.stars;
           // this.tasks = response.data.tasks;
           // this.goods = response.data.goods;
         })

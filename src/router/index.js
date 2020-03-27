@@ -111,7 +111,7 @@ export default new Router({
                 import ("@/views/medicationGuidance/medicationInstructions"),
             name: "MedicationInstructions",
             meta: {
-                title: "诊疗方法",
+                title: "常用药物",
                 index: 1
             }
         },
@@ -121,7 +121,7 @@ export default new Router({
                 import ("@/components/DetailInfo"),
             name: "DetailInfo",
             meta: {
-                title: "诊疗方法",
+                title: "常用药物",
                 index: 2
             }
         },
@@ -238,6 +238,16 @@ export default new Router({
             meta: {
                 title: "评估历史",
                 index: 2
+            }
+        },
+        {
+            path: "/assesshistory/assessDetail",
+            component: () =>
+                import ("@/views/patientManagement/personalCenter/components/assessDetail"),
+            name: 'assessDetail',
+            meta: {
+                title: "评估详情",
+                index: 3
             }
         },
         {

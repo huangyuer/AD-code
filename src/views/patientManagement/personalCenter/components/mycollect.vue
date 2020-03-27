@@ -13,19 +13,14 @@
       </div>
     </div>
     <div class="patient-like">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div v-for="item in getmystars" :key="item.id">
           <div class="like-item">
             <div class="like-content">
               <div class="like-text">{{ item.title }}</div>
               <div class="like-btn">
                 <div>
-                  <svg-icon iconClass="heart" className="icon"></svg-icon>
+                  <svg-icon iconClass="heart" class="icon"></svg-icon>
                   <span>收藏</span>
                 </div>
               </div>
@@ -75,6 +70,7 @@ export default {
     },
     sortway(val) {
       console.log("------------val", val);
+      this.getmystars = [];
       if (val == "asc") {
         this.$set(this.keylist, "desc", false);
         this.$set(this.keylist, "page", 1);

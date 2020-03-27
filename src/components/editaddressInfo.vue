@@ -1,10 +1,6 @@
 <template>
   <div>
-    <van-field
-      v-model="form.recipient"
-      placeholder="收货人"
-      input-align="left"
-    />
+    <van-field v-model="form.recipient" placeholder="收货人" input-align="left" />
     <van-field v-model="form.phone" placeholder="手机号码" input-align="left" />
     <van-areas
       :formvalue="place"
@@ -14,11 +10,7 @@
       @IsshowArea="IsshowArea"
       @onConfirm="onConfirm"
     ></van-areas>
-    <van-field
-      v-model="form.detail"
-      input-align="left"
-      placeholder="详细地址：如道路、门牌号、小区、楼洞号，单元"
-    />
+    <van-field v-model="form.detail" input-align="left" placeholder="详细地址：如道路、门牌号、小区、楼洞号，单元" />
     <div class="saveEdit" @click="BtnupMyAddress()">保存</div>
   </div>
 </template>
@@ -90,6 +82,9 @@ export default {
         .dispatch("patientManagement/upMyAddress", this.form)
         .then(data => {
           Toast("保存成功");
+          if (this.$store.getters.produceinfoToeditaddress) {
+            this.$store.commit("patientManagement/SET_SAVEADDRESS", true);
+          }
           // this.$router.push({ path: "/personalInfo" });
           this.$router.go(-1);
         })

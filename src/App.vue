@@ -18,6 +18,23 @@ export default {
     //使用watch 监听$router的变化
     $route(to, from) {
       //当然，如果你没有需要设置索引值为0的页面可以直接用着一段
+      console.log(
+        "Fdsfsadfasfas",
+        "to=>>>>>>>>>>>>>>>>>",
+        to,
+        "from=>>>>>>>>>>>>>>>>",
+        from
+      );
+      if (from.path == "/productInfo" && to.path == "/editaddressInfo") {
+        this.$store.commit("patientManagement/SET_PROTOEDITADDRESS", true);
+      }
+      if (
+        from.path == "/editaddressInfo" &&
+        to.path == "/productInfo" &&
+        this.$store.getters.IssaveAddress
+      ) {
+        this.$store.commit("patientManagement/SET_ISSUBMITEXCHANGE", true);
+      }
       if (to.meta.index < from.meta.index) {
         this.transitionName = "slide-right";
       } else {

@@ -28,7 +28,10 @@
             <div class="title">{{item.name}}</div>
             <div class="card">{{item.score}}积分</div>
           </div>
-          <div class="btnchange" @click="changeBtn(item)">立即兑换</div>
+          <div
+            :class="{btnchange:true,bgc6:item.stockNum==0}"
+            @click="item.stockNum>0?changeBtn(item):''"
+          >立即兑换</div>
         </div>
       </div>
     </div>
@@ -82,8 +85,7 @@ export default {
       // console.log("id", item);
       this.$router.push({
         path: "/ProductInfo",
-        name: "ProductInfo",
-        params: { item: item, score: this.score }
+        query: { id: item._id, score: this.score }
       });
     },
     getGoods() {
@@ -200,6 +202,10 @@ export default {
           border-radius: 30px;
           padding: 0.04rem 0.12rem;
           flex: 1;
+          &.bgc6 {
+            background: #c6c6c6;
+            color: #ffffff;
+          }
         }
       }
     }

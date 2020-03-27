@@ -1,12 +1,12 @@
 <template>
-  <div class="productinfowapper" style="color:#000000">
+  <div class="productinfowapper" style="color:#000000" v-if="Object.keys(item).length!=0">
     <div class="imageheader">
       <van-image
         width="3rem"
         height="3rem"
         fit="cover"
         :src="
-          item.goodsImg.length != 0
+          item.goodsImg
             ? item.goodsImg[0].httpUrl
             : item.coverImg[0].httpUrl
         "
@@ -26,52 +26,77 @@ export default {
   name: "ProductInfo",
   data() {
     return {
-      item: {},
-      score: {}
+      score: {},
+      form: {
+        goods: String,
+        address: String
+      },
+      item: {}
     };
   },
   created() {
-    console.log("this.$route.params.item", this.$route.params.item);
-    console.log("this.$route.params.id", this.$route.params.score);
-    this.item = this.$route.params.item;
-    this.score = this.$route.params.score;
-    // this.getMyAddress()
+    this.score = this.$route.query.score;
+    this.getGoodsDetail();
   },
   methods: {
-    changeItemBtn(id) {
-      // if (this.score.nowScore < this.item.score) {
-      //   Toast("积分不足");
-      //   return;
-      // }
-      if (this.item.type == "实物") {
-        this.$router.push({ path: "/editaddressInfo" });
-      } else {
-        this.$router.push({
-          path: "/exchangeInfo",
-          name: "ExchangeInfo",
-          params: { id: id }
+    getGoodsDetail() {
+      this.$store
+        .dispatch("patientManagement/getGoodsDetail", this.$route.query.id)
+        .then(response => {
+          this.item = response.data.goods;
+        })
+        .catch(e => {
+          Toast(e);
         });
+    },
+    changeItemBtn(id) {
+      if (this.score.nowScore < this.item.score) {
+        Toast("积分不足");
+        return;
+      }
+      if (
+        !this.item.isVirtual &&
+        !this.$store.getters.IssaveAddress.IsSubmitExchange
+      ) {
+        this.$router.push({ path: "/editaddressInfo" });
+      } else if (
+        !this.item.isVirtual &&
+        this.$store.getters.IssaveAddress.IsSubmitExchange
+      ) {
+        this.form.goods = id;
+        this.getMyAddress();
+      } else {
+        this.form.goods = id;
+        this.exchangeGoods();
       }
     },
     exchangeGoods() {
-      // this.address = this.address
       this.$store
-        .dispatch("patientManagement/exchangeGoods")
+        .dispatch("patientManagement/exchangeGoods", this.form)
         .then(response => {
-          console.log("response", response);
-          // this.goods = response.data.goods;
+          Toast(response.data.msg);
+          this.$router.push({ path: "/myexchange" });
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
-      // console.log("this.address");
-    }
-  },
-  watch: {
-    $route(to, from) {
-      console.log("from", from, "to", to);
-      // from 对象中要 router 来源信息.
-      // do your want
+    },
+    getMyAddress() {
+      this.$store
+        .dispatch("patientManagement/getMyAddress")
+        .then(response => {
+          this.address = this.$store.getters.getmyaddress.address;
+          var place =
+            this.address.province +
+            this.address.city +
+            this.address.area +
+            this.address.detail;
+          this.$set(this.form, "address", place);
+          this.exchangeGoods();
+        })
+        .catch(e => {
+          Toast(e);
+        });
     }
   }
 };

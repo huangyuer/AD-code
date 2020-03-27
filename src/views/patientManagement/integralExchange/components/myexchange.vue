@@ -1,28 +1,18 @@
 <template>
-  <div class="myexchangeWapper">
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <div class="excahngeItem" v-for="(item, index) in itemlist" :key="index">
+  <div class="myexchangeWapper" v-if="logs.length!=0">
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <div class="excahngeItem" v-for="(item, index) in logs" :key="index">
         <div class="vanimge">
-          <van-image
-            width=".72rem"
-            height=".72rem"
-            fit="cover"
-            :src="require('@/assets/change.png')"
-          />
+          <van-image width=".72rem" height=".72rem" fit="cover" :src="item.icon" />
         </div>
         <div class="center">
-          <div class="title">{{ item.title }}</div>
+          <div class="title">{{ item.name }}</div>
           <div class="card">
-            <span>{{ item.card }}</span>
-            <span class="cardtime">| {{ item.cardtime }}</span>
+            <span>{{ item.score }}积分</span>
+            <span class="cardtime">| {{ item.date }}</span>
           </div>
         </div>
-        <div class="rightBtn" @click="checkcode(item.id)">立即兑换</div>
+        <div class="rightBtn" @click="checkcode(item._id)">立即使用</div>
       </div>
     </van-list>
   </div>
@@ -51,25 +41,16 @@ export default {
     };
   },
   created() {
-    this.getExchangeLogs();
+    this.onLoad();
   },
   methods: {
     checkcode(id) {
-      this.$router.push({ path: "/productInfo?id=" + id });
+      this.$router.push({ path: "/exchangeInfo?id=" + id });
     },
-    onLoad() {
+    getExchangeLogs() {
       this.$store
         .dispatch("patientManagement/getExchangeLogs", this.logsform)
         .then(response => {
-          if (response.code == 1) {
-            Toast(response.msg);
-            return;
-          }
-          if (response.data.logs.length == 0) {
-            this.loading = false;
-            this.finished = true;
-            return;
-          }
           if (this.logs.length != 0) {
             this.logs = this.logs.concat(response.data.logs);
           } else {
@@ -87,8 +68,11 @@ export default {
           }
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
+    },
+    onLoad() {
+      this.getExchangeLogs();
     }
   }
 };

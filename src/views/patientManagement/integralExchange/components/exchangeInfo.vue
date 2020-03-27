@@ -1,14 +1,28 @@
 <template>
-  <div class="productinfowapper" style="color:#000000">
-    <!-- <div class="imageheader">
-      <van-image width="3rem" height="3rem" fit="cover" :src="item.goodsImg[0].httpUrl" />
+  <div class="productinfowapper" style="color:#000000" v-if="Object.keys(exchangeitem).length!=0">
+    <div class="imageheader" v-if="exchangeitem.type!='视频' && exchangeitem.goodsImg">
+      <van-image width="3rem" height="3rem" fit="cover" :src="exchangeitem.goodsImg[0].httpUrl" />
+    </div>
+    <div class="videoheader" v-if="exchangeitem.type=='视频' && exchangeitem.video">
+      <div ref="container" class="container"></div>
+      <video
+        ref="videoPlay"
+        preload
+        autoplay
+        width="6.86rem"
+        height="3.2rem"
+        id="videoPlay"
+        controls="controls"
+        style
+      >
+        <source :src="exchangeitem.video[0].httpUrl" />您的浏览器不支持 video 标签。
+      </video>
     </div>
     <div class="contentheader">
-      <div class="credit">{{item.score}}积分</div>
-      <div class="title">{{item.name}}</div>
+      <div class="credit">{{exchangeitem.score}}积分</div>
+      <div class="title">{{exchangeitem.name}}</div>
     </div>
-    <div class="contentlist">{{item.introduction}}</div>-->
-    <div class="changeBtn" @click="changeItemBtn()">立即兑换</div>
+    <div class="contentlist">{{exchangeitem.introduction}}</div>
   </div>
 </template>
 <script>
@@ -18,22 +32,23 @@ export default {
   data() {
     return {
       id: "",
-      exchangeitem: {}
+      exchangeitem: {},
+      coverUrl: "",
+      type: ""
     };
   },
-  created() {},
-  mounted() {
+  created() {
     this.getExchangeDetail();
   },
+  mounted() {},
   methods: {
     getExchangeDetail() {
-      this.id = this.$route.params.id;
-      console.log("this.$route.params.id", this.$route.params.id);
+      this.id = this.$route.query.id;
+      console.log("this.$route.query.id", this.$route.query.id);
       this.$store
-        .dispatch("patientManagement/getExchangeDetail", this.$route.params.id)
+        .dispatch("patientManagement/getExchangeDetail", this.$route.query.id)
         .then(response => {
-          console.log("response", response);
-          // this.goods = response.data.goods;
+          this.exchangeitem = response.data.log;
         })
         .catch(e => {
           console.log(e);
@@ -53,6 +68,16 @@ export default {
     justify-content: center;
     margin: 0.4rem 0 0.6rem 0;
     line-height: 0;
+  }
+  .videoheader {
+    width: 6.86rem;
+    height: 3.2rem;
+    margin: 0.4rem auto 0.6rem;
+    > video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
   .contentheader {
     border-bottom: 2px solid rgba(229, 229, 229, 1);
