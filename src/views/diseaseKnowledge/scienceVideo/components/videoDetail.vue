@@ -25,9 +25,7 @@
           controls="controls"
           autoplay
           style
-        >
-          您的浏览器不支持 video 标签。
-        </video>
+        >您的浏览器不支持 video 标签。</video>
         <van-image
           class="playicon"
           width=".48rem"
@@ -57,6 +55,10 @@ import { Toast } from "vant";
 import LikeAndForward from "@/components/LikeAndForward";
 export default {
   components: { LikeAndForward },
+  beforeRouteLeave(to, form, next) {
+    next();
+    this.addOutPageLog();
+  },
   data() {
     return {
       videoitem: {},
@@ -69,6 +71,16 @@ export default {
     this.getVideo();
   },
   methods: {
+    addOutPageLog() {
+      this.$store
+        .dispatch("common/addOutPageLog", this.$route.meta.title)
+        .then(response => {
+          console.log("response===========", response);
+        })
+        .catch(e => {
+          Toast(e);
+        });
+    },
     getVideo() {
       this.$store
         .dispatch("diseaseKnowledge/getVideo", this.$route.params.id)
@@ -99,6 +111,25 @@ export default {
     },
     forwardBtn() {
       console.log("-----dss");
+      this.getShareUrl();
+    },
+    getShareUrl() {
+      if (this.$route.path.charAt(0) == "/")
+        var string = this.$route.path.substr(1);
+      var form = {
+        url: string,
+        id: this.$route.params.id
+      };
+      console.log("formformformformform", form);
+
+      this.$store
+        .dispatch("common/getShareUrl", form)
+        .then(data => {
+          // this.article = this.$store.getters.articleDetail.article;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };

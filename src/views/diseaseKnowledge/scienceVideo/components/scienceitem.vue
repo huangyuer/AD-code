@@ -6,31 +6,23 @@
       :key="key"
       @click="toPageVideodetail(item)"
     >
-      <van-image
-        width="100%"
-        height="1.8rem"
-        fit="cover"
-        src="https://img.yzcdn.cn/vant/cat.jpeg"
-      />
+      <van-image width="100%" height="1.8rem" fit="cover" :src="item.coverImg[0].httpUrl" />
       <div class="like-btn">
         <div @click.stop="likeBtn(item)">
-          <svg-icon
-            iconClass="heart"
-            className="icon"
-            v-if="item.isStar"
-          ></svg-icon>
-          <svg-icon iconClass="heart" className="grey" v-else></svg-icon>
+          <svg-icon iconClass="heart" class="icon" v-if="item.isStar"></svg-icon>
+          <svg-icon iconClass="heart" class="grey" v-else></svg-icon>
         </div>
       </div>
       <div>
         <div class="title">{{ item.title }}</div>
         <div class="chakancontent">
           <span>{{ item.date }}</span>
-          <span
-            ><img src="../../../../assets/chakan@2x.png" alt="" />{{
-              item.clickNum
-            }}</span
-          >
+          <span>
+            <img src="../../../../assets/chakan@2x.png" alt />
+            {{
+            item.clickNum
+            }}
+          </span>
         </div>
       </div>
     </div>

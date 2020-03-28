@@ -29,6 +29,10 @@ export default {
       article: ""
     };
   },
+  beforeRouteLeave(to, form, next) {
+    next();
+    this.addOutPageLog();
+  },
   created() {
     this.$store
       .dispatch("common/getArticle", this.$route.params.id)
@@ -41,12 +45,22 @@ export default {
   },
   mounted() {},
   methods: {
+    addOutPageLog() {
+      this.$store
+        .dispatch("common/addOutPageLog", this.$route.meta.title)
+        .then(response => {
+          console.log("response===========", response);
+        })
+        .catch(e => {
+          Toast(e);
+        });
+    },
     likeBtn() {
       this.de;
       console.log("-----d");
     },
     forwardBtn() {
-      console.log("-----dss");
+      console.log("-----dsssdfsdfadsadf");
     }
   }
 };
