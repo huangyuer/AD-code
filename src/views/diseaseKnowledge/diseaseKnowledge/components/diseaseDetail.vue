@@ -46,6 +46,24 @@ export default {
     },
     forwardBtn() {
       console.log("-----dss");
+      this.getShareUrl();
+    },
+     getShareUrl() {
+      if (this.$route.path.charAt(0) == "/")
+        var string = this.$route.path.substr(1);
+        var form = {
+          url: string,
+          id: this.$route.params.id
+      };
+      console.log("formformformformform", form);
+      this.$store
+        .dispatch("common/getShareUrl", form)
+        .then(data => {
+          // this.article = this.$store.getters.articleDetail.article;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };

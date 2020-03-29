@@ -1,12 +1,24 @@
 <template>
   <div class="meesage-board">
     <message-tip
-      v-if="ckNum>0||failNum>0"
+      v-if="ckNum > 0 || failNum > 0"
       class="message-tip-box"
       :ckNum="ckNum"
       :failNum="failNum"
     ></message-tip>
-    <message-info v-for="item in lvMsgList" :item="item" :key="item.id" @delLeaveMsg="delLeaveMsg"></message-info>
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <message-info
+        v-for="item in lvMsgList"
+        :item="item"
+        :key="item.id"
+        @delLeaveMsg="delLeaveMsg"
+      ></message-info>
+    </van-list>
     <div class="leave-message" @click="leaveMessage">写留言</div>
   </div>
 </template>
@@ -18,29 +30,53 @@ export default {
   components: { MessageTip, MessageInfo },
   data() {
     return {
-      page: 1,
-      limit: 10,
+      loading: false,
+      finished: false,
+      total: 0,
+      params: {
+        page: 1,
+        limit: 10
+      },
       ckNum: 0,
       failNum: 0,
       lvMsgList: []
     };
   },
-  created() {
-    this.getLeaveMsgList();
+  // created() {
+  //   this.getLeaveMsgList();
+  // },
+  watch: {
+    lvMsgList: function(val) {
+      console.log("val", val);
+      this.lvMsgList = val;
+    }
   },
   methods: {
+    onLoad() {
+      this.getLeaveMsgList();
+    },
     getLeaveMsgList() {
-      let params = {
-        page: this.page,
-        limit: this.limit
-      };
       this.$store
-        .dispatch("diseaseKnowledge/getLeaveMsgList", params)
+        .dispatch("diseaseKnowledge/getLeaveMsgList", this.params)
         .then(data => {
-          this.lvMsgList = data.lvMsgList;
+          this.lvMsgList = this.lvMsgList.concat(data.lvMsgList);
+          this.total = data.total;
+          this.loading = false;
+          // this.lvMsgList = data.lvMsgList;
           this.ckNum = data.ckNum;
           this.failNum = data.failNum;
+          if (this.lvMsgList.length >= this.total) {
+            // 加载状态结束
+            this.loading = false;
+            this.finished = true;
+            return;
+          } else {
+            this.params.page = this.params.page + 1;
+          }
           console.log("------ss", data);
+        })
+        .catch(e => {
+          console.log(e);
         });
     },
     leaveMessage() {
@@ -62,7 +98,7 @@ export default {
   }
 };
 </script>
-<style lang='less' scoped>
+<style lang="less" scoped>
 .meesage-board {
   margin-top: 0.4rem;
   .message-tip-box {

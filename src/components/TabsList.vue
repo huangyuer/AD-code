@@ -98,7 +98,7 @@ export default {
 @{aaa} .van-hairline--top-bottom {
   &::after {
     border-width: 0px;
-    border-bottom: 6px solid rgba(216, 216, 216, 1);
+    border-bottom: 0.06rem solid rgba(216, 216, 216, 1);
     margin: 0 0.32rem;
   }
 }

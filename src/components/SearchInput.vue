@@ -4,6 +4,7 @@ event:recentClear,onChange
 -->
 <template>
   <div>
+    <form action="#">
     <van-search
       v-model="value"
       :readonly="readonly"
@@ -13,7 +14,9 @@ event:recentClear,onChange
       @change="onChange"
       @focus="onFocus"
       @clear="onClear"
+      type="search"
     />
+    </form>
     <div class="recent-search" v-if="recentSearch.type && recentFlag">
       <div class="recent-search-title">
         <span>{{ recentSearch.type }}</span>
