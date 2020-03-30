@@ -6,6 +6,7 @@ import {
     unStar,
     getShareUrl,
     addOutPageLog,
+    getSignature,
 } from "@/api/common";
 import axios from "axios";
 
@@ -171,6 +172,21 @@ const actions = {
         return new Promise((resolve, reject) => {
             addOutPageLog({
                     menu: question
+                })
+                .then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    },
+    getSignature({
+        commit
+    }, question) {
+        return new Promise((resolve, reject) => {
+            getSignature({
+                    url: question
                 })
                 .then(response => {
                     resolve(response);

@@ -111,7 +111,8 @@ export default {
     },
     forwardBtn() {
       console.log("-----dss");
-      this.getShareUrl();
+      // this.getShareUrl();
+      // this.getSignature();
     },
     getShareUrl() {
       if (this.$route.path.charAt(0) == "/")

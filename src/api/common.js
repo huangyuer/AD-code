@@ -48,3 +48,10 @@ export function addOutPageLog(data) {
         data
     })
 }
+export function getSignature(data) {
+    return request({
+        url: '/getSignature',
+        method: 'post',
+        data
+    })
+}
