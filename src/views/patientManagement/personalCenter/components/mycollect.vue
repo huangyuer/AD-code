@@ -97,20 +97,16 @@ export default {
           }
         })
         .catch(e => {
-          console.log(e);
+           Toast(e);
         });
     },
     getMyStars() {
       this.$store
         .dispatch("patientManagement/getMyStars", this.keylist)
         .then(data => {
-          if (this.getmystars != null) {
-            this.getmystars = this.getmystars.concat(
-              this.$store.getters.getmystars.stars
-            );
-          } else {
-            this.getmystars = this.$store.getters.getmystars.stars;
-          }
+          this.getmystars = this.getmystars.concat(
+            this.$store.getters.getmystars.stars
+          );
           this.total = this.$store.getters.getmystars.total;
           this.loading = false;
           if (this.getmystars.length >= this.total) {
@@ -123,7 +119,7 @@ export default {
           }
         })
         .catch(e => {
-          console.log(e);
+           Toast(e);
         });
     },
     onLoad() {

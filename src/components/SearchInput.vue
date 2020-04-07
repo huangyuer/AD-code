@@ -53,6 +53,10 @@ export default {
     readonly: {
       type: Boolean,
       default: false
+    },
+    valuesearch:{
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -89,6 +93,10 @@ export default {
       if (val == "" && oldval != "") {
         this.$emit("onClear");
       }
+    },
+    valuesearch: function(val) {
+      this.value = val;
+      console.log("fsflskdajfsajf");
     }
   }
 };

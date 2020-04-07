@@ -22,14 +22,6 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      itemlist: [
-        {
-          title: "fsfd",
-          card: "fsdf",
-          cardtime: "2010-08-09",
-          id: 1
-        }
-      ],
       logs: [],
       total: 0,
       loading: false,
@@ -51,11 +43,7 @@ export default {
       this.$store
         .dispatch("patientManagement/getExchangeLogs", this.logsform)
         .then(response => {
-          if (this.logs.length != 0) {
-            this.logs = this.logs.concat(response.data.logs);
-          } else {
-            this.logs = response.data.logs;
-          }
+          this.logs = this.logs.concat(response.data.logs);
           this.total = response.data.total;
           this.loading = false;
           if (this.logs.length >= this.total) {

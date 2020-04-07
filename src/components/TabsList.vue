@@ -2,8 +2,9 @@
   <div>
     <van-tabs line-width="1.4rem" @change="change" v-model="active" title-active-color="#009966">
       <van-tab v-for="(index, key) in itemTabcontent" :key="key" :title="index.type">
-        <div class="vansList">
+        <div ref="vansList" class="vansList" v-if="index.tags.length!=0">
           <div
+            ref="tablecontent"
             :class="{
               'vans-tableContent': true,
               activeTag: current[key] == item
@@ -19,61 +20,43 @@
 </template>
 <script>
 export default {
+  props:{
+    itemTabcontent:{
+      type:Array,
+      default:[],
+    }
+  },
   data() {
     return {
       active: "",
       activeTag: "",
-      itemTabcontent: [],
       current: []
     };
-  },
-  mounted() {
-    this.getMenuSelect();
   },
   methods: {
     change(name, title) {
       this.$emit("change", name, title);
     },
-    getMenuSelect() {
-      this.$store
-        .dispatch("common/getMenuSelect", this.$route.meta.title)
-        .then(data => {
-          if (
-            this.$store.getters.menuList.selects != "null" &&
-            this.$store.getters.menuList.selects.length != 0
-          ) {
-            this.$emit(
-              "currentFuc",
-              this.$store.getters.menuList.selects.length
-            );
-            this.itemTabcontent = this.$store.getters.menuList.selects;
-          }
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
     tocurrentTag(item, k, key) {
-      this.activeTag = k;
       this.current.length = this.itemTabcontent.length;
-      this.$set(this.current, key, item);
-      this.$emit("tocurrentTag", item);
-      this.$emit("currentFuc", this.itemTabcontent.length, item, key);
+      console.log("tablecontent",key,k,this.$refs.vansList[key]);
+      if(this.$refs.vansList[key].children[k].classList.contains('activeTag')){
+        this.$set(this.current, key, '');
+        this.$emit("tocurrentTag", '');
+        this.$emit("currentFuc", this.itemTabcontent.length, '', key);
+      }else{
+        this.$set(this.current, key, item);
+        this.$emit("tocurrentTag", item);
+        this.$emit("currentFuc", this.itemTabcontent.length, item, key);
+      }
     }
   },
-  watch: {}
 };
 </script>
 <style lang="less" scoped>
 @aaa: ~">>>";
 @{aaa}.van-tab {
   text-align: center;
-  width: 1.4rem;
-  float: left;
-  flex: none;
-}
-@{aaa}.van-tabs__nav {
-  // margin-left: -0.1rem;
 }
 @{aaa}.van-tabs__line {
   background-color: #009966;

@@ -5,7 +5,14 @@
       <!-- <div class="searchdiv" @click="searchpage()"></div> -->
       <div style="padding-top:.4rem"></div>
       <div class="searchwapper" v-if="isExitSearch" @click="searchpage()">
-        <search-input :readonly="true" :placeholder="'输入我的位置'"></search-input>
+        <van-search
+          v-model="valuesearch"
+          :readonly="true"
+          :placeholder="'输入我的位置'"
+          class="seach-input"
+          type="search"
+        />
+        <!-- <search-input :valuesearch="valuesearch" :readonly="true" :placeholder="'输入我的位置'"></search-input> -->
       </div>
       <div id="allmap"></div>
     </div>
@@ -57,7 +64,6 @@ import SearchInput from "@/components/SearchInput";
 import HospitalDetail from "./components/hospitalDetail";
 import HospitalList from "./components/hospitalList";
 import NavgationHospital from "./components/navgationHospital";
-var map = new BMap.Map("allmap");
 import { Toast } from "vant";
 export default {
   name: "HospitalMap",
@@ -69,11 +75,12 @@ export default {
   },
   data() {
     return {
+      valuesearch:"",
       isExitSearch: true,
       typePicker: false,
       typeValue: "",
       distancediv: "",
-      typeColumns: ["3公里以内", "5公里以内", "10公里以内"], //
+      typeColumns: ["全部","3公里以内", "5公里以内", "10公里以内"], 
       ii: false,
       show: false,
       showDetail: false,
@@ -93,19 +100,29 @@ export default {
     };
   },
   created() {
-    this.getMyLocation();
-    console.log(this.$route.params.item);
+    console.log("this.$route.params.item",this.$route.params.item);
     if (this.$route.params.item != undefined) {
       var address =
         this.$route.params.item.province +
         this.$route.params.item.city +
         this.$route.params.item.address;
+        this.valuesearch = address;
+      console.log("this.valuesearch",this.valuesearch);
       this.$set(this.params, "address", address);
-      this.getNearHospitals();
+      this.x = this.$route.params.item.x;
+      this.y = this.$route.params.item.y;
+    }else{
+      this.getMyLocation();
     }
   },
   mounted() {
     this.show = true;
+    if (this.$route.params.item != undefined) {
+      var map = new BMap.Map("allmap");
+      this.mapMyLocation(map,13);
+      this.getNearHospitals(map);
+    }
+    
   },
   methods: {
     searchpage() {
@@ -165,22 +182,43 @@ export default {
       n = r1 >= r2 ? r1 : r2;
       return ((arg1 * m - arg2 * m) / m).toFixed(n);
     },
+    addNum (num1, num2) {
+       var sq1,sq2,m;
+       try {
+         sq1 = num1.toString().split(".")[1].length;
+       }
+       catch (e) {
+         sq1 = 0;
+       }
+       try {
+         sq2 = num2.toString().split(".")[1].length;
+       }
+       catch (e) {
+         sq2 = 0;
+       }
+       m = Math.pow(10,Math.max(sq1, sq2));
+       return (num1 * m + num2 * m) / m;
+    },
     map() {
       // 百度地图API功能
       var map = new BMap.Map("allmap");
-      var x = this.accSub(this.x, 0.0005);
-      var y = this.accSub(this.y, 0.0003);
+    },
+    mapMyLocation(map,zoom){
+      // if(z00m){
+
+      // }
+      var x = this.accSub(this.x, 0.0005*(18-zoom)*10);
+      var y = this.accSub(this.y, 0.0003*(18-zoom)*10);
       var point = new BMap.Point(x, y);
-      map.centerAndZoom(point, 20);
+      map.centerAndZoom(point, zoom);
       //创建标注点
       var pt = new BMap.Point(this.x, this.y);
       var content = "我的位置";
-      var xlable = this.accSub(this.x, 0.0002);
-      var labelpt = new BMap.Point(xlable, this.y);
+      var labelpt = new BMap.Point(this.x, this.y);
       var label = new BMap.Label(content, {
         // 创建文本标注
         position: labelpt, // 设置标注的地理位置
-        offset: new BMap.Size(0, 0) // 设置标注的偏移量
+        offset: new BMap.Size(-30, 0) // 设置标注的偏移量
       });
       map.addOverlay(label);
       label.setStyle({
@@ -198,6 +236,64 @@ export default {
       );
       var marker2 = new BMap.Marker(pt, { icon: myIcon }); // 创建标注
       map.addOverlay(marker2); // 将标注添加到地图中
+    },
+    mapHospitalLocation(map){
+      //创建医院的标注
+      for(var i=0;i<this.hospitals.length;i++){
+        var pt = new BMap.Point(this.hospitals[i].x, this.hospitals[i].y);
+        var myIcon = new BMap.Icon(
+          require("../../../assets/locationpng.png"),
+          new BMap.Size(32, 62)
+        );
+        var marker2 = new BMap.Marker(pt, { icon: myIcon }); // 创建标注
+        map.addOverlay(marker2);
+        var istwo=false;
+        if(i>8){
+          istwo=true;
+        }else{
+          istwo=false;
+        }
+        var content = i+1;
+        var labelpt = new BMap.Point(this.hospitals[i].x, this.hospitals[i].y);
+        var label = new BMap.Label(content, {
+          // 创建文本标注
+          position: labelpt, // 设置标注的地理位置
+          offset: istwo?new BMap.Size(-9, -32):new BMap.Size(-6, -34) // 设置标注的偏移量
+        });
+        map.addOverlay(label);
+        label.setStyle({
+          // 设置label的样式
+          color: "#ffffff",
+          fontSize: istwo?".25rem":".32rem",
+          border: "0",
+          background: "transparent",
+          "font-family": "PingFangSC-Medium",
+        });
+      }
+    },
+    drawPolyline(){
+      // pointline
+      var map = new BMap.Map("allmap");
+      var pointstart = new BMap.Point(this.x, this.y);
+      var pointend = new BMap.Point(this.hispitalDetail.x, this.hispitalDetail.y);
+      map.centerAndZoom(pointstart, 12);
+      //创建自定义图标
+      var myIcon = new BMap.Icon(
+        require("../../../assets/dingwei.png"),
+        new BMap.Size(32, 62)
+      );
+      // 创建标注
+      var marker2 = new BMap.Marker(pointstart, { icon: myIcon });
+      // 将标注添加到地图中
+      map.addOverlay(marker2);
+      // 创建polyline对象
+      var polyline = new BMap.Polyline([pointstart,pointend], {
+        enableEditing: false, //是否启用线编辑，默认为false
+        enableClicking: true, //是否响应点击事件，默认为true
+        strokeWeight: "10", //折线的宽度，以像素为单位
+        strokeColor: "#90ADFF" //折线颜色
+      });
+      map.addOverlay(polyline);
     },
     //跳转第三方
     togoNavPART() {
@@ -217,11 +313,24 @@ export default {
     },
     //距离范围确定
     typeConfirm(value) {
+      var map = new BMap.Map("allmap");
+      if(value=='全部'){
+        this.$set(this.params, "distance", Number);
+        this.mapMyLocation(map,13);
+      }else{
+        var distance = parseInt(value.split("公里")[0]);
+        if(distance==3){
+          this.mapMyLocation(map,14);
+        }else if(distance==5){
+          this.mapMyLocation(map,14);
+        }else{
+           this.mapMyLocation(map,13);
+        }
+        this.$set(this.params, "distance", distance * 1000);
+      }
       this.typeValue = value;
       this.typePicker = false;
-      var distance = parseInt(value.split("公里")[0]);
-      this.$set(this.params, "distance", distance * 1000);
-      this.getNearHospitals();
+      this.getNearHospitals(map);
     },
     //打开医院详情
     toHostipalDetail(val, bool) {
@@ -241,17 +350,17 @@ export default {
       this.$route.meta.title = "导航";
       this.showDetail = val;
       this.showNav = true;
-      var map = new BMap.Map("allmap");
+      this.drawPolyline();
       //拿到经纬度医院的
-      var localSearch = new BMap.LocalSearch(map, {
-        renderOptions: {
-          pageCapacity: 8,
-          autoViewport: true,
-          selectFirstResult: false
-        }
-      });
-      localSearch.enableAutoViewport();
-      this.searchByStationName(localSearch);
+      // var localSearch = new BMap.LocalSearch(map, {
+      //   renderOptions: {
+      //     pageCapacity: 8,
+      //     autoViewport: true,
+      //     selectFirstResult: false
+      //   }
+      // });
+      // localSearch.enableAutoViewport();
+      // this.searchByStationName(localSearch);
     },
     showPopup() {
       this.ii = true;
@@ -268,7 +377,10 @@ export default {
       this.isExitSearch = true;
       document.title = "医院详情";
       this.$route.meta.title = "医院详情";
-      this.map();
+      // this.map();
+      var map = new BMap.Map("allmap");
+      this.mapMyLocation(map,13);
+      this.mapHospitalLocation(map);
     },
     //获取我的地址
     getMyLocation() {
@@ -279,20 +391,24 @@ export default {
           this.y = parseFloat(res.data.location.y);
           this.$set(this.params, "x", res.data.location.x);
           this.$set(this.params, "y", res.data.location.y);
-          this.map();
-          this.getNearHospitals();
+          var map = new BMap.Map("allmap");
+          this.mapMyLocation(map,13);
+          this.getNearHospitals(map);
         })
         .catch(e => {
-          alert(e);
-          console.log(e);
+          Toast({
+            message: e,
+            position: "top"
+          });
         });
     },
     //获取附近医院
-    getNearHospitals() {
+    getNearHospitals(map) {
       this.$store
         .dispatch("medicationGuidance/getNearHospitals", this.params)
         .then(res => {
           this.hospitals = res.data.hospitals;
+          this.mapHospitalLocation(map);
           this.vloading = false;
         })
         .catch(e => {
@@ -300,7 +416,6 @@ export default {
             message: e,
             position: "top"
           });
-          // Toast(e);
         });
     },
     //获取医院医生
@@ -311,8 +426,10 @@ export default {
           this.doctors = res.data.doctors;
         })
         .catch(e => {
-          alert(e);
-          console.log(e);
+           Toast({
+            message: e,
+            position: "top"
+          });
         });
     }
   }
@@ -381,6 +498,58 @@ export default {
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: rgba(0, 153, 102, 1);
+  }
+}
+// searchinput
+.seach-input {
+  background: rgba(249, 249, 249, 1);
+  border-radius: 0.51rem;
+  height: 0.72rem;
+  margin: 0 0.32rem;
+  padding: 0px;
+}
+@{aaa} .van-search__content {
+  padding-left: 0.32rem;
+  border-radius: 0.51rem;
+}
+@{aaa} .van-field__left-icon {
+  margin-right: 0.16rem;
+}
+@{aaa} input {
+  font-size: 0.28rem;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  &::-webkit-input-placeholder {
+    font-size: 0.28rem;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(102, 102, 102, 1);
+  }
+}
+@{aaa} .van-icon-search {
+  &::before {
+    content: "\e68f";
+  }
+}
+@{aaa} .van-field__value {
+  .van-icon {
+    position: relative;
+    display: inline-block;
+    font: normal normal normal 14px/1 vant-icon;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+@{aaa} .van-field__left-icon {
+  .van-icon {
+    font-family: "iconfont" !important;
+    font-size: 0.36rem;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #8e8e93;
   }
 }
 </style>

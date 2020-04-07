@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       id: "",
-      article: ""
+      article: "",
     };
   },
   beforeRouteLeave(to, form, next) {
@@ -73,7 +73,8 @@ export default {
     font-size: 0.3rem;
     text-align: center;
     font-family: "PingFangSC-Medium";
-    height: 1.12rem;
+    // height: 1.12rem;
+    padding:.4rem 0 .18rem 0;
     display: flex;
     align-items: center;
     flex-direction: column;

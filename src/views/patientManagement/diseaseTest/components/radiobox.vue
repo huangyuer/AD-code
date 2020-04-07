@@ -3,21 +3,17 @@
     <van-radio-group v-model="radio">
       <van-cell-group>
         <van-cell
-          :class="{cellvans:true,checked:radio==item}"
-          :title="item"
+          :class="{cellvans:true,checked:radio==item.option}"
+          :title="item.option"
           v-for="item in list"
-          :key="item"
+          :key="item.option"
           clickable
-          @click="toggle(item)"
+          @click="toggle(item.option)"
         >
-          <van-radio ref="radios" slot="right-icon" :name="item" />
+          <van-radio ref="radios" slot="right-icon" :name="item.option" />
         </van-cell>
-        <!-- <van-cell title="单选框 2" clickable @click="radio = '2'">
-                <van-radio slot="right-icon" name="2" />
-        </van-cell>-->
       </van-cell-group>
     </van-radio-group>
-    <!-- <div class="groupnext" @click="groupNextBtn()">下一题</div> -->
   </div>
 </template>
 <script>
@@ -29,7 +25,7 @@ export default {
     },
     type: {
       type: String,
-      default: 0
+      default: ''
     },
     list: {
       type: Array,

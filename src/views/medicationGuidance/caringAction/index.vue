@@ -13,7 +13,7 @@
           </div>
           <div class="right">
             <div class="like-btn">
-              <div @click.stop="likeBtn(item)">
+              <div class="likeclick" @click.stop="likeBtn(item)">
                 <svg-icon
                   iconClass="heart"
                   className="icon"
@@ -65,13 +65,9 @@ export default {
       this.$store
         .dispatch("common/getArticles", this.form)
         .then(data => {
-          if (this.acticalList != null) {
-            this.acticalList = this.acticalList.concat(
-              this.$store.getters.articlesList.articles
-            );
-          } else {
-            this.acticalList = this.$store.getters.articlesList.articles;
-          }
+          this.acticalList = this.acticalList.concat(
+            this.$store.getters.articlesList.articles
+          );
           this.total = this.$store.getters.articlesList.total;
           this.loading = false;
           if (this.acticalList.length >= this.total) {
@@ -84,7 +80,7 @@ export default {
           }
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     likeBtn(index) {
@@ -135,6 +131,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  .likeclick{
+    display: flex;
+    align-items: center;
+  }
   .icon {
     fill: #ff7559 !important;
     width: 0.32rem;
@@ -150,10 +150,12 @@ export default {
     font-family: "PingFangSC-Regular";
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
+    padding-left:.1rem;
   }
 }
 .caringList {
   width: 100%;
+  padding-top:.4rem;
   .caringItem {
     width: 95%;
     border-radius: 0.08rem;

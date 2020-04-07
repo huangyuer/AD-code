@@ -4,16 +4,18 @@ event:recentClear,onChange
 -->
 <template>
   <div class="searchpage">
+  <form action="#">
     <van-search
       v-model="value"
       placeholder="输入我的位置"
       class="seach-input"
-      autofocus
       @search="onSearch"
       @change="onChange"
       @focus="onFocus"
       @clear="onClear"
+      type="search"
     />
+    </form>
     <div class="recent-search" v-if="recentFlag">
       <div class="recent-search-title">
         <span>{{ recentSearch.type }}</span>
@@ -34,6 +36,7 @@ event:recentClear,onChange
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   name: "SearchInput",
   data() {
@@ -118,7 +121,7 @@ export default {
           console.log(res);
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     }
   },

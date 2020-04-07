@@ -98,14 +98,12 @@
     <div class="baseinfo">您近两个月疾病严重度是？</div>
     <div class="sliderbox">
       <div class="header">
-        <span>无</span>
         <span>轻度</span>
         <span>中度</span>
         <span>严重</span>
-        <span>非常严重</span>
       </div>
       <van-slider
-        :step="25"
+        :step="50"
         v-model="level"
         bar-height="4px"
         active-color="linear-gradient(90deg,rgba(0, 153, 102, 1) 0%,rgba(242, 169, 0, 1) 52%,rgba(255, 63, 15, 1) 100%);"
@@ -119,6 +117,7 @@
 import VanAreas from "@/components/vanareas.vue";
 import VanTimePicker from "@/components/vantimepicker.vue";
 import VanSexPicker from "@/components/vansexpicker";
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -141,10 +140,13 @@ export default {
       isFirstEnter: false,
       medications: [],
       address: {},
-      user: {}
+      user: {},
+      silderBar:'',
     };
   },
   mounted() {
+    // console.log('document.getElementsByClassName("van-slider__bar")',document.getElementsByClassName("van-slider__bar")[0].style.width);
+    // this.silderBar = document.getElementsByClassName("van-slider__bar")[0].style.width;
     this.getMyInfo();
     this.getMedications();
     // this.getMyAddress();
@@ -159,14 +161,14 @@ export default {
       this.$set(this.form, "province", this.user.province);
       this.$set(this.form, "area", this.user.city);
       this.$set(this.form, "time", this.user.diaTime);
-      if (this.user.level == "无") {
+      if (this.user.level == "轻度") {
         this.level = 0;
-      } else if (this.user.level == "轻度") {
-        this.level = 33;
       } else if (this.user.level == "中度") {
-        this.level = 66;
+        document.getElementsByClassName("van-slider__bar")[0].classList.add("backgroundColor50");
+        this.level = 50;
       } else {
-        this.level = 99;
+        document.getElementsByClassName("van-slider__bar")[0].classList.add("backgroundColor100");
+        this.level = 100;
       }
     },
     onConfirmplace(values) {
@@ -187,13 +189,19 @@ export default {
     },
     onChange(value) {
       if (value == 0) {
-        this.$set(this.form, "level", "无");
-      } else if (value == 33) {
         this.$set(this.form, "level", "轻度");
-      } else if (value == 66) {
+      } else if (value == 50) {
+        document.getElementsByClassName("van-slider__bar")[0].classList.add("backgroundColor50");
+        if(document.getElementsByClassName("van-slider__bar")[0].classList.contains('backgroundColor100')){
+          document.getElementsByClassName("van-slider__bar")[0].classList.remove("backgroundColor100");
+        }
         this.$set(this.form, "level", "中度");
       } else {
-        this.$set(this.form, "level", "重度");
+        if(document.getElementsByClassName("van-slider__bar")[0].classList.contains('backgroundColor50')){
+          document.getElementsByClassName("van-slider__bar")[0].classList.remove("backgroundColor50");
+        }
+        document.getElementsByClassName("van-slider__bar")[0].classList.add("backgroundColor100");
+        this.$set(this.form, "level", "严重");
       }
     },
     editmedicinalhistory() {
@@ -217,7 +225,7 @@ export default {
           console.log("data", data);
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     getMedications() {
@@ -227,7 +235,7 @@ export default {
           this.medications = this.$store.getters.getmedications.medications;
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     getMyInfo() {
@@ -246,8 +254,12 @@ export default {
           this.init();
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
+    }
+  },
+  watch:{
+    silderBar:function (val) {
     }
   },
   components: { VanAreas, VanTimePicker, VanSexPicker }
@@ -300,40 +312,43 @@ export default {
     justify-content: space-between;
     color: #333333;
     font-size: 0.28rem;
-    width: 6.8rem;
-    margin: 0.12rem auto;
+    width: 6rem;
+    margin: 0.12rem 0.32rem;
   }
 }
 .van-slider {
   position: relative;
-  // width: 82%;
-  background-color: #ebedf0;
   border-radius: 999px;
   cursor: pointer;
-  margin: 0 auto;
-  width: 6.8rem;
-  height: 0.12rem;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 153, 102, 1) 0%,
-    rgba(242, 169, 0, 1) 52%,
-    rgba(255, 63, 15, 1) 100%
-  );
+  margin: 0 0.32rem 0.62rem 0.32rem;
+  width: 6rem;
+  height: 0.16rem;
+  background: #cdcdcd;
   box-shadow: 0px 4px 8px 0px rgba(103, 103, 103, 0.5);
+  border: 2px solid rgba(255, 255, 255, 1);
+  box-sizing: border-box;
   border-radius: 0.4rem;
 }
 @{aaa}.van-slider__bar {
-  background: transparent;
+    background:linear-gradient(90deg,rgba(0, 153, 102, 1) 0%,rgba(242, 169, 0, 1) 52%,rgba(255, 63, 15, 1) 100%)!important;
+  &.backgroundColor50{
+    background:linear-gradient(90deg,rgba(0,153,102,1) 0%,rgba(242,169,0,1) 100%)!important;
+  }
+  &.backgroundColor100{
+    background:linear-gradient(90deg,rgba(0, 153, 102, 1) 0%,rgba(242, 169, 0, 1) 52%,rgba(255, 63, 15, 1) 100%)!important;
+  }
 }
 @{aaa}.van-slider__button {
-  width: 0.28rem;
-  height: 0.28rem;
+  width: 0.44rem;
+  height: 0.44rem;
+  border: 0.04rem solid #ffffff;
   background: linear-gradient(
     180deg,
     rgba(0, 201, 159, 1) 0%,
     rgba(0, 153, 102, 1) 100%
   );
   box-shadow: 0px 4px 8px 0px rgba(58, 170, 133, 1);
+  right: -.22rem;
 }
 .baseinfo {
   font-size: 0.32rem;

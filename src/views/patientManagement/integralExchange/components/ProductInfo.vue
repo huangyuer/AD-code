@@ -1,16 +1,26 @@
 <template>
   <div class="productinfowapper" style="color:#000000" v-if="Object.keys(item).length!=0">
     <div class="imageheader">
-      <van-image
-        width="3rem"
-        height="3rem"
-        fit="cover"
-        :src="
-          item.goodsImg
-            ? item.goodsImg[0].httpUrl
-            : item.coverImg[0].httpUrl
-        "
-      />
+    <van-swipe
+      :loop="true"
+      :show-indicator="false"
+      :initial-swipe="0"
+    >
+      <van-swipe-item v-for="(index,key) in item.goodsImg">
+        <van-image
+          width="3rem"
+          height="3rem"
+          fit="cover"
+          class="vangoodsimg"
+          :src="index.httpUrl"
+        />
+      </van-swipe-item>
+      <template #indicator>
+        <div class="custom-indicator">
+          {{ current + 1 }}/{{item.goodsImg.length}}
+        </div>
+      </template>
+    </van-swipe>
     </div>
     <div class="contentheader">
       <div class="credit">{{ item.score }}积分</div>
@@ -31,7 +41,8 @@ export default {
         goods: String,
         address: String
       },
-      item: {}
+      item: {},
+      current: 0
     };
   },
   created() {
@@ -112,6 +123,14 @@ export default {
     justify-content: center;
     margin: 0.4rem 0 0.6rem 0;
     line-height: 0;
+    >div{
+      width:100%;
+      height:3.2rem;
+      .vangoodsimg{
+        margin:0 auto;
+        display:block;
+      }
+    }
   }
   .contentheader {
     border-bottom: 2px solid rgba(229, 229, 229, 1);
@@ -153,5 +172,21 @@ export default {
     text-align: center;
     margin: 0.6rem auto 0;
   }
+  .custom-indicator {
+    position: absolute;
+    right: .32rem;
+    bottom: 0;
+    background: #999999;
+    font-size:.24rem;
+    font-family:"PingFangSC-Medium";
+    font-weight:500;
+    color:rgba(255,255,255,1);
+    border-radius:.2rem;
+    width:.72rem;
+    height:.4rem;
+    line-height:.4rem;
+    text-align:center;
+  }
 }
+
 </style>

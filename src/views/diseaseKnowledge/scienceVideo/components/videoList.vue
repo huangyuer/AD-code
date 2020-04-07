@@ -116,7 +116,6 @@ export default {
         .dispatch("common/getMenuSelect", this.$route.meta.title)
         .then(data => {
           let menus = this.$store.getters.menuList.selects[0].tags;
-          console.log("menu", this.$store.getters.menuList.selects);
           for (var i = 0; i < menus.length; i++) {
             let obj = {};
             obj["text"] = menus[i];
@@ -132,13 +131,9 @@ export default {
       this.$store
         .dispatch("diseaseKnowledge/getVideos", this.form)
         .then(data => {
-          if (this.videoList != null) {
             this.videoList = this.videoList.concat(
               this.$store.getters.videoList.videos
             );
-          } else {
-            this.videoList = this.$store.getters.videoList.videos;
-          }
           this.total = this.$store.getters.videoList.total;
           this.loading = false;
           if (this.videoList.length >= this.total) {
@@ -173,7 +168,7 @@ export default {
           });
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     }
   }

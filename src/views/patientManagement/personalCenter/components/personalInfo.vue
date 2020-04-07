@@ -100,6 +100,7 @@
 </template>
 <script>
 import Clipboard from "clipboard";
+import {removeToken} from "@/utils/auth";
 import { Toast } from "vant";
 export default {
   data() {
@@ -120,7 +121,7 @@ export default {
           this.getmyinfo = this.$store.getters.getmyinfo.user;
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     getMyAddress() {
@@ -130,17 +131,17 @@ export default {
           this.address = this.$store.getters.getmyaddress.address;
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     delMyInfo() {
       this.$store
         .dispatch("patientManagement/delMyInfo")
         .then(data => {
-          console.log("fsdfaf");
+          removeToken();
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     myinfopageEdit() {

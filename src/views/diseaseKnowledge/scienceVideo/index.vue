@@ -80,7 +80,7 @@ export default {
           });
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     toPagemore() {
@@ -110,7 +110,7 @@ export default {
           }
         })
         .catch(e => {
-          console.log(e);
+         Toast(e);
         });
     },
     getLive() {
@@ -120,7 +120,7 @@ export default {
           this.LiveList = this.$store.getters.LiveList.live;
         })
         .catch(e => {
-          console.log(e);
+         Toast(e);
         });
     }
   }

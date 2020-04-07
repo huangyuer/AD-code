@@ -42,33 +42,6 @@ import { Image } from "vant";
 export default {
   data() {
     return {
-      itemlist: [
-        {
-          id: 1,
-          title: "黄丹法fdsfdsf黄丹萨芬撒",
-          card: "13"
-        },
-        {
-          id: 2,
-          title: "黄丹法fdsfdsf黄丹萨芬撒",
-          card: "13"
-        },
-        {
-          id: 3,
-          title: "黄丹法fdsfdsf黄丹萨芬撒",
-          card: "13"
-        },
-        {
-          id: 4,
-          title: "黄丹法fdsfdsf黄丹萨芬撒",
-          card: "13"
-        },
-        {
-          id: 5,
-          title: "黄丹法fdsfdsf黄丹萨芬撒",
-          card: "13"
-        }
-      ],
       goods: [],
       score: {}
     };
@@ -82,7 +55,6 @@ export default {
       this.$router.push({ path: "myexchange" });
     },
     changeBtn(item) {
-      // console.log("id", item);
       this.$router.push({
         path: "/ProductInfo",
         query: { id: item._id, score: this.score }
@@ -96,18 +68,17 @@ export default {
           this.goods = response.data.goods;
         })
         .catch(e => {
-          console.log(e);
+         Toast(e);
         });
     },
     getMyScore() {
       this.$store
         .dispatch("patientManagement/getMyScore")
         .then(response => {
-          console.log("responsestore", response);
           this.score = response.data.score;
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     }
   }
@@ -124,7 +95,7 @@ export default {
     height: 0.8rem;
     background: rgba(249, 249, 249, 1);
     border-radius: 0.5rem;
-    margin: 0.28rem auto;
+    margin: 0.4rem auto .28rem;
     box-sizing: border-box;
     .left {
       display: flex;

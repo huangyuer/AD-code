@@ -31,8 +31,10 @@
         </div>
         <div class="right">
           <span>最近评估：</span>
-          <span class="deg">{{ answerLogs }}</span>
-          <img src="@/assets/jiantou@2x.png" alt />
+          <span class="deg">{{ scoreNumber }}</span>
+          <svg-icon iconClass="jiantoushangseng" v-if="addScore>=0" class="iconjiantou"></svg-icon>
+          <svg-icon iconClass="jiantouchiping" v-if="addScore=''"  class="iconjiantou"></svg-icon>
+          <svg-icon iconClass="jiantouxiajiang" v-if="addScore<0" class="iconjiantou"></svg-icon>
         </div>
       </div>
       <div class="bottom">
@@ -120,7 +122,7 @@
               >{{ user.name != "" ? user.name : user.nickName }}</div>
               <div class="color3 font-size28 fmregular">
                 您最近一次评估程度为
-                <b class="color009966 fmmedium">{{ answerLogs }}分</b>
+                <b class="color009966 fmmedium">{{scoreNumber }}分</b>
               </div>
             </div>
             <div class="btnpage" @click="todiseaseTest()">去评估</div>
@@ -169,13 +171,21 @@ export default {
       answerLogs: "",
       msglist: {},
       user: {},
-      score: {}
+      score: {},
+      scoreNumber:'',
+      addScore:'',
     };
   },
   created() {
     this.getMyInfo();
     this.getMyScore();
     this.getLeaveMsgList();
+    if(localStorage.getItem("score") != null){
+      this.scoreNumber = localStorage.getItem("score");
+    }
+    if(localStorage.getItem("addScore") != null){
+      this.addScore= parseInt(localStorage.getItem("addScore"));
+    }
   },
   mounted() {
     this.getTasks();
@@ -223,12 +233,9 @@ export default {
       this.$store
         .dispatch("patientManagement/getTasks")
         .then(response => {
-          console.log("response", response);
           this.tasks = response.data.tasks;
-          // this.goods = response.data.goods;
         })
         .catch(e => {
-          console.log("fsdfsdf", e);
           Toast(e);
         });
     },
@@ -242,14 +249,12 @@ export default {
       this.$store
         .dispatch("patientManagement/getMyStars", form)
         .then(response => {
-          console.log("response=====================>star", response);
           this.stars = this.$store.getters.getmystars.stars;
           // this.tasks = response.data.tasks;
           // this.goods = response.data.goods;
         })
         .catch(e => {
-          // console.log("fsdfsdf", e);
-          // Toast(e);
+          Toast(e);
         });
     },
     getAnswerLogs() {
@@ -268,7 +273,6 @@ export default {
             response.data.answerLogs[response.data.answerLogs.length - 1].score;
         })
         .catch(e => {
-          console.log("fsdfsdf", e);
           Toast(e);
         });
     },
@@ -279,7 +283,7 @@ export default {
           this.user = this.$store.getters.getmyinfo.user;
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     getMyScore() {
@@ -289,7 +293,7 @@ export default {
           this.score = response.data.score;
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     getLeaveMsgList() {
@@ -300,11 +304,10 @@ export default {
       this.$store
         .dispatch("diseaseKnowledge/getLeaveMsgList", form)
         .then(response => {
-          console.log("dssdd", response.lvMsgList);
           this.msglist = response.lvMsgList[0];
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     }
   }
@@ -386,6 +389,10 @@ export default {
         color: rgba(51, 51, 51, 1);
         line-height: initial;
         margin: 0.3rem 0 0 0;
+        .iconjiantou{
+          width:.4rem;
+          height:.44rem;
+        }
         .deg {
           color: #009966;
           font-size: 0.36rem;

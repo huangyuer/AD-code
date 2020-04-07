@@ -47,14 +47,16 @@
       @likeBtn="likeBtn"
       @forwardBtn="forwardBtn"
     ></like-and-forward>
+    <van-over-lay :show="showoverlay"></van-over-lay>
   </div>
 </template>
 <script>
 import "./json2";
 import { Toast } from "vant";
 import LikeAndForward from "@/components/LikeAndForward";
+import VanOverLay from "@/components/overlay";
 export default {
-  components: { LikeAndForward },
+  components: { LikeAndForward,VanOverLay },
   beforeRouteLeave(to, form, next) {
     next();
     this.addOutPageLog();
@@ -63,7 +65,8 @@ export default {
     return {
       videoitem: {},
       isvideo: false,
-      iframe: ""
+      iframe: "",
+      showoverlay:false,
     };
   },
   created() {},
@@ -75,7 +78,6 @@ export default {
       this.$store
         .dispatch("common/addOutPageLog", this.$route.meta.title)
         .then(response => {
-          console.log("response===========", response);
         })
         .catch(e => {
           Toast(e);
@@ -93,7 +95,7 @@ export default {
           this.iframe = this.videoitem.video[0].httpUrl;
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     isIframe() {
@@ -111,8 +113,7 @@ export default {
     },
     forwardBtn() {
       console.log("-----dss");
-      // this.getShareUrl();
-      // this.getSignature();
+      this.showoverlay = true;
     },
     getShareUrl() {
       if (this.$route.path.charAt(0) == "/")
@@ -121,15 +122,13 @@ export default {
         url: string,
         id: this.$route.params.id
       };
-      console.log("formformformformform", form);
-
       this.$store
         .dispatch("common/getShareUrl", form)
         .then(data => {
           // this.article = this.$store.getters.articleDetail.article;
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     }
   }
@@ -143,7 +142,8 @@ export default {
     font-size: 0.3rem;
     text-align: center;
     font-family: "PingFangSC-Medium";
-    height: 1.12rem;
+    // height: 1.12rem;
+    padding: .4rem 0 .18rem 0;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -153,6 +153,7 @@ export default {
       color: #acadaf;
       font-family: "PingFangSC-Regular";
       line-height: 0.4rem;
+      margin-top:.08rem;
     }
   }
   .content {

@@ -49,13 +49,15 @@
         <!-- <template v-for='items in item'>
           <template  v-for='(itemss, indexs) in items'> -->
             <!-- <td>{{itemss}}</td> -->
-          
           <div class="left">
-            <div class="hospitalname">{{itemss.name}}
-              <span class="top" v-if="itemss.isAd">首推</span>
-              <span class="hot" v-if="itemss.isZd && !itemss.isAd">热门</span>
+            <div class="hospitalIndex">{{key+1}}</div>
+            <div class="hospitaldetail">
+              <div class="hospitalname">{{itemss.name}}
+                <span class="top" v-if="itemss.isAd">首推</span>
+                <span class="hot" v-if="itemss.isZd && !itemss.isAd">热门</span>
+              </div>
+              <div class="hospitaladdress">{{itemss.address}}</div>
             </div>
-            <div class="hospitaladdress">{{itemss.address}}</div>
           </div>
           <div class="right">
             <svg-icon iconClass="daohang" className="dao-hang"></svg-icon
@@ -115,7 +117,6 @@ export default {
       var vanpopup = document.getElementsByClassName("van-popup")[0];
       let scrollTop = vanpopup.scrollTop;
       var bottom = document.getElementsByClassName("van-popup--bottom")[0];
-      console.log(bottom.style.top);
       if (bottom.style.top == "50%" || bottom.style.top=='') {
         vanpopup.style.scrollTop = 0;
         bottom.style.top = "0";
@@ -157,7 +158,7 @@ export default {
     z-index: 2;
     .tip {
       width: 100%;
-      height: 0.3rem;
+      height: 0.58rem;
       background: #ffffff;
       position: fixed;
       width: calc(100% - 0.64rem);
@@ -167,7 +168,7 @@ export default {
         content: "";
         position: absolute;
         left: calc(50% - 0.4rem);
-        bottom: 0;
+        bottom: .28rem;
         width: 0.8rem;
         height: 0.1rem;
         background: rgba(216, 216, 216, 1);
@@ -178,7 +179,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.28rem 0 0.16rem 0;
+      padding: 0.58rem 0 0.16rem 0;
       border-bottom: 0.02rem solid rgba(229, 229, 229, 1);
 
       > div:nth-child(1) {
@@ -205,7 +206,7 @@ export default {
   }
 
   .hospitalContent {
-    padding-top: 0.86rem;
+    padding-top: 1.16rem;
     .hospitalItem {
       display: flex;
       justify-content: space-between;
@@ -215,66 +216,80 @@ export default {
       position:relative;
       .left {
         display: flex;
-        flex-direction: column;
+        // flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        .hospitalname {
-          font-size: 0.28rem;
-          font-family: "PingFangSC-Medium";
-          font-weight: 500;
-          color: rgba(51, 51, 51, 1);
-          line-height: initial;
-          .topicon {
-            width: 0.86rem;
-            height: 0.32rem;
-            margin-left: 0.12rem;
-          }
-          .top {
-            width: 0.8rem;
-            height: 0.36rem;
-            background: linear-gradient(
-              270deg,
-              rgba(50, 209, 157, 1) 0%,
-              rgba(0, 153, 102, 1) 100%
-            );
-            font-size: 0.24rem;
-            font-family: "PingFangSC-Medium";
-            font-weight: 500;
-            color: rgba(255, 255, 255, 1);
-            padding: 0 0.16rem;
-            border-top-left-radius: 0.3rem;
-            border-top-right-radius: 0.2rem;
-            border-bottom-right-radius: 0.2rem;
-            margin-left: 0.1rem;
-          }
-          .hot {
-            width: 0.8rem;
-            height: 0.36rem;
-            background: linear-gradient(
-              270deg,
-              rgba(250, 212, 0, 1) 0%,
-              rgba(242, 169, 0, 1) 100%
-            );
-            font-size: 0.24rem;
-            font-family: "PingFangSC-Medium";
-            font-weight: 500;
-            color: rgba(255, 255, 255, 1);
-            padding: 0 0.16rem;
-            border-top-left-radius: 0.3rem;
-            border-top-right-radius: 0.2rem;
-            border-bottom-right-radius: 0.2rem;
-          }
+        .hospitalIndex{
+          font-size:.4rem;
+          font-family:Arial-ItalicMT,Arial;
+          font-weight:normal;
+          font-style:italic;
+          color:#009966;
+          padding-right:.16rem;
         }
-        .hospitaladdress {
-          font-size: 0.28rem;
-          font-family: "PingFangSC-Regular";
-          font-weight: 400;
-          color: rgba(153, 153, 153, 1);
-          line-height: initial;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          width:5.5rem;
+        .hospitaldetail{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          .hospitalname {
+            font-size: 0.28rem;
+            font-family: "PingFangSC-Medium";
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            line-height: initial;
+            .topicon {
+              width: 0.86rem;
+              height: 0.32rem;
+              margin-left: 0.12rem;
+            }
+            .top {
+              width: 0.8rem;
+              height: 0.36rem;
+              background: linear-gradient(
+                270deg,
+                rgba(50, 209, 157, 1) 0%,
+                rgba(0, 153, 102, 1) 100%
+              );
+              font-size: 0.24rem;
+              font-family: "PingFangSC-Medium";
+              font-weight: 500;
+              color: rgba(255, 255, 255, 1);
+              padding: 0 0.16rem;
+              border-top-left-radius: 0.3rem;
+              border-top-right-radius: 0.2rem;
+              border-bottom-right-radius: 0.2rem;
+              margin-left: 0.1rem;
+            }
+            .hot {
+              width: 0.8rem;
+              height: 0.36rem;
+              background: linear-gradient(
+                270deg,
+                rgba(250, 212, 0, 1) 0%,
+                rgba(242, 169, 0, 1) 100%
+              );
+              font-size: 0.24rem;
+              font-family: "PingFangSC-Medium";
+              font-weight: 500;
+              color: rgba(255, 255, 255, 1);
+              padding: 0 0.16rem;
+              border-top-left-radius: 0.3rem;
+              border-top-right-radius: 0.2rem;
+              border-bottom-right-radius: 0.2rem;
+            }
+          }
+          .hospitaladdress {
+            font-size: 0.28rem;
+            font-family: "PingFangSC-Regular";
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            line-height: initial;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width:5.5rem;
+          }
         }
       }
       .right {

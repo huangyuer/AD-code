@@ -23,6 +23,10 @@ import LikeAndForward from "@/components/LikeAndForward";
 export default {
   name: "DiseaseDetail",
   components: { LikeAndForward },
+  beforeRouteLeave(to, form, next) {
+    next();
+    this.addOutPageLog();
+  },
   data() {
     return {
       id: "",
@@ -41,6 +45,15 @@ export default {
   },
   mounted() {},
   methods: {
+    addOutPageLog() {
+      this.$store
+        .dispatch("common/addOutPageLog", this.$route.meta.title)
+        .then(response => {
+        })
+        .catch(e => {
+          Toast(e);
+        });
+    },
     likeBtn() {
       console.log("-----d");
     },

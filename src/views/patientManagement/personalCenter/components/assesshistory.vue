@@ -51,7 +51,7 @@ export default {
         //获得评估历史
         page: 1,
         limit: 10,
-        startDate: getLastMonth().now,
+        startDate: getLastMonth().last,
         endDate: getLastMonth().now,
         isChart: false
       },
@@ -92,7 +92,6 @@ export default {
           var day = this.getPassFormatDate(i);
           this.xall.push(day);
         }
-        console.log("this.x=>,", this.xall);
         this.$set(this.getAnswerLogChart, "startDate", getLastMonth().last);
         this.$set(this.getAnswerLogChart, "endDate", getLastMonth().now);
         this.$set(this.getAnswerLog, "startDate", getLastMonth().last);
@@ -100,7 +99,8 @@ export default {
         this.getAnswerLogsChart();
         this.answerLogs = [];
         this.$set(this.getAnswerLog, "page", 1);
-        this.finished = false;
+        this.getAnswerLogs();
+        // this.finished = false;
       } else if (this.currentTime == "近三个月") {
         this.xall = [];
         this.interval = 17;
@@ -109,8 +109,6 @@ export default {
           var day = this.getPassFormatDate(i);
           this.xall.push(day);
         }
-        console.log("this.x=>,", this.xall);
-
         this.$set(this.getAnswerLogChart, "startDate", getLast3Month().last);
         this.$set(this.getAnswerLogChart, "endDate", getLast3Month().now);
         this.$set(this.getAnswerLog, "startDate", getLast3Month().last);
@@ -118,7 +116,8 @@ export default {
         this.getAnswerLogsChart();
         this.answerLogs = [];
         this.$set(this.getAnswerLog, "page", 1);
-        this.finished = false;
+        this.getAnswerLogs();
+        // this.finished = false;
       } else {
         this.xall = [];
         this.interval = 35;
@@ -127,8 +126,6 @@ export default {
           var day = this.getPassFormatDate(i);
           this.xall.push(day);
         }
-        console.log("this.x=>,", this.xall);
-
         this.$set(this.getAnswerLogChart, "startDate", getLastYear().last);
         this.$set(this.getAnswerLogChart, "endDate", getLastYear().now);
         this.$set(this.getAnswerLog, "startDate", getLastYear().last);
@@ -136,7 +133,8 @@ export default {
         this.getAnswerLogsChart();
         this.answerLogs = [];
         this.$set(this.getAnswerLog, "page", 1);
-        this.finished = false;
+        this.getAnswerLogs();
+        // this.finished = false;
       }
     },
     getPassFormatDate(i) {
@@ -377,7 +375,7 @@ export default {
           this.drawLine();
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     getAnswerLogs() {
@@ -401,7 +399,7 @@ export default {
           }
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     },
     onLoad() {

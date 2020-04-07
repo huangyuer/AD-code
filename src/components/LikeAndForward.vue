@@ -73,19 +73,6 @@ export default {
     forwardBtn() {
       this.getSignature();
       this.$emit("forwardBtn");
-      // console.log("----1111-", wx.updateAppMessageShareData);
-      // //需在用户可能点击分享按钮前就先调用
-      // wx.updateAppMessageShareData({
-      //   title: "sss", // 分享标题
-      //   desc: "sss", // 分享描述
-      //   link:
-      //     "https://note.youdao.com/ynoteshare1/index.html?id=4e314c4cfb5c952a70a60fda7400c91d&type=note", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-      //   imgUrl: "", // 分享图标
-      //   success: function() {
-      //     console.log("----ss");
-      //     // 设置成功
-      //   }
-      // });
     },
     getSignature() {
       var url = encodeURIComponent(window.location.href.split("#")[0]);
@@ -111,17 +98,12 @@ export default {
 
           wx.ready(function() {
             var obj = {
-              title: "开球了App", // 标题
-              desc: "NBA球星和训练师教你打篮球", // 说明文字
-              link: "http://wx.sportses.com/mobile/#/pages/download/download", // 链接
+              title: "患者故事", // 标题
+              desc: "患者故事", // 说明文字
+              link: url, // 链接
               imgUrl:
                 "https://seats-1257313859.cos.ap-beijing.myqcloud.com/ustar/images/kickoff.png", // 分享的图标
-              fail: function(res) {
-                alert(JSON.stringify(res));
-              }
             };
-            // WeixinJSBridge.invoke("shareTimeline", obj);
-
             wx.checkJsApi({
               jsApiList: [
                 "updateAppMessageShareData",

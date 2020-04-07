@@ -21,13 +21,20 @@
           <div class="hospitalContentname">医院详情</div>
           <div class="todaohangItem">
             <div class="right">
-              <div class="hp-address">{{hispitalItem.address}}上海市长宁区武夷路196号</div>
-              <div class="hp-phone">电话：{{hispitalItem.distance}}</div>
-              <div class="hp-distance">距离您{{hispitalItem.duration}}</div>
+              <div class="hp-address">
+              <van-image width=".3rem" height=".36rem" :src="require('../../../../assets/zu-2.png')" />
+              <span>{{hispitalItem.name}}</span></div>
+              <div class="hp-phone">{{hispitalItem.address}}</div>
+              <div class="hp-distance">
+              <van-image width=".2rem" height=".2rem" :src="require('../../../../assets/tuoyuan.png')" />
+              <span>距离您{{hispitalItem.distance}}</span></div>
             </div>
             <div class="hp-btn" @click="goNav()">
               <svg-icon iconClass="daohang" className="daohang"></svg-icon>导航
             </div>
+          </div>
+          <div class="tips">
+            <b class="first">友情提示：</b>就诊时，携带<b class="colorred">药盒</b>并展示<b class="colorred">自评报告</b>，有助于医生评估病情。
           </div>
           <div class="hospitalContentname">医生列表</div>
           <div class="doctorList">
@@ -42,7 +49,7 @@
                   width=".72rem"
                   height=".72rem"
                   fit="cover"
-                  src="https://img.yzcdn.cn/vant/cat.jpeg"
+                  :src="require('../../../../assets/doctor.png')"
                 />
                 <div class="doc-detail">
                   <div class="doc-name">
@@ -104,7 +111,7 @@ export default {
   },
   methods: {
     goNav() {
-      this.$emit("goNav", false,this.hispitalItem.name);
+      this.$emit("goNav", false,this.hispitalItem);
     },
     clicktip() {
       var vanpopup = document.getElementsByClassName("van-popup")[0];
@@ -174,7 +181,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.22rem 0;
+        padding: 0.2rem 0 .4rem 0;
         .right {
           // padding-left: 0.2rem;
           display: flex;
@@ -187,6 +194,11 @@ export default {
             font-weight: 500;
             color: rgba(51, 51, 51, 1);
             line-height: initial;
+            display:flex;
+            align-items:center;
+            span{
+              margin-left:.14rem;
+            }
           }
           .hp-phone {
             font-size: 0.28rem;
@@ -194,7 +206,7 @@ export default {
             font-weight: 400;
             color: rgba(84, 84, 84, 1);
             line-height: initial;
-            margin: 0.04rem 0;
+            margin: 0.08rem 0;
           }
           .hp-distance {
             font-size: 0.28rem;
@@ -202,6 +214,11 @@ export default {
             font-weight: 400;
             color: rgba(84, 84, 84, 1);
             line-height: initial;
+            display:flex;
+            align-items:center;
+            span{
+              margin-left:.1rem;
+            }
           }
         }
         .hp-btn {
@@ -225,6 +242,23 @@ export default {
             height: 0.24rem;
             fill: #ffffff !important;
           }
+        }
+      }
+      .tips{
+        font-size:.28rem;
+        font-family:PingFangSC-Medium,PingFang SC;
+        font-weight:500;
+        color:rgba(51,51,51,1);
+        padding-top:.2rem;
+        padding-bottom:.6rem;
+        border-top:.02rem solid #E5E5E5;
+        >.first{
+          color:#333333;
+          font-weight:500;
+        }
+        >.colorred{
+          color:#FF755A;
+          font-weight:500;
         }
       }
       .doctorList {

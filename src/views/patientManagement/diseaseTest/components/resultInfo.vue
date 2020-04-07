@@ -1,13 +1,17 @@
 <template>
-  <div class="resultWapper" v-if="Object.keys(result).length!=0">
+<!-- v-if="Object.keys(result).length!=0" -->
+  <div class="resultWapper" >
     <div class="degtitle">
-      <div>
-        {{ result.score }}
+      <div class="score">
+        <span>{{ result.score }}</span>
         <b>分</b>
       </div>
-      <span v-if="level=='peace'" class="spanlevel"></span>
-      <span v-else-if="level=='up'" class="spanup">+1</span>
-      <span v-else-if="level=='down'" class="spandown">-2</span>
+      <div class="tip">
+        <span v-if="result.addScore==''" class="spanlevel"></span>
+        <span v-if="parseInt(result.addScore)>=0" class="spanup">{{result.addScore}}</span>
+        <span v-if="parseInt(result.addScore)<0" class="spandown">{{result.addScore}}</span>
+        <span v-if="result.addScore!=''" class="title">较均值</span>
+      </div>
     </div>
     <!-- <star-scale
       v-if="Object.keys(dataresult).length != 0"
@@ -19,6 +23,7 @@
       {{ result.msg }}
     </div>
     <div class="groupnext" @click="topagePersonalCenter()">关闭</div>
+    <div class="titledetail"><b>*</b>较均值：此次测试前2周得分的均值</div>
   </div>
 </template>
 <script>
@@ -33,8 +38,13 @@ export default {
   },
   data() {
     return {
-      level: "",
-      result: {}
+      result: {},
+      // dataresult:{
+      //   addScore: "0"
+      //   date: "2020-04-07"
+      //   msg: "您的特应性皮炎控制得不错，再接再厉"
+      //   score: 0
+      // }
     };
   },
   created() {},
@@ -47,18 +57,8 @@ export default {
   watch: {
     dataresult: function(val, oldval) {
       this.result = val;
-      if (localStorage.getItem("score") != null) {
-        this.level = "peace";
-        localStorage.setItem("score", this.result.score);
-      } else {
-        if (localStorage.getItem("score") < this.result.score) {
-          this.level = "down";
-          localStorage.setItem("score", this.result.score);
-        } else {
-          this.level = "up";
-          localStorage.setItem("score", this.result.score);
-        }
-      }
+      localStorage.setItem("score", this.result.score);
+      localStorage.setItem("addScore", this.result.addScore);
     }
   }
 };
@@ -68,67 +68,84 @@ export default {
   .degtitle {
     font-weight: 500;
     line-height: initial;
-    padding-top: 0.86rem;
     font-size: 0.6rem;
     font-family: "PingFangSC-Medium";
     font-weight: 500;
-    color: rgba(242, 169, 0, 1);
+    color: #F2A900;
     display: flex;
     align-items: center;
     justify-content: center;
-    b {
-      font-size: 0.4rem;
-      font-weight: 500;
-      line-height: initial;
-      font-family: "PingFangSC-Medium";
-      font-weight: 500;
-      color: #f2a900;
-      margin-right: 0.08rem;
+    height: .84rem;
+    >.score{
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      b {
+        font-size: 0.4rem;
+        font-weight: 500;
+        line-height: initial;
+        font-family: "PingFangSC-Medium";
+        font-weight: 500;
+        color: #f2a900;
+        margin-right: 0.08rem;
+      }
     }
-    .spanlevel {
-      width: 0.32rem;
-      height: 0.04rem;
-      background: rgba(153, 153, 153, 1);
-      font-size: 0.3rem;
-      font-family: "PingFangSC-Medium";
-      font-weight: 500;
-      color: rgba(255, 255, 255, 1);
-    }
-    .spanup {
-      width: 0.8rem;
-      height: 0.36rem;
-      background: linear-gradient(
-        270deg,
-        rgba(255, 157, 138, 1) 0%,
-        rgba(255, 117, 90, 1) 100%
-      );
-      display: block;
-      font-size: 0.3rem;
-      font-family: "PingFangSC-Medium";
-      font-weight: 500;
-      color: rgba(255, 255, 255, 1);
-      line-height: 0.36rem;
-      border-top-left-radius: 0.3rem;
-      border-top-right-radius: 0.2rem;
-      border-bottom-right-radius: 0.2rem;
-    }
-    .spandown {
-      display: block;
-      width: 0.8rem;
-      height: 0.36rem;
-      line-height: 0.36rem;
-      border-top-left-radius: 0.3rem;
-      border-top-right-radius: 0.2rem;
-      border-bottom-right-radius: 0.2rem;
-      background: linear-gradient(
-        270deg,
-        rgba(50, 209, 157, 1) 0%,
-        rgba(0, 153, 102, 1) 100%
-      );
-      font-size: 0.3rem;
-      font-family: "PingFangSC-Medium";
-      font-weight: 500;
-      color: rgba(255, 255, 255, 1);
+    .tip{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction:column;
+      .title{
+        font-size:.26rem;
+        font-family:PingFangSC-Medium,PingFang SC;
+        font-weight:500;
+        color:rgba(153,153,153,1);
+      }
+      .spanlevel {
+        width: 0.32rem;
+        height: 0.04rem;
+        background: rgba(153, 153, 153, 1);
+        font-size: 0.3rem;
+        font-family: "PingFangSC-Medium";
+        font-weight: 500;
+        color: rgba(255, 255, 255, 1);
+      }
+      .spanup {
+        width: 0.8rem;
+        height: 0.36rem;
+        background: linear-gradient(
+          270deg,
+          rgba(255, 157, 138, 1) 0%,
+          rgba(255, 117, 90, 1) 100%
+        );
+        display: block;
+        font-size: 0.3rem;
+        font-family: "PingFangSC-Medium";
+        font-weight: 500;
+        color: rgba(255, 255, 255, 1);
+        line-height: 0.36rem;
+        border-top-left-radius: 0.3rem;
+        border-top-right-radius: 0.2rem;
+        border-bottom-right-radius: 0.2rem;
+      }
+      .spandown {
+        display: block;
+        width: 0.8rem;
+        height: 0.36rem;
+        line-height: 0.36rem;
+        border-top-left-radius: 0.3rem;
+        border-top-right-radius: 0.2rem;
+        border-bottom-right-radius: 0.2rem;
+        background: linear-gradient(
+          270deg,
+          rgba(50, 209, 157, 1) 0%,
+          rgba(0, 153, 102, 1) 100%
+        );
+        font-size: 0.3rem;
+        font-family: "PingFangSC-Medium";
+        font-weight: 500;
+        color: rgba(255, 255, 255, 1);
+      }
     }
   }
   .time {
@@ -169,6 +186,27 @@ export default {
   font-weight: 500;
   color: rgba(255, 255, 255, 1);
   line-height: 0.8rem;
-  margin-top: 3.2rem;
+  margin-top: auto;
+  margin-bottom: 2.4rem;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 3rem);
+}
+.titledetail{
+  font-size:.28rem;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:#999999;
+  text-align:center;
+  margin-top: auto;
+  width:5rem;
+  margin-bottom: .84rem;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 2.5rem);
+  >b{
+    color:#FF755A;
+    font-weight:500;
+  }
 }
 </style>
