@@ -1,7 +1,7 @@
 <template>
   <div
-    data-v-0c38f854=""
-    data-v-6f539d17=""
+    data-v-0c38f854
+    data-v-6f539d17
     class="van-popup van-popup--bottom"
     style="z-index: 2008;"
     v-if="isShow"
@@ -26,7 +26,7 @@
               :value="typeValue"
               placeholder="位置距离"
               @click="typePicker = true"
-            /> -->
+            />-->
             <div @click="toopen()" class="distancediv">
               <span ref="distancediv">位置距离</span>
               <img
@@ -41,18 +41,19 @@
       <div class="hospitalContent">
         <div
           class="hospitalItem"
-          v-if="itemlist!=[]"
+          v-if="itemlist.length>0"
           v-for="(itemss, key) in itemlist"
           :key="key"
           @click="toPageDetail(itemss)"
         >
-        <!-- <template v-for='items in item'>
-          <template  v-for='(itemss, indexs) in items'> -->
-            <!-- <td>{{itemss}}</td> -->
+          <!-- <template v-for='items in item'>
+          <template  v-for='(itemss, indexs) in items'>-->
+          <!-- <td>{{itemss}}</td> -->
           <div class="left">
             <div class="hospitalIndex">{{key+1}}</div>
             <div class="hospitaldetail">
-              <div class="hospitalname">{{itemss.name}}
+              <div class="hospitalname">
+                {{itemss.name}}
                 <span class="top" v-if="itemss.isAd">首推</span>
                 <span class="hot" v-if="itemss.isZd && !itemss.isAd">热门</span>
               </div>
@@ -60,11 +61,11 @@
             </div>
           </div>
           <div class="right">
-            <svg-icon iconClass="daohang" className="dao-hang"></svg-icon
-            ><span>{{itemss.distance}}</span>
+            <svg-icon iconClass="daohang" class="dao-hang"></svg-icon>
+            <span>{{itemss.distance}}</span>
           </div>
           <!-- </template>
-        </template> -->
+          </template>-->
         </div>
       </div>
     </div>
@@ -82,9 +83,9 @@ export default {
       type: String,
       default: ""
     },
-    hospitals:{
-      type:Array,
-      default:[],
+    hospitals: {
+      type: Array,
+      default: []
     }
   },
   data() {
@@ -94,7 +95,7 @@ export default {
       container: null,
       startx: 0,
       starty: 0,
-      itemlist:[],
+      itemlist: []
     };
   },
   mounted() {
@@ -117,7 +118,7 @@ export default {
       var vanpopup = document.getElementsByClassName("van-popup")[0];
       let scrollTop = vanpopup.scrollTop;
       var bottom = document.getElementsByClassName("van-popup--bottom")[0];
-      if (bottom.style.top == "50%" || bottom.style.top=='') {
+      if (bottom.style.top == "50%" || bottom.style.top == "") {
         vanpopup.style.scrollTop = 0;
         bottom.style.top = "0";
         bottom.style.transition = "0.3s";
@@ -140,9 +141,9 @@ export default {
     typeValue: function(val) {
       this.$refs.distancediv.innerHTML = val;
     },
-    hospitals:function(val) {
+    hospitals: function(val) {
       this.itemlist = val;
-    },
+    }
   }
 };
 </script>
@@ -168,7 +169,7 @@ export default {
         content: "";
         position: absolute;
         left: calc(50% - 0.4rem);
-        bottom: .28rem;
+        bottom: 0.28rem;
         width: 0.8rem;
         height: 0.1rem;
         background: rgba(216, 216, 216, 1);
@@ -213,21 +214,21 @@ export default {
       align-items: center;
       padding: 0.2rem 0;
       border-bottom: 0.02rem solid #e5e5e5;
-      position:relative;
+      position: relative;
       .left {
         display: flex;
         // flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        .hospitalIndex{
-          font-size:.4rem;
-          font-family:Arial-ItalicMT,Arial;
-          font-weight:normal;
-          font-style:italic;
-          color:#009966;
-          padding-right:.16rem;
+        .hospitalIndex {
+          font-size: 0.4rem;
+          font-family: Arial-ItalicMT, Arial;
+          font-weight: normal;
+          font-style: italic;
+          color: #009966;
+          padding-right: 0.16rem;
         }
-        .hospitaldetail{
+        .hospitaldetail {
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -288,7 +289,7 @@ export default {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            width:5.5rem;
+            width: 5.5rem;
           }
         }
       }
@@ -304,7 +305,7 @@ export default {
         margin-top: 0.4rem;
         position: absolute;
         right: 0;
-        bottom: .2rem;
+        bottom: 0.2rem;
         .dao-hang {
           margin-right: 0.08rem;
           width: 0.24rem;

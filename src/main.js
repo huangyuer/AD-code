@@ -74,13 +74,14 @@ new Vue({
     template: "<App/>"
 });
 
-if (!getOpenId()) {
-    setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
-    setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xMCAwNTo0MDoyMSIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.j3Qks5pIBy3nmSBMZJTX6XAcXCZ6d92JC-8_AX6Il50')
-        // store.dispatch('register/getOpenIdApi').catch(e => {
-        //     Toast(e);
-        // })
-} else {
-    store.commit('register/SET_OPENID', getOpenId())
+// if (!getOpenId()) {
+setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
+setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xMCAwNTo0MDoyMSIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.j3Qks5pIBy3nmSBMZJTX6XAcXCZ6d92JC-8_AX6Il50')
 
-}
+// store.dispatch('register/getOpenIdApi').catch(e => {
+//     Toast(e);
+// })
+// } else {
+//     store.commit('register/SET_OPENID', getOpenId())
+
+// }

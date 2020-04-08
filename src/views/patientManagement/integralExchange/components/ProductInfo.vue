@@ -6,7 +6,7 @@
       :show-indicator="false"
       :initial-swipe="0"
     >
-      <van-swipe-item v-for="(index,key) in item.goodsImg">
+      <van-swipe-item v-for="(index,key) in item.goodsImg" :key="key">
         <van-image
           width="3rem"
           height="3rem"

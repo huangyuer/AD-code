@@ -41,6 +41,7 @@
     </div>
     <like-and-forward
       :like="this.$route.params.like"
+      :path="this.$route.path"
       :forward="this.$route.params.forward"
       :starId="this.$route.params.id"
       :isStar="this.$route.params.isStar"
@@ -56,7 +57,7 @@ import { Toast } from "vant";
 import LikeAndForward from "@/components/LikeAndForward";
 import VanOverLay from "@/components/overlay";
 export default {
-  components: { LikeAndForward,VanOverLay },
+  components: { LikeAndForward, VanOverLay },
   beforeRouteLeave(to, form, next) {
     next();
     this.addOutPageLog();
@@ -66,7 +67,7 @@ export default {
       videoitem: {},
       isvideo: false,
       iframe: "",
-      showoverlay:false,
+      showoverlay: false
     };
   },
   created() {},
@@ -77,8 +78,7 @@ export default {
     addOutPageLog() {
       this.$store
         .dispatch("common/addOutPageLog", this.$route.meta.title)
-        .then(response => {
-        })
+        .then(response => {})
         .catch(e => {
           Toast(e);
         });
@@ -114,22 +114,6 @@ export default {
     forwardBtn() {
       console.log("-----dss");
       this.showoverlay = true;
-    },
-    getShareUrl() {
-      if (this.$route.path.charAt(0) == "/")
-        var string = this.$route.path.substr(1);
-      var form = {
-        url: string,
-        id: this.$route.params.id
-      };
-      this.$store
-        .dispatch("common/getShareUrl", form)
-        .then(data => {
-          // this.article = this.$store.getters.articleDetail.article;
-        })
-        .catch(e => {
-          Toast(e);
-        });
     }
   }
 };
@@ -143,7 +127,7 @@ export default {
     text-align: center;
     font-family: "PingFangSC-Medium";
     // height: 1.12rem;
-    padding: .4rem 0 .18rem 0;
+    padding: 0.4rem 0 0.18rem 0;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -153,7 +137,7 @@ export default {
       color: #acadaf;
       font-family: "PingFangSC-Regular";
       line-height: 0.4rem;
-      margin-top:.08rem;
+      margin-top: 0.08rem;
     }
   }
   .content {

@@ -13,16 +13,19 @@
       :forward="this.$route.params.forward"
       :starId="this.$route.params.id"
       :isStar="this.$route.params.isStar"
+      :path="this.$route.path"
       @likeBtn="likeBtn"
       @forwardBtn="forwardBtn"
     ></like-and-forward>
+    <van-over-lay :show="showoverlay"></van-over-lay>
   </div>
 </template>
 <script>
 import LikeAndForward from "@/components/LikeAndForward";
+import VanOverLay from "@/components/overlay";
 export default {
   name: "DiseaseDetail",
-  components: { LikeAndForward },
+  components: { LikeAndForward, VanOverLay },
   beforeRouteLeave(to, form, next) {
     next();
     this.addOutPageLog();
@@ -30,7 +33,8 @@ export default {
   data() {
     return {
       id: "",
-      article: ""
+      article: "",
+      showoverlay: false
     };
   },
   created() {
@@ -40,7 +44,7 @@ export default {
         this.article = this.$store.getters.articleDetail.article;
       })
       .catch(e => {
-        console.log(e);
+        Toast(e);
       });
   },
   mounted() {},
@@ -48,8 +52,7 @@ export default {
     addOutPageLog() {
       this.$store
         .dispatch("common/addOutPageLog", this.$route.meta.title)
-        .then(response => {
-        })
+        .then(response => {})
         .catch(e => {
           Toast(e);
         });
@@ -59,24 +62,7 @@ export default {
     },
     forwardBtn() {
       console.log("-----dss");
-      this.getShareUrl();
-    },
-     getShareUrl() {
-      if (this.$route.path.charAt(0) == "/")
-        var string = this.$route.path.substr(1);
-        var form = {
-          url: string,
-          id: this.$route.params.id
-      };
-      console.log("formformformformform", form);
-      this.$store
-        .dispatch("common/getShareUrl", form)
-        .then(data => {
-          // this.article = this.$store.getters.articleDetail.article;
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      this.showoverlay = true;
     }
   }
 };

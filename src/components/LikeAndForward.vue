@@ -34,6 +34,10 @@ export default {
     starId: {
       type: String,
       default: ""
+    },
+    path: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -71,12 +75,25 @@ export default {
       this.$emit("likeBtn");
     },
     forwardBtn() {
-      this.getSignature();
+      this.getShareUrl();
       this.$emit("forwardBtn");
     },
-    getSignature() {
-      var url = encodeURIComponent(window.location.href.split("#")[0]);
-      // var url = window.location.href;
+    getShareUrl() {
+      if (this.path.charAt(0) == "/") var string = this.path.substr(1);
+      var form = {
+        url: string,
+        id: this.starId
+      };
+      this.$store
+        .dispatch("common/getShareUrl", form)
+        .then(data => {
+          this.getSignature(data.url);
+        })
+        .catch(e => {
+          Toast(e);
+        });
+    },
+    getSignature(url) {
       this.$store
         .dispatch("common/getSignature", url)
         .then(response => {
@@ -85,7 +102,7 @@ export default {
             debug: true,
             appId: "wx23922f116d0212aa",
             timestamp: response.data.timestamp,
-            nonceStr: response.data.nonceStr,
+            nonceStr: response.data.nonce_str,
             signature: response.data.signature,
             jsApiList: [
               "checkJsApi",
@@ -98,11 +115,11 @@ export default {
 
           wx.ready(function() {
             var obj = {
-              title: "患者故事", // 标题
-              desc: "患者故事", // 说明文字
+              title: this.$route.meta.title, // 标题
+              desc: this.$route.meta.title, // 说明文字
               link: url, // 链接
               imgUrl:
-                "https://seats-1257313859.cos.ap-beijing.myqcloud.com/ustar/images/kickoff.png", // 分享的图标
+                "https://seats-1257313859.cos.ap-beijing.myqcloud.com/ustar/images/kickoff.png" // 分享的图标
             };
             wx.checkJsApi({
               jsApiList: [
@@ -130,7 +147,7 @@ export default {
           });
         })
         .catch(e => {
-          console.log(e);
+          Toast(e);
         });
     }
   }

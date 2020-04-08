@@ -20,10 +20,10 @@
 </template>
 <script>
 export default {
-  props:{
-    itemTabcontent:{
-      type:Array,
-      default:[],
+  props: {
+    itemTabcontent: {
+      type: Array,
+      default: []
     }
   },
   data() {
@@ -39,18 +39,19 @@ export default {
     },
     tocurrentTag(item, k, key) {
       this.current.length = this.itemTabcontent.length;
-      console.log("tablecontent",key,k,this.$refs.vansList[key]);
-      if(this.$refs.vansList[key].children[k].classList.contains('activeTag')){
-        this.$set(this.current, key, '');
-        this.$emit("tocurrentTag", '');
-        this.$emit("currentFuc", this.itemTabcontent.length, '', key);
-      }else{
+      if (
+        this.$refs.vansList[key].children[k].classList.contains("activeTag")
+      ) {
+        this.$set(this.current, key, "");
+        this.$emit("tocurrentTag", "");
+        this.$emit("currentFuc", this.itemTabcontent.length, "", key);
+      } else {
         this.$set(this.current, key, item);
         this.$emit("tocurrentTag", item);
         this.$emit("currentFuc", this.itemTabcontent.length, item, key);
       }
     }
-  },
+  }
 };
 </script>
 <style lang="less" scoped>
