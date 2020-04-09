@@ -80,7 +80,9 @@ export default {
           });
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     toPagemore() {
@@ -110,7 +112,9 @@ export default {
           }
         })
         .catch(e => {
-         Toast(e);
+         if(e){
+            Toast(e);
+          }
         });
     },
     getLive() {
@@ -120,7 +124,9 @@ export default {
           this.LiveList = this.$store.getters.LiveList.live;
         })
         .catch(e => {
-         Toast(e);
+         if(e){
+            Toast(e);
+          }
         });
     }
   }

@@ -121,7 +121,9 @@ export default {
           this.getmyinfo = this.$store.getters.getmyinfo.user;
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     getMyAddress() {
@@ -131,7 +133,9 @@ export default {
           this.address = this.$store.getters.getmyaddress.address;
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     delMyInfo() {
@@ -141,7 +145,9 @@ export default {
           removeToken();
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     myinfopageEdit() {

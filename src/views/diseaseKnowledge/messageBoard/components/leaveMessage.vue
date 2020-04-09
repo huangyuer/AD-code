@@ -173,7 +173,9 @@ export default {
           this.show = true;
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     closeBtn() {

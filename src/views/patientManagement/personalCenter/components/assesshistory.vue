@@ -30,6 +30,7 @@
 import echarts from "echarts";
 import StarScale from "@/components/StarScale";
 import { getLastYear, getLastMonth, getLast3Month } from "./timetemp";
+import { Toast } from "vant";
 export default {
   name: "hello",
   components: { StarScale },
@@ -375,7 +376,9 @@ export default {
           this.drawLine();
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     getAnswerLogs() {
@@ -399,7 +402,9 @@ export default {
           }
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     onLoad() {

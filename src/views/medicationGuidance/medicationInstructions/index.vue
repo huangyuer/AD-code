@@ -106,7 +106,9 @@ export default {
           }
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     getMenuSelect() {
@@ -122,7 +124,9 @@ export default {
           this.finished = false;
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     onLoad() {

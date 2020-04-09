@@ -241,7 +241,9 @@ export default {
           this.nextquestionB2 = this.$store.getters.getquesion[Object.keys(this.$store.getters.getquesion)[3]];
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     submitAnswer() {
@@ -252,7 +254,9 @@ export default {
           this.levelresult = response.data;
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     }
   },

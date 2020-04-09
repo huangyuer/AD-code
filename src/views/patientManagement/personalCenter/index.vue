@@ -252,7 +252,11 @@ export default {
           this.tasks = response.data.tasks;
         })
         .catch((e) => {
-          Toast(e);
+
+            if(e){
+            Toast(e);
+          
+          }
         });
     },
     getMyStars() {
@@ -270,7 +274,11 @@ export default {
           // this.goods = response.data.goods;
         })
         .catch((e) => {
-          Toast(e);
+           if(e){
+     
+            Toast(e);
+          
+           }
         });
     },
     getAnswerLogs() {
@@ -292,7 +300,11 @@ export default {
           }
         })
         .catch((e) => {
-          Toast(e);
+          if(e){
+            
+            Toast(e);
+          
+          }  
         });
     },
     getMyInfo() {
@@ -302,7 +314,11 @@ export default {
           this.user = this.$store.getters.getmyinfo.user;
         })
         .catch((e) => {
-          Toast(e);
+          if(e){
+            if(e){
+            Toast(e);
+          }
+          }      
         });
     },
     getMyScore() {
@@ -312,7 +328,11 @@ export default {
           this.score = response.data.score;
         })
         .catch((e) => {
-          Toast(e);
+          if(e){
+            
+            Toast(e);
+          
+          }
         });
     },
     getLeaveMsgList() {
@@ -328,7 +348,11 @@ export default {
           }
         })
         .catch((e) => {
-          Toast(e);
+          if(e){
+            
+            Toast(e);
+          
+          }
         });
     },
   },

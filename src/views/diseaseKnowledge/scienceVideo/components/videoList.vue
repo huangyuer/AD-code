@@ -124,7 +124,9 @@ export default {
           }
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     onLoad() {
@@ -146,7 +148,9 @@ export default {
           }
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     likeBtn(val) {
@@ -168,7 +172,9 @@ export default {
           });
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     }
   }

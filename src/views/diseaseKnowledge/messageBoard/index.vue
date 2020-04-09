@@ -25,6 +25,7 @@
 <script>
 import MessageTip from "./components/messageTip";
 import MessageInfo from "./components/messageInfo";
+import { Toast } from "vant";
 export default {
   name: "MessageBoard",
   components: { MessageTip, MessageInfo },
@@ -92,7 +93,9 @@ export default {
           Toast(data);
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     }
   }

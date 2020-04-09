@@ -23,6 +23,7 @@ import {
 import {
     setOpenId,
     getOpenId,
+    getToken,
     removeOpenId,
     setToken
 } from "@/utils/auth";
@@ -73,8 +74,8 @@ new Vue({
     },
     template: "<App/>"
 });
-// setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
-// setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xNyAwNjo0MTo0MyIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZThkZTJhN2Y0YzBkMTE4MWI0N2VjMWYifQ.3An5uKzojYcIPv1f2u7noU9mXg6SCPv_aJzd8jrA2zc')
+setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
+setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xNyAwNjo0MTo0MyIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZThkZTJhN2Y0YzBkMTE4MWI0N2VjMWYifQ.3An5uKzojYcIPv1f2u7noU9mXg6SCPv_aJzd8jrA2zc')
 
 if (!getOpenId()) {
     // setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
@@ -82,5 +83,12 @@ if (!getOpenId()) {
     store.dispatch('register/getOpenIdApi')
 } else {
     store.commit('register/SET_OPENID', getOpenId())
+}
 
+if (!getToken()) {
+    store.dispatch("register/resetToken").then(() => {
+        router.push({
+          name: "Register"
+        });
+     });
 }

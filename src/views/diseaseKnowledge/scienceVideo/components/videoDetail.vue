@@ -80,7 +80,9 @@ export default {
         .dispatch("common/addOutPageLog", this.$route.meta.title)
         .then(response => {})
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     getVideo() {
@@ -95,7 +97,9 @@ export default {
           this.iframe = this.videoitem.video[0].httpUrl;
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     isIframe() {

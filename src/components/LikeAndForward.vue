@@ -98,7 +98,9 @@ export default {
           this.getSignature(data.url);
         })
         .catch((e) => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     getSignature(url) {
@@ -155,7 +157,9 @@ export default {
           });
         })
         .catch((e) => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
   },

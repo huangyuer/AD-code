@@ -1,7 +1,8 @@
 import {
     getOpenIdApi,
     sendValidateCode,
-    register
+    register,
+    login
 } from "@/api/register";
 import {
     getToken,
@@ -120,7 +121,24 @@ const actions = {
             resolve();
         });
     },
-
+    login({
+        commit
+    }) {
+        return new Promise((resolve, reject) => {
+            login({
+                openId: getOpenId()
+            }).then(response => {
+                const {
+                    data
+                } = response
+                commit("SET_TOKEN", data.token);
+                setToken(data.token)
+                resolve(response);
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
 };
 
 export default {

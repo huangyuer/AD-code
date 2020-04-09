@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-import { Image } from "vant";
+import { Image,Toast} from "vant";
 export default {
   data() {
     return {
@@ -68,7 +68,9 @@ export default {
           this.goods = response.data.goods;
         })
         .catch(e => {
-         Toast(e);
+         if(e){
+            Toast(e);
+          }
         });
     },
     getMyScore() {
@@ -78,7 +80,9 @@ export default {
           this.score = response.data.score;
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     }
   }

@@ -20,6 +20,7 @@
 </template>
 <script>
 import LikeAndForward from "@/components/LikeAndForward";
+import { Toast } from "vant";
 export default {
   name: "DiseaseDetail",
   components: { LikeAndForward },
@@ -52,7 +53,9 @@ export default {
           console.log("response===========", response);
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     likeBtn() {

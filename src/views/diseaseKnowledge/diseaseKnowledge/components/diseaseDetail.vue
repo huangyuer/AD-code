@@ -23,6 +23,7 @@
 <script>
 import LikeAndForward from "@/components/LikeAndForward";
 import VanOverLay from "@/components/overlay";
+import { Toast } from "vant";
 export default {
   name: "DiseaseDetail",
   components: { LikeAndForward, VanOverLay },
@@ -44,7 +45,9 @@ export default {
         this.article = this.$store.getters.articleDetail.article;
       })
       .catch(e => {
-        Toast(e);
+        if(e){
+            Toast(e);
+          }
       });
   },
   mounted() {},
@@ -54,7 +57,9 @@ export default {
         .dispatch("common/addOutPageLog", this.$route.meta.title)
         .then(response => {})
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     likeBtn() {

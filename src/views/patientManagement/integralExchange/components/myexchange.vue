@@ -56,7 +56,9 @@ export default {
           }
         })
         .catch(e => {
-          Toast(e);
+          if(e){
+            Toast(e);
+          }
         });
     },
     onLoad() {

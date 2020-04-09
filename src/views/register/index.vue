@@ -80,7 +80,10 @@ export default {
           this.getOpenId();
         })
         .catch(e => {
-          this.$toast(e);
+          if(e){
+            this.$toast(e);
+          }
+          
         });
     },
     registerBtn() {
@@ -107,8 +110,9 @@ export default {
         })
         .catch(e => {
           console.log("----s1", e);
-
-          this.$toast(e);
+          if(e){
+            this.$toast(e);
+          }
         });
     }
   }
