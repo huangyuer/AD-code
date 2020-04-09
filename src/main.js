@@ -74,21 +74,23 @@ new Vue({
     },
     template: "<App/>"
 });
-setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
-setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xNyAwNjo0MTo0MyIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZThkZTJhN2Y0YzBkMTE4MWI0N2VjMWYifQ.3An5uKzojYcIPv1f2u7noU9mXg6SCPv_aJzd8jrA2zc')
+// setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
+// setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xNyAwNjo0MTo0MyIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZThkZTJhN2Y0YzBkMTE4MWI0N2VjMWYifQ.3An5uKzojYcIPv1f2u7noU9mXg6SCPv_aJzd8jrA2zc')
 
-if (!getOpenId()) {
-    // setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
-    // setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xMCAwNTo0MDoyMSIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.j3Qks5pIBy3nmSBMZJTX6XAcXCZ6d92JC-8_AX6Il50')
-    store.dispatch('register/getOpenIdApi')
-} else {
-    store.commit('register/SET_OPENID', getOpenId())
-}
+// if (!getOpenId()) {
+//     // setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
+//     // setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xMCAwNTo0MDoyMSIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.j3Qks5pIBy3nmSBMZJTX6XAcXCZ6d92JC-8_AX6Il50')
+//     store.dispatch('register/getOpenIdApi').then(()=>{
+//         store.dispatch("register/login");
+//     })
+//     // location.reload();
 
-if (!getToken()) {
-    store.dispatch("register/resetToken").then(() => {
-        router.push({
-          name: "Register"
-        });
-     });
-}
+// } else {
+//     store.dispatch("register/login");
+//     // location.reload();
+// }
+
+// if (!getToken()) {
+//     store.dispatch("register/login");
+//     location.reload();
+// }

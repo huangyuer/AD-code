@@ -75,14 +75,16 @@ service.interceptors.response.use(
         //     });
         //   });
         if (getOpenId()) {
-            store.dispatch("register/login");
+            store.dispatch("register/login").then(()=>{
             location.reload();
+
+            })
           } else {  
-              store.dispatch("register/resetToken").then(() => {
-                router.push({
-                  name: "Register"
-                });
-              });
+            store.dispatch('register/getOpenIdApi').then(()=>{
+                store.dispatch("register/login");
+            location.reload();
+
+            })
           }
         });
       }
@@ -94,18 +96,20 @@ service.interceptors.response.use(
   error => {
     console.log("err2222", getToken());
     if (getOpenId()) {
-      store.dispatch("register/login");
-      location.reload();
+      store.dispatch("register/login").then(()=>{
+        location.reload();
+    });
+      
     } else {
       if (error.response.status == 401) {
         // setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xMCAwNTo0MDoyMSIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.j3Qks5pIBy3nmSBMZJTX6XAcXCZ6d92JC-8_AX6Il50')
         // location.reload()
 
-        store.dispatch("register/resetToken").then(() => {
-          router.push({
-            name: "Register"
-          });
-        });
+        store.dispatch('register/getOpenIdApi').then(()=>{
+            store.dispatch("register/login");
+        location.reload();
+
+        })
       }
     }
 
