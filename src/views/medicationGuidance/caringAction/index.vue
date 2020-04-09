@@ -52,11 +52,11 @@ export default {
         tag: String,
         title: String,
         page: 1,
-        limit: 10
+        limit: 10,
       },
       total: 0,
       loading: false,
-      finished: false
+      finished: false,
     };
   },
   mounted() {},
@@ -64,7 +64,7 @@ export default {
     onLoad() {
       this.$store
         .dispatch("common/getArticles", this.form)
-        .then(data => {
+        .then((data) => {
           this.acticalList = this.acticalList.concat(
             this.$store.getters.articlesList.articles
           );
@@ -79,8 +79,8 @@ export default {
             this.form.page = this.form.page + 1;
           }
         })
-        .catch(e => {
-          if(e){
+        .catch((e) => {
+          if (e) {
             Toast(e);
           }
         });
@@ -89,21 +89,21 @@ export default {
       if (!index.isStar) {
         let params = {
           menu: this.$route.meta.title,
-          starId: index._id
+          starId: index._id,
         };
-        this.$store.dispatch("common/star", params).then(res => {
+        this.$store.dispatch("common/star", params).then((res) => {
           Toast({
             message: res,
-            icon: "like-o"
+            icon: "like-o",
           });
           index.isStar = !index.isStar;
         });
       } else {
         let params = { starId: index._id };
-        this.$store.dispatch("common/unStar", params).then(res => {
+        this.$store.dispatch("common/unStar", params).then((res) => {
           Toast({
             message: res,
-            icon: "like-o"
+            icon: "like-o",
           });
           index.isStar = !index.isStar;
         });
@@ -116,16 +116,16 @@ export default {
         this.$router.push({
           path: "/DetailInfo",
           name: "DetailInfo",
-          params: {
+          query: {
             id: item._id,
             like: true,
             forward: false,
-            isStar: item.isStar
-          }
+            isStar: item.isStar,
+          },
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -133,7 +133,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  .likeclick{
+  .likeclick {
     display: flex;
     align-items: center;
   }
@@ -152,12 +152,12 @@ export default {
     font-family: "PingFangSC-Regular";
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
-    padding-left:.1rem;
+    padding-left: 0.1rem;
   }
 }
 .caringList {
   width: 100%;
-  padding-top:.4rem;
+  padding-top: 0.4rem;
   .caringItem {
     width: 95%;
     border-radius: 0.08rem;

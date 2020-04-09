@@ -49,29 +49,29 @@ export default {
   props: {
     articles: {
       type: Array,
-      default: []
-    }
+      default: [],
+    },
   },
   methods: {
     likeBtn(index) {
       if (!index.isStar) {
         let params = {
           menu: this.$route.meta.title,
-          starId: index._id
+          starId: index._id,
         };
-        this.$store.dispatch("common/star", params).then(res => {
+        this.$store.dispatch("common/star", params).then((res) => {
           Toast({
             message: res,
-            icon: "like-o"
+            icon: "like-o",
           });
           this.$emit("likeBtn", index);
         });
       } else {
         let params = { starId: index._id };
-        this.$store.dispatch("common/unStar", params).then(res => {
+        this.$store.dispatch("common/unStar", params).then((res) => {
           Toast({
             message: res,
-            icon: "like-o"
+            icon: "like-o",
           });
           this.$emit("likeBtn", index);
         });
@@ -84,16 +84,16 @@ export default {
         this.$router.push({
           path: "/DetailInfo",
           name: "DetailInfo",
-          params: {
+          query: {
             id: index._id,
             like: true,
             forward: false,
-            isStar: index.isStar
-          }
+            isStar: index.isStar,
+          },
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less">

@@ -72,7 +72,7 @@ export default {
         childMenu: String,
         title: String,
         page: 1,
-        limit: 10
+        limit: 10,
       },
       value: "0",
       itemTabcontent: [],
@@ -134,8 +134,8 @@ export default {
       option: [
         { text: "全部商品", value: "0" },
         { text: "新款商品", value: "1" },
-        { text: "活动商品", value: "2" }
-      ]
+        { text: "活动商品", value: "2" },
+      ],
     };
   },
   created() {
@@ -151,7 +151,7 @@ export default {
         // this.changeTab(null,this.itemTabcontent[0].type)
         this.onLoad();
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
     console.log("------ss", this.$route.meta.title);
@@ -175,7 +175,7 @@ export default {
       this.$router.push({
         path: "/diseaseDetail",
         name: "DiseaseDetail",
-        params: { id: info._id, like: true, forward: true, isStar: info.isStar }
+        query: { id: info._id, like: true, forward: true, isStar: info.isStar },
       });
     },
     changeTab(name, title) {
@@ -189,10 +189,10 @@ export default {
       this.$store
         .dispatch("common/getArticles", this.params)
         .then(() => {
-            this.diseaseInfo = this.diseaseInfo.concat(
-              this.$store.getters.articlesList.articles
-            );
-         
+          this.diseaseInfo = this.diseaseInfo.concat(
+            this.$store.getters.articlesList.articles
+          );
+
           this.total = this.$store.getters.articlesList.total;
           this.loading = false;
           if (this.diseaseInfo.length >= this.total) {
@@ -204,7 +204,7 @@ export default {
             this.params.page = this.params.page + 1;
           }
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
@@ -217,14 +217,14 @@ export default {
       val.isStar = !val.isStar;
       // this.$set(this.diseaseInfo,'isStar',!this.diseaseInfo.isStar)
       // this.diseaseInfo.isStar=!this.diseaseInfo.isStar
-    }
+    },
   },
   watch: {
-    diseaseInfo: function(val) {
+    diseaseInfo: function (val) {
       console.log("val", val);
       this.diseaseInfo = val;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>

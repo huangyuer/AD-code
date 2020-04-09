@@ -11,7 +11,7 @@ export default {
   name: "App",
   data() {
     return {
-      transitionName: ""
+      transitionName: "",
     };
   },
   watch: {
@@ -40,13 +40,13 @@ export default {
       } else {
         this.transitionName = "slide-left";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="less">
-@import "./common/font/font.css";
+// @import "./common/font/font.css";
 #app {
   margin: 0;
   padding: 0;

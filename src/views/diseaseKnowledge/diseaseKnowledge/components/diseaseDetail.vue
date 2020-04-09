@@ -9,10 +9,10 @@
       {{ this.article.contentHtml }}
     </div>
     <like-and-forward
-      :like="this.$route.params.like"
-      :forward="this.$route.params.forward"
-      :starId="this.$route.params.id"
-      :isStar="this.$route.params.isStar"
+      :like="this.$route.query.like"
+      :forward="this.$route.query.forward"
+      :starId="this.$route.query.id"
+      :isStar="this.$route.query.isStar"
       :path="this.$route.path"
       @likeBtn="likeBtn"
       @forwardBtn="forwardBtn"
@@ -35,19 +35,19 @@ export default {
     return {
       id: "",
       article: "",
-      showoverlay: false
+      showoverlay: false,
     };
   },
   created() {
     this.$store
-      .dispatch("common/getArticle", this.$route.params.id)
-      .then(data => {
+      .dispatch("common/getArticle", this.$route.query.id)
+      .then((data) => {
         this.article = this.$store.getters.articleDetail.article;
       })
-      .catch(e => {
-        if(e){
-            Toast(e);
-          }
+      .catch((e) => {
+        if (e) {
+          Toast(e);
+        }
       });
   },
   mounted() {},
@@ -55,9 +55,9 @@ export default {
     addOutPageLog() {
       this.$store
         .dispatch("common/addOutPageLog", this.$route.meta.title)
-        .then(response => {})
-        .catch(e => {
-          if(e){
+        .then((response) => {})
+        .catch((e) => {
+          if (e) {
             Toast(e);
           }
         });
@@ -68,8 +68,8 @@ export default {
     forwardBtn() {
       console.log("-----dss");
       this.showoverlay = true;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
