@@ -1,6 +1,7 @@
 import axios from 'axios'
 // import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
+import router from '../router'
 import {
     getToken,
     setToken
@@ -58,18 +59,21 @@ service.interceptors.response.use(
 
             // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
             if (!getToken()) {
-                setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xMCAwNTo0MDoyMSIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.j3Qks5pIBy3nmSBMZJTX6XAcXCZ6d92JC-8_AX6Il50')
-                location.reload()
-                    // to re-login
-                    // MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-                    //   confirmButtonText: 'Re-Login',
-                    //   cancelButtonText: 'Cancel',
-                    //   type: 'warning'
-                    // }).then(() => {
-                    //   store.dispatch('user/resetToken').then(() => {
-                    //     location.reload()
-                    //   })
-                    // })
+                // setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xMCAwNTo0MDoyMSIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.j3Qks5pIBy3nmSBMZJTX6XAcXCZ6d92JC-8_AX6Il50')
+                // location.reload()
+                // to re-login
+                MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+                    confirmButtonText: 'Re-Login',
+                    cancelButtonText: 'Cancel',
+                    type: 'warning'
+                }).then(() => {
+                    store.dispatch('register/resetToken').then(() => {
+                        // location.reload()
+                        router.push({
+                            name: 'Register'
+                        })
+                    })
+                })
             }
             return Promise.reject(res.msg)
         } else {
@@ -77,12 +81,16 @@ service.interceptors.response.use(
         }
     },
     error => {
+        console.log('err2222', getToken())
         if (error.response.status == 401) {
-            setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xMCAwNTo0MDoyMSIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.j3Qks5pIBy3nmSBMZJTX6XAcXCZ6d92JC-8_AX6Il50')
-            location.reload()
-                //       store.dispatch('user/resetToken').then(() => {
-                //         router.push({name:'Login'})
-                //       })
+            // setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xMCAwNTo0MDoyMSIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.j3Qks5pIBy3nmSBMZJTX6XAcXCZ6d92JC-8_AX6Il50')
+            // location.reload()
+
+            store.dispatch('register/resetToken').then(() => {
+                router.push({
+                    name: 'Register'
+                })
+            })
         }
         console.log('err' + error) // for debug
             // Message({

@@ -35,7 +35,7 @@ const actions = {
     getOpenIdApi({
         commit
     }) {
-        const AppId = "wx23922f116d0212aa"; // 测试公众号平台的APPID，第1步那个链接里
+        const AppId = "wx91701d2b2f9ed162"; // 测试公众号平台的APPID，第1步那个链接里
         const {
             code = ""
         } = qs.parse(window.location.search); // 获取当前页面地址中的code参数的值
@@ -110,6 +110,17 @@ const actions = {
             });
         });
     },
+    // remove token
+    resetToken({
+        commit
+    }) {
+        return new Promise(resolve => {
+            commit("SET_TOKEN", "");
+            removeToken();
+            resolve();
+        });
+    },
+
 };
 
 export default {

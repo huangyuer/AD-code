@@ -3,12 +3,12 @@
     <Dialog
       :show="diaLogShow"
       :title="'恭喜！您已完成注册！'"
-      :content="
-        '【关爱自己，从自我评估开始，拥抱AD专业资讯】是否进一步了解您的皮肤状况？'
-      "
+      :content="'【关爱自己，从自我评估开始，拥抱AD专业资讯】是否进一步了解您的皮肤状况？'"
       :isClose="false"
     >
-      <div slot="confirmButton" class="dialog-confirm" @click="confirmBtn">前往自我评估</div>
+      <div slot="confirmButton" class="dialog-confirm" @click="confirmBtn">
+        前往自我评估
+      </div>
       <div slot="closeButton" @click="closeBtn">
         <svg-icon iconClass="register-close" class="close-icon"></svg-icon>
       </div>
@@ -17,14 +17,17 @@
     <div class="header">
       <div class="top">
         <div class="left">
-          <van-image round fit="cover" width="1.32rem" height="1.32rem" :src="user.headImg" />
+          <van-image
+            round
+            fit="cover"
+            width="1.32rem"
+            height="1.32rem"
+            :src="user.headImg"
+          />
           <div class="nameitem">
             <div class="name">
               {{ user.name != "" ? user.name : user.nickName }}
-              <span
-                class="pagetoinfo"
-                @click="toPagepersonalInfo()"
-              >查看</span>
+              <span class="pagetoinfo" @click="toPagepersonalInfo()">查看</span>
             </div>
             <div class="phone">{{ user.phone }}</div>
           </div>
@@ -32,9 +35,21 @@
         <div class="right">
           <span>最近评估：</span>
           <span class="deg">{{ scoreNumber }}</span>
-          <svg-icon iconClass="jiantoushangseng" v-if="addScore>=0" class="iconjiantou"></svg-icon>
-          <svg-icon iconClass="jiantouchiping" v-if="addScore=''"  class="iconjiantou"></svg-icon>
-          <svg-icon iconClass="jiantouxiajiang" v-if="addScore<0" class="iconjiantou"></svg-icon>
+          <svg-icon
+            iconClass="jiantoushangseng"
+            v-if="parseInt(addScore) >= 0"
+            class="iconjiantou"
+          ></svg-icon>
+          <svg-icon
+            iconClass="jiantouchiping"
+            v-if="addScore == ''"
+            class="iconjiantou"
+          ></svg-icon>
+          <svg-icon
+            iconClass="jiantouxiajiang"
+            v-if="addScore < 0"
+            class="iconjiantou"
+          ></svg-icon>
         </div>
       </div>
       <div class="bottom">
@@ -47,7 +62,7 @@
           fit="cover"
           width="100%"
           height=".18rem"
-          style="margin-top:-.1rem"
+          style="margin-top: -0.1rem;"
           :src="require('@/assets/tuoyuanxing.png')"
         />
       </div>
@@ -60,15 +75,19 @@
           <span ref="text" @click="isshoeAll()">显示全部</span>
         </div>
         <div class="itemlist">
-          <div class="iteminner" v-for="(item, index) in tasks" :key="index">
-            <div
-              :class="{
-                color9: item.status == '已完成',
-                color3: item.status == '未完成',
-                'font-size28': true
-              }"
-            >{{ item.name }}（{{ item.num }}/{{ item.limit }}）</div>
-            <div class="btnpage whitenone">{{ item.status }}</div>
+          <div v-if="tasks.length > 0">
+            <div class="iteminner" v-for="(item, index) in tasks" :key="index">
+              <div
+                :class="{
+                  color9: item.status == '已完成',
+                  color3: item.status == '未完成',
+                  'font-size28': true,
+                }"
+              >
+                {{ item.name }}（{{ item.num }}/{{ item.limit }}）
+              </div>
+              <div class="btnpage whitenone">{{ item.status }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -84,23 +103,20 @@
           </span>
         </div>
         <div class="itemlist">
-          <div
-            class="iteminner fmregular"
-            v-if="stars!=[] && index < 3"
-            v-for="(item, index) in stars"
-            :key="index"
-          >
-            <div class="color52 font-size28">{{ item.title }}</div>
-            <div class="coloracadaf font-size30">{{ item.date }}</div>
+          <div v-if="stars.length > 0">
+            <div
+              class="iteminner fmregular"
+              v-for="(item, index) in stars"
+              :key="index"
+            >
+              <div v-if="index < 3" class="color52 font-size28">
+                {{ item.title }}
+              </div>
+              <div v-if="index < 3" class="coloracadaf font-size30">
+                {{ item.date }}
+              </div>
+            </div>
           </div>
-          <!-- <div class="iteminner fmregular">
-            <div class="color52 font-size28">fsadfasfsafa</div>
-            <div class="coloracadaf font-size30">2020-02-26</div>
-          </div>
-          <div class="iteminner fmregular">
-            <div class="color52 font-size28">fsadfasfsafa</div>
-            <div class="coloracadaf font-size30">2020-02-26</div>
-          </div>-->
         </div>
       </div>
     </div>
@@ -115,14 +131,14 @@
           </span>
         </div>
         <div class="itemlist">
-          <div class="iteminner" v-if="answerLogs.length != 0">
+          <div class="iteminner" v-if="scoreNumber != ''">
             <div class="color52 font-size28">
-              <div
-                class="color3 font-size30 fmmedium"
-              >{{ user.name != "" ? user.name : user.nickName }}</div>
+              <div class="color3 font-size30 fmmedium">
+                {{ user.name != "" ? user.name : user.nickName }}
+              </div>
               <div class="color3 font-size28 fmregular">
                 您最近一次评估程度为
-                <b class="color009966 fmmedium">{{scoreNumber }}分</b>
+                <b class="color009966 fmmedium">{{ scoreNumber }}分</b>
               </div>
             </div>
             <div class="btnpage" @click="todiseaseTest()">去评估</div>
@@ -137,14 +153,15 @@
           <span>我的留言板</span>
         </div>
         <div class="itemlist">
-          <div class="iteminner" v-if="Object.keys(msglist).length != 0">
+          <div class="iteminner" v-if="Object.keys(msglist).length > 0">
             <div class="color52 font-size28">
               <div class="color3 font-size30 fmmedium">
                 {{ msglist.sex }}
                 <span
-                  style="margin-left:.16rem"
+                  style="margin-left: 0.16rem;"
                   class="color6 font-size28 fmregular"
-                >{{ msglist.age }}岁</span>
+                  >{{ msglist.age }}岁</span
+                >
               </div>
               <div class="color3 font-size28 fmregular">
                 您最近一次留言时间为
@@ -172,26 +189,25 @@ export default {
       msglist: {},
       user: {},
       score: {},
-      scoreNumber:'',
-      addScore:'',
+      scoreNumber: "",
+      addScore: "",
     };
   },
   created() {
     this.getMyInfo();
     this.getMyScore();
     this.getLeaveMsgList();
-    if(localStorage.getItem("score") != null){
+    if (localStorage.getItem("score") != null) {
       this.scoreNumber = localStorage.getItem("score");
     }
-    if(localStorage.getItem("addScore") != null){
-      this.addScore= parseInt(localStorage.getItem("addScore"));
+    if (localStorage.getItem("addScore") != null) {
+      this.addScore = parseInt(localStorage.getItem("addScore"));
     }
-  },
-  mounted() {
     this.getTasks();
     this.getMyStars();
     this.getAnswerLogs();
   },
+  mounted() {},
   methods: {
     isshoeAll() {
       if (this.$refs.taskitemlist.classList.contains("heightauto")) {
@@ -208,7 +224,7 @@ export default {
     confirmBtn() {
       this.diaLogShow = false;
       this.$router.push({
-        path: "/diseaseTest"
+        path: "/diseaseTest",
       });
     },
     toPagepersonalInfo() {
@@ -232,10 +248,10 @@ export default {
     getTasks() {
       this.$store
         .dispatch("patientManagement/getTasks")
-        .then(response => {
+        .then((response) => {
           this.tasks = response.data.tasks;
         })
-        .catch(e => {
+        .catch((e) => {
           Toast(e);
         });
     },
@@ -244,16 +260,16 @@ export default {
         menu: String,
         desc: true,
         page: 1,
-        limit: 10
+        limit: 10,
       };
       this.$store
         .dispatch("patientManagement/getMyStars", form)
-        .then(response => {
+        .then((response) => {
           this.stars = this.$store.getters.getmystars.stars;
           // this.tasks = response.data.tasks;
           // this.goods = response.data.goods;
         })
-        .catch(e => {
+        .catch((e) => {
           Toast(e);
         });
     },
@@ -263,54 +279,59 @@ export default {
         limit: Number,
         startDate: String,
         endDate: String,
-        isChart: true
+        isChart: true,
       };
       this.$store
         .dispatch("patientManagement/getAnswerLogs", form)
-        .then(response => {
-          console.log("response", response);
-          this.answerLogs =
-            response.data.answerLogs[response.data.answerLogs.length - 1].score;
+        .then((response) => {
+          if (response.data.answerLogs.length > 0) {
+            this.answerLogs =
+              response.data.answerLogs[
+                response.data.answerLogs.length - 1
+              ].score;
+          }
         })
-        .catch(e => {
+        .catch((e) => {
           Toast(e);
         });
     },
     getMyInfo() {
       this.$store
         .dispatch("patientManagement/getMyInfo")
-        .then(data => {
+        .then((data) => {
           this.user = this.$store.getters.getmyinfo.user;
         })
-        .catch(e => {
+        .catch((e) => {
           Toast(e);
         });
     },
     getMyScore() {
       this.$store
         .dispatch("patientManagement/getMyScore")
-        .then(response => {
+        .then((response) => {
           this.score = response.data.score;
         })
-        .catch(e => {
+        .catch((e) => {
           Toast(e);
         });
     },
     getLeaveMsgList() {
       var form = {
         page: 1,
-        limit: 10
+        limit: 10,
       };
       this.$store
         .dispatch("diseaseKnowledge/getLeaveMsgList", form)
-        .then(response => {
-          this.msglist = response.lvMsgList[0];
+        .then((response) => {
+          if (response.lvMsgList.length > 0) {
+            this.msglist = response.lvMsgList[0];
+          }
         })
-        .catch(e => {
+        .catch((e) => {
           Toast(e);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -389,9 +410,9 @@ export default {
         color: rgba(51, 51, 51, 1);
         line-height: initial;
         margin: 0.3rem 0 0 0;
-        .iconjiantou{
-          width:.4rem;
-          height:.44rem;
+        .iconjiantou {
+          width: 0.4rem;
+          height: 0.44rem;
         }
         .deg {
           color: #009966;
