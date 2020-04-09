@@ -52,8 +52,8 @@ export default {
         limit: 10,
         tag: String,
         sort: String,
-        desc: false
-      }
+        desc: false,
+      },
     };
   },
   mounted() {
@@ -67,27 +67,27 @@ export default {
     toPageVideodetail(item, key) {
       this.$store
         .dispatch("diseaseKnowledge/upVideoClickNum", item._id)
-        .then(data => {
+        .then((data) => {
           this.$router.push({
             path: "/scienceVideo/videoList/videoDetail",
             name: "videoDetail",
-            params: {
+            query: {
               id: item._id,
               like: true,
               forward: true,
-              isStar: item.isStar
-            }
+              isStar: item.isStar,
+            },
           });
         })
-        .catch(e => {
-          if(e){
+        .catch((e) => {
+          if (e) {
             Toast(e);
           }
         });
     },
     toPagemore() {
       this.$router.push({
-        path: "/scienceVideo/videoList"
+        path: "/scienceVideo/videoList",
       });
     },
     liveToPage(liveItem) {
@@ -100,7 +100,7 @@ export default {
     getVideos() {
       this.$store
         .dispatch("diseaseKnowledge/getVideos", this.form)
-        .then(data => {
+        .then((data) => {
           if (this.$store.getters.videoList.videos.length < 5) {
             this.videoList = this.$store.getters.videoList.videos;
           } else {
@@ -111,8 +111,8 @@ export default {
             }
           }
         })
-        .catch(e => {
-         if(e){
+        .catch((e) => {
+          if (e) {
             Toast(e);
           }
         });
@@ -120,16 +120,16 @@ export default {
     getLive() {
       this.$store
         .dispatch("diseaseKnowledge/getLive")
-        .then(data => {
+        .then((data) => {
           this.LiveList = this.$store.getters.LiveList.live;
         })
-        .catch(e => {
-         if(e){
+        .catch((e) => {
+          if (e) {
             Toast(e);
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>

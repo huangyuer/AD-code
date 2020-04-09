@@ -11,7 +11,7 @@ export default {
   name: "App",
   data() {
     return {
-      transitionName: ""
+      transitionName: "",
     };
   },
   watch: {
@@ -40,8 +40,8 @@ export default {
       } else {
         this.transitionName = "slide-left";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

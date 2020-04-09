@@ -25,7 +25,9 @@
           controls="controls"
           autoplay
           style
-        >您的浏览器不支持 video 标签。</video>
+        >
+          您的浏览器不支持 video 标签。
+        </video>
         <van-image
           class="playicon"
           width=".48rem"
@@ -40,11 +42,11 @@
       </div>
     </div>
     <like-and-forward
-      :like="this.$route.params.like"
+      :like="this.$route.query.like"
       :path="this.$route.path"
-      :forward="this.$route.params.forward"
-      :starId="this.$route.params.id"
-      :isStar="this.$route.params.isStar"
+      :forward="this.$route.query.forward"
+      :starId="this.$route.query.id"
+      :isStar="this.$route.query.isStar"
       @likeBtn="likeBtn"
       @forwardBtn="forwardBtn"
     ></like-and-forward>
@@ -67,7 +69,7 @@ export default {
       videoitem: {},
       isvideo: false,
       iframe: "",
-      showoverlay: false
+      showoverlay: false,
     };
   },
   created() {},
@@ -78,17 +80,17 @@ export default {
     addOutPageLog() {
       this.$store
         .dispatch("common/addOutPageLog", this.$route.meta.title)
-        .then(response => {})
-        .catch(e => {
-          if(e){
+        .then((response) => {})
+        .catch((e) => {
+          if (e) {
             Toast(e);
           }
         });
     },
     getVideo() {
       this.$store
-        .dispatch("diseaseKnowledge/getVideo", this.$route.params.id)
-        .then(response => {
+        .dispatch("diseaseKnowledge/getVideo", this.$route.query.id)
+        .then((response) => {
           if (response.code == 1) {
             Toast(response.msg);
             return;
@@ -96,8 +98,8 @@ export default {
           this.videoitem = response.data.video;
           this.iframe = this.videoitem.video[0].httpUrl;
         })
-        .catch(e => {
-          if(e){
+        .catch((e) => {
+          if (e) {
             Toast(e);
           }
         });
@@ -118,8 +120,8 @@ export default {
     forwardBtn() {
       console.log("-----dss");
       this.showoverlay = true;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>

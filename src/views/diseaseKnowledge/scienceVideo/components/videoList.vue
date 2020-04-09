@@ -1,12 +1,12 @@
 <template>
   <div>
     <search-input
-        class="searchinput"
-        :value="searchinputvalue"
-        :placeholder="placeholder"
-        @onSearch="onSearch"
-        @onClear="onClear"
-      ></search-input>
+      class="searchinput"
+      :value="searchinputvalue"
+      :placeholder="placeholder"
+      @onSearch="onSearch"
+      @onClear="onClear"
+    ></search-input>
     <div class="dropdownwapper">
       <dropdown-menu
         :option="option"
@@ -49,28 +49,28 @@ export default {
         tag: String,
         page: 1,
         limit: 10,
-        title:String,
+        title: String,
         sort: String,
-        desc: false
+        desc: false,
       },
       total: 0,
       loading: false,
       finished: false,
-      videoList: []
+      videoList: [],
     };
   },
   mounted() {
     this.getMenuSelect();
   },
   methods: {
-    onSearch(value){
+    onSearch(value) {
       this.form.title = value;
       this.videoList = null;
       this.form.page = 1;
       this.finished = false;
     },
-    onClear(){
-      this.form.title = '';
+    onClear() {
+      this.form.title = "";
       this.videoList = null;
       this.form.page = 1;
       this.finished = false;
@@ -114,7 +114,7 @@ export default {
     getMenuSelect() {
       this.$store
         .dispatch("common/getMenuSelect", this.$route.meta.title)
-        .then(data => {
+        .then((data) => {
           let menus = this.$store.getters.menuList.selects[0].tags;
           for (var i = 0; i < menus.length; i++) {
             let obj = {};
@@ -123,8 +123,8 @@ export default {
             this.option.push(obj);
           }
         })
-        .catch(e => {
-          if(e){
+        .catch((e) => {
+          if (e) {
             Toast(e);
           }
         });
@@ -132,10 +132,10 @@ export default {
     onLoad() {
       this.$store
         .dispatch("diseaseKnowledge/getVideos", this.form)
-        .then(data => {
-            this.videoList = this.videoList.concat(
-              this.$store.getters.videoList.videos
-            );
+        .then((data) => {
+          this.videoList = this.videoList.concat(
+            this.$store.getters.videoList.videos
+          );
           this.total = this.$store.getters.videoList.total;
           this.loading = false;
           if (this.videoList.length >= this.total) {
@@ -147,8 +147,8 @@ export default {
             this.form.page = this.form.page + 1;
           }
         })
-        .catch(e => {
-          if(e){
+        .catch((e) => {
+          if (e) {
             Toast(e);
           }
         });
@@ -159,25 +159,25 @@ export default {
     toPageVideodetail(item) {
       this.$store
         .dispatch("diseaseKnowledge/upVideoClickNum", item._id)
-        .then(data => {
+        .then((data) => {
           this.$router.push({
             path: "/scienceVideo/videoList/videoDetail",
             name: "videoDetail",
-            params: {
+            query: {
               id: item._id,
               like: true,
               forward: true,
-              isStar: item.isStar
-            }
+              isStar: item.isStar,
+            },
           });
         })
-        .catch(e => {
-          if(e){
+        .catch((e) => {
+          if (e) {
             Toast(e);
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>

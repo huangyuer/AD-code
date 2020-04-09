@@ -5,19 +5,23 @@
       @onChange="onChange"
       class="patient-search"
       @onSearch="onSearch"
-        @onClear="onClear"
+      @onClear="onClear"
     ></search-input>
     <div class="patient-like">
-        <van-list
-            v-model="loading"
-            :finished="finished"
-            finished-text="没有更多了"
-            @load="onLoad"
-          >
-      <div v-for="item in diseaseInfo" :key="item.id">
-        <like-info :info="item" @likeBtn="likeBtn" @likeItem="likeItem"></like-info>
-      </div>
-        </van-list>
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <div v-for="item in diseaseInfo" :key="item.id">
+          <like-info
+            :info="item"
+            @likeBtn="likeBtn"
+            @likeItem="likeItem"
+          ></like-info>
+        </div>
+      </van-list>
     </div>
   </div>
 </template>
@@ -28,7 +32,7 @@ import { Toast } from "vant";
 
 export default {
   name: "PatientStory",
-  components: { LikeInfo, SearchInput},
+  components: { LikeInfo, SearchInput },
   data() {
     return {
       loading: false,
@@ -37,10 +41,10 @@ export default {
       params: {
         menu: this.$route.meta.title,
         page: 1,
-        limit: 10
+        limit: 10,
       },
       category: ["特应性皮炎", "银屑病"],
-      diseaseInfo:[],
+      diseaseInfo: [],
       // diseaseInfo: [
       //   {
       //     title: "中毒性表皮坏死松解型药疹",
@@ -105,18 +109,18 @@ export default {
       // ]
     };
   },
-    watch: {
-    diseaseInfo: function(val) {
+  watch: {
+    diseaseInfo: function (val) {
       console.log("val", val);
       this.diseaseInfo = val;
-    }
+    },
   },
   methods: {
-      onLoad() {
+    onLoad() {
       this.getArticles();
       // this.changeTab(null,this.itemTabcontent[0].type)
     },
-        onSearch(value) {
+    onSearch(value) {
       this.params.title = value;
       this.diseaseInfo = [];
       this.params.page = 1;
@@ -130,14 +134,14 @@ export default {
       this.finished = false;
     },
     onChange(val) {},
-    getArticles(){
+    getArticles() {
       this.$store
-        .dispatch("common/getArticles",this.params)
-          .then(() => {
-            this.diseaseInfo = this.diseaseInfo.concat(
-              this.$store.getters.articlesList.articles
-            );
-          
+        .dispatch("common/getArticles", this.params)
+        .then(() => {
+          this.diseaseInfo = this.diseaseInfo.concat(
+            this.$store.getters.articlesList.articles
+          );
+
           this.total = this.$store.getters.articlesList.total;
           this.loading = false;
           if (this.diseaseInfo.length >= this.total) {
@@ -149,21 +153,25 @@ export default {
             this.params.page = this.params.page + 1;
           }
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
     likeBtn(val) {
       // this.changeTab(this.curTab)
-      val.isStar=!val.isStar
+      val.isStar = !val.isStar;
       // this.$set(this.diseaseInfo,'isStar',!this.diseaseInfo.isStar)
       // this.diseaseInfo.isStar=!this.diseaseInfo.isStar
     },
-        likeItem(info){
-      console.log("======",info)
-      this.$router.push({ path: "/diseaseDetail",name:"DiseaseDetail",params:{id:info._id,like:true,forward:true,isStar:info.isStar} });
+    likeItem(info) {
+      console.log("======", info);
+      this.$router.push({
+        path: "/diseaseDetail",
+        name: "DiseaseDetail",
+        query: { id: info._id, like: true, forward: true, isStar: info.isStar },
+      });
     },
-  }
+  },
 };
 </script>
 <style lang="less" scoped>

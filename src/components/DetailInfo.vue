@@ -9,10 +9,10 @@
       {{ this.article.contentHtml }}
     </div>
     <like-and-forward
-      :like="this.$route.params.like"
-      :forward="this.$route.params.forward"
-      :starId="this.$route.params.id"
-      :isStar="this.$route.params.isStar"
+      :like="this.$route.query.like"
+      :forward="this.$route.query.forward"
+      :starId="this.$route.query.id"
+      :isStar="this.$route.query.isStar"
       @likeBtn="likeBtn"
       @forwardBtn="forwardBtn"
     ></like-and-forward>
@@ -36,11 +36,11 @@ export default {
   },
   created() {
     this.$store
-      .dispatch("common/getArticle", this.$route.params.id)
-      .then(data => {
+      .dispatch("common/getArticle", this.$route.query.id)
+      .then((data) => {
         this.article = this.$store.getters.articleDetail.article;
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   },
@@ -49,11 +49,11 @@ export default {
     addOutPageLog() {
       this.$store
         .dispatch("common/addOutPageLog", this.$route.meta.title)
-        .then(response => {
+        .then((response) => {
           console.log("response===========", response);
         })
-        .catch(e => {
-          if(e){
+        .catch((e) => {
+          if (e) {
             Toast(e);
           }
         });
@@ -64,8 +64,8 @@ export default {
     },
     forwardBtn() {
       console.log("-----dsssdfsdfadsadf");
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -77,7 +77,7 @@ export default {
     text-align: center;
     font-family: "PingFangSC-Medium";
     // height: 1.12rem;
-    padding:.4rem 0 .18rem 0;
+    padding: 0.4rem 0 0.18rem 0;
     display: flex;
     align-items: center;
     flex-direction: column;
