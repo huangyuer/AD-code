@@ -66,9 +66,9 @@ export default {
         })
         .catch(e => {
           // console.log(e);
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     },
     BtnupMyAddress() {
@@ -92,9 +92,9 @@ export default {
         })
         .catch(e => {
           console.log(e);
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     }
   },

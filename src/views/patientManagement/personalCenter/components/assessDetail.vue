@@ -75,9 +75,9 @@ export default {
           this.answerLog = response.data.answerLog;
         })
         .catch(e => {
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     },
   }

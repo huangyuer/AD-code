@@ -80,9 +80,9 @@ export default {
           }
         })
         .catch((e) => {
-          if (e) {
-            Toast(e);
-          }
+            // if (e) {
+          //   Toast(e);
+          // }
         });
     },
     likeBtn(index) {

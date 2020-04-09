@@ -396,10 +396,10 @@ export default {
           this.getNearHospitals(map);
         })
         .catch(e => {
-          Toast({
-            message: e,
-            position: "top"
-          });
+          // Toast({
+          //   message: e,
+          //   position: "top"
+          // });
         });
     },
     //获取附近医院
@@ -412,10 +412,10 @@ export default {
           this.vloading = false;
         })
         .catch(e => {
-          Toast({
-            message: e,
-            position: "top"
-          });
+          // Toast({
+          //   message: e,
+          //   position: "top"
+          // });
         });
     },
     //获取医院医生
@@ -426,10 +426,10 @@ export default {
           this.doctors = res.data.doctors;
         })
         .catch(e => {
-           Toast({
-            message: e,
-            position: "top"
-          });
+          //  Toast({
+          //   message: e,
+          //   position: "top"
+          // });
         });
     }
   }

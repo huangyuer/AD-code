@@ -28,15 +28,15 @@ export default {
   name: "LikeAndForward",
   props: {
     like: {
-      type: Boolean,
+      // type: [Boolean],
       default: false,
     },
     forward: {
-      type: Boolean,
+      // type: Boolean,
       default: false,
     },
     isStar: {
-      type: Boolean,
+      // type: Boolean,
       default: true,
     },
     starId: {
@@ -98,9 +98,9 @@ export default {
           this.getSignature(data.url);
         })
         .catch((e) => {
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     },
     getSignature(url) {
@@ -156,11 +156,8 @@ export default {
             console.log("success", res);
           });
         })
-        .catch((e) => {
-          if(e){
-            Toast(e);
-          }
-        });
+       .catch((e) => {
+        }); 
     },
   },
 };

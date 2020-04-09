@@ -68,9 +68,9 @@ export default {
           this.goods = response.data.goods;
         })
         .catch(e => {
-         if(e){
-            Toast(e);
-          }
+        //  if(e){
+        //     Toast(e);
+        //   }
         });
     },
     getMyScore() {
@@ -80,9 +80,9 @@ export default {
           this.score = response.data.score;
         })
         .catch(e => {
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     }
   }

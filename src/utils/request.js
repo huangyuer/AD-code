@@ -2,7 +2,15 @@ import axios from "axios";
 // import { MessageBox, Message } from 'element-ui'
 import store from "@/store";
 import router from "../router";
-import { getToken, getOpenId, setToken } from "@/utils/auth";
+import {
+  getToken,
+  getOpenId,
+  setToken
+} from "@/utils/auth";
+import {
+  Toast
+} from "vant";
+
 
 // create an axios instance
 const service = axios.create({
@@ -26,7 +34,7 @@ service.interceptors.request.use(
   },
   error => {
     // do something with request error
-    console.log(error); // for debug
+    console.log("---------", error); // for debug
     return Promise.reject(error);
   }
 );
@@ -47,7 +55,7 @@ service.interceptors.response.use(
     const res = response.data;
     console.log("ssss", res);
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code === 1) {
+    if (res.code == 1) {
       // Message({
       //   message: res.msg || 'Error',
       //   type: 'error',
@@ -59,35 +67,22 @@ service.interceptors.response.use(
         // setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xMCAwNTo0MDoyMSIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.j3Qks5pIBy3nmSBMZJTX6XAcXCZ6d92JC-8_AX6Il50')
         // location.reload()
         // to re-login
-        MessageBox.confirm(
-          "You have been logged out, you can cancel to stay on this page, or log in again",
-          "Confirm logout",
-          {
-            confirmButtonText: "Re-Login",
-            cancelButtonText: "Cancel",
-            type: "warning"
-          }
-        ).then(() => {
-        //   store.dispatch("register/resetToken").then(() => {
-        //     // location.reload()
-        //     router.push({
-        //       name: "Register"
-        //     });
-        //   });
+
         if (getOpenId()) {
-            store.dispatch("register/login").then(()=>{
+          store.dispatch("register/login").then(() => {
             location.reload();
 
-            })
-          } else {  
-            store.dispatch('register/getOpenIdApi').then(()=>{
-                store.dispatch("register/login");
-            location.reload();
+          })
+        } else {
+          store.dispatch('register/getOpenIdApi').then(() => {
+            store.dispatch("register/login").then(() => {
+              location.reload();
+            });
 
-            })
-          }
-        });
+          })
+        }
       }
+      Toast(res.msg);
       return Promise.reject(res.msg);
     } else {
       return res;
@@ -95,25 +90,22 @@ service.interceptors.response.use(
   },
   error => {
     console.log("err2222", getToken());
-    if (getOpenId()) {
-      store.dispatch("register/login").then(()=>{
-        location.reload();
-    });
-      
-    } else {
-      if (error.response.status == 401) {
-        // setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xMCAwNTo0MDoyMSIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZTc4MmE2NGY0YzBkMTZmZjMwMjNmYzMifQ.j3Qks5pIBy3nmSBMZJTX6XAcXCZ6d92JC-8_AX6Il50')
-        // location.reload()
+    if (error.response.status == 401) {
+      if (getOpenId()) {
+        store.dispatch("register/login").then(() => {
+          location.reload();
+        });
 
-        store.dispatch('register/getOpenIdApi').then(()=>{
-            store.dispatch("register/login");
-        location.reload();
-
+      } else {
+        store.dispatch('register/getOpenIdApi').then(() => {
+          store.dispatch("register/login").then(() => {
+            location.reload();
+          });
         })
       }
     }
 
-    console.log("err" + error); // for debug
+    console.log("errzzzzzzz" + error); // for debug
     // Message({
     //   message: error.message,
     //   type: 'error',

@@ -93,9 +93,9 @@ export default {
           Toast(data);
         })
         .catch(e => {
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     }
   }

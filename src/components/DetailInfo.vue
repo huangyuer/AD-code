@@ -53,9 +53,9 @@ export default {
           console.log("response===========", response);
         })
         .catch((e) => {
-          if (e) {
-            Toast(e);
-          }
+            // if (e) {
+          //   Toast(e);
+          // }
         });
     },
     likeBtn() {

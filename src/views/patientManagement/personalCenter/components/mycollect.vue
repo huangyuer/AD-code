@@ -97,9 +97,9 @@ export default {
           }
         })
         .catch(e => {
-           if(e){
-            Toast(e);
-          }
+          //  if(e){
+          //   Toast(e);
+          // }
         });
     },
     getMyStars() {
@@ -121,9 +121,9 @@ export default {
           }
         })
         .catch(e => {
-           if(e){
-            Toast(e);
-          }
+          //  if(e){
+          //   Toast(e);
+          // }
         });
     },
     onLoad() {

@@ -74,7 +74,9 @@ new Vue({
     },
     template: "<App/>"
 });
-// setOpenId('omJO-vqXceLy5Qrw9g7kzGmTtQz4')
+
+
+setOpenId('oiqI3whHXikr12gjRdg2Ynh4yYJM')
 // setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xNyAwNjo0MTo0MyIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZThkZTJhN2Y0YzBkMTE4MWI0N2VjMWYifQ.3An5uKzojYcIPv1f2u7noU9mXg6SCPv_aJzd8jrA2zc')
 
 // if (!getOpenId()) {

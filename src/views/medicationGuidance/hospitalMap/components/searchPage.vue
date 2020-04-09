@@ -121,9 +121,9 @@ export default {
           console.log(res);
         })
         .catch(e => {
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     }
   },

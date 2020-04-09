@@ -57,9 +57,9 @@ export default {
           this.item = response.data.goods;
         })
         .catch(e => {
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     },
     changeItemBtn(id) {
@@ -91,9 +91,9 @@ export default {
           this.$router.push({ path: "/myexchange" });
         })
         .catch(e => {
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     },
     getMyAddress() {
@@ -110,9 +110,9 @@ export default {
           this.exchangeGoods();
         })
         .catch(e => {
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     }
   }

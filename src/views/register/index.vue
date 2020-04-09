@@ -80,9 +80,9 @@ export default {
           this.getOpenId();
         })
         .catch(e => {
-          if(e){
-            this.$toast(e);
-          }
+          // if(e){
+          //   this.$toast(e);
+          // }
           
         });
     },
@@ -110,9 +110,9 @@ export default {
         })
         .catch(e => {
           console.log("----s1", e);
-          if(e){
-            this.$toast(e);
-          }
+          // if(e){
+          //   this.$toast(e);
+          // }
         });
     }
   }

@@ -225,9 +225,9 @@ export default {
           console.log("data", data);
         })
         .catch(e => {
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     },
     getMedications() {
@@ -237,9 +237,9 @@ export default {
           this.medications = this.$store.getters.getmedications.medications;
         })
         .catch(e => {
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     },
     getMyInfo() {
@@ -258,9 +258,9 @@ export default {
           this.init();
         })
         .catch(e => {
-          if(e){
-            Toast(e);
-          }
+          // if(e){
+          //   Toast(e);
+          // }
         });
     }
   },
