@@ -72,14 +72,15 @@ service.interceptors.response.use(
           store.dispatch("register/login").then(() => {
             // location.reload();
           })
-        } else {
-          store.dispatch('register/getOpenIdApi').then(() => {
-            store.dispatch("register/login").then(() => {
-              // location.reload();
-            });
-
-          })
         }
+        //  else {
+        //   store.dispatch('register/getOpenIdApi').then(() => {
+        //     store.dispatch("register/login").then(() => {
+        //       // location.reload();
+        //     });
+
+        //   })
+        // }
       }
       Toast(res.msg);
       return Promise.reject(res.msg);
@@ -95,13 +96,14 @@ service.interceptors.response.use(
           // location.reload();
         });
 
-      } else {
-        store.dispatch('register/getOpenIdApi').then(() => {
-          store.dispatch("register/login").then(() => {
-            // location.reload();
-          });
-        })
       }
+      //  else {
+      //   store.dispatch('register/getOpenIdApi').then(() => {
+      //     store.dispatch("register/login").then(() => {
+      //       // location.reload();
+      //     });
+      //   })
+      // }
     }
 
     console.log("errzzzzzzz" + error); // for debug
