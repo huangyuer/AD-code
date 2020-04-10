@@ -70,13 +70,12 @@ service.interceptors.response.use(
 
         if (getOpenId()) {
           store.dispatch("register/login").then(() => {
-            location.reload();
-
+            // location.reload();
           })
         } else {
           store.dispatch('register/getOpenIdApi').then(() => {
             store.dispatch("register/login").then(() => {
-              location.reload();
+              // location.reload();
             });
 
           })
@@ -93,13 +92,13 @@ service.interceptors.response.use(
     if (error.response.status == 401) {
       if (getOpenId()) {
         store.dispatch("register/login").then(() => {
-          location.reload();
+          // location.reload();
         });
 
       } else {
         store.dispatch('register/getOpenIdApi').then(() => {
           store.dispatch("register/login").then(() => {
-            location.reload();
+            // location.reload();
           });
         })
       }

@@ -76,7 +76,12 @@ new Vue({
 });
 
 
-// setOpenId('oiqI3whHXikr12gjRdg2Ynh4yYJM')
+setOpenId('1oiqI3whHXikr12gjRdg2Ynh4yYJM')
+// if(!getOpenId()){
+//     store.dispatch('register/getOpenIdApi').then(() => {
+//       })
+// }
+
 // setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBEYXRlIjoiMjAyMC0wNC0xNyAwNjo0MTo0MyIsIm5hbWUiOiIiLCJyb2xlIjowLCJ1c2VySWQiOiI1ZThkZTJhN2Y0YzBkMTE4MWI0N2VjMWYifQ.3An5uKzojYcIPv1f2u7noU9mXg6SCPv_aJzd8jrA2zc')
 
 // if (!getOpenId()) {
