@@ -40,7 +40,24 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         window.document.title = to.meta.title;
     }
-    next();
+    if(Object.is(to.name,'Register')) {
+        next();
+        return
+      }
+      if(getOpenId()) {
+        next();
+      }else {
+        // router.push({name:'Register'})
+      }
+
+    // if(!getToken()){
+    //     // console.log("======ss")
+    //     next({ path: '/register' })
+    // }else{
+    // next();
+
+    // }
+    
 });
 
 Vue.config.productionTip = false;
@@ -76,7 +93,7 @@ new Vue({
 });
 
 
-// setOpenId('1oiqI3whHXikr12gjRdg2Ynh4yYJM')
+// setOpenId('oiqI3whHXikr12gjRdg2Ynh4yYJM')
 if(!getOpenId()){
     store.dispatch('register/getOpenIdApi').then(() => {
         store.dispatch("register/login").then(() => {

@@ -82,7 +82,11 @@ service.interceptors.response.use(
         //   })
         // }
       }
-      Toast(res.msg);
+      // Toast(res.msg);
+       Toast({
+            message: res.msg,
+            position: "top"
+          });
       return Promise.reject(res.msg);
     } else {
       return res;

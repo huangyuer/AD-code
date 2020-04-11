@@ -114,7 +114,7 @@ const actions = {
       })
         .then(response => {
           const { data } = response;
-          if (!data.token)
+          if (!data.token&&route.meta.title.indexOf('DiseaseDetail'))
             router.push({
               path: "/register"
             });

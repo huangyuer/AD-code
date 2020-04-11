@@ -6,7 +6,12 @@
       :ckNum="ckNum"
       :failNum="failNum"
     ></message-tip>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
       <message-info
         v-for="item in lvMsgList"
         :item="item"
@@ -98,7 +103,9 @@ export default {
 </script>
 <style lang="less" scoped>
 .meesage-board {
-  margin-top: 0.4rem;
+  padding-top: 0.4rem;
+  height: 100%;
+  box-sizing: border-box;
   .message-tip-box {
     margin-bottom: 0.32rem !important;
   }
@@ -106,8 +113,8 @@ export default {
     width: 6.4rem;
     height: 0.8rem;
     background: #009d75;
-    -webkit-box-shadow: 0 0.04rem 0.08rem 0 rgba(0, 153, 102, 0.5);
-    box-shadow: 0px 0.04rem 0.08rem 0 rgba(0, 153, 102, 0.5);
+    -webkit-box-shadow: 0px 0.04rem 0.08rem 0px rgba(0, 153, 102, 0.5);
+    box-shadow: 0px 0.04rem 0.08rem 0px rgba(0, 153, 102, 0.5);
     border-radius: 0.4rem;
     font-size: 0.3rem;
     font-family: PingFangSC-Medium, PingFang SC;

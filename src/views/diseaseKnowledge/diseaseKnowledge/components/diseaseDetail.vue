@@ -87,6 +87,7 @@ export default {
 <style lang="less" scoped>
 .wapperItemInfo {
   width: 100%;
+  height: 100%;
   .header {
     color: #333333;
     font-size: 0.3rem;

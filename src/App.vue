@@ -53,6 +53,11 @@ export default {
   font-family: PingFangSC-Regular, PingFang SC;
   box-sizing: border-box;
   font-size: 0.24rem;
+  height: 100%;
+}
+html,body{
+  height: 100%;
+
 }
 .slide-right-enter-active,
 .slide-right-leave-active,

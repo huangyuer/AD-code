@@ -38,14 +38,12 @@ export default {
     }
   },
   methods: {
-    delLeaveMsg() {
-      this.$emit("delLeaveMsg", this.item._id);
+    delLeaveMsg(){
+      this.$emit("delLeaveMsg",this.item._id )
     },
-    MessageDetail() {
+    MessageDetail(){
       this.$router.push({
-        path: "/MessageDetail",
-        name: "MessageDetail",
-        params: { msgItem: this.item }
+        path: "/MessageDetail",name:'MessageDetail',params:{msgItem:this.item}
       });
     }
   }
@@ -53,18 +51,16 @@ export default {
 </script>
 <style lang="less" scoped>
 @aaa: ~">>>";
-@{aaa} .van-swipe-cell__right {
-  background: rgba(255, 117, 90, 1);
-}
 @{aaa} .van-button--danger {
   height: 100%;
   font-size: 0.28rem;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
   color: rgba(255, 255, 255, 1);
+  background: #FF755A;
+  border:none
 }
 .message-info {
-  height: 2.8rem;
   background: rgba(255, 255, 255, 1);
   border-top: 0.02rem solid rgba(243, 243, 243, 1);
   border-bottom: 0.02rem solid rgba(243, 243, 243, 1);
@@ -76,7 +72,7 @@ export default {
     width: 0.08rem;
     height: 0.8rem;
     background: rgba(0, 153, 102, 1);
-    border-radius: 0.04rem;
+    border-radius: 4px;
   }
   .message-top {
     padding: 0.2rem 0.32rem 0.12rem 0.32rem;
@@ -115,7 +111,7 @@ export default {
     }
   }
   .message-body {
-    height: 0.88rem;
+    max-height: 0.88rem;
     font-size: 0.28rem;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
@@ -131,6 +127,7 @@ export default {
     display: flex;
     padding-left: 0.32rem;
     padding-top: 0.08rem;
+    padding-bottom: 0.2rem;
     > div {
       // min-width: 1.2rem;
       padding: 0 0.32rem;
