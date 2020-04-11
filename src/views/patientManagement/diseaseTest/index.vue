@@ -155,7 +155,6 @@ export default {
       }
     },
     openquestion() {
-      this.istouchable = true;
       var obj = {};
       obj["question"] = this.firstquestion.questions[0]._id;
       obj["answers"] = {};
@@ -164,11 +163,13 @@ export default {
         Toast("请先选择");
         return;
       } else if (this.changeFirstval == "是") {
+        this.istouchable = true;
         this.touchAble = true;
         this.detail.push(obj);
         this.initFirstAnswer(this.nextquestion.questions);
         this.questionlength = this.nextquestion.questions.length;
       } else {
+        this.istouchable = true;
         this.detail.push(obj);
         var nextquesion = this.nextquestionA.questions;
         nextquesion = nextquesion.concat(this.nextquestion.questions);
