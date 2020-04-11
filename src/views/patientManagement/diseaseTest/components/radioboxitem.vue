@@ -1,20 +1,21 @@
 <template>
   <div class="radiowapper">
-    <div class="swipediv">{{index+1+ '.' +dataitem.title}}</div>
+    <div class="swipediv">{{ index + 1 + "." + dataitem.title }}</div>
     <div class="detail" v-if="dataitem.remark">
-      <b>*</b>亲属包括：父母/子女/亲兄弟姐妹、叔/伯/姑/舅/姨/祖父母/外祖父母、表/堂兄妹/叔侄/伯侄/姑侄/舅甥/姨甥等。
+      <b>*</b
+      >亲属包括：父母/子女/亲兄弟姐妹、叔/伯/姑/舅/姨/祖父母/外祖父母、表/堂兄妹/叔侄/伯侄/姑侄/舅甥/姨甥等。
     </div>
     <div class="setswipeItem">
       <van-radio-group v-model="radio" direction="horizontal">
         <van-radio
           :name="index"
-          v-for="(item,index) in dataitem.options"
+          v-for="(item, index) in dataitem.options"
           :key="index"
-          @click="toggle(dataitem,index)"
+          @click="toggle(dataitem, index)"
         >
-          {{item.option}}
+          {{ item.option }}
           <template #icon="props">
-            <div :class="{defaultCheck:true,activeCheck:props.checked}">
+            <div :class="{ defaultCheck: true, activeCheck: props.checked }">
               <div class="inner"></div>
             </div>
           </template>
@@ -28,9 +29,9 @@ export default {
   props: {
     dataitem: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
-      }
+      },
     },
     index: {
       type: Number,
@@ -39,16 +40,21 @@ export default {
   },
   data() {
     return {
-      radio: 1
+      radio: "",
     };
   },
   methods: {
     toggle(dataitem, index) {
       this.radio = index;
-      console.log("dataitem.options[index]",dataitem.options[index]);
-      this.$emit("radiobox", dataitem, dataitem.options[index].option,this.index);
-    }
-  }
+      console.log("dataitem.options[index]", dataitem.options[index]);
+      this.$emit(
+        "radiobox",
+        dataitem,
+        dataitem.options[index].option,
+        this.index
+      );
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -75,6 +81,11 @@ export default {
   @{aaa}.van-radio--horizontal {
     margin-right: 0.6rem;
   }
+  @{aaa}.van-radio__icon{
+    width: 0.4rem;
+    height: 0.4rem;
+    line-height: 0;
+  }
   .detail {
     font-size: 0.24rem;
     font-family: PingFangSC-Regular, PingFang SC;
@@ -90,6 +101,7 @@ export default {
   .setswipeItem {
     // width: 88%;
     margin: 0.28rem auto 0;
+    line-height: initial;
   }
   .defaultCheck {
     background: #cdcdcd;

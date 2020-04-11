@@ -42,12 +42,12 @@
           ></svg-icon>
           <svg-icon
             iconClass="jiantouchiping"
-            v-if="addScore == ''"
+            v-else-if="addScore === ''"
             class="iconjiantou"
           ></svg-icon>
           <svg-icon
             iconClass="jiantouxiajiang"
-            v-if="addScore < 0"
+            v-else-if="addScore < 0"
             class="iconjiantou"
           ></svg-icon>
         </div>
@@ -62,7 +62,7 @@
           fit="cover"
           width="100%"
           height=".18rem"
-          style="margin-top: -0.1rem;"
+          style="position: absolute; bottom: -0.1rem; z-index: -1;"
           :src="require('@/assets/tuoyuanxing.png')"
         />
       </div>
@@ -252,10 +252,8 @@ export default {
           this.tasks = response.data.tasks;
         })
         .catch((e) => {
-
           //   if(e){
           //   Toast(e);
-          
           // }
         });
     },
@@ -273,13 +271,7 @@ export default {
           // this.tasks = response.data.tasks;
           // this.goods = response.data.goods;
         })
-        .catch((e) => {
-          //  if(e){
-     
-          //   Toast(e);
-          
-          //  }
-        });
+        .catch((e) => {});
     },
     getAnswerLogs() {
       var form = {
@@ -301,10 +293,8 @@ export default {
         })
         .catch((e) => {
           // if(e){
-            
           //   Toast(e);
-          
-          // }  
+          // }
         });
     },
     getMyInfo() {
@@ -314,10 +304,9 @@ export default {
           this.user = this.$store.getters.getmyinfo.user;
         })
         .catch((e) => {
-
           //   if(e){
           //   Toast(e);
-          // }   
+          // }
         });
     },
     getMyScore() {
@@ -328,9 +317,7 @@ export default {
         })
         .catch((e) => {
           // if(e){
-            
           //   Toast(e);
-          
           // }
         });
     },
@@ -348,9 +335,7 @@ export default {
         })
         .catch((e) => {
           // if(e){
-            
           //   Toast(e);
-          
           // }
         });
     },
@@ -457,6 +442,7 @@ export default {
       align-items: center;
       flex-direction: column;
       margin: 0.32rem 0 0.28rem 0;
+      position: relative;
       .bottom-top {
         width: 99%;
         height: 1.28rem;

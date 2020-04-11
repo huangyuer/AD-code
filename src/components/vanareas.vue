@@ -28,38 +28,38 @@ export default {
   props: {
     formvalue: {
       type: String,
-      default: ""
+      default: "",
     },
     formlabel: {
       type: String,
-      default: ""
+      default: "",
     },
     formplaceholder: {
       type: String,
-      default: ""
+      default: "",
     },
     forminputalign: {
       type: String,
-      default: ""
+      default: "",
     },
     formshowArea: {
       type: Boolean,
-      default: false
+      default: false,
     },
     columnsnum: {
       type: Number,
-      default: 2
+      default: 2,
     },
     isFirstEnter: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
       areaList: areaList, // 数据格式见 Area 组件文档,
       showArea: false,
-      value: ""
+      value: "",
     };
   },
   mounted() {
@@ -71,18 +71,18 @@ export default {
       this.$emit("IsshowArea", bool);
     },
     onConfirm(values) {
-      this.value = values.map(item => item.name).join("");
+      this.value = values.map((item) => item.name).join("");
       console.log(values);
       this.showArea = false;
       this.$emit("onConfirm", values);
       this.$emit("IsshowArea", false);
-    }
+    },
   },
   watch: {
     formvalue(newVal, val) {
       this.value = newVal;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -94,6 +94,7 @@ export default {
     color: #333333;
     font-family: "PingFangSC-Medium";
     font-weight: 500;
+    line-height: initial;
   }
 }
 </style>

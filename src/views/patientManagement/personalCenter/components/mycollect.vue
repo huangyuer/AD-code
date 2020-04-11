@@ -15,7 +15,7 @@
     <div class="patient-like">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div v-for="item in getmystars" :key="item.id">
-          <div class="like-item">
+          <div class="like-item" @click="topageDetail(item)">
             <div class="like-content">
               <div class="like-text">{{ item.title }}</div>
               <div class="like-btn">
@@ -83,6 +83,43 @@ export default {
     },
     likeBtn(val) {
       val.isStar = !val.isStar;
+    },
+    topageDetail(item) {
+      console.log("item==>", item);
+      if (item.menu == "科普视频") {
+        this.$router.push({
+          path: "/scienceVideo/videoList/videoDetail",
+          name: "videoDetail",
+          query: {
+            id: item.starId,
+            like: true,
+            forward: true,
+            isStar: true
+          }
+        });
+      } else if (item.menu == "常用药物" || item.menu == "关爱行动") {
+        this.$router.push({
+          path: "/DetailInfo",
+          name: "DetailInfo",
+          query: {
+            id: item.starId,
+            like: true,
+            forward: false,
+            isStar: true
+          }
+        });
+      } else {
+        this.$router.push({
+          path: "/diseaseDetail",
+          name: "DiseaseDetail",
+          query: {
+            id: item.starId,
+            like: true,
+            forward: true,
+            isStar: true
+          }
+        });
+      }
     },
     getStarMenus() {
       this.$store

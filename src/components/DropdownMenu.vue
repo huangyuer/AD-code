@@ -1,11 +1,6 @@
 <template>
   <van-dropdown-menu active-color="#009966">
-    <van-dropdown-item
-      :title="title"
-      v-model="valueinner"
-      :options="option"
-      @change="changeValue"
-    />
+    <van-dropdown-item :title="title" v-model="valueinner" :options="option" @change="changeValue" />
     <!-- <van-dropdown-item v-if="option2!=[]" v-model="value2inner" @change="changeValue2" :options="option2" /> -->
   </van-dropdown-menu>
 </template>
@@ -94,5 +89,9 @@ export default {
 }
 @{aaa}.van-hairline--top-bottom::after,
 .van-hairline-unset--top-bottom::after {
+}
+@{aaa}.van-dropdown-item__content {
+  padding-top: 0.22rem;
+  padding-bottom: 0.36rem;
 }
 </style>

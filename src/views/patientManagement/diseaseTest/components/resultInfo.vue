@@ -1,23 +1,23 @@
 <template>
-<!-- v-if="Object.keys(result).length!=0" -->
-  <div class="resultWapper" >
+  <!-- v-if="Object.keys(result).length!=0" -->
+  <div class="resultWapper">
     <div class="degtitle">
       <div class="score">
         <span>{{ result.score }}</span>
         <b>分</b>
       </div>
       <div class="tip">
-        <span v-if="result.addScore==''" class="spanlevel"></span>
-        <span v-if="parseInt(result.addScore)>=0" class="spanup">{{result.addScore}}</span>
-        <span v-if="parseInt(result.addScore)<0" class="spandown">{{result.addScore}}</span>
-        <span v-if="result.addScore!=''" class="title">较均值</span>
+        <span v-if="result.addScore == ''" class="spanlevel"></span>
+        <span v-if="parseInt(result.addScore) >= 0" class="spanup"
+          >+{{ result.addScore }}</span
+        >
+        <span v-if="parseInt(result.addScore) < 0" class="spandown"
+          >-{{ result.addScore }}</span
+        >
+        <span v-if="result.addScore != ''" class="title">较均值</span>
       </div>
     </div>
-    <!-- <star-scale
-      v-if="Object.keys(dataresult).length != 0"
-      :scale="dataresult.star"
-    />-->
-    <div class="time">{{result.date}}</div>
+    <div class="time">{{ result.date }}</div>
     <div class="content">
       <div class="header">评估建议</div>
       {{ result.msg }}
@@ -31,10 +31,10 @@ export default {
   props: {
     dataresult: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -52,15 +52,15 @@ export default {
   methods: {
     topagePersonalCenter() {
       this.$router.push({ path: "/personalCenter" });
-    }
+    },
   },
   watch: {
-    dataresult: function(val, oldval) {
+    dataresult: function (val, oldval) {
       this.result = val;
       localStorage.setItem("score", this.result.score);
       localStorage.setItem("addScore", this.result.addScore);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -71,12 +71,12 @@ export default {
     font-size: 0.6rem;
     font-family: "PingFangSC-Medium";
     font-weight: 500;
-    color: #F2A900;
+    color: #f2a900;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: .84rem;
-    >.score{
+    height: 0.84rem;
+    > .score {
       display: flex;
       align-items: baseline;
       justify-content: center;
@@ -90,16 +90,16 @@ export default {
         margin-right: 0.08rem;
       }
     }
-    .tip{
+    .tip {
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction:column;
-      .title{
-        font-size:.26rem;
-        font-family:PingFangSC-Medium,PingFang SC;
-        font-weight:500;
-        color:rgba(153,153,153,1);
+      flex-direction: column;
+      .title {
+        font-size: 0.26rem;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: rgba(153, 153, 153, 1);
       }
       .spanlevel {
         width: 0.32rem;
@@ -192,21 +192,21 @@ export default {
   bottom: 0;
   left: calc(50% - 3rem);
 }
-.titledetail{
-  font-size:.28rem;
-  font-family:PingFangSC-Regular,PingFang SC;
-  font-weight:400;
-  color:#999999;
-  text-align:center;
+.titledetail {
+  font-size: 0.28rem;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  text-align: center;
   margin-top: auto;
-  width:5rem;
-  margin-bottom: .84rem;
+  width: 5rem;
+  margin-bottom: 0.84rem;
   position: absolute;
   bottom: 0;
   left: calc(50% - 2.5rem);
-  >b{
-    color:#FF755A;
-    font-weight:500;
+  > b {
+    color: #ff755a;
+    font-weight: 500;
   }
 }
 </style>

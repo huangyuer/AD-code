@@ -9,82 +9,82 @@
       />
     </div>
     <div class="TestWapper-List">
-      <van-swipe
-        v-if="Object.keys(firstquestion).length!=0"
-        class="my-swipe"
-        ref="myswiper"
-        :loop="false"
-        :show-indicator="false"
-        :touchable="touchAble"
-        :initial-swipe="0"
-        indicator-color="white"
-        vertical
-        @change="onChange"
-      >
-        <van-swipe-item v-if="!istouchable">
-          <div class="swipediv">{{firstquestion.questions[0].title}}</div>
-          <radio-box :list="firstquestion.questions[0].options" @nextToPageradiobox="nextToPageradiobox"></radio-box>
-          <div class="groupnext" @click="openquestion()" style="margin-top:1.82rem">开始答题</div>
-        </van-swipe-item>
-        <van-swipe-item v-if="changeFirstval == '否' || changeFirstval == '不清楚'">
-          <div v-for="(item,index) in nextquestionA.questions" :key="index">
-            <radio-box-item :index="index" :dataitem="item" @radiobox="radiobox"></radio-box-item>
-          </div>
-          <div v-if="noFirstquestion">
-            <div class="slidertitle">{{nextquestion.tag}}</div>
-            <slider-box-item :index="4" :dataitem="nextquestion.questions[0]" @sliderbox="sliderbox"></slider-box-item>
-          </div>
-        </van-swipe-item>
-        <van-swipe-item>
-          <div
-            v-if="index>0 && index<5 && noFirstquestion"
-            v-for="(item,index) in nextquestion.questions"
-            :key="index"
-          >
-            <slider-box-item :index="index+4" :dataitem="item" @sliderbox="sliderbox"></slider-box-item>
-          </div>
-          <div v-if="!noFirstquestion">
-            <div class="slidertitle">{{nextquestion.tag}}</div>
-            <div v-if="index<4" v-for="(item,index) in nextquestion.questions" :key="index">
-              <slider-box-item :index="changeFirstval == '是'?index+1:index+4" :dataitem="item" @sliderbox="sliderbox"></slider-box-item>
-            </div>
-          </div>
-        </van-swipe-item>
-        <van-swipe-item>
-          <div v-if="noFirstquestion">
-            <div v-for="(item,index) in nextquestion.questions" :key="index">
-              <slider-box-item :index="index+4" v-if="index>=5 && index<7" :dataitem="item" @sliderbox="sliderbox"></slider-box-item>
-              <check-box-item :index="index" v-if="index==7" :medications="item" :typethis="'notype1'" @checkbox="checkbox"></check-box-item>
-            </div>
-          </div>
-          <div v-else>
-            <div v-for="(item,index) in nextquestion.questions" :key="index">
-              <slider-box-item :index="changeFirstval == '是'?index+1:index+4" v-if="index>=4 && index<7"  :dataitem="item" @sliderbox="sliderbox"></slider-box-item>
-              <check-box-item  :index="changeFirstval == '是'?index+1:index+4"  v-if="index==7" :medications="item" :typethis="'notype3'" @checkbox="checkbox"></check-box-item>
-            </div>
-          </div>
-        </van-swipe-item>
-        <van-swipe-item>
-          <div v-if="!isShowresult">
-            <div v-if="noFirstquestion">
-              <div v-for="(item,index) in nextquestion.questions" :key="index">
-                <check-box-item v-if="index==7" :medications="item" :typethis="'notype2'" @checkbox="checkbox"></check-box-item>
+      <div :class="{ swiperInner: true, swiperesult: isShowresult }">
+        <van-swipe
+          v-if="Object.keys(firstquestion).length != 0"
+          :class="{ 'my-swipe': true, myswiperesult: isShowresult }"
+          ref="myswiper"
+          :loop="false"
+          :show-indicator="false"
+          :touchable="false"
+          :initial-swipe="0"
+          indicator-color="white"
+          vertical
+          :stop-propagation="false"
+          @change="onChange"
+        >
+          <van-swipe-item v-if="!istouchable">
+            <div class="swipediv">{{ firstquestion.questions[0].title }}</div>
+            <radio-box
+              :list="firstquestion.questions[0].options"
+              @nextToPageradiobox="nextToPageradiobox"
+            ></radio-box>
+            <div class="groupnext" @click="openquestion()" style="margin-top: 1.82rem;">开始答题</div>
+          </van-swipe-item>
+          <van-swipe-item v-if="changeFirstval == '否' || changeFirstval == '不清楚'">
+            <div v-if="!isShowresult">
+              <div v-for="(item, index) in nextquestionA.questions" :key="index">
+                <radio-box-item :index="index" :dataitem="item" @radiobox="radiobox"></radio-box-item>
+              </div>
+              <div v-if="noFirstquestion">
+                <div class="slidertitle">{{ nextquestion.tag }}</div>
+                <div v-for="(item, index) in nextquestion.questions" :key="index">
+                  <slider-box-item
+                    v-if="item.type == 'radio'"
+                    :index="index + 4"
+                    :dataitem="item"
+                    @sliderbox="sliderbox"
+                  ></slider-box-item>
+                  <check-box-item
+                    :index="index + 4"
+                    v-if="item.type == 'checkbox'"
+                    :medications="item"
+                    @checkbox="checkbox"
+                  ></check-box-item>
+                </div>
+                <div class="groupnext" @click="uptoCommit()">提交</div>
               </div>
             </div>
             <div v-else>
-              <div v-for="(item,index) in nextquestion.questions" :key="index">
-                <check-box-item v-if="index==7" :medications="item" :typethis="'notype4'" @checkbox="checkbox"></check-box-item>
-              </div>
+              <result-info :dataresult="levelresult"></result-info>
             </div>
-            <div class="groupnext" @click="uptoCommit()">提交</div>
-          </div>
-          <div v-else>
-            <result-info :dataresult="levelresult"></result-info>
-          </div>
-        </van-swipe-item>
-        <!-- <van-swipe-item v-if="isShowresult">
-        </van-swipe-item> -->
-      </van-swipe>
+          </van-swipe-item>
+          <van-swipe-item v-if="!noFirstquestion">
+            <div v-if="!isShowresult">
+              <div class="slidertitle">{{ nextquestion.tag }}</div>
+              <div v-for="(item, index) in nextquestion.questions" :key="index">
+                <slider-box-item
+                  v-if="item.type == 'radio'"
+                  :index="changeFirstval == '是' ? index + 1 : index + 4"
+                  :dataitem="item"
+                  @sliderbox="sliderbox"
+                ></slider-box-item>
+                <check-box-item
+                  :index="changeFirstval == '是' ? index + 1 : index + 4"
+                  v-if="item.type == 'checkbox'"
+                  :medications="item"
+                  :typethis="'notype3'"
+                  @checkbox="checkbox"
+                ></check-box-item>
+              </div>
+              <div class="groupnext" @click="uptoCommit()">提交</div>
+            </div>
+            <div v-else>
+              <result-info :dataresult="levelresult"></result-info>
+            </div>
+          </van-swipe-item>
+        </van-swipe>
+      </div>
       <van-overlay :show="showoverlay">
         <div class="wrapper" @click.stop>
           <div class="wrapperblock">
@@ -111,21 +111,21 @@ export default {
     return {
       optionsFirst: [],
       istouchable: false,
-      touchAble:false,
+      touchAble: false,
       changeFirstval: "",
       checkboxresult1: [],
       checkboxresult2: [],
-      currentIndex:0,
+      currentIndex: 0,
       showoverlay: false, //提醒去医院看病
-      isShowresult:false,//是否显示诊断结果
+      isShowresult: false, //是否显示诊断结果
       //登陆
-      firstquestion:{},
-      nextquestionA:{},
-      nextquestionB1:{},
-      nextquestionB2:{},
-      nextquestion:{},
-      questionlength:0,
-      noFirstquestion:false,
+      firstquestion: {},
+      nextquestionA: {},
+      nextquestionB1: {},
+      nextquestionB2: {},
+      nextquestion: {},
+      questionlength: 0,
+      noFirstquestion: false,
       current: 0,
       questions: [],
       detail: [], //提交的答案
@@ -133,40 +133,41 @@ export default {
       levelresult: {}
     };
   },
-  created(){
+  created() {
     this.getQuestions();
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     initFirstAnswer(question) {
-      for(var i=0;i<question.length;i++){
-        var obj={};
-        if(this.changeFirstval!='是' && i<3){
-          var current = question[i].options[1].option;
-        }else{
+      for (var i = 0; i < question.length; i++) {
+        var obj = {};
+        if (this.changeFirstval != "是" && i < 3) {
+          var current = "";
+        } else {
           var current = question[i].options[0].option;
         }
         obj["question"] = question[i]._id;
         obj["answers"] = {};
-        if(i!=question.length-1){
+        if (i != question.length - 1) {
           obj.answers[current] = 0;
         }
         this.detail.push(obj);
       }
-      console.log("this.detail", this.detail);
     },
     openquestion() {
       this.istouchable = true;
-      if(this.changeFirstval=='是'){
+      if (this.changeFirstval == "") {
+        Toast("请先选择");
+        return;
+      } else if (this.changeFirstval == "是") {
         this.touchAble = true;
         this.initFirstAnswer(this.nextquestion.questions);
         this.questionlength = this.nextquestion.questions.length;
-      }else{
+      } else {
         var nextquesion = this.nextquestionA.questions;
         nextquesion = nextquesion.concat(this.nextquestion.questions);
-        this.questionlength = nextquesion.questions.length;
         this.initFirstAnswer(nextquesion);
+        this.questionlength = nextquesion.length;
       }
     },
     tipnext() {
@@ -177,74 +178,94 @@ export default {
     },
     nextToPageradiobox(val) {
       this.changeFirstval = val;
-      if(val=='是'){
+      if (val == "是") {
         this.nextquestion = this.nextquestionB1;
-      }else{
+      } else {
         this.nextquestion = this.nextquestionB2;
       }
     },
-    radiobox(item, current,index) {
+    radiobox(item, current, index) {
       var objradio = {};
       objradio["question"] = item._id;
       objradio["answers"] = {};
       objradio.answers[current] = 0;
       var no = index;
       this.detail.splice(no, 1, objradio);
-      this.touchAble = true;
-      if(Object.keys(this.detail[0].answers)[0]!='"是"' || (Object.keys(this.detail[0].answers)[0]=='"是"' && Object.keys(this.detail[1].answers)[0]!='"是"' && Object.keys(this.detail[2].answers)[0]!='"是"')){
-        this.noFirstquestion=true;
-      }else{
+      if (
+        Object.keys(this.detail[0].answers)[0] == "" ||
+        Object.keys(this.detail[1].answers)[0] == "" ||
+        Object.keys(this.detail[2].answers)[0] == ""
+      ) {
+        return;
+      } else if (
+        Object.keys(this.detail[0].answers)[0] != "是" ||
+        (Object.keys(this.detail[0].answers)[0] == "是" &&
+          Object.keys(this.detail[1].answers)[0] != "是" &&
+          Object.keys(this.detail[2].answers)[0] != "是")
+      ) {
+        this.noFirstquestion = true;
+        this.touchAble = true;
+      } else {
+        this.noFirstquestion = false;
+        this.touchAble = true;
         this.showoverlay = true;
-        this.noFirstquestion=false;
         this.$refs.myswiper.next();
       }
-      console.log("this.detail", this.detail);
     },
-    sliderbox(item, current,index) {
+    sliderbox(item, current, index) {
       var objradio = {};
       objradio["question"] = item._id;
       objradio["answers"] = {};
       objradio.answers[current] = 0;
-      var no = index-1;
+      var no = index - 1;
       this.detail.splice(no, 1, objradio);
-      console.log("this.detail", this.detail);
     },
-    checkbox(result, title, type) {
-      if (type == "notype1" || type == "notype3") {
-        this.checkboxresult1 = result;
-      } else if (type == "notype2" || type == "notype4") {
-        this.checkboxresult2 = result;
-      }
-      var resultall = this.checkboxresult1;
-      resultall = resultall.concat(this.checkboxresult2);
+    checkbox(result, title, isendChecked) {
       var objradio = {};
       objradio["question"] = title;
       objradio["answers"] = {};
-      for (var i = 0; i < resultall.length; i++) {
-        objradio.answers[resultall[i]] = 0;
+      if (isendChecked) {
+        objradio.answers["未使用药物"] = 0;
+      } else {
+        if (result.length > 0) {
+          for (var i = 0; i < result.length; i++) {
+            objradio.answers[result[i]] = 0;
+          }
+        } else {
+          objradio["answers"] = {};
+        }
       }
-      this.detail.splice(this.questionlength-1, 1, objradio);
-      console.log("this.detail", this.detail);
+      this.detail.splice(this.questionlength - 1, 1, objradio);
     },
     uptoCommit() {
-      this.touchAble = false;
-      this.isShowresult = true;
-      this.submitAnswer();
+      if (
+        Object.keys(this.detail[this.detail.length - 1].answers).length != 0
+      ) {
+        this.touchAble = false;
+        this.isShowresult = true;
+        this.submitAnswer();
+      } else {
+        Toast("请先选择是否用药");
+      }
     },
     getQuestions() {
       this.$store
         .dispatch("patientManagement/getQuestions")
         .then(data => {
-          this.firstquestion = this.$store.getters.getquesion[Object.keys(this.$store.getters.getquesion)[0]];
-          this.nextquestionA = this.$store.getters.getquesion[Object.keys(this.$store.getters.getquesion)[1]];
-          this.nextquestionB1 = this.$store.getters.getquesion[Object.keys(this.$store.getters.getquesion)[2]];
-          this.nextquestionB2 = this.$store.getters.getquesion[Object.keys(this.$store.getters.getquesion)[3]];
+          this.firstquestion = this.$store.getters.getquesion[
+            Object.keys(this.$store.getters.getquesion)[0]
+          ];
+          this.nextquestionA = this.$store.getters.getquesion[
+            Object.keys(this.$store.getters.getquesion)[1]
+          ];
+          this.nextquestionB1 = this.$store.getters.getquesion[
+            Object.keys(this.$store.getters.getquesion)[2]
+          ];
+          this.nextquestionB2 = this.$store.getters.getquesion[
+            Object.keys(this.$store.getters.getquesion)[3]
+          ];
         })
-        .catch(e => {
-          // if(e){
-          //   Toast(e);
-          // }
-        });
+        .catch(e => {});
     },
     submitAnswer() {
       this.$store
@@ -253,11 +274,7 @@ export default {
           Toast(response.msg);
           this.levelresult = response.data;
         })
-        .catch(e => {
-          // if(e){
-          //   Toast(e);
-          // }
-        });
+        .catch(e => {});
     }
   },
   components: {
@@ -289,22 +306,45 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
+    .swiperInner {
+      position: relative;
+      width: 100%;
+      height: 11.46rem;
+      border-radius: 0.2rem;
+      background: #ffffff;
+      &.swiperesult {
+        height: 10rem;
+      }
+    }
+    .swiperWapper {
+      position: relative;
+      width: 100%;
+      margin-top: 0.6rem;
+      height: calc(100% - 2.32rem);
+      border-radius: 0.2rem;
+      background: #ffffff;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   }
   @{aaa}.my-swipe {
     position: relative;
     width: 100%;
-    height: 11.46rem;
+    margin-top: 0.6rem;
+    height: calc(100% - 2.32rem);
     border-radius: 0.2rem;
     background: #ffffff;
+    &.myswiperesult {
+      height: calc(100% - 1rem);
+    }
     .van-swipe-item {
       color: #fff;
       font-size: 20px;
       text-align: center;
       background-color: #ffffff;
-      border-radius: 0.2rem;
       box-shadow: 0px 4px 2px 0px rgba(195, 223, 214, 1);
-      padding-top: 0.6rem;
       box-sizing: border-box;
+      overflow-y: auto;
     }
     .custom-indicator {
       position: absolute;
@@ -345,6 +385,7 @@ export default {
     color: rgba(255, 255, 255, 1);
     line-height: 0.8rem;
     margin-top: 0.6rem;
+    text-align: center;
   }
 }
 .slidertitle {
@@ -397,7 +438,7 @@ export default {
     margin: 0.8rem auto 0;
   }
 }
-@{aaa}.van-swipe__indicators--vertical{
-  display:none;
+@{aaa}.van-swipe__indicators--vertical {
+  display: none;
 }
 </style>

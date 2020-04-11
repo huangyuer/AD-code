@@ -15,8 +15,13 @@
       </div>
     </div>
     <div class="integrallist">
-      <div class="integralItem" v-for="(item,index) in goods" :key="index">
-        <van-image width="100%" height="1.8rem" fit="cover" :src="item.coverImg[0].httpUrl" />
+      <div class="integralItem" v-for="(item, index) in goods" :key="index">
+        <van-image
+          width="100%"
+          height="1.8rem"
+          fit="cover"
+          :src="item.coverImg[0].httpUrl"
+        />
         <!-- <van-image
           width="100%"
           height="1.8rem"
@@ -25,25 +30,27 @@
         />-->
         <div class="bottom">
           <div class="left">
-            <div class="title">{{item.name}}</div>
-            <div class="card">{{item.score}}积分</div>
+            <div class="title">{{ item.name }}</div>
+            <div class="card">{{ item.score }}积分</div>
           </div>
           <div
-            :class="{btnchange:true,bgc6:item.stockNum==0}"
-            @click="item.stockNum>0?changeBtn(item):''"
-          >立即兑换</div>
+            :class="{ btnchange: true, bgc6: item.stockNum == 0 }"
+            @click="item.stockNum > 0 ? changeBtn(item) : ''"
+          >
+            立即兑换
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { Image,Toast} from "vant";
+import { Image, Toast } from "vant";
 export default {
   data() {
     return {
       goods: [],
-      score: {}
+      score: {},
     };
   },
   mounted() {
@@ -57,35 +64,35 @@ export default {
     changeBtn(item) {
       this.$router.push({
         path: "/ProductInfo",
-        query: { id: item._id, score: this.score }
+        query: { id: item._id, score: this.score },
       });
     },
     getGoods() {
       this.$store
         .dispatch("patientManagement/getGoods")
-        .then(response => {
+        .then((response) => {
           console.log("response", response);
           this.goods = response.data.goods;
         })
-        .catch(e => {
-        //  if(e){
-        //     Toast(e);
-        //   }
+        .catch((e) => {
+          //  if(e){
+          //     Toast(e);
+          //   }
         });
     },
     getMyScore() {
       this.$store
         .dispatch("patientManagement/getMyScore")
-        .then(response => {
+        .then((response) => {
           this.score = response.data.score;
         })
-        .catch(e => {
+        .catch((e) => {
           // if(e){
           //   Toast(e);
           // }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -99,7 +106,7 @@ export default {
     height: 0.8rem;
     background: rgba(249, 249, 249, 1);
     border-radius: 0.5rem;
-    margin: 0.4rem auto .28rem;
+    margin: 0.4rem auto 0.28rem;
     box-sizing: border-box;
     .left {
       display: flex;
@@ -128,7 +135,7 @@ export default {
       height: 3.2rem;
       background: rgba(255, 255, 255, 1);
       border-radius: 0.08rem;
-      border: 2px solid rgba(243, 243, 243, 1);
+      border: 0.02rem solid rgba(243, 243, 243, 1);
       padding: 0.2rem 0.15rem;
       box-sizing: border-box;
       line-height: 0;

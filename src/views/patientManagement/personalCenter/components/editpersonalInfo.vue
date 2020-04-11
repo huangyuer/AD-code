@@ -74,7 +74,7 @@
         </div>
         <div class="medicinallist">
           <div
-            class="medicinalitem"
+            :class="{ medicinalitem: true, islong: length[key] > 16 }"
             v-if="user.medications"
             v-for="(index, key) in user.medications"
             :key="key"
@@ -83,7 +83,7 @@
           </div>
         </div>
       </div>
-      <div class="selecthistoryinner" v-else>
+      <div class="selecthistoryinner" v-if="isSelectmedical">
         <div class="title">近半年治疗该疾病使用过的药物？</div>
         <van-checkbox-group v-model="result" direction="horizontal">
           <van-checkbox
@@ -95,22 +95,26 @@
         </van-checkbox-group>
       </div>
     </div>
-    <div class="baseinfo">您近两个月疾病严重度是？</div>
-    <div class="sliderbox">
-      <div class="header">
-        <span>轻度</span>
-        <span>中度</span>
-        <span>严重</span>
+    <div class="selecthistory">
+      <div class="baseinfo">您近两个月疾病严重度是？</div>
+      <div class="sliderbox">
+        <div class="header">
+          <span>轻度</span>
+          <span>中度</span>
+          <span>严重</span>
+        </div>
+        <van-slider
+          :step="50"
+          v-model="level"
+          bar-height="4px"
+          active-color="linear-gradient(90deg,rgba(0, 153, 102, 1) 0%,rgba(242, 169, 0, 1) 52%,rgba(255, 63, 15, 1) 100%);"
+          @change="onChange"
+        />
       </div>
-      <van-slider
-        :step="50"
-        v-model="level"
-        bar-height="4px"
-        active-color="linear-gradient(90deg,rgba(0, 153, 102, 1) 0%,rgba(242, 169, 0, 1) 52%,rgba(255, 63, 15, 1) 100%);"
-        @change="onChange"
-      />
     </div>
-    <div class="saveEdit" @click="upMyInfo()">保存修改</div>
+    <div class="saveEdit" @click="upMyInfo()">
+      {{ isFirstEnter ? "保存" : "保存修改" }}
+    </div>
   </div>
 </template>
 <script>
@@ -131,22 +135,21 @@ export default {
         showArea: false,
         disease: "",
         time: "",
-        level: "无"
+        level: "无",
       },
       level: 0,
       showtime: false,
       result: [],
+      length: [],
       isSelectmedical: false,
       isFirstEnter: false,
       medications: [],
       address: {},
       user: {},
-      silderBar:'',
+      silderBar: "",
     };
   },
   mounted() {
-    // console.log('document.getElementsByClassName("van-slider__bar")',document.getElementsByClassName("van-slider__bar")[0].style.width);
-    // this.silderBar = document.getElementsByClassName("van-slider__bar")[0].style.width;
     this.getMyInfo();
     this.getMedications();
     // this.getMyAddress();
@@ -161,14 +164,22 @@ export default {
       this.$set(this.form, "province", this.user.province);
       this.$set(this.form, "area", this.user.city);
       this.$set(this.form, "time", this.user.diaTime);
+      this.$set(this.form, "level", this.user.level);
+      console.log("this.user.level", this.user.level);
       if (this.user.level == "轻度") {
         this.level = 0;
       } else if (this.user.level == "中度") {
-        document.getElementsByClassName("van-slider__bar")[0].classList.add("backgroundColor50");
         this.level = 50;
-      } else {
-        document.getElementsByClassName("van-slider__bar")[0].classList.add("backgroundColor100");
+        document
+          .getElementsByClassName("van-slider__bar")[0]
+          .classList.add("backgroundColor50");
+      } else if (this.user.level == "严重") {
         this.level = 100;
+        document
+          .getElementsByClassName("van-slider__bar")[0]
+          .classList.add("backgroundColor100");
+      } else {
+        this.level = 0;
       }
     },
     onConfirmplace(values) {
@@ -191,20 +202,44 @@ export default {
       if (value == 0) {
         this.$set(this.form, "level", "轻度");
       } else if (value == 50) {
-        document.getElementsByClassName("van-slider__bar")[0].classList.add("backgroundColor50");
-        if(document.getElementsByClassName("van-slider__bar")[0].classList.contains('backgroundColor100')){
-          document.getElementsByClassName("van-slider__bar")[0].classList.remove("backgroundColor100");
+        document
+          .getElementsByClassName("van-slider__bar")[0]
+          .classList.add("backgroundColor50");
+        if (
+          document
+            .getElementsByClassName("van-slider__bar")[0]
+            .classList.contains("backgroundColor100")
+        ) {
+          document
+            .getElementsByClassName("van-slider__bar")[0]
+            .classList.remove("backgroundColor100");
         }
         this.$set(this.form, "level", "中度");
       } else {
-        if(document.getElementsByClassName("van-slider__bar")[0].classList.contains('backgroundColor50')){
-          document.getElementsByClassName("van-slider__bar")[0].classList.remove("backgroundColor50");
+        if (
+          document
+            .getElementsByClassName("van-slider__bar")[0]
+            .classList.contains("backgroundColor50")
+        ) {
+          document
+            .getElementsByClassName("van-slider__bar")[0]
+            .classList.remove("backgroundColor50");
         }
-        document.getElementsByClassName("van-slider__bar")[0].classList.add("backgroundColor100");
+        document
+          .getElementsByClassName("van-slider__bar")[0]
+          .classList.add("backgroundColor100");
         this.$set(this.form, "level", "严重");
       }
     },
+    getBLen(str) {
+      if (str == null) return 0;
+      if (typeof str != "string") {
+        str += "";
+      }
+      return str.replace(/[^\x00-\xff]/g, "01").length;
+    },
     editmedicinalhistory() {
+      console.log("huangdadfsfsdf");
       this.isSelectmedical = true;
     },
     upMyInfo() {
@@ -217,14 +252,14 @@ export default {
         city: this.form.area,
         diaTime: this.form.time,
         medications: this.result,
-        level: this.form.level
+        level: this.form.level,
       };
       this.$store
         .dispatch("patientManagement/upMyInfo", upmyinfo)
-        .then(data => {
-          console.log("data", data);
+        .then((data) => {
+          this.$router.push({ path: "/personalInfo" });
         })
-        .catch(e => {
+        .catch((e) => {
           // if(e){
           //   Toast(e);
           // }
@@ -233,10 +268,10 @@ export default {
     getMedications() {
       this.$store
         .dispatch("patientManagement/getMedications")
-        .then(data => {
+        .then((data) => {
           this.medications = this.$store.getters.getmedications.medications;
         })
-        .catch(e => {
+        .catch((e) => {
           // if(e){
           //   Toast(e);
           // }
@@ -245,30 +280,34 @@ export default {
     getMyInfo() {
       this.$store
         .dispatch("patientManagement/getMyInfo")
-        .then(data => {
+        .then((data) => {
           this.user = this.$store.getters.getmyinfo.user;
           if (this.user.medications) {
             this.result = this.user.medications;
+            for (var i = 0; i < this.user.medications.length; i++) {
+              this.$set(this.length, i, this.getBLen(this.user.medications[i]));
+            }
           }
           if (this.user.createdAt == this.user.updatedAt) {
             this.isFirstEnter = true;
+            this.isSelectmedical = true;
           } else {
             this.isFirstEnter = false;
+            this.isSelectmedical = false;
           }
           this.init();
         })
-        .catch(e => {
+        .catch((e) => {
           // if(e){
           //   Toast(e);
           // }
         });
-    }
+    },
   },
-  watch:{
-    silderBar:function (val) {
-    }
+  watch: {
+    silderBar: function (val) {},
   },
-  components: { VanAreas, VanTimePicker, VanSexPicker }
+  components: { VanAreas, VanTimePicker, VanSexPicker },
 };
 </script>
 <style lang="less" scoped>
@@ -311,22 +350,22 @@ export default {
 }
 .sliderbox {
   margin-top: 0.2rem;
-  padding-bottom: 0.34rem;
-  border-bottom: 0.02rem solid rgba(229, 229, 229, 1) !important;
+  // padding-bottom: 0.34rem;
+  border-bottom: none !important;
   .header {
     display: flex;
     justify-content: space-between;
     color: #333333;
     font-size: 0.28rem;
     width: 6rem;
-    margin: 0.12rem 0.32rem;
+    margin: 0.12rem 0.32rem 0.32rem 0.32rem;
   }
 }
 .van-slider {
   position: relative;
   border-radius: 999px;
   cursor: pointer;
-  margin: 0 0.32rem 0.62rem 0.32rem;
+  margin: 0 0.32rem 0.16rem 0.32rem;
   width: 6rem;
   height: 0.16rem;
   background: #cdcdcd;
@@ -336,12 +375,26 @@ export default {
   border-radius: 0.4rem;
 }
 @{aaa}.van-slider__bar {
-    background:linear-gradient(90deg,rgba(0, 153, 102, 1) 0%,rgba(242, 169, 0, 1) 52%,rgba(255, 63, 15, 1) 100%)!important;
-  &.backgroundColor50{
-    background:linear-gradient(90deg,rgba(0,153,102,1) 0%,rgba(242,169,0,1) 100%)!important;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 153, 102, 1) 0%,
+    rgba(242, 169, 0, 1) 52%,
+    rgba(255, 63, 15, 1) 100%
+  ) !important;
+  &.backgroundColor50 {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 153, 102, 1) 0%,
+      rgba(242, 169, 0, 1) 100%
+    ) !important;
   }
-  &.backgroundColor100{
-    background:linear-gradient(90deg,rgba(0, 153, 102, 1) 0%,rgba(242, 169, 0, 1) 52%,rgba(255, 63, 15, 1) 100%)!important;
+  &.backgroundColor100 {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 153, 102, 1) 0%,
+      rgba(242, 169, 0, 1) 52%,
+      rgba(255, 63, 15, 1) 100%
+    ) !important;
   }
 }
 @{aaa}.van-slider__button {
@@ -354,7 +407,7 @@ export default {
     rgba(0, 153, 102, 1) 100%
   );
   box-shadow: 0px 4px 8px 0px rgba(58, 170, 133, 1);
-  right: -.22rem;
+  right: -0.22rem;
 }
 .baseinfo {
   font-size: 0.32rem;
@@ -423,6 +476,9 @@ export default {
       text-align: center;
       float: left;
       margin: 0 0.14rem 0.12rem 0.32rem;
+      &.islong {
+        width: 6.9rem;
+      }
     }
   }
   .selecthistoryinner {

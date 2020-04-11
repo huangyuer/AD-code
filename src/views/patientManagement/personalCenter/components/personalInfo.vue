@@ -55,7 +55,7 @@
             <span class="colorshallow">{{
               getmyinfo.sex == "" ? "未填写" : getmyinfo.sex
             }}</span>
-            <span class="colordeep font28" style="margin-left:.24rem"
+            <span class="colordeep font28" style="margin-left: 0.24rem;"
               >出生年月:</span
             >
             <span class="colorshallow">{{
@@ -75,7 +75,7 @@
         <div class="address">
           <div class="margin6">
             <span class="colordeep">{{
-              address.recipient != "" ? address.recipient : "姓名未填写"
+              address.recipient != "" ? address.recipient : "收货人未填写"
             }}</span>
             <span class="colormiddle">{{
               address.phone != "" ? address.phone : "电话未填写"
@@ -84,7 +84,7 @@
           <div class="colorshallow">
             {{
               address.province == "" && address.detail == ""
-                ? "地址未填写"
+                ? "你还未添加收货地址"
                 : address.province != ""
                 ? address.province +
                   address.city +
@@ -100,13 +100,13 @@
 </template>
 <script>
 import Clipboard from "clipboard";
-import {removeToken} from "@/utils/auth";
+import { removeToken } from "@/utils/auth";
 import { Toast } from "vant";
 export default {
   data() {
     return {
       getmyinfo: {},
-      address: {}
+      address: {},
     };
   },
   mounted() {
@@ -117,10 +117,10 @@ export default {
     getMyInfo() {
       this.$store
         .dispatch("patientManagement/getMyInfo")
-        .then(data => {
+        .then((data) => {
           this.getmyinfo = this.$store.getters.getmyinfo.user;
         })
-        .catch(e => {
+        .catch((e) => {
           // if(e){
           //   Toast(e);
           // }
@@ -129,10 +129,10 @@ export default {
     getMyAddress() {
       this.$store
         .dispatch("patientManagement/getMyAddress")
-        .then(data => {
+        .then((data) => {
           this.address = this.$store.getters.getmyaddress.address;
         })
-        .catch(e => {
+        .catch((e) => {
           // if(e){
           //   Toast(e);
           // }
@@ -141,10 +141,10 @@ export default {
     delMyInfo() {
       this.$store
         .dispatch("patientManagement/delMyInfo")
-        .then(data => {
+        .then((data) => {
           removeToken();
         })
-        .catch(e => {
+        .catch((e) => {
           // if(e){
           //   Toast(e);
           // }
@@ -159,23 +159,23 @@ export default {
     clipbroad() {
       var _this = this;
       var clipboard = new Clipboard("#myInvCode", {
-        text: function() {
+        text: function () {
           return _this.getmyinfo.myInvCode;
-        }
+        },
       });
-      clipboard.on("success", e => {
+      clipboard.on("success", (e) => {
         Toast("复制成功");
         // 释放内存
         clipboard.destroy();
       });
-      clipboard.on("error", e => {
+      clipboard.on("error", (e) => {
         // 不支持复制
         Toast("复制失败");
         // 释放内存
         clipboard.destroy();
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>

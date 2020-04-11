@@ -1,5 +1,5 @@
 <template>
-  <div class="areacomponent">
+  <div :class="{ areacomponent: true, tipe: !isFirstEnter }">
     <van-field
       :class="{ color3: !isFirstEnter, color9: isFirstEnter }"
       readonly
@@ -26,30 +26,30 @@ export default {
   props: {
     formvalue: {
       type: String,
-      default: ""
+      default: "",
     },
     formlabel: {
       type: String,
-      default: ""
+      default: "",
     },
     formplaceholder: {
       type: String,
-      default: ""
+      default: "",
     },
     forminputalign: {
       type: String,
-      default: ""
+      default: "",
     },
     isFirstEnter: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
       columns: ["女", "男"],
       showSex: false,
-      value: ""
+      value: "",
     };
   },
   mounted() {
@@ -62,10 +62,17 @@ export default {
       this.showSex = false;
       this.value = val;
       this.$emit("IsshowSex", val);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
 @import "./picker.less";
+.areacomponent {
+  &.tipe {
+    @{aaa}.van-field__control {
+      padding-right: 0;
+    }
+  }
+}
 </style>

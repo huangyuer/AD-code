@@ -65,13 +65,13 @@ export default {
   methods: {
     onSearch(value) {
       this.form.title = value;
-      this.videoList = null;
+      this.videoList = [];
       this.form.page = 1;
       this.finished = false;
     },
     onClear() {
       this.form.title = "";
-      this.videoList = null;
+      this.videoList = [];
       this.form.page = 1;
       this.finished = false;
     },

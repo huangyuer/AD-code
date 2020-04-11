@@ -1,36 +1,59 @@
 <template>
   <div>
-    <div class="selecthistoryinner" v-if="medications.options.length!=0">
-      <div class="title" v-if="typethis == 'notype1' || typethis == 'notype3'">{{index+'.'+medications.title}}</div>
-      <van-checkbox-group @change="onChange" v-model="result" direction="horizontal">
-        <van-checkbox
-          v-if="key<thiskeymax && key>=thiskeymin"
+    <div class="selecthistoryinner" v-if="medications.options.length != 0">
+      <div class="title">
+        {{ index + "." + medications.title }}
+      </div>
+      <van-checkbox-group
+        @change="onChange"
+        v-model="result"
+        direction="horizontal"
+        ref="checkboxGroup"
+      >
+        <div
+          style="width: 100%;"
           v-for="(index, key) in medications.options"
           :key="key"
-          :name="index.option"
         >
-          <div>{{index.option}}</div>
-          <div
-            class="exp"
-          >{{index.remark}}</div>
-        </van-checkbox>
+          <van-checkbox
+            v-if="key < medications.options.length - 2"
+            :name="index.option"
+            ref="checkboxes"
+          >
+            <div>{{ index.option }}</div>
+            <div class="exp">{{ index.remark }}</div>
+          </van-checkbox>
+        </div>
       </van-checkbox-group>
+      <van-checkbox
+        :name="medications.options[medications.options.length - 1].option"
+        ref="checkboxes"
+        @click="checkAll"
+        v-model="checked"
+      >
+        <div>
+          {{ medications.options[medications.options.length - 1].option }}
+        </div>
+        <div class="exp">
+          {{ medications.options[medications.options.length - 1].remark }}
+        </div>
+      </van-checkbox>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name:"checkboxitem",
+  name: "checkboxitem",
   props: {
     typethis: {
       type: String,
-      default: ""
+      default: "",
     },
-    medications:{
+    medications: {
       type: Object,
-      default: function (){
-        return {}
-      }
+      default: function () {
+        return {};
+      },
     },
     index: {
       type: Number,
@@ -40,47 +63,22 @@ export default {
   data() {
     return {
       result: [],
-      // medications: [],
-      thiskeymax: 4,
-      thiskeymin: 0,
+      checked: false,
     };
   },
-  mounted() {
-    // console.log("medications",this.medications);
-    // this.getMedications();
-  },
-  updated() {
-    // console.log(":upupuuuuuppppp", this.typethis);
-    if (this.typethis == "notype1") {
-      this.thiskeymin = 0;
-      this.thiskeymax = 6;
-    } else if (this.typethis == "notype2") {
-      this.thiskeymin = 6;
-      this.thiskeymax = this.medications.options.length;
-    } else if (this.typethis == "notype3") {
-      this.thiskeymin = 0;
-      this.thiskeymax = 4;
-    } else if (this.typethis == "notype4") {
-      this.thiskeymin = 4;
-      this.thiskeymax = this.medications.options.length;
-    }
-  },
   methods: {
-    // getMedications() {
-    //   this.$store
-    //     .dispatch("patientManagement/getMedications")
-    //     .then(data => {
-    //       this.medications = this.$store.getters.getmedications.medications;
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // },
     onChange(name) {
-      this.$emit("checkbox", this.result, this.medications._id, this.typethis);
-      //   console.log("this.result", this.result);
-    }
-  }
+      this.$emit("checkbox", this.result, this.medications._id, this.checked);
+    },
+    checkAll() {
+      this.$refs.checkboxGroup.toggleAll(false);
+    },
+  },
+  watch: {
+    checked: function (val) {
+      this.$emit("checkbox", this.result, this.medications._id, this.checked);
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -107,12 +105,20 @@ export default {
   margin-bottom: 0.12rem;
   width: 100%;
 }
+@{aaa}.van-checkbox__icon{
+  width: .36rem;
+  height: .36rem;
+}
 @{aaa}.van-checkbox__icon .van-icon {
   background: RGBA(206, 206, 206, 1);
   color: #ffffff;
 }
 @{aaa}.van-checkbox__icon--round .van-icon {
   border-radius: 0;
+  width: .36rem;
+  height: .36rem;
+  line-height: .36rem;
+  font-size: .3rem;
 }
 @{aaa}.van-checkbox__icon--checked .van-icon {
   background-color: RGBA(4, 151, 101, 1);

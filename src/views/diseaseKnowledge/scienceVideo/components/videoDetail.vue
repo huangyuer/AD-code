@@ -25,9 +25,7 @@
           controls="controls"
           autoplay
           style
-        >
-          您的浏览器不支持 video 标签。
-        </video>
+        >您的浏览器不支持 video 标签。</video>
         <van-image
           class="playicon"
           width=".48rem"
@@ -69,7 +67,7 @@ export default {
       videoitem: {},
       isvideo: false,
       iframe: "",
-      showoverlay: false,
+      showoverlay: false
     };
   },
   created() {},
@@ -79,9 +77,9 @@ export default {
   methods: {
     addOutPageLog() {
       this.$store
-        .dispatch("common/addOutPageLog", this.$route.meta.title)
-        .then((response) => {})
-        .catch((e) => {
+        .dispatch("common/addOutPageLog", "科普视频")
+        .then(response => {})
+        .catch(e => {
           // if (e) {
           //   Toast(e);
           // }
@@ -90,7 +88,7 @@ export default {
     getVideo() {
       this.$store
         .dispatch("diseaseKnowledge/getVideo", this.$route.query.id)
-        .then((response) => {
+        .then(response => {
           if (response.code == 1) {
             Toast(response.msg);
             return;
@@ -98,7 +96,7 @@ export default {
           this.videoitem = response.data.video;
           this.iframe = this.videoitem.video[0].httpUrl;
         })
-        .catch((e) => {
+        .catch(e => {
           // if (e) {
           //   Toast(e);
           // }
@@ -120,8 +118,8 @@ export default {
     forwardBtn() {
       console.log("-----dss");
       this.showoverlay = true;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>

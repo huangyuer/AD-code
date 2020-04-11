@@ -23,12 +23,8 @@
         <span class="time">{{ index.date }}</span>
         <div class="like-btn">
           <div @click.stop="likeBtn(index)">
-            <svg-icon
-              iconClass="heart"
-              className="icon"
-              v-if="index.isStar"
-            ></svg-icon>
-            <svg-icon iconClass="heart" className="grey" v-else></svg-icon>
+            <svg-icon iconClass="heart" class="icon" v-if="index.isStar"></svg-icon>
+            <svg-icon iconClass="heart" class="grey" v-else></svg-icon>
             <span>收藏</span>
           </div>
         </div>
@@ -38,7 +34,7 @@
             iconClass="heart"
             :class="{ 'heart-icon': true, iconactive: index.isStar }"
           />收藏
-        </span> -->
+        </span>-->
       </div>
     </div>
   </div>
@@ -49,29 +45,29 @@ export default {
   props: {
     articles: {
       type: Array,
-      default: [],
-    },
+      default: []
+    }
   },
   methods: {
     likeBtn(index) {
       if (!index.isStar) {
         let params = {
           menu: this.$route.meta.title,
-          starId: index._id,
+          starId: index._id
         };
-        this.$store.dispatch("common/star", params).then((res) => {
+        this.$store.dispatch("common/star", params).then(res => {
           Toast({
             message: res,
-            icon: "like-o",
+            icon: "like-o"
           });
           this.$emit("likeBtn", index);
         });
       } else {
         let params = { starId: index._id };
-        this.$store.dispatch("common/unStar", params).then((res) => {
+        this.$store.dispatch("common/unStar", params).then(res => {
           Toast({
             message: res,
-            icon: "like-o",
+            icon: "like-o"
           });
           this.$emit("likeBtn", index);
         });
@@ -88,12 +84,12 @@ export default {
             id: index._id,
             like: true,
             forward: false,
-            isStar: index.isStar,
-          },
+            isStar: index.isStar
+          }
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less">
@@ -121,7 +117,7 @@ export default {
 .instructionsItem {
   padding: 0.24rem 0;
   margin: 0 0.32rem;
-  border-bottom: 2px solid #e5e5e5;
+  border-bottom: 0.02rem solid #e5e5e5;
 
   .top {
     display: flex;

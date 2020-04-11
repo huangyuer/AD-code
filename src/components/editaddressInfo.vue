@@ -1,6 +1,10 @@
 <template>
   <div>
-    <van-field v-model="form.recipient" placeholder="收货人" input-align="left" />
+    <van-field
+      v-model="form.recipient"
+      placeholder="收货人"
+      input-align="left"
+    />
     <van-field v-model="form.phone" placeholder="手机号码" input-align="left" />
     <van-areas
       :formvalue="place"
@@ -10,7 +14,11 @@
       @IsshowArea="IsshowArea"
       @onConfirm="onConfirm"
     ></van-areas>
-    <van-field v-model="form.detail" input-align="left" placeholder="详细地址：如道路、门牌号、小区、楼洞号，单元" />
+    <van-field
+      v-model="form.detail"
+      input-align="left"
+      placeholder="详细地址：如道路、门牌号、小区、楼洞号，单元"
+    />
     <div class="saveEdit" @click="BtnupMyAddress()">保存</div>
   </div>
 </template>
@@ -26,10 +34,10 @@ export default {
         province: "",
         city: "",
         area: "",
-        detail: ""
+        detail: "",
       },
       place: "",
-      address: {}
+      address: {},
     };
   },
   created() {
@@ -49,7 +57,7 @@ export default {
     getMyAddress() {
       this.$store
         .dispatch("patientManagement/getMyAddress")
-        .then(data => {
+        .then((data) => {
           this.address = this.$store.getters.getmyaddress.address;
           if (this.address.recipient == "") {
             this.$route.meta.title = "添加收货地址";
@@ -64,7 +72,7 @@ export default {
           this.place = this.form.province + this.form.city + this.form.area;
           this.form.detail = this.address.detail;
         })
-        .catch(e => {
+        .catch((e) => {
           // console.log(e);
           // if(e){
           //   Toast(e);
@@ -80,25 +88,29 @@ export default {
         Toast("请填写手机号");
         return;
       }
+      var re = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+      if (!re.test(this.form.phone)) {
+        Toast("手机号码有误，请重填");
+        return;
+      }
       this.$store
         .dispatch("patientManagement/upMyAddress", this.form)
-        .then(data => {
+        .then((data) => {
           Toast("保存成功");
           if (this.$store.getters.produceinfoToeditaddress) {
             this.$store.commit("patientManagement/SET_SAVEADDRESS", true);
           }
-          // this.$router.push({ path: "/personalInfo" });
           this.$router.go(-1);
         })
-        .catch(e => {
-          console.log(e);
+        .catch((e) => {
+          // console.log(e);
           // if(e){
           //   Toast(e);
           // }
         });
-    }
+    },
   },
-  components: { VanAreas }
+  components: { VanAreas },
 };
 </script>
 <style lang="less" scoped>

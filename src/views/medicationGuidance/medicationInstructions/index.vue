@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-sticky>
-      <div style="background:#ffffff;padding-top:.12rem">
+      <div style="background: #ffffff; padding-top: 0.12rem;">
         <search-input
           class="searchinput"
           :value="searchinputvalue"
@@ -19,8 +19,17 @@
         </div>
       </div>
     </van-sticky>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <instructions-item v-if="acticalList" :articles="acticalList" @likeBtn="likeBtn"></instructions-item>
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <instructions-item
+        v-if="acticalList"
+        :articles="acticalList"
+        @likeBtn="likeBtn"
+      ></instructions-item>
     </van-list>
   </div>
 </template>
@@ -44,10 +53,10 @@ export default {
         tag: String,
         title: String,
         page: 1,
-        limit: 10
+        limit: 10,
       },
       total: 0,
-      current: []
+      current: [],
     };
   },
   created() {
@@ -60,7 +69,7 @@ export default {
     },
     onSearch(value) {
       this.form.title = value;
-      this.acticalList = null;
+      this.acticalList = [];
       this.form.page = 1;
       this.finished = false;
     },
@@ -90,7 +99,7 @@ export default {
     getArticles() {
       this.$store
         .dispatch("common/getArticles", this.form)
-        .then(data => {
+        .then((data) => {
           this.acticalList = this.acticalList.concat(
             this.$store.getters.articlesList.articles
           );
@@ -105,7 +114,7 @@ export default {
             this.form.page = this.form.page + 1;
           }
         })
-        .catch(e => {
+        .catch((e) => {
           // if(e){
           //   Toast(e);
           // }
@@ -114,7 +123,7 @@ export default {
     getMenuSelect() {
       this.$store
         .dispatch("common/getMenuSelect", this.$route.meta.title)
-        .then(data => {
+        .then((data) => {
           this.itemTabcontent = this.$store.getters.menuList.selects;
           this.$set(
             this.form,
@@ -123,7 +132,7 @@ export default {
           );
           this.finished = false;
         })
-        .catch(e => {
+        .catch((e) => {
           // if(e){
           //   Toast(e);
           // }
@@ -131,9 +140,9 @@ export default {
     },
     onLoad() {
       this.getArticles();
-    }
+    },
   },
-  components: { SearchInput, TabsList, InstructionsItem }
+  components: { SearchInput, TabsList, InstructionsItem },
 };
 </script>
 <style scoped lang="less">

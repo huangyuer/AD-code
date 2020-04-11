@@ -56,7 +56,7 @@ export default new Router({
             name: "DiseaseDetail",
             meta: {
                 title: "疾病知识",
-                index: 2
+                index: 3
             }
         },
         {
@@ -122,7 +122,7 @@ export default new Router({
             name: "DetailInfo",
             meta: {
                 title: "常用药物",
-                index: 2
+                index: 3
             }
         },
         {
