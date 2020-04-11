@@ -1,11 +1,7 @@
 <template>
   <div class="disease-content">
     <div class="disease-search">
-      <search-input
-        :placeholder="'搜索关键字'"
-        @onSearch="onSearch"
-        @onClear="onClear"
-      ></search-input>
+      <search-input :placeholder="'搜索关键字'" @onSearch="onSearch" @onClear="onClear"></search-input>
 
       <!-- <div class="category-box">
 
@@ -17,34 +13,15 @@
         <div v-for="item in category" :key="item.id" class="category-li">
           {{ item }}
         </div>
-      </div> -->
+      </div>-->
     </div>
     <div class="category-box">
-      <van-tabs
-        sticky
-        @click="changeTab"
-        title-active-color="#009966"
-        line-width="1.4rem"
-      >
-        <van-tab
-          v-for="item in itemTabcontent"
-          :title="item.type"
-          :key="item.id"
-        >
-        </van-tab>
+      <van-tabs sticky @click="changeTab" title-active-color="#009966" line-width="1.4rem">
+        <van-tab v-for="item in itemTabcontent" :title="item.type" :key="item.id"></van-tab>
         <div class="patient-like">
-          <van-list
-            v-model="loading"
-            :finished="finished"
-            finished-text="没有更多了"
-            @load="onLoad"
-          >
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
             <div v-for="item in diseaseInfo" :key="item.id">
-              <like-info
-                :info="item"
-                @likeBtn="likeBtn"
-                @likeItem="likeItem"
-              ></like-info>
+              <like-info :info="item" @likeBtn="likeBtn" @likeItem="likeItem"></like-info>
             </div>
           </van-list>
         </div>
@@ -72,7 +49,7 @@ export default {
         childMenu: String,
         title: String,
         page: 1,
-        limit: 10,
+        limit: 10
       },
       value: "0",
       itemTabcontent: [],
@@ -134,8 +111,8 @@ export default {
       option: [
         { text: "全部商品", value: "0" },
         { text: "新款商品", value: "1" },
-        { text: "活动商品", value: "2" },
-      ],
+        { text: "活动商品", value: "2" }
+      ]
     };
   },
   created() {
@@ -151,7 +128,7 @@ export default {
         // this.changeTab(null,this.itemTabcontent[0].type)
         this.onLoad();
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
     console.log("------ss", this.$route.meta.title);
@@ -175,7 +152,7 @@ export default {
       this.$router.push({
         path: "/diseaseDetail",
         name: "DiseaseDetail",
-        query: { id: info._id, like: true, forward: true, isStar: info.isStar },
+        query: { id: info._id, like: true, forward: true, isStar: info.isStar }
       });
     },
     changeTab(name, title) {
@@ -204,7 +181,7 @@ export default {
             this.params.page = this.params.page + 1;
           }
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
         });
     },
@@ -217,14 +194,14 @@ export default {
       val.isStar = !val.isStar;
       // this.$set(this.diseaseInfo,'isStar',!this.diseaseInfo.isStar)
       // this.diseaseInfo.isStar=!this.diseaseInfo.isStar
-    },
+    }
   },
   watch: {
-    diseaseInfo: function (val) {
+    diseaseInfo: function(val) {
       console.log("val", val);
       this.diseaseInfo = val;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -256,7 +233,7 @@ export default {
     flex: none;
     font-size: 0.3rem;
     padding: 0;
-    font-family: PingFangSC-Medium, PingFang SC;
+    // font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: rgba(51, 51, 51, 1);
     &:nth-child(2) {
@@ -270,7 +247,7 @@ export default {
     border-radius: 0.03rem;
   }
   @{aaa}.van-tab__text {
-    font-family: "PingFangSC-Medium";
+    // font-family: "PingFangSC-Medium";
     font-weight: 500;
     font-size: 0.3rem;
   }
@@ -288,7 +265,8 @@ export default {
   @{aaa} .van-hairline--top-bottom {
     &::after {
       border-width: 0px;
-      border-bottom: 0.06rem solid rgba(216, 216, 216, 1);
+      border-bottom: 0.12rem solid rgba(216, 216, 216, 0.34);
+      border-radius: 0.03rem;
       // margin: 0 0.32rem;
     }
   }

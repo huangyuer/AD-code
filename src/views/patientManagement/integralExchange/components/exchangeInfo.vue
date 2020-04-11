@@ -80,7 +80,7 @@ export default {
     }
   }
   .contentheader {
-    border-bottom: 2px solid rgba(229, 229, 229, 1);
+    border-bottom: 0.02rem solid rgba(229, 229, 229, 1);
     .credit {
       font-size: 0.32rem;
       font-family: "PingFangSC-Medium";

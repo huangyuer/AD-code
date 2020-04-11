@@ -63,8 +63,8 @@ export default {
   background-color: #009966;
 }
 @{aaa}.van-tab__text {
-  font-family: "PingFangSC-Medium";
-  font-weight: 500;
+  // font-family: "PingFangSC-Medium";
+  font-weight: normal;
   font-size: 0.3rem;
 }
 @{aaa}.van-tabs__wrap {
@@ -82,13 +82,14 @@ export default {
 @{aaa} .van-hairline--top-bottom {
   &::after {
     border-width: 0px;
-    border-bottom: 0.06rem solid rgba(216, 216, 216, 1);
+    border-bottom: 0.12rem solid rgba(216, 216, 216, 0.34);
     margin: 0 0.32rem;
+    border-radius: 0.03rem;
   }
 }
 @{aaa} .van-tab {
   font-size: 0.3rem;
-  font-family: PingFangSC-Medium, PingFang SC;
+  // font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
   color: rgba(51, 51, 51, 1);
 }
@@ -114,7 +115,7 @@ export default {
     background: rgba(247, 247, 247, 1);
     border-radius: 0.28rem;
     font-size: 0.28rem;
-    font-family: "PingFangSC-Medium";
+    // font-family: "PingFangSC-Medium";
     font-weight: 500;
     color: #666666;
     float: left;

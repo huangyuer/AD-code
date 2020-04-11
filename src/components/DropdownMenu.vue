@@ -64,7 +64,7 @@ export default {
     right: -0.1rem;
   }
   &.van-dropdown-menu__title--down::after {
-    margin-top: -1px;
+    margin-top: -0.01rem;
     transform: rotate(0);
     top: calc(50% - 0.15rem);
     background-image: url("../assets/upgreen.png");
@@ -77,7 +77,7 @@ export default {
   }
 }
 @{aaa}.van-overlay {
-  top: 1px;
+  top: 0.01rem;
 }
 @{aaa} .van-cell:not(:last-child)::after {
   border: 0;

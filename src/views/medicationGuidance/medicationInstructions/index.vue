@@ -19,18 +19,11 @@
         </div>
       </div>
     </van-sticky>
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <instructions-item
-        v-if="acticalList"
-        :articles="acticalList"
-        @likeBtn="likeBtn"
-      ></instructions-item>
-    </van-list>
+    <div class="listmedication">
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <instructions-item v-if="acticalList" :articles="acticalList" @likeBtn="likeBtn"></instructions-item>
+      </van-list>
+    </div>
   </div>
 </template>
 <script>
@@ -53,10 +46,10 @@ export default {
         tag: String,
         title: String,
         page: 1,
-        limit: 10,
+        limit: 10
       },
       total: 0,
-      current: [],
+      current: []
     };
   },
   created() {
@@ -99,7 +92,7 @@ export default {
     getArticles() {
       this.$store
         .dispatch("common/getArticles", this.form)
-        .then((data) => {
+        .then(data => {
           this.acticalList = this.acticalList.concat(
             this.$store.getters.articlesList.articles
           );
@@ -114,7 +107,7 @@ export default {
             this.form.page = this.form.page + 1;
           }
         })
-        .catch((e) => {
+        .catch(e => {
           // if(e){
           //   Toast(e);
           // }
@@ -123,7 +116,7 @@ export default {
     getMenuSelect() {
       this.$store
         .dispatch("common/getMenuSelect", this.$route.meta.title)
-        .then((data) => {
+        .then(data => {
           this.itemTabcontent = this.$store.getters.menuList.selects;
           this.$set(
             this.form,
@@ -132,7 +125,7 @@ export default {
           );
           this.finished = false;
         })
-        .catch((e) => {
+        .catch(e => {
           // if(e){
           //   Toast(e);
           // }
@@ -140,9 +133,9 @@ export default {
     },
     onLoad() {
       this.getArticles();
-    },
+    }
   },
-  components: { SearchInput, TabsList, InstructionsItem },
+  components: { SearchInput, TabsList, InstructionsItem }
 };
 </script>
 <style scoped lang="less">
@@ -152,5 +145,8 @@ export default {
 .dropdownwapper {
   overflow: hidden;
   padding: 0 0.32rem;
+}
+.listmedication {
+  padding-top: 0.36rem;
 }
 </style>

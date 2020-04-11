@@ -38,12 +38,14 @@ export default {
     }
   },
   methods: {
-    delLeaveMsg(){
-      this.$emit("delLeaveMsg",this.item._id )
+    delLeaveMsg() {
+      this.$emit("delLeaveMsg", this.item._id);
     },
-    MessageDetail(){
+    MessageDetail() {
       this.$router.push({
-        path: "/MessageDetail",name:'MessageDetail',params:{msgItem:this.item}
+        path: "/MessageDetail",
+        name: "MessageDetail",
+        params: { msgItem: this.item }
       });
     }
   }
@@ -74,7 +76,7 @@ export default {
     width: 0.08rem;
     height: 0.8rem;
     background: rgba(0, 153, 102, 1);
-    border-radius: 4px;
+    border-radius: 0.04rem;
   }
   .message-top {
     padding: 0.2rem 0.32rem 0.12rem 0.32rem;

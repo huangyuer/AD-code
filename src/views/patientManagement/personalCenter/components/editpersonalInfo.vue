@@ -6,14 +6,14 @@
       :readonly="!isFirstEnter"
       v-model="form.name"
       label="姓名"
-      placeholder=""
+      placeholder
       input-align="right"
     />
     <van-field
       :class="{ color3: !isFirstEnter, color9: isFirstEnter }"
       v-model="form.tel"
       label="手机号"
-      placeholder=""
+      placeholder
       input-align="right"
       readonly
     />
@@ -51,7 +51,7 @@
       :readonly="!isFirstEnter"
       v-model="form.disease"
       label="确诊疾病"
-      placeholder=""
+      placeholder
       input-align="right"
     />
     <van-time-picker
@@ -78,9 +78,7 @@
             v-if="user.medications"
             v-for="(index, key) in user.medications"
             :key="key"
-          >
-            {{ index }}
-          </div>
+          >{{ index }}</div>
         </div>
       </div>
       <div class="selecthistoryinner" v-if="isSelectmedical">
@@ -90,8 +88,7 @@
             v-for="(index, key) in medications"
             :key="key"
             :name="index.name"
-            >{{ index.name }}</van-checkbox
-          >
+          >{{ index.name }}</van-checkbox>
         </van-checkbox-group>
       </div>
     </div>
@@ -106,15 +103,13 @@
         <van-slider
           :step="50"
           v-model="level"
-          bar-height="4px"
+          bar-height=".16rem"
           active-color="linear-gradient(90deg,rgba(0, 153, 102, 1) 0%,rgba(242, 169, 0, 1) 52%,rgba(255, 63, 15, 1) 100%);"
           @change="onChange"
         />
       </div>
     </div>
-    <div class="saveEdit" @click="upMyInfo()">
-      {{ isFirstEnter ? "保存" : "保存修改" }}
-    </div>
+    <div class="saveEdit" @click="upMyInfo()">{{ isFirstEnter ? "保存" : "保存修改" }}</div>
   </div>
 </template>
 <script>
@@ -135,7 +130,7 @@ export default {
         showArea: false,
         disease: "",
         time: "",
-        level: "无",
+        level: "无"
       },
       level: 0,
       showtime: false,
@@ -146,7 +141,7 @@ export default {
       medications: [],
       address: {},
       user: {},
-      silderBar: "",
+      silderBar: ""
     };
   },
   mounted() {
@@ -252,14 +247,14 @@ export default {
         city: this.form.area,
         diaTime: this.form.time,
         medications: this.result,
-        level: this.form.level,
+        level: this.form.level
       };
       this.$store
         .dispatch("patientManagement/upMyInfo", upmyinfo)
-        .then((data) => {
+        .then(data => {
           this.$router.push({ path: "/personalInfo" });
         })
-        .catch((e) => {
+        .catch(e => {
           // if(e){
           //   Toast(e);
           // }
@@ -268,10 +263,10 @@ export default {
     getMedications() {
       this.$store
         .dispatch("patientManagement/getMedications")
-        .then((data) => {
+        .then(data => {
           this.medications = this.$store.getters.getmedications.medications;
         })
-        .catch((e) => {
+        .catch(e => {
           // if(e){
           //   Toast(e);
           // }
@@ -280,7 +275,7 @@ export default {
     getMyInfo() {
       this.$store
         .dispatch("patientManagement/getMyInfo")
-        .then((data) => {
+        .then(data => {
           this.user = this.$store.getters.getmyinfo.user;
           if (this.user.medications) {
             this.result = this.user.medications;
@@ -297,17 +292,17 @@ export default {
           }
           this.init();
         })
-        .catch((e) => {
+        .catch(e => {
           // if(e){
           //   Toast(e);
           // }
         });
-    },
+    }
   },
   watch: {
-    silderBar: function (val) {},
+    silderBar: function(val) {}
   },
-  components: { VanAreas, VanTimePicker, VanSexPicker },
+  components: { VanAreas, VanTimePicker, VanSexPicker }
 };
 </script>
 <style lang="less" scoped>
@@ -346,7 +341,7 @@ export default {
 @{aaa}.van-field__control {
   color: #999999;
   font-size: 0.28rem;
-  font-family: "PingFangSC-Medium";
+  // font-family: "PingFangSC-Medium";
 }
 .sliderbox {
   margin-top: 0.2rem;
@@ -363,14 +358,13 @@ export default {
 }
 .van-slider {
   position: relative;
-  border-radius: 999px;
   cursor: pointer;
   margin: 0 0.32rem 0.16rem 0.32rem;
   width: 6rem;
   height: 0.16rem;
   background: #cdcdcd;
-  box-shadow: 0px 4px 8px 0px rgba(103, 103, 103, 0.5);
-  border: 2px solid rgba(255, 255, 255, 1);
+  box-shadow: 0px 0.04rem 0.08rem 0px rgba(103, 103, 103, 0.5);
+  border: 0.02rem solid rgba(255, 255, 255, 1);
   box-sizing: border-box;
   border-radius: 0.4rem;
 }
@@ -406,7 +400,7 @@ export default {
     rgba(0, 201, 159, 1) 0%,
     rgba(0, 153, 102, 1) 100%
   );
-  box-shadow: 0px 4px 8px 0px rgba(58, 170, 133, 1);
+  box-shadow: 0px 0.04rem 0.08rem 0px rgba(58, 170, 133, 1);
   right: -0.22rem;
 }
 .baseinfo {
@@ -424,13 +418,13 @@ export default {
   }
 }
 .selecthistory {
-  border-top: 2px solid rgba(243, 243, 243, 1);
-  border-bottom: 2px solid rgba(243, 243, 243, 1);
+  border-top: 0.02rem solid rgba(243, 243, 243, 1);
+  border-bottom: 0.02rem solid rgba(243, 243, 243, 1);
   margin-top: 0.4rem;
   padding-bottom: 0.28rem;
   .history {
     box-sizing: border-box;
-    border-bottom: 0.02px solid rgba(243, 243, 243, 1);
+    border-bottom: 0.02rem solid rgba(243, 243, 243, 1);
     height: 0.78rem;
     display: flex;
     align-items: center;

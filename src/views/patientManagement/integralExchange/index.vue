@@ -2,12 +2,13 @@
   <div class="integralexchange">
     <div class="headerpageto" @click="headerpageto()">
       <div class="left">
-        <van-image
+        <!-- <van-image
           width=".48rem"
           height=".48rem"
           fit="cover"
           :src="require('@/assets/change.png')"
-        />
+        />-->
+        <svg-icon iconClass="lishiyidianji" class="lishiyidianji"></svg-icon>
         <span class="title">我的兑换</span>
       </div>
       <div>
@@ -16,12 +17,7 @@
     </div>
     <div class="integrallist">
       <div class="integralItem" v-for="(item, index) in goods" :key="index">
-        <van-image
-          width="100%"
-          height="1.8rem"
-          fit="cover"
-          :src="item.coverImg[0].httpUrl"
-        />
+        <van-image width="100%" height="1.8rem" fit="cover" :src="item.coverImg[0].httpUrl" />
         <!-- <van-image
           width="100%"
           height="1.8rem"
@@ -36,9 +32,7 @@
           <div
             :class="{ btnchange: true, bgc6: item.stockNum == 0 }"
             @click="item.stockNum > 0 ? changeBtn(item) : ''"
-          >
-            立即兑换
-          </div>
+          >立即兑换</div>
         </div>
       </div>
     </div>
@@ -50,7 +44,7 @@ export default {
   data() {
     return {
       goods: [],
-      score: {},
+      score: {}
     };
   },
   mounted() {
@@ -64,17 +58,17 @@ export default {
     changeBtn(item) {
       this.$router.push({
         path: "/ProductInfo",
-        query: { id: item._id, score: this.score },
+        query: { id: item._id, score: this.score }
       });
     },
     getGoods() {
       this.$store
         .dispatch("patientManagement/getGoods")
-        .then((response) => {
+        .then(response => {
           console.log("response", response);
           this.goods = response.data.goods;
         })
-        .catch((e) => {
+        .catch(e => {
           //  if(e){
           //     Toast(e);
           //   }
@@ -83,19 +77,23 @@ export default {
     getMyScore() {
       this.$store
         .dispatch("patientManagement/getMyScore")
-        .then((response) => {
+        .then(response => {
           this.score = response.data.score;
         })
-        .catch((e) => {
+        .catch(e => {
           // if(e){
           //   Toast(e);
           // }
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
+.lishiyidianji {
+  width: 0.48rem !important;
+  height: 0.48rem !important;
+}
 .integralexchange {
   .headerpageto {
     display: flex;
@@ -181,9 +179,10 @@ export default {
             rgba(246, 188, 88, 1) 0%,
             rgba(255, 247, 207, 1) 100%
           );
-          border-radius: 30px;
+          border-radius: 0.3rem;
           padding: 0.04rem 0.12rem;
           flex: 1;
+          text-align: center;
           &.bgc6 {
             background: #c6c6c6;
             color: #ffffff;

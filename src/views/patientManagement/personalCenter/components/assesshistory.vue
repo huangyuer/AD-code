@@ -468,7 +468,7 @@ export default {
         line-height: initial;
       }
       .time {
-        font-size: 0.3rem;
+        font-size: 0.28rem;
         font-family: "PingFangSC-Regular";
         font-weight: 400;
         color: #acadaf;

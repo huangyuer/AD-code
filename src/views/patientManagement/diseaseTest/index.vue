@@ -156,14 +156,20 @@ export default {
     },
     openquestion() {
       this.istouchable = true;
+      var obj = {};
+      obj["question"] = this.firstquestion.questions[0]._id;
+      obj["answers"] = {};
+      obj.answers[this.changeFirstval] = 0;
       if (this.changeFirstval == "") {
         Toast("请先选择");
         return;
       } else if (this.changeFirstval == "是") {
         this.touchAble = true;
+        this.detail.push(obj);
         this.initFirstAnswer(this.nextquestion.questions);
         this.questionlength = this.nextquestion.questions.length;
       } else {
+        this.detail.push(obj);
         var nextquesion = this.nextquestionA.questions;
         nextquesion = nextquesion.concat(this.nextquestion.questions);
         this.initFirstAnswer(nextquesion);
@@ -190,18 +196,18 @@ export default {
       objradio["answers"] = {};
       objradio.answers[current] = 0;
       var no = index;
-      this.detail.splice(no, 1, objradio);
+      this.detail.splice(no + 1, 1, objradio);
       if (
-        Object.keys(this.detail[0].answers)[0] == "" ||
         Object.keys(this.detail[1].answers)[0] == "" ||
-        Object.keys(this.detail[2].answers)[0] == ""
+        Object.keys(this.detail[2].answers)[0] == "" ||
+        Object.keys(this.detail[3].answers)[0] == ""
       ) {
         return;
       } else if (
-        Object.keys(this.detail[0].answers)[0] != "是" ||
-        (Object.keys(this.detail[0].answers)[0] == "是" &&
-          Object.keys(this.detail[1].answers)[0] != "是" &&
-          Object.keys(this.detail[2].answers)[0] != "是")
+        Object.keys(this.detail[1].answers)[0] != "是" ||
+        (Object.keys(this.detail[1].answers)[0] == "是" &&
+          Object.keys(this.detail[2].answers)[0] != "是" &&
+          Object.keys(this.detail[3].answers)[0] != "是")
       ) {
         this.noFirstquestion = true;
         this.touchAble = true;
@@ -217,7 +223,7 @@ export default {
       objradio["question"] = item._id;
       objradio["answers"] = {};
       objradio.answers[current] = 0;
-      var no = index - 1;
+      var no = index;
       this.detail.splice(no, 1, objradio);
     },
     checkbox(result, title, isendChecked) {
@@ -235,7 +241,8 @@ export default {
           objradio["answers"] = {};
         }
       }
-      this.detail.splice(this.questionlength - 1, 1, objradio);
+      this.detail.splice(this.questionlength, 1, objradio);
+      console.log("fsfsadf", this.detail);
     },
     uptoCommit() {
       if (
@@ -339,10 +346,10 @@ export default {
     }
     .van-swipe-item {
       color: #fff;
-      font-size: 20px;
+      font-size: 0.2rem;
       text-align: center;
       background-color: #ffffff;
-      box-shadow: 0px 4px 2px 0px rgba(195, 223, 214, 1);
+      box-shadow: 0px 0.04rem 0.02rem 0px rgba(195, 223, 214, 1);
       box-sizing: border-box;
       overflow-y: auto;
     }

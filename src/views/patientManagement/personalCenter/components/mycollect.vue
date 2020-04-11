@@ -222,7 +222,7 @@ export default {
     width: 0.08rem;
     height: 0.8rem;
     background: rgba(0, 153, 102, 1);
-    border-radius: 4px;
+    border-radius: 0.04rem;
   }
   .like-content {
     display: flex;
@@ -259,7 +259,7 @@ export default {
     }
   }
   .like-time {
-    font-size: 0.3rem;
+    font-size: 0.28rem;
     font-family: "PingFangSC-Regular";
     font-weight: 400;
     color: rgba(172, 173, 175, 1);

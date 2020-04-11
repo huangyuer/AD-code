@@ -3,7 +3,9 @@
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <div class="excahngeItem" v-for="(item, index) in logs" :key="index">
         <div class="vanimge">
-          <van-image width=".72rem" height=".72rem" fit="cover" :src="item.icon" />
+          <svg-icon v-if="item.icon=='电子券'" iconClass="quan" class="quan"></svg-icon>
+          <svg-icon v-else-if="item.icon=='专家视频'" iconClass="kechengxiaoshou" class="quan"></svg-icon>
+          <svg-icon v-else-if="item.icon=='电子书'" iconClass="zuxun" class="quan"></svg-icon>
         </div>
         <div class="center">
           <div class="title">{{ item.name }}</div>
@@ -68,6 +70,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.quan {
+  width: 0.74rem !important;
+  height: 0.74rem !important;
+}
 .myexchangeWapper {
   width: 100%;
   padding: 0 0.32rem;
@@ -80,9 +86,11 @@ export default {
     align-items: center;
     height: 1.28rem;
     box-sizing: border-box;
-    border-bottom: 2px solid rgba(229, 229, 229, 1);
+    border-bottom: 0.02rem solid rgba(229, 229, 229, 1);
     .vanimge {
       line-height: 0;
+      // width: 0.72rem !important;
+      // height: 0.72rem !important;
     }
     .center {
       display: flex;

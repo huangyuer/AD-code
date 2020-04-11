@@ -3,22 +3,17 @@
     <div class="register-box">
       <van-field v-model="tel" type="tel" placeholder="请输入手机号" />
       <van-field v-model="sms" center clearable placeholder="请输入短信验证码">
-        <div slot="button" class="sms-btn" v-show="show" @click="getSms">
-          获取验证码
-        </div>
+        <div slot="button" class="sms-btn" v-show="show" @click="getSms">获取验证码</div>
         <div slot="button" class="sms-btn" v-show="!show">{{ count }}</div>
       </van-field>
       <van-field v-model="invite" placeholder="请输入邀请码（选填）" />
       <div class="register-agree">
         <div @click="agreeBtn">
-          <svg-icon
-            iconClass="gouxuan"
-            class="icon"
-            :class="{ active: flag }"
-          ></svg-icon>
+          <svg-icon iconClass="gouxuan" class="icon" :class="{ active: flag }"></svg-icon>
         </div>
         <div class="agree-tip">
-          我已阅读并同意<span @click="termsBtn">用户知情同意书</span>
+          我已阅读并同意
+          <span @click="termsBtn">用户知情同意书</span>
         </div>
       </div>
       <div class="register-btn" @click="registerBtn">注册</div>
@@ -83,7 +78,6 @@ export default {
           // if(e){
           //   this.$toast(e);
           // }
-          
         });
     },
     registerBtn() {
@@ -168,7 +162,7 @@ export default {
   /* width: 6.4rem; */
   height: 0.8rem;
   background: rgba(247, 247, 247, 1);
-  border-radius: 40px;
+  border-radius: 0.4rem;
   margin-top: 0.4rem;
   /* margin: 0 .54rem; */
   padding: 0.2rem 0.4rem;

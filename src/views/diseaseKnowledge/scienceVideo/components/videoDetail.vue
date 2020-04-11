@@ -136,12 +136,13 @@ export default {
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    border-bottom: 2px solid #e5e5e5;
+    border-bottom: 0.02rem solid #e5e5e5;
     .time {
       color: #acadaf;
       font-family: "PingFangSC-Regular";
       line-height: 0.4rem;
       margin-top: 0.08rem;
+      font-size: 0.28rem;
     }
   }
   .content {

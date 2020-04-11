@@ -1,26 +1,20 @@
 <template>
   <div class="productinfowapper" style="color:#000000" v-if="Object.keys(item).length!=0">
     <div class="imageheader">
-    <van-swipe
-      :loop="true"
-      :show-indicator="false"
-      :initial-swipe="0"
-    >
-      <van-swipe-item v-for="(index,key) in item.goodsImg" :key="key">
-        <van-image
-          width="3rem"
-          height="3rem"
-          fit="cover"
-          class="vangoodsimg"
-          :src="index.httpUrl"
-        />
-      </van-swipe-item>
-      <template #indicator>
-        <div class="custom-indicator">
-          {{ current + 1 }}/{{item.goodsImg.length}}
-        </div>
-      </template>
-    </van-swipe>
+      <van-swipe :loop="true" :show-indicator="false" :initial-swipe="0">
+        <van-swipe-item v-for="(index,key) in item.goodsImg" :key="key">
+          <van-image
+            width="3rem"
+            height="3rem"
+            fit="cover"
+            class="vangoodsimg"
+            :src="index.httpUrl"
+          />
+        </van-swipe-item>
+        <template #indicator>
+          <div class="custom-indicator">{{ current + 1 }}/{{item.goodsImg.length}}</div>
+        </template>
+      </van-swipe>
     </div>
     <div class="contentheader">
       <div class="credit">{{ item.score }}积分</div>
@@ -129,17 +123,17 @@ export default {
     justify-content: center;
     margin: 0.4rem 0 0.6rem 0;
     line-height: 0;
-    >div{
-      width:100%;
-      height:3.2rem;
-      .vangoodsimg{
-        margin:0 auto;
-        display:block;
+    > div {
+      width: 100%;
+      height: 3.2rem;
+      .vangoodsimg {
+        margin: 0 auto;
+        display: block;
       }
     }
   }
   .contentheader {
-    border-bottom: 2px solid rgba(229, 229, 229, 1);
+    border-bottom: 0.02rem solid rgba(229, 229, 229, 1);
     .credit {
       font-size: 0.32rem;
       font-family: "PingFangSC-Medium";
@@ -180,19 +174,18 @@ export default {
   }
   .custom-indicator {
     position: absolute;
-    right: .32rem;
+    right: 0.32rem;
     bottom: 0;
     background: #999999;
-    font-size:.24rem;
-    font-family:"PingFangSC-Medium";
-    font-weight:500;
-    color:rgba(255,255,255,1);
-    border-radius:.2rem;
-    width:.72rem;
-    height:.4rem;
-    line-height:.4rem;
-    text-align:center;
+    font-size: 0.24rem;
+    font-family: "PingFangSC-Medium";
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    border-radius: 0.2rem;
+    width: 0.72rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    text-align: center;
   }
 }
-
 </style>

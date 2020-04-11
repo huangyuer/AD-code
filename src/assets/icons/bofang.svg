@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>bofang</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0.00175609756 0.0234146341 23.9765561 0.0234146341 23.9765561 23.9999707 0.00175609756 23.9999707"></polygon>
+    </defs>
+    <g id="AD患者之家4.0" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="视频动态" transform="translate(-176.000000, -560.000000)">
+            <g id="bofang" transform="translate(176.000000, 560.000000)">
+                <g id="分组">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Clip-2"></g>
+                    <path d="M0,12.0117659 C0,18.6326634 5.36730732,23.9999707 11.9883512,23.9999707 C18.6092488,23.9999707 23.9765561,18.6326634 23.9765561,12.0117659 C23.9765561,5.39072195 18.6092488,0.0234146341 11.9883512,0.0234146341 C5.36730732,0.0234146341 0,5.39072195 0,12.0117659 Z" id="Fill-1" fill="#FFFFFF" mask="url(#mask-2)"></path>
+                </g>
+                <polygon id="Fill-3" fill="#424242" points="8.99119024 5.86770732 18.5818244 12.0117659 8.99119024 18.1557073"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

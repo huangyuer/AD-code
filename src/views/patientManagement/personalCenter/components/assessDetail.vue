@@ -6,7 +6,7 @@
         <svg-icon iconClass="zicebaogao" class="icon"></svg-icon>
       </div>
       <div class="head">自测报告</div>
-      <div class="time">2020-03-11</div>
+      <div class="time">{{answerLog.date}}</div>
       <div class="detaillist" v-if="answerLog.isAd != '是'">
         <div v-if="answerLog.isAd == '不清楚'">
           <div class="title">评估建议：</div>
@@ -48,16 +48,11 @@
             </div>
           </div>
         </div>
-        <div
-          v-if="
-            answerLog.z_Medication.length != 0 ||
-            answerLog.c_Medication.length != 0
-          "
-        >
+        <div>
           <div class="title">用药历史：</div>
-          <div v-if="answerLog.z_Medication.length != 0">
-            <div class="med-title">近一周使用过 ：</div>
-            <div class="medical-list">
+          <div>
+            <div class="med-title" v-if="answerLog.isAd == '是'">近一周使用过 ：</div>
+            <div class="medical-list" v-if="answerLog.z_Medication.length != 0">
               <div
                 v-for="(item, key) in answerLog.z_Medication"
                 :key="key"
@@ -65,9 +60,9 @@
               >{{ item }}</div>
             </div>
           </div>
-          <div v-if="answerLog.c_Medication.length != 0">
+          <div v-if="answerLog.isAd == '是'">
             <div class="med-title">曾经使用过 ：</div>
-            <div class="medical-list">
+            <div class="medical-list" v-if="answerLog.c_Medication.length != 0">
               <div
                 v-for="(item, key) in answerLog.c_Medication"
                 :key="key"
@@ -164,7 +159,7 @@ export default {
     border-radius: 0.2rem;
     // position:absolute;
     z-index: 2;
-    box-shadow: 0px 4px 2px 0px rgba(195, 223, 214, 1);
+    box-shadow: 0 0.04rem 0.02rem 0 rgba(195, 223, 214, 1);
     margin: 0.8rem auto 0.6rem;
     padding-bottom: 0.28rem;
     min-height: 80%;

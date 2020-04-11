@@ -1,17 +1,13 @@
 <template>
   <div
-    data-v-0c38f854=""
-    data-v-6f539d17=""
+    data-v-0c38f854
+    data-v-6f539d17
     class="van-popup van-popup--bottom"
     style="z-index: 2008;"
     v-if="isShow"
     ref="vanpopup"
   >
-    <div
-      class="hospitalDetailWapper"
-      @touchstart="touchstart"
-      @touchmove="touchmove"
-    >
+    <div class="hospitalDetailWapper" @touchstart="touchstart" @touchmove="touchmove">
       <!-- <div class="whiteskr"></div> -->
       <div class="exceptwhite">
         <div class="headerTol">
@@ -22,44 +18,55 @@
           <div class="todaohangItem">
             <div class="right">
               <div class="hp-address">
-              <van-image width=".3rem" height=".36rem" :src="require('../../../../assets/zu-2.png')" />
-              <span>{{hispitalItem.name}}</span></div>
+                <!-- <van-image
+                  width=".3rem"
+                  height=".36rem"
+                  :src="require('../../../../assets/zu-2.png')"
+                />-->
+                <svg-icon iconClass="zu-2" class="zu-2"></svg-icon>
+                <span>{{hispitalItem.name}}</span>
+              </div>
               <div class="hp-phone">{{hispitalItem.address}}</div>
               <div class="hp-distance">
-              <van-image width=".2rem" height=".2rem" :src="require('../../../../assets/tuoyuan.png')" />
-              <span>距离您{{hispitalItem.distance}}</span></div>
+                <!-- <van-image
+                  width=".2rem"
+                  height=".2rem"
+                  :src="require('../../../../assets/tuoyuan.png')"
+                />-->
+                <svg-icon iconClass="tuoyuan" class="tuoyuan"></svg-icon>
+                <span>距离您{{hispitalItem.distance}}</span>
+              </div>
             </div>
             <div class="hp-btn" @click="goNav()">
-              <svg-icon iconClass="daohang" className="daohang"></svg-icon>导航
+              <svg-icon iconClass="daohang" class="daohang"></svg-icon>导航
             </div>
           </div>
           <div class="tips">
-            <b class="first">友情提示：</b>就诊时，携带<b class="colorred">药盒</b>并展示<b class="colorred">自评报告</b>，有助于医生评估病情。
+            <b class="first">友情提示：</b>就诊时，携带
+            <b class="colorred">药盒</b>并展示
+            <b class="colorred">自评报告</b>，有助于医生评估病情。
           </div>
           <div class="hospitalContentname">医生列表</div>
           <div class="doctorList">
-            <div
-              class="doctorItem"
-              v-for="(item, key) in doctoritem"
-              :key="key"
-            >
+            <div class="doctorItem" v-for="(item, key) in doctoritem" :key="key">
               <div class="doc-top">
-                <van-image
-                  round
-                  width=".72rem"
-                  height=".72rem"
-                  fit="cover"
-                  :src="require('../../../../assets/doctor.png')"
-                />
+                <svg-icon iconClass="doctor" class="doctor"></svg-icon>
                 <div class="doc-detail">
                   <div class="doc-name">
-                    {{item.name}} | 男
+                    {{item.name}}
+                    <span class="split">|</span>
+                    <b>{{item.sex}}</b>
                   </div>
-                  <div class="doc-work">{{item.department}} | {{item.position}}</div>
+                  <div class="doc-work">
+                    {{item.department}}
+                    <span class="split">|</span>
+                    {{item.position}}
+                  </div>
                 </div>
               </div>
               <div class="doc-major">
-                <b>擅长领域：</b>{{item.skill}}
+                <b>擅长领域：</b>
+                {{item.skill}}
               </div>
             </div>
           </div>
@@ -76,12 +83,12 @@ export default {
       type: Boolean,
       default: false
     },
-    doctors:{
-      type:Array,
-      default:[],
+    doctors: {
+      type: Array,
+      default: []
     },
-    hispitalDetail:{
-      type:Object,
+    hispitalDetail: {
+      type: Object,
       default: function() {
         return {};
       }
@@ -91,7 +98,7 @@ export default {
     return {
       isShow: false,
       doctoritem: [],
-      hispitalItem:{},
+      hispitalItem: {}
     };
   },
   mounted() {
@@ -106,12 +113,12 @@ export default {
     },
     hispitalDetail: function(val) {
       this.hispitalItem = val;
-      console.log("val",val);
-    },
+      console.log("val", val);
+    }
   },
   methods: {
     goNav() {
-      this.$emit("goNav", false,this.hispitalItem);
+      this.$emit("goNav", false, this.hispitalItem);
     },
     clicktip() {
       var vanpopup = document.getElementsByClassName("van-popup")[0];
@@ -131,6 +138,18 @@ export default {
 </script>
 <style lang="less" scoped>
 @aaa: ~">>>";
+.doctor {
+  width: 0.72rem !important;
+  height: 0.72rem !important;
+}
+.tuoyuan {
+  width: 0.2rem !important;
+  height: 0.2rem !important;
+}
+.zu-2 {
+  width: 0.3rem !important;
+  height: 0.36rem !important;
+}
 .hospitalDetailWapper {
   position: relative;
   .whiteskr {
@@ -181,7 +200,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.2rem 0 .4rem 0;
+        padding: 0.2rem 0 0.4rem 0;
         .right {
           // padding-left: 0.2rem;
           display: flex;
@@ -194,10 +213,10 @@ export default {
             font-weight: 500;
             color: rgba(51, 51, 51, 1);
             line-height: initial;
-            display:flex;
-            align-items:center;
-            span{
-              margin-left:.14rem;
+            display: flex;
+            align-items: center;
+            span {
+              margin-left: 0.14rem;
             }
           }
           .hp-phone {
@@ -214,10 +233,10 @@ export default {
             font-weight: 400;
             color: rgba(84, 84, 84, 1);
             line-height: initial;
-            display:flex;
-            align-items:center;
-            span{
-              margin-left:.1rem;
+            display: flex;
+            align-items: center;
+            span {
+              margin-left: 0.1rem;
             }
           }
         }
@@ -244,21 +263,21 @@ export default {
           }
         }
       }
-      .tips{
-        font-size:.28rem;
-        font-family:PingFangSC-Medium,PingFang SC;
-        font-weight:500;
-        color:rgba(51,51,51,1);
-        padding-top:.2rem;
-        padding-bottom:.6rem;
-        border-top:.02rem solid #E5E5E5;
-        >.first{
-          color:#333333;
-          font-weight:500;
+      .tips {
+        font-size: 0.28rem;
+        // font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: rgba(51, 51, 51, 1);
+        padding-top: 0.2rem;
+        padding-bottom: 0.6rem;
+        border-top: 0.02rem solid #e5e5e5;
+        > .first {
+          color: #333333;
+          font-weight: 600;
         }
-        >.colorred{
-          color:#FF755A;
-          font-weight:500;
+        > .colorred {
+          color: #ff755a;
+          font-weight: 500;
         }
       }
       .doctorList {
@@ -277,10 +296,17 @@ export default {
               padding-left: 0.2rem;
               .doc-name {
                 color: #333333;
-                font-family: "PingFangSC-Medium";
+                // font-family: "PingFangSC-Medium";
                 font-size: 0.28rem;
                 line-height: initial;
-                font-weight: 500;
+                font-weight: 600;
+                > .split {
+                  font-weight: 400;
+                  color: #e5e5e5;
+                }
+                > b {
+                  font-weight: 400;
+                }
                 .topicon {
                   width: 0.86rem;
                   height: 0.32rem;
@@ -293,6 +319,10 @@ export default {
                 font-size: 0.28rem;
                 line-height: initial;
                 font-weight: 400;
+                > .split {
+                  font-weight: 400;
+                  color: #e5e5e5;
+                }
               }
             }
           }

@@ -23,9 +23,7 @@
             "
           />
         </div>
-        <div class="name">
-          {{ getmyinfo.name == "" ? getmyinfo.nickName : getmyinfo.name }}
-        </div>
+        <div class="name">{{ getmyinfo.name == "" ? getmyinfo.nickName : getmyinfo.name }}</div>
         <div class="tel">{{ getmyinfo.phone }}</div>
         <div id="myInvCode" class="invitcode" @click="clipbroad()">
           邀请码：
@@ -45,22 +43,26 @@
         </div>
         <div class="infoitem">
           <div class="margin6">
-            <span class="colordeep">{{
+            <span class="colordeep">
+              {{
               getmyinfo.name == "" ? getmyinfo.nickName : getmyinfo.name
-            }}</span>
+              }}
+            </span>
             <span class="colormiddle">{{ getmyinfo.phone }}</span>
           </div>
           <div>
             <span class="colordeep font28">性别:</span>
-            <span class="colorshallow">{{
+            <span class="colorshallow">
+              {{
               getmyinfo.sex == "" ? "未填写" : getmyinfo.sex
-            }}</span>
-            <span class="colordeep font28" style="margin-left: 0.24rem;"
-              >出生年月:</span
-            >
-            <span class="colorshallow">{{
+              }}
+            </span>
+            <span class="colordeep font28" style="margin-left: 0.24rem;">出生年月:</span>
+            <span class="colorshallow">
+              {{
               getmyinfo.birthday == "" ? "未填写" : getmyinfo.birthday
-            }}</span>
+              }}
+            </span>
           </div>
         </div>
       </div>
@@ -74,23 +76,27 @@
         </div>
         <div class="address">
           <div class="margin6">
-            <span class="colordeep">{{
+            <span class="colordeep">
+              {{
               address.recipient != "" ? address.recipient : "收货人未填写"
-            }}</span>
-            <span class="colormiddle">{{
+              }}
+            </span>
+            <span class="colormiddle">
+              {{
               address.phone != "" ? address.phone : "电话未填写"
-            }}</span>
+              }}
+            </span>
           </div>
           <div class="colorshallow">
             {{
-              address.province == "" && address.detail == ""
-                ? "你还未添加收货地址"
-                : address.province != ""
-                ? address.province +
-                  address.city +
-                  address.area +
-                  address.detail
-                : "" + address.detail
+            address.province == "" && address.detail == ""
+            ? "你还未添加收货地址"
+            : address.province != ""
+            ? address.province +
+            address.city +
+            address.area +
+            address.detail
+            : "" + address.detail
             }}
           </div>
         </div>
@@ -106,7 +112,7 @@ export default {
   data() {
     return {
       getmyinfo: {},
-      address: {},
+      address: {}
     };
   },
   mounted() {
@@ -117,10 +123,10 @@ export default {
     getMyInfo() {
       this.$store
         .dispatch("patientManagement/getMyInfo")
-        .then((data) => {
+        .then(data => {
           this.getmyinfo = this.$store.getters.getmyinfo.user;
         })
-        .catch((e) => {
+        .catch(e => {
           // if(e){
           //   Toast(e);
           // }
@@ -129,10 +135,10 @@ export default {
     getMyAddress() {
       this.$store
         .dispatch("patientManagement/getMyAddress")
-        .then((data) => {
+        .then(data => {
           this.address = this.$store.getters.getmyaddress.address;
         })
-        .catch((e) => {
+        .catch(e => {
           // if(e){
           //   Toast(e);
           // }
@@ -141,10 +147,10 @@ export default {
     delMyInfo() {
       this.$store
         .dispatch("patientManagement/delMyInfo")
-        .then((data) => {
+        .then(data => {
           removeToken();
         })
-        .catch((e) => {
+        .catch(e => {
           // if(e){
           //   Toast(e);
           // }
@@ -159,23 +165,23 @@ export default {
     clipbroad() {
       var _this = this;
       var clipboard = new Clipboard("#myInvCode", {
-        text: function () {
+        text: function() {
           return _this.getmyinfo.myInvCode;
-        },
+        }
       });
-      clipboard.on("success", (e) => {
+      clipboard.on("success", e => {
         Toast("复制成功");
         // 释放内存
         clipboard.destroy();
       });
-      clipboard.on("error", (e) => {
+      clipboard.on("error", e => {
         // 不支持复制
         Toast("复制失败");
         // 释放内存
         clipboard.destroy();
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -220,7 +226,7 @@ export default {
         height: 0.48rem;
         background: rgba(1, 125, 84, 1);
         border-radius: 0.24rem;
-        border: 2px solid rgba(230, 230, 230, 1);
+        border: 0.02rem solid rgba(230, 230, 230, 1);
         font-size: 0.28rem;
         font-family: "PingFangSC-Medium";
         font-weight: 500;
@@ -254,14 +260,14 @@ export default {
     width: 100%;
     .myinfolist,
     .addresslist {
-      border-bottom: 0.02px solid rgba(243, 243, 243, 1);
+      border-bottom: 0.02rem solid rgba(243, 243, 243, 1);
       height: 2.18rem;
       box-sizing: border-box;
       padding: 0 0.32rem;
 
       .header {
         box-sizing: border-box;
-        border-bottom: 0.02px solid rgba(243, 243, 243, 1);
+        border-bottom: 0.02rem solid rgba(243, 243, 243, 1);
         height: 0.78rem;
         display: flex;
         align-items: center;

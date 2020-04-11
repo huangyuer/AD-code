@@ -112,6 +112,7 @@ export default {
     font-family: "PingFangSC-Regular";
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
+    margin-left: 0.08rem;
   }
 }
 .instructionsItem {
@@ -161,18 +162,24 @@ export default {
     font-size: 0.3rem;
     text-align: left;
     color: #999999;
-    font-family: "PingFangSC-Regular";
+    // font-family: "PingFangSC-Regular";
     font-weight: 400;
     display: flex;
+    align-items: center;
     .time {
-      font-size: 0.3rem;
+      font-size: 0.28rem;
       color: #acadaf;
       padding-right: 0.28rem;
       font-weight: 400;
     }
+    .like-btn {
+      > div {
+        display: flex;
+        align-items: center;
+      }
+    }
   }
   &:not(:last-child) {
-    // border-bottom: 2px solid #e5e5e5;
   }
 }
 </style>

@@ -1,41 +1,23 @@
 <template>
   <div class="caringList">
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <div class="caringItem" v-for="(item, index) in acticalList" :key="index">
         <div class="header">
-          <div class="left">
-            {{ item.title }}
-          </div>
+          <div class="left">{{ item.title }}</div>
           <div class="right">
             <div class="like-btn">
               <div class="likeclick" @click.stop="likeBtn(item)">
-                <svg-icon
-                  iconClass="heart"
-                  className="icon"
-                  v-if="item.isStar"
-                ></svg-icon>
-                <svg-icon iconClass="heart" className="grey" v-else></svg-icon>
+                <svg-icon iconClass="heart" class="icon" v-if="item.isStar"></svg-icon>
+                <svg-icon iconClass="heart" class="grey" v-else></svg-icon>
                 <span>收藏</span>
               </div>
             </div>
           </div>
         </div>
         <div class="center" @click="pageInfo(item)">
-          <van-image
-            width="100%"
-            height="2.6rem"
-            :src="item.coverImg[0].httpUrl"
-            fit="cover"
-          />
+          <van-image width="100%" height="2.6rem" :src="item.coverImg[0].httpUrl" fit="cover" />
         </div>
-        <div class="bottom">
-          {{ item.date }}
-        </div>
+        <div class="bottom">{{ item.date }}</div>
       </div>
     </van-list>
   </div>
@@ -52,11 +34,11 @@ export default {
         tag: String,
         title: String,
         page: 1,
-        limit: 10,
+        limit: 10
       },
       total: 0,
       loading: false,
-      finished: false,
+      finished: false
     };
   },
   mounted() {},
@@ -64,7 +46,7 @@ export default {
     onLoad() {
       this.$store
         .dispatch("common/getArticles", this.form)
-        .then((data) => {
+        .then(data => {
           this.acticalList = this.acticalList.concat(
             this.$store.getters.articlesList.articles
           );
@@ -79,8 +61,8 @@ export default {
             this.form.page = this.form.page + 1;
           }
         })
-        .catch((e) => {
-            // if (e) {
+        .catch(e => {
+          // if (e) {
           //   Toast(e);
           // }
         });
@@ -89,21 +71,21 @@ export default {
       if (!index.isStar) {
         let params = {
           menu: this.$route.meta.title,
-          starId: index._id,
+          starId: index._id
         };
-        this.$store.dispatch("common/star", params).then((res) => {
+        this.$store.dispatch("common/star", params).then(res => {
           Toast({
             message: res,
-            icon: "like-o",
+            icon: "like-o"
           });
           index.isStar = !index.isStar;
         });
       } else {
         let params = { starId: index._id };
-        this.$store.dispatch("common/unStar", params).then((res) => {
+        this.$store.dispatch("common/unStar", params).then(res => {
           Toast({
             message: res,
-            icon: "like-o",
+            icon: "like-o"
           });
           index.isStar = !index.isStar;
         });
@@ -120,12 +102,12 @@ export default {
             id: item._id,
             like: true,
             forward: false,
-            isStar: item.isStar,
-          },
+            isStar: item.isStar
+          }
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -161,7 +143,7 @@ export default {
   .caringItem {
     width: 95%;
     border-radius: 0.08rem;
-    border: 2px solid #f3f3f3;
+    border: 0.02rem solid #f3f3f3;
     margin: 0 auto;
     box-sizing: border-box;
     margin-bottom: 0.3rem;
@@ -195,7 +177,7 @@ export default {
     }
     .bottom {
       padding: 0 0.2rem;
-      font-size: 0.3rem;
+      font-size: 0.28rem;
       color: #acadaf;
       text-align: left;
       height: 0.7rem;

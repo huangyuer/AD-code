@@ -97,11 +97,12 @@ export default {
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    border-bottom: 2px solid #e5e5e5;
+    border-bottom: 0.02rem solid #e5e5e5;
     .time {
       color: #acadaf;
       font-family: "PingFangSC-Regular";
       line-height: 0.4rem;
+      font-size: 0.28rem;
     }
   }
   .content {
@@ -113,7 +114,7 @@ export default {
     width: 6.4rem;
     height: 0.8rem;
     background: rgba(0, 157, 117, 1);
-    box-shadow: 0px 0.04rem 0.08rem 0px rgba(0, 153, 102, 0.5);
+    box-shadow: 0 0.04rem 0.08rem 0 rgba(0, 153, 102, 0.5);
     border-radius: 0.4rem;
     font-size: 0.3rem;
     font-weight: 500;

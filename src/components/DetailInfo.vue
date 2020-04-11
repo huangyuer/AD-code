@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       id: "",
-      article: "",
+      article: ""
     };
   },
   beforeRouteLeave(to, form, next) {
@@ -37,10 +37,10 @@ export default {
   created() {
     this.$store
       .dispatch("common/getArticle", this.$route.query.id)
-      .then((data) => {
+      .then(data => {
         this.article = this.$store.getters.articleDetail.article;
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
   },
@@ -49,11 +49,11 @@ export default {
     addOutPageLog() {
       this.$store
         .dispatch("common/addOutPageLog", this.$route.meta.title)
-        .then((response) => {
+        .then(response => {
           console.log("response===========", response);
         })
-        .catch((e) => {
-            // if (e) {
+        .catch(e => {
+          // if (e) {
           //   Toast(e);
           // }
         });
@@ -64,8 +64,8 @@ export default {
     },
     forwardBtn() {
       console.log("-----dsssdfsdfadsadf");
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -82,11 +82,12 @@ export default {
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    border-bottom: 2px solid #e5e5e5;
+    border-bottom: 0.02rem solid #e5e5e5;
     .time {
       color: #acadaf;
       font-family: "PingFangSC-Regular";
       line-height: 0.4rem;
+      font-size: 0.28rem;
     }
   }
   .content {

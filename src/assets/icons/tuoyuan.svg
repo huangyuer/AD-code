@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>椭圆形</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#32D19D" offset="0%"></stop>
+            <stop stop-color="#009966" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="AD患者之家5.0" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="附近医院-医院详情" transform="translate(-16.000000, -209.000000)" stroke="url(#linearGradient-1)" stroke-width="2">
+            <g id="分组-7" transform="translate(16.000000, 152.000000)">
+                <g id="分组-2-copy-5" transform="translate(0.000000, 52.000000)">
+                    <g id="分组">
+                        <g id="分组-5">
+                            <g id="分组-3">
+                                <g id="分组-9">
+                                    <circle id="椭圆形" cx="5" cy="10" r="4"></circle>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
