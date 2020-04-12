@@ -72,7 +72,7 @@ export default {
 <style lang="less" scoped>
 .quan {
   width: 0.74rem !important;
-  height: 0.74rem !important;
+  height: 0.78rem !important;
 }
 .myexchangeWapper {
   width: 100%;

@@ -1,9 +1,9 @@
 <template>
-  <div class v-if="Object.keys(user).length != 0">
+  <div class="editpersonalInfo" v-if="Object.keys(user).length > 0">
     <div class="baseinfo">基础信息</div>
     <van-field
       :class="{ color3: !isFirstEnter, color9: isFirstEnter }"
-      :readonly="!isFirstEnter"
+      :readonly="!isFirstEnter && user.name!=''"
       v-model="form.name"
       label="姓名"
       placeholder
@@ -23,7 +23,7 @@
       :formlabel="'性别'"
       :formplaceholder="''"
       :forminputalign="'right'"
-      :isFirstEnter="isFirstEnter"
+      :isFirstEnter="isFirstEnter || !user.hasOwnProperty('sex') || user.sex==''"
       @IsshowSex="IsshowSex"
     ></van-SexPicker>
     <van-time-picker
@@ -32,7 +32,7 @@
       :formlabel="'出生年月日'"
       :formplaceholder="''"
       :forminputalign="'right'"
-      :isFirstEnter="isFirstEnter"
+      :isFirstEnter="isFirstEnter || !user.hasOwnProperty('birthday') || user.birthday==''"
       @IsshowTime="IsshowTime"
     ></van-time-picker>
     <van-areas
@@ -48,7 +48,7 @@
     <div class="baseinfo margin52">疾病信息</div>
     <van-field
       :class="{ color3: !isFirstEnter, color9: isFirstEnter }"
-      :readonly="!isFirstEnter"
+      :readonly="!isFirstEnter && user.disease!=''"
       v-model="form.disease"
       label="确诊疾病"
       placeholder
@@ -60,7 +60,7 @@
       :formlabel="'首次确诊年份'"
       :formplaceholder="''"
       :forminputalign="'right'"
-      :isFirstEnter="isFirstEnter"
+      :isFirstEnter="isFirstEnter || !user.hasOwnProperty('diaTime') || user.diaTime==''"
       @IsshowTime="IsdiaTime"
     ></van-time-picker>
     <div class="selecthistory">
@@ -72,10 +72,9 @@
             <img :src="require('../../../../assets/up.png')" />
           </div>
         </div>
-        <div class="medicinallist">
+        <div class="medicinallist" v-if="user.medications.length>0">
           <div
             :class="{ medicinalitem: true, islong: length[key] > 16 }"
-            v-if="user.medications"
             v-for="(index, key) in user.medications"
             :key="key"
           >{{ index }}</div>
@@ -84,11 +83,10 @@
       <div class="selecthistoryinner" v-if="isSelectmedical">
         <div class="title">近半年治疗该疾病使用过的药物？</div>
         <van-checkbox-group v-model="result" direction="horizontal">
-          <van-checkbox
-            v-for="(index, key) in medications"
-            :key="key"
-            :name="index.name"
-          >{{ index.name }}</van-checkbox>
+          <van-checkbox v-for="(index, key) in medications" :key="key" :name="index.name">
+            <div>{{ index.name }}</div>
+            <div class="exp">{{ index.remark }}</div>
+          </van-checkbox>
         </van-checkbox-group>
       </div>
     </div>
@@ -151,16 +149,15 @@ export default {
   },
   methods: {
     init() {
-      console.log("this.user", this.user);
       this.$set(this.form, "name", this.user.name);
       this.$set(this.form, "tel", this.user.phone);
       this.$set(this.form, "sex", this.user.sex);
       this.$set(this.form, "birth", this.user.birthday);
       this.$set(this.form, "province", this.user.province);
       this.$set(this.form, "area", this.user.city);
+      this.$set(this.form, "disease", this.user.disease);
       this.$set(this.form, "time", this.user.diaTime);
       this.$set(this.form, "level", this.user.level);
-      console.log("this.user.level", this.user.level);
       if (this.user.level == "轻度") {
         this.level = 0;
       } else if (this.user.level == "中度") {
@@ -245,6 +242,7 @@ export default {
         birthday: this.form.birth,
         province: this.form.province,
         city: this.form.area,
+        disease: this.form.disease,
         diaTime: this.form.time,
         medications: this.result,
         level: this.form.level
@@ -327,7 +325,9 @@ export default {
     line-height: initial;
   }
 }
-
+.editpersonalInfo {
+  padding-bottom: 0.34rem;
+}
 // @{aaa}.van-cell:not(:last-child)::after {
 //   border: 0.02rem solid rgba(229, 229, 229, 1);
 // }
@@ -484,6 +484,12 @@ export default {
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       line-height: initial;
+      text-align: left;
+    }
+    .exp {
+      color: #666666;
+      font-size: 0.24rem;
+      font-family: PingFangSC-Regular, PingFang SC;
     }
   }
 }

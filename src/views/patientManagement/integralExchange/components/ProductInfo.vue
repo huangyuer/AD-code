@@ -81,8 +81,10 @@ export default {
       this.$store
         .dispatch("patientManagement/exchangeGoods", this.form)
         .then(response => {
-          Toast(response.data.msg);
-          this.$router.push({ path: "/myexchange" });
+          Toast(response.msg);
+          setTimeout(() => {
+            this.$router.push({ path: "/myexchange" });
+          }, 500);
         })
         .catch(e => {
           // if(e){

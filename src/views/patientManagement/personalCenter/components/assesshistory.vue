@@ -302,16 +302,16 @@ export default {
             },
             axisLabel: {
               color: "#999999",
-              showMinLabel: true
+              showMinLabel: false
             },
             // data: ["", 0, 8, 16, 24]
-            data: ["", 0, 8, 16, 24]
+            data: [-5, 0, 8, 16, 24]
           },
           {
             type: "value",
             boundaryGap: false,
             show: true,
-            min: -5,
+            min: -8,
             max: 24,
             position: "left",
             splitLine: {
@@ -347,7 +347,8 @@ export default {
             yAxisIndex: 1,
             data: dataAll,
             // data: [
-            //   ["03.21", 4],
+            //   ["04.12", 0],
+            //   ["03.21", 0],
             //   ["03.20", 4],
             //   ["03.10", 24],
             //   ["02.28", 7],

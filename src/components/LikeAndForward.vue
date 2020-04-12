@@ -6,16 +6,8 @@ event:likeBtn,forwardBtn
 <template>
   <div class="like-forward">
     <div v-if="like" @click="likeBtn">
-      <svg-icon
-        v-show="isLike"
-        iconClass="like-btn"
-        class="like-icon"
-      ></svg-icon>
-      <svg-icon
-        v-show="!isLike"
-        iconClass="likeGrey-btn"
-        class="like-icon"
-      ></svg-icon>
+      <svg-icon v-show="isLike" iconClass="like-btn" class="like-icon"></svg-icon>
+      <svg-icon v-show="!isLike" iconClass="likeGrey-btn" class="like-icon"></svg-icon>
     </div>
     <div v-if="forward" @click="forwardBtn">
       <svg-icon iconClass="forward-btn" class="forward-icon"></svg-icon>
@@ -29,84 +21,80 @@ export default {
   props: {
     like: {
       // type: [Boolean],
-      default: false,
+      default: false
     },
     forward: {
       // type: Boolean,
-      default: false,
+      default: false
     },
     isStar: {
       // type: Boolean,
-      default: true,
+      default: true
     },
     starId: {
       type: String,
-      default: "",
+      default: ""
     },
     path: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   data() {
     return {
-      isLike: this.isStar,
+      isLike: this.isStar
     };
   },
   created() {
-    wx.ready(function () {});
+    wx.ready(function() {});
   },
   methods: {
     likeBtn() {
       if (!this.isLike) {
         let params = {
           menu: this.$route.meta.title,
-          starId: this.starId,
+          starId: this.starId
         };
-        this.$store.dispatch("common/star", params).then((res) => {
+        this.$store.dispatch("common/star", params).then(res => {
           this.isLike = true;
           Toast({
             message: res,
-            icon: "like-o",
+            icon: "like-o"
           });
         });
       } else {
         let params = { starId: this.starId };
-        this.$store.dispatch("common/unStar", params).then((res) => {
+        this.$store.dispatch("common/unStar", params).then(res => {
           this.isLike = false;
           Toast({
             message: res,
-            icon: "like-o",
+            icon: "like-o"
           });
         });
       }
       this.$emit("likeBtn");
     },
     forwardBtn() {
-      this.getShareUrl();
+      // this.getShareUrl();
       this.$emit("forwardBtn");
     },
     getShareUrl() {
       if (this.path.charAt(0) == "/") var string = this.path.substr(1);
       var form = {
         url: string,
-        id: this.starId,
+        id: this.starId
       };
       this.$store
         .dispatch("common/getShareUrl", form)
-        .then((data) => {
+        .then(data => {
           this.getSignature(data.url);
         })
-        .catch((e) => {
-          // if(e){
-          //   Toast(e);
-          // }
-        });
+        .catch(e => {});
     },
     getSignature(url) {
       this.$store
         .dispatch("common/getSignature", url)
-        .then((response) => {
+        .then(response => {
           console.log("data", response);
           wx.config({
             debug: true,
@@ -119,25 +107,25 @@ export default {
               "updateTimelineShareData",
               "updateAppMessageShareData",
               "onMenuShareWeibo",
-              "onMenuShareQZone",
-            ], // 必填，需要使用的JS接口列表
+              "onMenuShareQZone"
+            ] // 必填，需要使用的JS接口列表
           });
 
-          wx.ready(function () {
+          wx.ready(function() {
             var obj = {
               title: this.$route.meta.title, // 标题
               desc: this.$route.meta.title, // 说明文字
               link: url, // 链接
               imgUrl:
-                "https://seats-1257313859.cos.ap-beijing.myqcloud.com/ustar/images/kickoff.png", // 分享的图标
+                "https://seats-1257313859.cos.ap-beijing.myqcloud.com/ustar/images/kickoff.png" // 分享的图标
             };
             wx.checkJsApi({
               jsApiList: [
                 "updateAppMessageShareData",
                 "updateTimelineShareData",
                 "onMenuShareQZone",
-                "onMenuShareWeibo",
-              ], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+                "onMenuShareWeibo"
+              ] // 需要检测的JS接口列表，所有JS接口列表见附录2,
             });
 
             // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
@@ -149,17 +137,16 @@ export default {
             // 2.5 监听“分享到QZone”按钮点击、自定义分享内容及分享接口
             wx.onMenuShareQZone(obj);
           });
-          wx.error(function (res) {
+          wx.error(function(res) {
             console.log("error", res);
           });
-          wx.success(function (res) {
+          wx.success(function(res) {
             console.log("success", res);
           });
         })
-       .catch((e) => {
-        }); 
-    },
-  },
+        .catch(e => {});
+    }
+  }
 };
 </script>
 <style lang="less" scoped>

@@ -105,12 +105,12 @@ export default {
   border-radius: 50%;
   .icon {
     fill: #ff7559 !important;
-    width: 0.32rem;
+    width: 0.34rem;
     height: 0.28rem;
   }
   .grey {
     fill: #9a979b !important;
-    width: 0.32rem;
+    width: 0.34rem;
     height: 0.28rem;
   }
   span {

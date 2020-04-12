@@ -234,6 +234,7 @@ const actions = {
                     birthday: question.birthday,
                     province: question.province,
                     city: question.city,
+                    disease: question.disease,
                     diaTime: question.diaTime,
                     medications: question.medications,
                     level: question.level

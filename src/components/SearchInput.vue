@@ -5,17 +5,17 @@ event:recentClear,onChange
 <template>
   <div>
     <form action="#">
-    <van-search
-      v-model="value"
-      :readonly="readonly"
-      :placeholder="placeholder"
-      class="seach-input"
-      @search="onSearch"
-      @change="onChange"
-      @focus="onFocus"
-      @clear="onClear"
-      type="search"
-    />
+      <van-search
+        v-model="value"
+        :readonly="readonly"
+        :placeholder="placeholder"
+        class="seach-input"
+        @search="onSearch"
+        @change="onChange"
+        @focus="onFocus"
+        @clear="onClear"
+        type="search"
+      />
     </form>
     <div class="recent-search" v-if="recentSearch.type && recentFlag">
       <div class="recent-search-title">
@@ -54,7 +54,7 @@ export default {
       type: Boolean,
       default: false
     },
-    valuesearch:{
+    valuesearch: {
       type: String,
       default: ""
     }
@@ -195,6 +195,7 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #8e8e93;
+    padding-left: 0.01rem;
   }
 }
 </style>

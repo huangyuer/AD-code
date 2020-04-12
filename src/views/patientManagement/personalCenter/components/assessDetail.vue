@@ -8,7 +8,7 @@
       <div class="head">自测报告</div>
       <div class="time">{{answerLog.date}}</div>
       <div class="detaillist" v-if="answerLog.isAd != '是'">
-        <div v-if="answerLog.isAd == '不清楚'">
+        <div v-if="answerLog.suggest.msg != ''">
           <div class="title">评估建议：</div>
           <div class="result-one">
             {{ answerLog.suggest.msg.split("[]")[0]
@@ -16,7 +16,7 @@
             <b>{{ answerLog.suggest.answer }}</b>
           </div>
         </div>
-        <div v-if="answerLog.isAd == '否' || answerLog.isAd == '不清楚' || answerLog.isAd == ''">
+        <div>
           <div class="title">诊断标准：</div>
           <div class="standard">{{ answerLog.diagnosis.title }}</div>
           <div class="answerlist">
@@ -40,7 +40,7 @@
         </div>
         <div v-if="answerLog.adReason.length != 0">
           <div class="title">问题原因：</div>
-          <div v-for="(item, index) in answerLog.adReason">
+          <div v-for="(item, index) in answerLog.adReason" :key="index">
             <div class="result-one">
               {{ item.msg.split("[]")[0] }}
               <b>{{ item.answer }}</b>

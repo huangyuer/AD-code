@@ -139,15 +139,15 @@ export default {
 <style lang="less" scoped>
 @aaa: ~">>>";
 .doctor {
-  width: 0.72rem !important;
-  height: 0.72rem !important;
+  width: 0.74rem !important;
+  height: 0.78rem !important;
 }
 .tuoyuan {
   width: 0.2rem !important;
-  height: 0.2rem !important;
+  height: 0.23rem !important;
 }
 .zu-2 {
-  width: 0.3rem !important;
+  width: 0.35rem !important;
   height: 0.36rem !important;
 }
 .hospitalDetailWapper {

@@ -29,10 +29,22 @@
         </div>
         <div class="right">
           <span>最近评估：</span>
-          <span class="deg">{{ scoreNumber }}</span>
-          <svg-icon iconClass="jiantoushangseng" v-if="parseInt(addScore) >= 0" class="iconjiantou"></svg-icon>
-          <svg-icon iconClass="jiantouchiping" v-else-if="addScore === ''" class="iconjiantou"></svg-icon>
-          <svg-icon iconClass="jiantouxiajiang" v-else-if="addScore < 0" class="iconjiantou"></svg-icon>
+          <span class="deg">{{ answerLogs.score }}</span>
+          <svg-icon
+            iconClass="jiantoushangseng"
+            v-if="parseInt(answerLogs.addScore) >= 0"
+            class="iconjiantou"
+          ></svg-icon>
+          <svg-icon
+            iconClass="jiantouchiping"
+            v-else-if="answerLogs.addScore === ''"
+            class="iconjiantou"
+          ></svg-icon>
+          <svg-icon
+            iconClass="jiantouxiajiang"
+            v-else-if="parseInt(answerLogs.addScore) < 0"
+            class="iconjiantou"
+          ></svg-icon>
         </div>
       </div>
       <div class="bottom">
@@ -104,14 +116,14 @@
           </span>
         </div>
         <div class="itemlist">
-          <div class="iteminner" v-if="scoreNumber != ''">
+          <div class="iteminner" v-if="Object.keys(answerLogs).length>0">
             <div class="color52 font-size28">
               <div
                 class="color3 font-size30 fmmedium"
               >{{ user.name != "" ? user.name : user.nickName }}</div>
               <div class="color3 font-size28 fmregular">
                 您最近一次评估程度为
-                <b class="color009966 fmmedium">{{ scoreNumber }}分</b>
+                <b class="color009966 fmmedium">{{ answerLogs.score }}分</b>
               </div>
             </div>
             <div class="btnpage" @click="todiseaseTest()">去评估</div>
@@ -157,7 +169,7 @@ export default {
       diaLogShow: this.$route.params.diaLogShow,
       tasks: [],
       stars: [],
-      answerLogs: "",
+      answerLogs: {},
       msglist: {},
       user: {},
       score: {},
@@ -247,20 +259,17 @@ export default {
     },
     getAnswerLogs() {
       var form = {
-        page: Number,
-        limit: Number,
+        page: 1,
+        limit: 10,
         startDate: String,
         endDate: String,
-        isChart: true
+        isChart: false
       };
       this.$store
         .dispatch("patientManagement/getAnswerLogs", form)
         .then(response => {
           if (response.data.answerLogs.length > 0) {
-            this.answerLogs =
-              response.data.answerLogs[
-                response.data.answerLogs.length - 1
-              ].score;
+            this.answerLogs = response.data.answerLogs[0];
           }
         })
         .catch(e => {

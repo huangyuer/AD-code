@@ -11,17 +11,7 @@
       </div>
       <div class="headercontent">
         <div class="vanhead">
-          <van-image
-            width="1.32rem"
-            height="1.32rem"
-            round
-            fit="cover"
-            :src="
-              getmyinfo.headImg != ''
-                ? getmyinfo.headImg
-                : require('../../../../assets/change.png')
-            "
-          />
+          <van-image width="1.32rem" height="1.32rem" round fit="cover" :src="getmyinfo.headImg" />
         </div>
         <div class="name">{{ getmyinfo.name == "" ? getmyinfo.nickName : getmyinfo.name }}</div>
         <div class="tel">{{ getmyinfo.phone }}</div>
@@ -75,29 +65,32 @@
           </div>
         </div>
         <div class="address">
-          <div class="margin6">
-            <span class="colordeep">
+          <div class="colordeep margin6" v-if="address.recipient == '' ">你还未添加收货地址</div>
+          <div v-else>
+            <div class="margin6">
+              <span class="colordeep">
+                {{
+                address.recipient != "" ? address.recipient : "收货人未填写"
+                }}
+              </span>
+              <span class="colormiddle">
+                {{
+                address.phone != "" ? address.phone : "电话未填写"
+                }}
+              </span>
+            </div>
+            <div class="colorshallow">
               {{
-              address.recipient != "" ? address.recipient : "收货人未填写"
+              address.province == "" && address.detail == ""
+              ? "你还未添加收货地址"
+              : address.province != ""
+              ? address.province +
+              address.city +
+              address.area +
+              address.detail
+              : "" + address.detail
               }}
-            </span>
-            <span class="colormiddle">
-              {{
-              address.phone != "" ? address.phone : "电话未填写"
-              }}
-            </span>
-          </div>
-          <div class="colorshallow">
-            {{
-            address.province == "" && address.detail == ""
-            ? "你还未添加收货地址"
-            : address.province != ""
-            ? address.province +
-            address.city +
-            address.area +
-            address.detail
-            : "" + address.detail
-            }}
+            </div>
           </div>
         </div>
       </div>

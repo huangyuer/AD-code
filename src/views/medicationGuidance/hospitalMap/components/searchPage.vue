@@ -4,17 +4,17 @@ event:recentClear,onChange
 -->
 <template>
   <div class="searchpage">
-  <form action="#">
-    <van-search
-      v-model="value"
-      placeholder="输入我的位置"
-      class="seach-input"
-      @search="onSearch"
-      @change="onChange"
-      @focus="onFocus"
-      @clear="onClear"
-      type="search"
-    />
+    <form action="#">
+      <van-search
+        v-model="value"
+        placeholder="输入我的位置"
+        class="seach-input"
+        @search="onSearch"
+        @change="onChange"
+        @focus="onFocus"
+        @clear="onClear"
+        type="search"
+      />
     </form>
     <div class="recent-search" v-if="recentFlag">
       <div class="recent-search-title">
@@ -240,6 +240,7 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #8e8e93;
+    padding-left: 0.01rem;
   }
 }
 </style>

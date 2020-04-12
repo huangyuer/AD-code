@@ -1,20 +1,14 @@
 <template>
   <div>
     <div class="selecthistoryinner" v-if="medications.options.length != 0">
-      <div class="title">
-        {{ index + "." + medications.title }}
-      </div>
+      <div class="title">{{ index + "." + medications.title }}</div>
       <van-checkbox-group
         @change="onChange"
         v-model="result"
         direction="horizontal"
         ref="checkboxGroup"
       >
-        <div
-          style="width: 100%;"
-          v-for="(index, key) in medications.options"
-          :key="key"
-        >
+        <div style="width: 100%;" v-for="(index, key) in medications.options" :key="key">
           <van-checkbox
             v-if="key < medications.options.length - 2"
             :name="index.option"
@@ -31,12 +25,8 @@
         @click="checkAll"
         v-model="checked"
       >
-        <div>
-          {{ medications.options[medications.options.length - 1].option }}
-        </div>
-        <div class="exp">
-          {{ medications.options[medications.options.length - 1].remark }}
-        </div>
+        <div>{{ medications.options[medications.options.length - 1].option }}</div>
+        <div class="exp">{{ medications.options[medications.options.length - 1].remark }}</div>
       </van-checkbox>
     </div>
   </div>
@@ -47,38 +37,39 @@ export default {
   props: {
     typethis: {
       type: String,
-      default: "",
+      default: ""
     },
     medications: {
       type: Object,
-      default: function () {
+      default: function() {
         return {};
-      },
+      }
     },
     index: {
       type: Number,
-      default: 0,
-    },
+      default: 0
+    }
   },
   data() {
     return {
       result: [],
-      checked: false,
+      checked: false
     };
   },
   methods: {
     onChange(name) {
+      this.checked = false;
       this.$emit("checkbox", this.result, this.medications._id, this.checked);
     },
     checkAll() {
       this.$refs.checkboxGroup.toggleAll(false);
-    },
+    }
   },
   watch: {
-    checked: function (val) {
+    checked: function(val) {
       this.$emit("checkbox", this.result, this.medications._id, this.checked);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -105,9 +96,9 @@ export default {
   margin-bottom: 0.12rem;
   width: 100%;
 }
-@{aaa}.van-checkbox__icon{
-  width: .36rem;
-  height: .36rem;
+@{aaa}.van-checkbox__icon {
+  width: 0.36rem;
+  height: 0.36rem;
 }
 @{aaa}.van-checkbox__icon .van-icon {
   background: RGBA(206, 206, 206, 1);
@@ -115,10 +106,10 @@ export default {
 }
 @{aaa}.van-checkbox__icon--round .van-icon {
   border-radius: 0;
-  width: .36rem;
-  height: .36rem;
-  line-height: .36rem;
-  font-size: .3rem;
+  width: 0.36rem;
+  height: 0.36rem;
+  line-height: 0.36rem;
+  font-size: 0.3rem;
 }
 @{aaa}.van-checkbox__icon--checked .van-icon {
   background-color: RGBA(4, 151, 101, 1);
