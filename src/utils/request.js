@@ -69,6 +69,7 @@ service.interceptors.response.use(
         // to re-login
 
         if (getOpenId()) {
+          // if(router.history.current.name.indexOf('DiseaseDetail')<=-1)return
           store.dispatch("register/login").then(() => {
             // location.reload();
           })
@@ -96,6 +97,7 @@ service.interceptors.response.use(
     console.log("err2222", getToken());
     if (error.response.status == 401) {
       if (getOpenId()) {
+        // if(router.history.current.name.indexOf('DiseaseDetail')<=-1)return
         store.dispatch("register/login").then(() => {
           // location.reload();
         });

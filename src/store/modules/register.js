@@ -108,13 +108,14 @@ const actions = {
     });
   },
   login({ commit }) {
+    if(!getOpenId())return
     return new Promise((resolve, reject) => {
       login({
         openId: getOpenId()
       })
         .then(response => {
           const { data } = response;
-          if (!data.token&&route.meta.title.indexOf('DiseaseDetail'))
+          if (!data.token)
             router.push({
               path: "/register"
             });

@@ -3,7 +3,7 @@
     <Dialog
       :show="diaLogShow"
       :title="'恭喜！您已完成注册！'"
-      :content="'【关爱自己，从自我评估开始，拥抱AD专业资讯】是否进一步了解您的皮肤状况？'"
+      :content="'【关爱自己，从自我评估开始。】是否进一步了解您的皮肤状况？'"
       :isClose="false"
     >
       <div slot="confirmButton" class="dialog-confirm" @click="confirmBtn">前往自我评估</div>

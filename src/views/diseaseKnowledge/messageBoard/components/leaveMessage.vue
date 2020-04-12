@@ -133,12 +133,24 @@ export default {
       this.levelPicker = false;
     },
     afterRead(file, name) {
-      this.$store
-        .dispatch("diseaseKnowledge/uploadFile", file.file)
-        .then(data => {
-          console.log("-----s1", data, this.fileList);
-          file.images = data.fileId;
-        });
+      if (file.length > 0) {
+        for (const key in file) {
+          if (file.hasOwnProperty(key)) {
+            const el = file[key];
+            this.$store
+              .dispatch("diseaseKnowledge/uploadFile", el.file)
+              .then(data => {
+                el.images = data.fileId;
+              });
+          }
+        }
+      } else {
+        this.$store
+          .dispatch("diseaseKnowledge/uploadFile", file.file)
+          .then(data => {
+            file.images = data.fileId;
+          });
+      }
     },
     asyncBeforeRead(file) {
       console.log("-----s");
@@ -180,6 +192,20 @@ export default {
     },
     closeBtn() {
       this.show = false;
+      this.ageValue = "";
+      this.sexValue = "";
+      this.typeValue = "";
+      this.levelValue = "";
+      this.description = "";
+      this.fileList = [];
+      // show: false,
+      // sexPicker: false,
+      // typePicker: false,
+      // levelPicker: false,
+
+      // sexColumns: ["男", "女"],
+      // typeColumns: [],
+      // levelColumns: []
     }
   }
 };
