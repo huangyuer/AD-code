@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style lang="less">
-// @import "./common/font/font.css";
+@import "./common/quill.snow.css";
 #app {
   margin: 0;
   padding: 0;

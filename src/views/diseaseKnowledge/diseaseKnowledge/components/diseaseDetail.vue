@@ -4,9 +4,11 @@
       <div class="title">{{ this.article.title }}</div>
       <div class="time">{{ this.article.date }}</div>
     </div>
-    <div class="content" v-html="this.article.contentHtml">
+    <div class="content" >
       <!-- <van-image  /> -->
-      {{ this.article.contentHtml }}
+      <div class="ql-editor" v-html="this.article.contentHtml">
+         {{ this.article.contentHtml }}
+      </div>
     </div>
     <like-and-forward
       v-if="flag"
@@ -88,12 +90,13 @@ export default {
 .wapperItemInfo {
   width: 100%;
   height: 100%;
-  .header {
+   .header {
     color: #333333;
     font-size: 0.3rem;
     text-align: center;
     font-family: "PingFangSC-Medium";
-    height: 1.12rem;
+    // height: 1.12rem;
+    padding: 0.4rem 0 0.18rem 0;
     display: flex;
     align-items: center;
     flex-direction: column;

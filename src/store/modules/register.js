@@ -130,6 +130,26 @@ const actions = {
           reject(error);
         });
     });
+  },
+
+  login1({ commit }) {
+    if(!getOpenId())return
+    return new Promise((resolve, reject) => {
+      login({
+        openId: getOpenId()
+      })
+        .then(response => {
+          const { data } = response;
+          if (data.token){
+             commit("SET_TOKEN", data.token);
+          setToken(data.token);
+          }
+          resolve(data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
   }
 };
 

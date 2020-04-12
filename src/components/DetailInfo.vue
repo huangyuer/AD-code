@@ -4,9 +4,11 @@
       <div class="title">{{ this.article.title }}</div>
       <div class="time">{{ this.article.date }}</div>
     </div>
-    <div class="content" v-html="this.article.contentHtml">
+    <div class="content">
       <!-- <van-image  /> -->
+      <div class="ql-editor" v-html="this.article.contentHtml">
       {{ this.article.contentHtml }}
+      </div>
     </div>
     <like-and-forward
       :like="this.$route.query.like"
