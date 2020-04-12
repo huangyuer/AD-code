@@ -10,7 +10,7 @@
       >
         <div style="width: 100%;" v-for="(index, key) in medications.options" :key="key">
           <van-checkbox
-            v-if="key < medications.options.length - 2"
+            v-if="key < medications.options.length - 1"
             :name="index.option"
             ref="checkboxes"
           >

@@ -8,22 +8,20 @@
       </div>
       <div class="tip">
         <span v-if="result.addScore == ''" class="spanlevel"></span>
-        <span v-if="parseInt(result.addScore) >= 0" class="spanup"
-          >+{{ result.addScore }}</span
-        >
-        <span v-if="parseInt(result.addScore) < 0" class="spandown"
-          >-{{ result.addScore }}</span
-        >
+        <span v-if="parseInt(result.addScore) >= 0" class="spanup">+{{ result.addScore }}</span>
+        <span v-if="parseInt(result.addScore) < 0" class="spandown">-{{ result.addScore }}</span>
         <span v-if="result.addScore != ''" class="title">较均值</span>
       </div>
     </div>
     <div class="time">{{ result.date }}</div>
     <div class="content">
       <div class="header">评估建议</div>
-      {{ result.msg }}
+      <div class="detail">{{ result.msg }}</div>
     </div>
     <div class="groupnext" @click="topagePersonalCenter()">关闭</div>
-    <div class="titledetail"><b>*</b>较均值：此次测试前2周得分的均值</div>
+    <div class="titledetail">
+      <b>*</b>较均值：此次测试前2周得分的均值
+    </div>
   </div>
 </template>
 <script>
@@ -31,14 +29,14 @@ export default {
   props: {
     dataresult: {
       type: Object,
-      default: function () {
+      default: function() {
         return {};
-      },
-    },
+      }
+    }
   },
   data() {
     return {
-      result: {},
+      result: {}
       // dataresult:{
       //   addScore: "0"
       //   date: "2020-04-07"
@@ -52,15 +50,15 @@ export default {
   methods: {
     topagePersonalCenter() {
       this.$router.push({ path: "/personalCenter" });
-    },
+    }
   },
   watch: {
-    dataresult: function (val, oldval) {
+    dataresult: function(val, oldval) {
       this.result = val;
       localStorage.setItem("score", this.result.score);
       localStorage.setItem("addScore", this.result.addScore);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -172,6 +170,12 @@ export default {
       color: rgba(0, 153, 102, 1);
       margin: 0.28rem auto 0.1rem;
       text-align: center;
+    }
+    .detail {
+      font-size: 0.28rem;
+      text-align: left;
+      color: rgba(102, 102, 102, 1);
+      text-indent: 0.2em;
     }
   }
 }

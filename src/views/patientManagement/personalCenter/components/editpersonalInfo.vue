@@ -46,14 +46,15 @@
       @onConfirm="onConfirmplace"
     ></van-areas>
     <div class="baseinfo margin52">疾病信息</div>
-    <van-field
-      :class="{ color3: !isFirstEnter, color9: isFirstEnter }"
-      :readonly="!isFirstEnter && user.disease!=''"
-      v-model="form.disease"
-      label="确诊疾病"
-      placeholder
-      input-align="right"
-    />
+    <van-disease-picker
+      :formvalue="form.disease"
+      :formtype="'year-month'"
+      :formlabel="'确诊疾病'"
+      :formplaceholder="''"
+      :forminputalign="'right'"
+      :isFirstEnter="isFirstEnter || !user.hasOwnProperty('disease') || user.disease==''"
+      @IsshowDisease="IsshowDisease"
+    ></van-disease-picker>
     <van-time-picker
       :formvalue="form.time"
       :formtype="'year'"
@@ -82,12 +83,28 @@
       </div>
       <div class="selecthistoryinner" v-if="isSelectmedical">
         <div class="title">近半年治疗该疾病使用过的药物？</div>
-        <van-checkbox-group v-model="result" direction="horizontal">
-          <van-checkbox v-for="(index, key) in medications" :key="key" :name="index.name">
-            <div>{{ index.name }}</div>
-            <div class="exp">{{ index.remark }}</div>
-          </van-checkbox>
+        <van-checkbox-group
+          @change="onCheckGroup"
+          v-model="result"
+          direction="horizontal"
+          ref="checkboxGroup"
+        >
+          <div style="width:100%" v-for="(index, key) in medications" :key="key">
+            <van-checkbox v-if="key < medications.length - 1" :name="index.name">
+              <div>{{ index.name }}</div>
+              <div class="exp">{{ index.remark }}</div>
+            </van-checkbox>
+          </div>
         </van-checkbox-group>
+        <van-checkbox
+          :name="medications[medications.length - 1].name"
+          ref="checkboxes"
+          @click="checkAll"
+          v-model="checkedmediEnd"
+        >
+          <div>{{ medications[medications.length - 1].name }}</div>
+          <div class="exp">{{ medications[medications.length - 1].remark }}</div>
+        </van-checkbox>
       </div>
     </div>
     <div class="selecthistory">
@@ -114,6 +131,7 @@
 import VanAreas from "@/components/vanareas.vue";
 import VanTimePicker from "@/components/vantimepicker.vue";
 import VanSexPicker from "@/components/vansexpicker";
+import VanDiseasePicker from "@/components/vandiseasepicker";
 import { Toast } from "vant";
 export default {
   data() {
@@ -137,6 +155,7 @@ export default {
       isSelectmedical: false,
       isFirstEnter: false,
       medications: [],
+      checkedmediEnd: false,
       address: {},
       user: {},
       silderBar: ""
@@ -187,9 +206,16 @@ export default {
     IsshowSex(value) {
       this.$set(this.form, "sex", value);
     },
+    IsshowDisease(value) {
+      this.$set(this.form, "disease", value);
+    },
     IsshowArea(value) {
       this.$set(this.form, "showArea", value);
     },
+    onCheckGroup(name) {
+      console.log("this.result====>", this.result);
+    },
+    checkAll() {},
     onChange(value) {
       if (value == 0) {
         this.$set(this.form, "level", "轻度");
@@ -231,7 +257,6 @@ export default {
       return str.replace(/[^\x00-\xff]/g, "01").length;
     },
     editmedicinalhistory() {
-      console.log("huangdadfsfsdf");
       this.isSelectmedical = true;
     },
     upMyInfo() {
@@ -252,11 +277,7 @@ export default {
         .then(data => {
           this.$router.push({ path: "/personalInfo" });
         })
-        .catch(e => {
-          // if(e){
-          //   Toast(e);
-          // }
-        });
+        .catch(e => {});
     },
     getMedications() {
       this.$store
@@ -264,11 +285,7 @@ export default {
         .then(data => {
           this.medications = this.$store.getters.getmedications.medications;
         })
-        .catch(e => {
-          // if(e){
-          //   Toast(e);
-          // }
-        });
+        .catch(e => {});
     },
     getMyInfo() {
       this.$store
@@ -298,9 +315,35 @@ export default {
     }
   },
   watch: {
-    silderBar: function(val) {}
+    checkedmediEnd: function(val) {
+      if (val) {
+        this.$refs.checkboxGroup.toggleAll(false);
+        this.result = [];
+        this.result.push(this.medications[this.medications.length - 1].name);
+      } else {
+        if (this.result.length > 0) {
+          for (var i = 0; i < this.result.length; i++) {
+            if (
+              this.result[i] ==
+              this.medications[this.medications.length - 1].name
+            ) {
+              this.result.splice(i, 1);
+            }
+          }
+        }
+      }
+    },
+    result: function(val, oldVal) {
+      if (
+        oldVal.length > 0 &&
+        oldVal[0] == this.medications[this.medications.length - 1].name &&
+        val.length > 0
+      ) {
+        this.checkedmediEnd = false;
+      }
+    }
   },
-  components: { VanAreas, VanTimePicker, VanSexPicker }
+  components: { VanAreas, VanTimePicker, VanSexPicker, VanDiseasePicker }
 };
 </script>
 <style lang="less" scoped>
