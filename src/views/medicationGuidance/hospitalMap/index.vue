@@ -55,6 +55,13 @@
           visible-item-count="3"
         />
       </van-popup>
+      <van-action-sheet
+        v-model="showactionsheet"
+        :actions="actions"
+        cancel-text="取消"
+        @select="onSelectAction"
+        @cancel="onCancel"
+      />
     </div>
   </div>
 </template>
@@ -96,7 +103,13 @@ export default {
       },
       hospitals: [],
       hispitalDetail: {},
-      doctors: []
+      doctors: [],
+      showactionsheet: false,
+      actions: [
+        { name: "高德地图", color: "#07c160" },
+        { name: "百度地图", color: "#07c160" },
+        { name: "腾讯地图", color: "#07c160" }
+      ]
     };
   },
   created() {
@@ -295,16 +308,56 @@ export default {
       });
       map.addOverlay(polyline);
     },
+    togoNavPART(bool) {
+      this.showactionsheet = bool;
+    },
+    onSelectAction(active, name) {
+      console.log("huangdandandjdujdjjdjddjdddkkd", active, name);
+      this.showactionsheet = false;
+      // this.$emit("togoNavPART", active.name);
+      this.togoNavPARTAction(active.name);
+    },
+    onCancel() {
+      this.showactionsheet = false;
+    },
     //跳转第三方
-    togoNavPART() {
-      var url =
-        "http://api.map.baidu.com/direction?origin=latlng:" +
-        this.y +
-        "," +
-        this.x +
-        "|name:我的位置&destination=" +
-        this.hispitalDetail.name +
-        "&mode=driving&region=上海&output=html&src=webapp.baidu.openAPIdemo";
+    togoNavPARTAction(name) {
+      if (name == "高德地图") {
+        var url =
+          "https://gaode.com/dir?from[name]=我的位置&from[lnglat]=" +
+          this.x +
+          "," +
+          this.y +
+          "&to[name]=" +
+          this.hispitalDetail.name +
+          "&to[lnglat]=" +
+          this.hispitalDetail.x +
+          "," +
+          this.hispitalDetail.y +
+          "&policy=1&type=car";
+      } else if (name == "百度地图") {
+        var url =
+          "http://api.map.baidu.com/direction?origin=latlng:" +
+          this.y +
+          "," +
+          this.x +
+          "|name:我的位置&destination=" +
+          this.hispitalDetail.name +
+          "&mode=driving&region=上海&output=html&src=webapp.baidu.openAPIdemo";
+      } else {
+        var url =
+          "https://apis.map.qq.com/uri/v1/routeplan?type=bus&from=我的位置&fromcoord=" +
+          this.y +
+          "," +
+          this.x +
+          "&to=" +
+          this.hispitalDetail.name +
+          "&tocoord=" +
+          this.hispitalDetail.y +
+          "," +
+          this.hispitalDetail.x +
+          "&policy=1&referer=adcode";
+      }
       window.location.href = url;
       // window.location.href =
       //   "baidumap://map/direction?origin=name:我的位置|latlng:" +
@@ -402,6 +455,7 @@ export default {
       this.mapMyLocation(map, 13);
       this.mapHospitalLocation(map);
     },
+
     //获取我的地址
     getMyLocation() {
       this.$store
@@ -572,5 +626,8 @@ export default {
     color: #8e8e93;
     padding-left: 0.01rem;
   }
+}
+@{aaa}.van-action-sheet {
+  z-index: 3000 !important;
 }
 </style>

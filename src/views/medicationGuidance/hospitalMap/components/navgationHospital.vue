@@ -73,7 +73,7 @@ export default {
       this.$emit("closeNav", false);
     },
     togoNavPART() {
-      this.$emit("togoNavPART");
+      this.$emit("togoNavPART", true);
     },
     clicktip() {
       var vanpopup = document.getElementsByClassName("van-popup")[0];
