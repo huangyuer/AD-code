@@ -80,12 +80,12 @@ const actions = {
 
   register({ commit }, params) {
     console.log("-----sss", params);
-    const { phone, validateCode, openId, invCode } = params;
+    const { phone, validateCode,invCode } = params;
     return new Promise((resolve, reject) => {
       register({
         phone: phone,
         validateCode: validateCode,
-        openId: openId,
+        openId: getOpenId(),
         invCode: invCode
       })
         .then(response => {
@@ -140,10 +140,8 @@ const actions = {
       })
         .then(response => {
           const { data } = response;
-          if (data.token){
-             commit("SET_TOKEN", data.token);
+          commit("SET_TOKEN", data.token);
           setToken(data.token);
-          }
           resolve(data);
         })
         .catch(error => {
