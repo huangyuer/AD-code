@@ -66,6 +66,7 @@
                 <slider-box-item
                   v-if="item.type == 'radio'"
                   :index="changeFirstval == '是' ? index + 1 : index + 4"
+                  :istruefirst="changeFirstval == '是'"
                   :dataitem="item"
                   @sliderbox="sliderbox"
                 ></slider-box-item>

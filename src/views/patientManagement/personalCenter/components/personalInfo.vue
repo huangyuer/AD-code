@@ -20,7 +20,7 @@
           <b ref="myInvCode">{{ getmyinfo.myInvCode }}</b>
         </div>
       </div>
-      <div class="cancelaccount" @click="delMyInfo()">注销账号</div>
+      <div class="cancelaccount" @click="showoverlay = true">注销账号</div>
     </div>
     <div class="infolist">
       <div class="myinfolist">
@@ -95,6 +95,17 @@
         </div>
       </div>
     </div>
+    <van-overlay :show="showoverlay" @click="showoverlay = false">
+      <div class="wrapper" @click.stop>
+        <div class="block">
+          <div class="title">注销后会清除您所有资料，是否继续？</div>
+          <div class="btnlist">
+            <div class="btnfalse" @click="showoverlay=false">取消</div>
+            <div class="btntrue" @click="delMyInfo()">确定</div>
+          </div>
+        </div>
+      </div>
+    </van-overlay>
   </div>
 </template>
 <script>
@@ -105,7 +116,8 @@ export default {
   data() {
     return {
       getmyinfo: {},
-      address: {}
+      address: {},
+      showoverlay: false
     };
   },
   mounted() {
@@ -141,13 +153,13 @@ export default {
       this.$store
         .dispatch("patientManagement/delMyInfo")
         .then(data => {
+          this.showoverlay = false;
           removeToken();
+          this.$router.push({
+            path: "/register"
+          });
         })
-        .catch(e => {
-          // if(e){
-          //   Toast(e);
-          // }
-        });
+        .catch(e => {});
     },
     myinfopageEdit() {
       this.$router.push({ path: "/editpersonalInfo" });
@@ -318,6 +330,45 @@ export default {
       .margin6 {
         margin-bottom: 0.06rem;
         margin-top: 0.2rem;
+      }
+    }
+  }
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    .block {
+      width: 5rem;
+      height: 3rem;
+      background-color: #fff;
+      border-radius: 0.2rem;
+      padding: 0.4rem 0.6rem 0;
+      box-sizing: border-box;
+      .title {
+        text-align: center;
+        font-size: 0.28rem;
+        color: #333333;
+      }
+      .btnlist {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.8rem;
+        .btntrue,
+        .btnfalse {
+          width: 1.5rem;
+          height: 0.6rem;
+          line-height: 0.6rem;
+          text-align: center;
+          font-size: 0.26rem;
+          border-radius: 0.2rem;
+          color: #ffffff;
+          background: #009966;
+        }
+        .btnfalse {
+          color: #ffffff;
+          background: #999999;
+        }
       }
     }
   }

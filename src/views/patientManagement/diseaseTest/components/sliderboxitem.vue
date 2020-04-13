@@ -2,9 +2,11 @@
   <div class="sliderwapper">
     <div class="swipediv">{{ index + "." + dataitem.title }}</div>
     <div class="header">
-      <span v-for="item in dataitem.options" :key="item.option">{{
+      <span v-for="item in dataitem.options" :key="item.option">
+        {{
         item.option
-      }}</span>
+        }}
+      </span>
     </div>
     <van-slider
       v-model="value"
@@ -20,18 +22,22 @@ export default {
   props: {
     dataitem: {
       type: Object,
-      default: function () {
+      default: function() {
         return {};
-      },
+      }
     },
     index: {
       type: Number,
-      default: 0,
+      default: 0
     },
+    istruefirst: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
-      value: 0,
+      value: 0
     };
   },
   methods: {
@@ -44,8 +50,24 @@ export default {
         this.dataitem.options[index].option,
         this.index
       );
-    },
-  },
+      if (this.istruefirst) {
+        var botton = document.getElementsByClassName(
+          "van-slider__button-wrapper"
+        )[this.index - 1];
+      } else {
+        var botton = document.getElementsByClassName(
+          "van-slider__button-wrapper"
+        )[this.index - 4];
+      }
+      if (value == 100) {
+        botton.style.right = "0.22rem";
+      } else if (value == 0) {
+        botton.style.right = "-0.22rem";
+      } else {
+        botton.style.right = "0";
+      }
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -93,7 +115,10 @@ export default {
   );
   box-shadow: 0 0.04rem 0.08rem 0 #505050;
 }
-@{aaa}.van-slider__bar{
-  height: .16rem;
+@{aaa}.van-slider__bar {
+  height: 0.16rem;
+}
+@{aaa}.van-slider__button-wrapper {
+  right: -0.22rem;
 }
 </style>
