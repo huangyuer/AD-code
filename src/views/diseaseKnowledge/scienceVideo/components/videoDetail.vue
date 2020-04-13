@@ -40,6 +40,7 @@
       </div>
     </div>
     <like-and-forward
+      v-if="flag"
       :like="this.$route.query.like"
       :path="this.$route.path"
       :forward="this.$route.query.forward"
@@ -49,6 +50,7 @@
       @forwardBtn="forwardBtn"
     ></like-and-forward>
     <van-over-lay :show="showoverlay" @isShowOverlay="isShowOverlay"></van-over-lay>
+    <div class="more-btn" v-if="!flag" @click="register">查看更多内容，请点击注册</div>
   </div>
 </template>
 <script>
@@ -56,6 +58,7 @@ import "./json2";
 import { Toast } from "vant";
 import LikeAndForward from "@/components/LikeAndForward";
 import VanOverLay from "@/components/overlay";
+import { getToken } from "@/utils/auth";
 export default {
   components: { LikeAndForward, VanOverLay },
   beforeRouteLeave(to, form, next) {
@@ -67,14 +70,23 @@ export default {
       videoitem: {},
       isvideo: false,
       iframe: "",
-      showoverlay: false
+      showoverlay: false,
+      flag: true
     };
   },
-  created() {},
+  created() {
+    if (getToken()) this.flag = true;
+    else this.flag = false;
+  },
   mounted() {
     this.getVideo();
   },
   methods: {
+    register() {
+      this.$router.push({
+        path: "/register"
+      });
+    },
     addOutPageLog() {
       this.$store
         .dispatch("common/addOutPageLog", "科普视频")
@@ -126,8 +138,26 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+  .more-btn {
+    width: 6.4rem;
+    height: 0.8rem;
+    background: rgba(0, 157, 117, 1);
+    box-shadow: 0 0.04rem 0.08rem 0 rgba(0, 153, 102, 0.5);
+    border-radius: 0.4rem;
+    font-size: 0.3rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    line-height: 0.8rem;
+    text-align: center;
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 0.8rem;
+  }
 .wapperItemInfo {
   width: 100%;
+  height: 100%;
   .header {
     color: #333333;
     font-size: 0.3rem;
