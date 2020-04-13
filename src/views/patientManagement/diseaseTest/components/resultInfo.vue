@@ -55,8 +55,6 @@ export default {
   watch: {
     dataresult: function(val, oldval) {
       this.result = val;
-      localStorage.setItem("score", this.result.score);
-      localStorage.setItem("addScore", this.result.addScore);
     }
   }
 };

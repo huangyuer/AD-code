@@ -102,6 +102,7 @@
               <div v-if="index < 3" class="coloracadaf font-size28">{{ item.date }}</div>
             </div>
           </div>
+          <div v-else>你还没有进行收藏</div>
         </div>
       </div>
     </div>
@@ -128,6 +129,7 @@
             </div>
             <div class="btnpage" @click="todiseaseTest()">去评估</div>
           </div>
+          <div v-else>你还没有进行评估</div>
         </div>
       </div>
     </div>
@@ -154,6 +156,7 @@
             </div>
             <div class="btnpage" @click="toPageleavemessage()">去留言</div>
           </div>
+          <div v-else>你还没有进行留言</div>
         </div>
       </div>
     </div>
@@ -172,21 +175,13 @@ export default {
       answerLogs: {},
       msglist: {},
       user: {},
-      score: {},
-      scoreNumber: "",
-      addScore: ""
+      score: {}
     };
   },
   created() {
     this.getMyInfo();
     this.getMyScore();
     this.getLeaveMsgList();
-    if (localStorage.getItem("score") != null) {
-      this.scoreNumber = localStorage.getItem("score");
-    }
-    if (localStorage.getItem("addScore") != null) {
-      this.addScore = parseInt(localStorage.getItem("addScore"));
-    }
     this.getTasks();
     this.getMyStars();
     this.getAnswerLogs();

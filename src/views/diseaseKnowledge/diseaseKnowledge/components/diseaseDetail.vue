@@ -4,11 +4,9 @@
       <div class="title">{{ this.article.title }}</div>
       <div class="time">{{ this.article.date }}</div>
     </div>
-    <div class="content" >
+    <div class="content">
       <!-- <van-image  /> -->
-      <div class="ql-editor" v-html="this.article.contentHtml">
-         {{ this.article.contentHtml }}
-      </div>
+      <div class="ql-editor" v-html="this.article.contentHtml">{{ this.article.contentHtml }}</div>
     </div>
     <like-and-forward
       v-if="flag"
@@ -20,7 +18,7 @@
       @likeBtn="likeBtn"
       @forwardBtn="forwardBtn"
     ></like-and-forward>
-    <van-over-lay :show="showoverlay"></van-over-lay>
+    <van-over-lay :show="showoverlay" @isShowOverlay="isShowOverlay"></van-over-lay>
     <div class="more-btn" v-if="!flag" @click="register">查看更多内容，请点击注册</div>
   </div>
 </template>
@@ -82,6 +80,9 @@ export default {
     forwardBtn() {
       console.log("-----dss");
       this.showoverlay = true;
+    },
+    isShowOverlay() {
+      this.showoverlay = false;
     }
   }
 };
@@ -90,7 +91,7 @@ export default {
 .wapperItemInfo {
   width: 100%;
   height: 100%;
-   .header {
+  .header {
     color: #333333;
     font-size: 0.3rem;
     text-align: center;

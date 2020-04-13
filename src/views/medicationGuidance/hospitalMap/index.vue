@@ -306,6 +306,26 @@ export default {
         this.hispitalDetail.name +
         "&mode=driving&region=上海&output=html&src=webapp.baidu.openAPIdemo";
       window.location.href = url;
+      // window.location.href =
+      //   "baidumap://map/direction?origin=name:我的位置|latlng:" +
+      //   this.y +
+      //   "," +
+      //   this.x +
+      //   "&destination=" +
+      //   this.hispitalDetail.name +
+      //   "&mode=transit&sy=3&index=0&target=1&src=ios.baidu.openAPIdemo";
+      // window.location.href =
+      //   "iosamap://path?sourceApplication=applicationName&sid=BGVIS1&slat=" +
+      //   this.y +
+      //   "&slon=" +
+      //   this.x +
+      //   "&sname=我的位置&did=BGVIS2&dlat=" +
+      //   this.hispitalDetail.y +
+      //   "&dlon=" +
+      //   this.hispitalDetail.x +
+      //   "&dname=" +
+      //   this.hispitalDetail.name +
+      //   "&dev=0&t=0";
     },
     //选择距离范围
     typePickeropen() {

@@ -48,7 +48,7 @@
       @likeBtn="likeBtn"
       @forwardBtn="forwardBtn"
     ></like-and-forward>
-    <van-over-lay :show="showoverlay"></van-over-lay>
+    <van-over-lay :show="showoverlay" @isShowOverlay="isShowOverlay"></van-over-lay>
   </div>
 </template>
 <script>
@@ -118,6 +118,9 @@ export default {
     forwardBtn() {
       console.log("-----dss");
       this.showoverlay = true;
+    },
+    isShowOverlay() {
+      this.showoverlay = false;
     }
   }
 };
@@ -158,7 +161,7 @@ export default {
         object-fit: cover;
       }
       .container {
-        height: 3.8rem;
+        height: 2.8rem;
       }
       .playicon {
         position: absolute;
