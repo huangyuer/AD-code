@@ -198,6 +198,10 @@ export default {
       this.levelValue = "";
       this.description = "";
       this.fileList = [];
+       this.$router.push({
+        path: "/messageBoard"
+      });
+     
       // show: false,
       // sexPicker: false,
       // typePicker: false,
@@ -374,6 +378,10 @@ export default {
 @{aaa} .van-uploader__preview-image {
   width: 2.72rem;
   height: 2rem;
+}
+@{aaa} .van-image__img{
+  height: auto;
+  object-fit: initial !important;
 }
 @{aaa}.van-uploader__preview-delete {
   color: #cccccc;
