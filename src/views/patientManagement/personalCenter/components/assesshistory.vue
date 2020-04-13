@@ -302,16 +302,16 @@ export default {
             },
             axisLabel: {
               color: "#999999",
-              showMinLabel: false
+              showMinLabel: true
             },
             // data: ["", 0, 8, 16, 24]
-            data: [-5, 0, 8, 16, 24]
+            data: [0, 8, 16, 24]
           },
           {
             type: "value",
             boundaryGap: false,
             show: true,
-            min: -8,
+            min: 0,
             max: 24,
             position: "left",
             splitLine: {

@@ -75,7 +75,7 @@ export default {
       this.$emit("likeBtn");
     },
     forwardBtn() {
-      // this.getShareUrl();
+      this.getShareUrl();
       this.$emit("forwardBtn");
     },
     getShareUrl() {

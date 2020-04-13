@@ -32,12 +32,12 @@
           <span class="deg">{{ answerLogs.score }}</span>
           <svg-icon
             iconClass="jiantoushangseng"
-            v-if="parseInt(answerLogs.addScore) >= 0"
+            v-if="parseInt(answerLogs.addScore) > 0"
             class="iconjiantou"
           ></svg-icon>
           <svg-icon
             iconClass="jiantouchiping"
-            v-else-if="answerLogs.addScore === ''"
+            v-else-if="answerLogs.addScore == '' || parseInt(answerLogs.addScore) == 0"
             class="iconjiantou"
           ></svg-icon>
           <svg-icon
@@ -102,7 +102,7 @@
               <div v-if="index < 3" class="coloracadaf font-size28">{{ item.date }}</div>
             </div>
           </div>
-          <div v-else>你还没有进行收藏</div>
+          <div style="font-size:.28rem" v-else>您还没有进行收藏</div>
         </div>
       </div>
     </div>
@@ -117,8 +117,8 @@
           </span>
         </div>
         <div class="itemlist">
-          <div class="iteminner" v-if="Object.keys(answerLogs).length>0">
-            <div class="color52 font-size28">
+          <div class="iteminner">
+            <div class="color52 font-size28" v-if="Object.keys(answerLogs).length>0">
               <div
                 class="color3 font-size30 fmmedium"
               >{{ user.name != "" ? user.name : user.nickName }}</div>
@@ -127,9 +127,9 @@
                 <b class="color009966 fmmedium">{{ answerLogs.score }}分</b>
               </div>
             </div>
+            <div style="font-size:.28rem" v-else>您还没有进行评估</div>
             <div class="btnpage" @click="todiseaseTest()">去评估</div>
           </div>
-          <div v-else>你还没有进行评估</div>
         </div>
       </div>
     </div>
@@ -140,8 +140,8 @@
           <span>我的留言板</span>
         </div>
         <div class="itemlist">
-          <div class="iteminner" v-if="Object.keys(msglist).length > 0">
-            <div class="color52 font-size28">
+          <div class="iteminner">
+            <div class="color52 font-size28" v-if="Object.keys(msglist).length > 0">
               <div class="color3 font-size30 fmmedium">
                 {{ msglist.sex }}
                 <span
@@ -154,9 +154,9 @@
                 <b class="color009966 fmmedium">{{ msglist.before }}</b>
               </div>
             </div>
+            <div style="font-size:.28rem" v-else>您还没有进行留言</div>
             <div class="btnpage" @click="toPageleavemessage()">去留言</div>
           </div>
-          <div v-else>你还没有进行留言</div>
         </div>
       </div>
     </div>
