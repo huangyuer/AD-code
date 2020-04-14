@@ -3,7 +3,7 @@
     <!-- <svg-icon iconClass='xiala' className='icon'></svg-icon> -->
     <div class="MapCenter">
       <!-- <div class="searchdiv" @click="searchpage()"></div> -->
-      <div style="padding-top:.4rem"></div>
+      <div style="padding-top:.4rem;line-height:0"></div>
       <div class="searchwapper" v-if="isExitSearch" @click="searchpage()">
         <van-search
           v-model="valuesearch"
@@ -106,9 +106,14 @@ export default {
       doctors: [],
       showactionsheet: false,
       actions: [
+        {
+          name: "腾讯地图",
+          color: "#07c160",
+          subname: "推荐",
+          className: "push"
+        },
         { name: "高德地图", color: "#07c160" },
-        { name: "百度地图", color: "#07c160" },
-        { name: "腾讯地图", color: "#07c160" }
+        { name: "百度地图", color: "#07c160" }
       ]
     };
   },
@@ -253,7 +258,7 @@ export default {
         var pt = new BMap.Point(this.hospitals[i].x, this.hospitals[i].y);
         var myIcon = new BMap.Icon(
           require("../../../assets/locationpng.png"),
-          new BMap.Size(32, 62)
+          new BMap.Size(32, 68)
         );
         var marker2 = new BMap.Marker(pt, { icon: myIcon }); // 创建标注
         map.addOverlay(marker2);
@@ -300,13 +305,20 @@ export default {
       // 将标注添加到地图中
       map.addOverlay(marker2);
       // 创建polyline对象
-      var polyline = new BMap.Polyline([pointstart, pointend], {
-        enableEditing: false, //是否启用线编辑，默认为false
-        enableClicking: true, //是否响应点击事件，默认为true
-        strokeWeight: "10", //折线的宽度，以像素为单位
-        strokeColor: "#90ADFF" //折线颜色
+      // var polyline = new BMap.Polyline([pointstart, pointend], {
+      //   enableEditing: false, //是否启用线编辑，默认为false
+      //   enableClicking: true, //是否响应点击事件，默认为true
+      //   strokeWeight: "10", //折线的宽度，以像素为单位
+      //   strokeColor: "#90ADFF" //折线颜色
+      // });
+      // map.addOverlay(polyline);
+      var driving = new BMap.DrivingRoute(map, {
+        renderOptions: {
+          map: map,
+          autoViewport: true
+        }
       });
-      map.addOverlay(polyline);
+      driving.search(pointstart, pointend);
     },
     togoNavPART(bool) {
       this.showactionsheet = bool;
@@ -580,7 +592,8 @@ export default {
   border-radius: 0.51rem;
   height: 0.72rem;
   margin: 0 0.32rem;
-  padding: 0px;
+  padding: 0;
+  line-height: 0;
 }
 @{aaa} .van-search__content {
   padding-left: 0.32rem;
@@ -629,5 +642,11 @@ export default {
 }
 @{aaa}.van-action-sheet {
   z-index: 3000 !important;
+}
+@{aaa}.van-action-sheet__subname {
+  position: absolute;
+  color: red;
+  font-size: 0.24rem;
+  margin-left: 0.08rem;
 }
 </style>

@@ -54,7 +54,7 @@
             <div class="hospitaldetail">
               <div class="hospitalname">
                 {{itemss.name}}
-                <span class="top" v-if="itemss.isAd">首推</span>
+                <span class="top" v-if="itemss.isAd">推荐</span>
                 <span class="hot" v-if="itemss.isZd && !itemss.isAd">热门</span>
               </div>
               <div class="hospitaladdress">{{itemss.address}}</div>
@@ -181,8 +181,7 @@ export default {
       justify-content: space-between;
       align-items: center;
       padding: 0.58rem 0 0.16rem 0;
-      border-bottom: 0.02rem solid rgba(229, 229, 229, 1);
-
+      border-bottom: 0.02rem solid #e5e5e5 !important;
       > div:nth-child(1) {
         font-size: 0.3rem;
         font-family: "PingFangSC-Medium";

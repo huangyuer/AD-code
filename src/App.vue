@@ -11,7 +11,7 @@ export default {
   name: "App",
   data() {
     return {
-      transitionName: "",
+      transitionName: ""
     };
   },
   watch: {
@@ -40,8 +40,8 @@ export default {
       } else {
         this.transitionName = "slide-left";
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -50,14 +50,15 @@ export default {
 #app {
   margin: 0;
   padding: 0;
+  border: 0;
   font-family: PingFangSC-Regular, PingFang SC;
   box-sizing: border-box;
   font-size: 0.24rem;
   height: 100%;
 }
-html,body{
+html,
+body {
   height: 100%;
-
 }
 .slide-right-enter-active,
 .slide-right-leave-active,
