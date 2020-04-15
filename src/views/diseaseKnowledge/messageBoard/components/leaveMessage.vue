@@ -11,9 +11,34 @@
         :border="false"
         show-word-limit
       />
-      <van-uploader v-model="fileList" multiple max-count="4" :after-read="afterRead" />
+      <div style="display:flex;flex-wrap: wrap;">
+        <div style="display:flex;flex-wrap: wrap;" v-if="images.imgSrc.length>0">
+          <div class="van-uploader__preview" v-for="(item,index) in images.imgSrc" :key="index">
+            <van-image
+              width="2.72rem"
+              height="2rem"
+              style="line-height:0;border-radius:.2rem;overflow:hidden"
+              fit="cover"
+              :src="item"
+              @click="openImagePreview(index)"
+            />
+            <i
+              class="van-icon van-icon-clear van-uploader__preview-delete"
+              @click="deletedataImage(index)"
+            ></i>
+          </div>
+        </div>
+
+        <div class="van-uploader">
+          <div class="van-uploader__upload">
+            <i class="van-icon van-icon-photograph van-uploader__upload-icon"></i>
+            <div class="van-uploader__input" @click="openChooseImage()"></div>
+          </div>
+        </div>
+      </div>
+      <!-- <van-uploader v-model="fileList" multiple max-count="4" :after-read="afterRead" /> -->
       <div class="van-field__word-limit picture-limit">
-        <span class="van-field__word-num">{{ fileList.length }}</span>/4
+        <span class="van-field__word-num">{{ images.imgSrc.length }}</span>/4
       </div>
     </div>
     <div class="select-box">
@@ -89,7 +114,7 @@
 <script>
 // import DropdownMenu from "@/components/DropdownMenu";
 import Dialog from "@/components/Dialog";
-import { Toast } from "vant";
+import { Toast, ImagePreview } from "vant";
 import qs from "qs";
 
 export default {
@@ -99,6 +124,15 @@ export default {
     return {
       ageValue: "",
       description: "",
+      ImgDatasSrc: [
+        "https://b.yzcdn.cn/vant/icon-demo-1126.png",
+        "https://b.yzcdn.cn/vant/icon-demo-1126.png"
+      ],
+      images: {
+        localId: [],
+        imgId: [],
+        imgSrc: []
+      },
       fileList: [],
       show: false,
       sexPicker: false,
@@ -113,6 +147,7 @@ export default {
     };
   },
   created() {
+    this.getSignature();
     this.$store.dispatch("diseaseKnowledge/getLvMsgSelect").then(data => {
       this.typeColumns = data.type;
       this.levelColumns = data.level;
@@ -131,6 +166,29 @@ export default {
     levelConfirm(value) {
       this.levelValue = value;
       this.levelPicker = false;
+    },
+    openChooseImage() {
+      if (this.images.imgSrc.length == 4) {
+        Toast("最多可传4张图片");
+        return;
+      }
+      // this.demo();
+      this.setChooseImage();
+      console.log("image====>choose");
+    },
+    deletedataImage(index) {
+      this.images.imgSrc.splice(index, 1);
+      this.images.imgId.splice(index, 1);
+      console.log("this.images.", this.images);
+    },
+    openImagePreview(index) {
+      ImagePreview({
+        images: this.ImgDatasSrc,
+        startPosition: index,
+        onClose() {
+          // do something
+        }
+      });
     },
     afterRead(file, name) {
       if (file.length > 0) {
@@ -166,9 +224,9 @@ export default {
     DropdownchangeValue() {},
     commitBtn() {
       let images = [];
-      for (const key in this.fileList) {
-        if (this.fileList.hasOwnProperty(key)) {
-          images.push(this.fileList[key].images);
+      for (const key in this.images.imgId) {
+        if (this.images.imgId.hasOwnProperty(key)) {
+          images.push(this.images.imgId[key]);
         }
       }
       let params = {
@@ -198,10 +256,10 @@ export default {
       this.levelValue = "";
       this.description = "";
       this.fileList = [];
-       this.$router.push({
+      this.$router.push({
         path: "/messageBoard"
       });
-     
+
       // show: false,
       // sexPicker: false,
       // typePicker: false,
@@ -210,6 +268,90 @@ export default {
       // sexColumns: ["男", "女"],
       // typeColumns: [],
       // levelColumns: []
+    },
+    getSignature() {
+      this.$store
+        .dispatch("common/getSignature", window.location.href)
+        .then(response => {
+          console.log("data", response);
+          wx.config({
+            debug: false,
+            appId: "wx91701d2b2f9ed162",
+            timestamp: response.data.timestamp,
+            nonceStr: response.data.nonce_str,
+            signature: response.data.signature,
+            jsApiList: ["checkJsApi", "chooseImage", "getLocalImgData"]
+          });
+          wx.ready(function() {
+            wx.checkJsApi({
+              jsApiList: ["getLocalImgData"], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+              success: function(res) {
+                console.log("getsuccess");
+              },
+              fail() {
+                console.log("getfail");
+              }
+            });
+          });
+          wx.error(function(res) {
+            console.log("error", res);
+          });
+          wx.success(function(res) {
+            console.log("success", res);
+          });
+        })
+        .catch(e => {});
+    },
+    setChooseImage() {
+      var count = 4 - this.images.imgSrc.length;
+      if (count == 0) {
+        Toast("最多可传4张图片");
+        return;
+      }
+      wx.chooseImage({
+        count: count, // 默认9
+        sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
+        success: function(res) {
+          this.images.localId = res.localIds;
+          if (this.images.localId.length == 0) {
+            Toast("请先选择图片");
+            return;
+          }
+          var length = this.images.localId.length;
+          for (var i = 0; i < length; i++) {
+            wx.getLocalImgData({
+              localId: this.images.localId[i],
+              success: function(res) {
+                var localData = res.localData;
+                let imageBase64 = "";
+                if (localData.indexOf("data:image") == 0) {
+                  //苹果的直接赋值，默认生成'data:image/jpeg;base64,'的头部拼接
+                  imageBase64 = localData;
+                } else {
+                  //此处是安卓中的唯一得坑！在拼接前需要对localData进行换行符的全局替换
+                  //此时一个正常的base64图片路径就完美生成赋值到img的src中了
+                  imageBase64 = "data:image/jpeg;base64," + localData;
+                }
+                imageBase64 = imageBase64
+                  .replace(/\r|\n/g, "")
+                  .replace("data:image/jgp", "data:image/jpeg");
+                this.$store
+                  .dispatch("diseaseKnowledge/uploadBase64File", imageBase64)
+                  .then(data => {
+                    console.log("uploadBase64File=>data", data);
+                    this.images.imgSrc.push(imageBase64);
+                    this.images.imgId.push(data.id);
+                  })
+                  .catch(e => {});
+              }
+            });
+          }
+        },
+        fail() {
+          alert("获取失败");
+        }
+      });
     }
   }
 };
@@ -379,9 +521,9 @@ export default {
   width: 2.72rem;
   height: 2rem;
 }
-@{aaa} .van-image__img{
-  height: auto;
-  object-fit: initial !important;
+@{aaa} .van-image__img {
+  // height: auto;
+  // object-fit: initial !important;
 }
 @{aaa}.van-uploader__preview-delete {
   color: #cccccc;

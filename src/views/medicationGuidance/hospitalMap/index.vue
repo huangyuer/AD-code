@@ -645,8 +645,21 @@ export default {
 }
 @{aaa}.van-action-sheet__subname {
   position: absolute;
-  color: red;
+  height: 0.36rem;
+  line-height: 0.36rem;
+  background: linear-gradient(
+    270deg,
+    rgba(50, 209, 157, 1) 0%,
+    rgba(0, 153, 102, 1) 100%
+  );
   font-size: 0.24rem;
-  margin-left: 0.08rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  padding: 0 0.16rem;
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
+  margin-left: 0.2rem;
+  top: 0.25rem;
 }
 </style>

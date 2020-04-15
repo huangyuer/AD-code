@@ -51,7 +51,7 @@
         <div>
           <div class="title">用药历史：</div>
           <div>
-            <div class="med-title" v-if="answerLog.isAd == '是'">近一周使用过 ：</div>
+            <div class="med-title">近一周使用过 ：</div>
             <div class="medical-list" v-if="answerLog.z_Medication.length != 0">
               <div
                 v-for="(item, key) in answerLog.z_Medication"
@@ -60,7 +60,7 @@
               >{{ item }}</div>
             </div>
           </div>
-          <div v-if="answerLog.isAd == '是'">
+          <div>
             <div class="med-title">曾经使用过 ：</div>
             <div class="medical-list" v-if="answerLog.c_Medication.length != 0">
               <div

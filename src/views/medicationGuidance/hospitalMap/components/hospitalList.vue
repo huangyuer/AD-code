@@ -54,7 +54,7 @@
             <div class="hospitaldetail">
               <div class="hospitalname">
                 {{itemss.name}}
-                <span class="top" v-if="itemss.isAd">推荐</span>
+                <span class="top" v-if="itemss.isAd">首推</span>
                 <span class="hot" v-if="itemss.isZd && !itemss.isAd">热门</span>
               </div>
               <div class="hospitaladdress">{{itemss.address}}</div>

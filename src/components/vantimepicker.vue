@@ -35,32 +35,32 @@ export default {
   props: {
     formvalue: {
       type: String,
-      default: "",
+      default: ""
     },
     formlabel: {
       type: String,
-      default: "",
+      default: ""
     },
     formplaceholder: {
       type: String,
-      default: "",
+      default: ""
     },
     forminputalign: {
       type: String,
-      default: "",
+      default: ""
     },
     formshowArea: {
       type: Boolean,
-      default: false,
+      default: false
     },
     formtype: {
       type: String,
-      default: "",
+      default: ""
     },
     isFirstEnter: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   data() {
     return {
@@ -69,7 +69,7 @@ export default {
       minDate: new Date(1920, 0, 1),
       maxDate: new Date(),
       currentDate: new Date(),
-      value: "",
+      value: ""
     };
   },
   mounted() {
@@ -102,8 +102,8 @@ export default {
       this.showdate = false;
       this.value = datetime;
       this.$emit("IsshowTime", datetime);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -121,9 +121,14 @@ export default {
       padding-right: 0;
     }
   }
-  &.isyear{
-    @{aaa}.van-cell{
+  &.isyear {
+    @{aaa}.van-cell {
       padding: 0.7rem 0.32rem 0.2rem 0.32rem;
+      display: flex;
+      align-items: center;
+    }
+    @{aaa}img {
+      top: calc(50% + 0.1rem);
     }
   }
 }

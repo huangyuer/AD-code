@@ -75,7 +75,7 @@ export default {
       this.$emit("likeBtn");
     },
     forwardBtn() {
-      this.getShareUrl();
+      // this.getShareUrl();
       this.$emit("forwardBtn");
     },
     getShareUrl() {
@@ -104,10 +104,10 @@ export default {
             signature: response.data.signature,
             jsApiList: [
               "checkJsApi",
-              "updateTimelineShareData",
-              "updateAppMessageShareData",
-              "onMenuShareWeibo",
-              "onMenuShareQZone"
+              "onMenuShareTimeline",
+              "onMenuShareAppMessage",
+              "onMenuShareQQ",
+              "onMenuShareWeibo"
             ] // 必填，需要使用的JS接口列表
           });
 
