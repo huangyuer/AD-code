@@ -147,22 +147,18 @@ export default {
     };
   },
   created() {
-      this.$store
-        .dispatch("diseaseKnowledge/getLvMsgUrl")
-        .then(response => {
-          console.log("data",window.location.href,);
-          console.log("data22",response.url);
+    this.$store.dispatch("diseaseKnowledge/getLvMsgUrl").then(response => {
+      console.log("data", window.location.href);
+      console.log("data22", response.url);
 
-          var ua = navigator.userAgent.toLowerCase();
-            if(ua.match(/MicroMessenger/i)=="micromessenger") {
-              this.getSignature(response.url);
-            } else {
-                this.getSignature( windows.location.href);
-            }
-         
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        this.getSignature(response.url);
+      } else {
+        this.getSignature(windows.location.href);
+      }
+    });
 
-        })
-    
     this.$store.dispatch("diseaseKnowledge/getLvMsgSelect").then(data => {
       this.typeColumns = data.type;
       this.levelColumns = data.level;
@@ -198,7 +194,7 @@ export default {
     },
     openImagePreview(index) {
       ImagePreview({
-        images: this.ImgDatasSrc,
+        images: this.images.imgSrc,
         startPosition: index,
         onClose() {
           // do something
@@ -318,7 +314,7 @@ export default {
         .catch(e => {});
     },
     setChooseImage() {
-      let _this=this;
+      let _this = this;
       var count = 4 - this.images.imgSrc.length;
       if (count == 0) {
         Toast("最多可传4张图片");
@@ -352,7 +348,7 @@ export default {
                 imageBase64 = imageBase64
                   .replace(/\r|\n/g, "")
                   .replace("data:image/jgp", "data:image/jpeg");
-                  console.log("uploadBase64File", imageBase64);
+                console.log("uploadBase64File", imageBase64);
                 _this.$store
                   .dispatch("diseaseKnowledge/uploadBase64File", imageBase64)
                   .then(data => {
