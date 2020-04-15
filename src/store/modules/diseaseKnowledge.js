@@ -9,6 +9,7 @@ import {
     delLeaveMsg,
     getLvMsgSelect,
     uploadBase64File,
+    getLvMsgUrl
 } from "@/api/diseaseKnowledge";
 
 const state = {
@@ -223,6 +224,24 @@ const actions = {
             uploadBase64File({
                     base64: params
                 })
+                .then(response => {
+                    const {
+                        msg,
+                        data
+                    } = response;
+                    resolve(data);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    },
+
+    getLvMsgUrl({
+        commit
+    }, params) {
+        return new Promise((resolve, reject) => {
+            getLvMsgUrl()
                 .then(response => {
                     const {
                         msg,

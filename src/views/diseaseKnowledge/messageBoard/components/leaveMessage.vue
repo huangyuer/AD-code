@@ -147,7 +147,22 @@ export default {
     };
   },
   created() {
-    this.getSignature();
+      this.$store
+        .dispatch("diseaseKnowledge/getLvMsgUrl")
+        .then(response => {
+          console.log("data",window.location.href,);
+          console.log("data22",response.url);
+
+          var ua = navigator.userAgent.toLowerCase();
+            if(ua.match(/MicroMessenger/i)=="micromessenger") {
+              this.getSignature(response.url);
+            } else {
+                this.getSignature( windows.location.href);
+            }
+         
+
+        })
+    
     this.$store.dispatch("diseaseKnowledge/getLvMsgSelect").then(data => {
       this.typeColumns = data.type;
       this.levelColumns = data.level;
@@ -269,9 +284,9 @@ export default {
       // typeColumns: [],
       // levelColumns: []
     },
-    getSignature() {
+    getSignature(url) {
       this.$store
-        .dispatch("common/getSignature", window.location.href)
+        .dispatch("common/getSignature", url)
         .then(response => {
           console.log("data", response);
           wx.config({
@@ -303,6 +318,7 @@ export default {
         .catch(e => {});
     },
     setChooseImage() {
+      let _this=this;
       var count = 4 - this.images.imgSrc.length;
       if (count == 0) {
         Toast("最多可传4张图片");
@@ -313,15 +329,15 @@ export default {
         sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
         success: function(res) {
-          this.images.localId = res.localIds;
-          if (this.images.localId.length == 0) {
+          _this.images.localId = res.localIds;
+          if (_this.images.localId.length == 0) {
             Toast("请先选择图片");
             return;
           }
-          var length = this.images.localId.length;
+          var length = _this.images.localId.length;
           for (var i = 0; i < length; i++) {
             wx.getLocalImgData({
-              localId: this.images.localId[i],
+              localId: _this.images.localId[i],
               success: function(res) {
                 var localData = res.localData;
                 let imageBase64 = "";
@@ -336,12 +352,13 @@ export default {
                 imageBase64 = imageBase64
                   .replace(/\r|\n/g, "")
                   .replace("data:image/jgp", "data:image/jpeg");
-                this.$store
+                  console.log("uploadBase64File", imageBase64);
+                _this.$store
                   .dispatch("diseaseKnowledge/uploadBase64File", imageBase64)
                   .then(data => {
                     console.log("uploadBase64File=>data", data);
-                    this.images.imgSrc.push(imageBase64);
-                    this.images.imgId.push(data.id);
+                    _this.images.imgSrc.push(imageBase64);
+                    _this.images.imgId.push(data.id);
                   })
                   .catch(e => {});
               }

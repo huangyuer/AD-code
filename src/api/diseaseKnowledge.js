@@ -67,9 +67,17 @@ export function getLvMsgSelect() {
     })
 }
 
-export function uploadBase64File() {
+export function uploadBase64File(data) {
     return request({
         url: '/uploadBase64File',
-        method: 'post'
+        method: 'post',
+        data
+    })
+}
+
+export function getLvMsgUrl() {
+    return request({
+        url: '/getLvMsgUrl',
+        method: 'post',
     })
 }
