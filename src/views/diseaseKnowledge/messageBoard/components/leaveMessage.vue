@@ -12,22 +12,22 @@
         show-word-limit
       />
       <div style="display:flex;flex-wrap: wrap;">
-        <div style="display:flex;flex-wrap: wrap; margin-left: 8px;" v-if="images.imgSrc.length>0">
-          <div class="van-uploader__preview" v-for="(item,index) in images.imgSrc" :key="index">
-            <van-image
-              width="2.72rem"
-              height="2rem"
-              style="line-height:0;border-radius:.2rem;overflow:hidden"
-              fit="cover"
-              :src="item"
-              @click="openImagePreview(index)"
-            />
-            <i
-              class="van-icon van-icon-clear van-uploader__preview-delete"
-              @click="deletedataImage(index)"
-            ></i>
-          </div>
+        <!-- <div style="display:flex;flex-wrap: wrap; margin-left: 8px;" v-if="images.imgSrc.length>0"> -->
+        <div class="van-uploader__preview" v-for="(item,index) in images.imgSrc" :key="index">
+          <van-image
+            width="2.72rem"
+            height="2rem"
+            style="line-height:0;border-radius:.2rem;overflow:hidden"
+            fit="cover"
+            :src="item"
+            @click="openImagePreview(index)"
+          />
+          <i
+            class="van-icon van-icon-clear van-uploader__preview-delete"
+            @click="deletedataImage(index)"
+          ></i>
         </div>
+        <!-- </div> -->
 
         <div class="van-uploader" v-if="images.imgSrc.length<4">
           <div class="van-uploader__upload">
