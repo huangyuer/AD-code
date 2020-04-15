@@ -63,8 +63,8 @@ router.beforeEach((to, from, next) => {
         }
       });
     } else {
-        setOpenId('oiqI3whHXikr12gjRdg2Ynh4yYJM')
-      // store.dispatch('register/getOpenIdApi').then(() => {
+        // setOpenId('oiqI3whHXikr12gjRdg2Ynh4yYJM')
+      store.dispatch('register/getOpenIdApi').then(() => {
         store.dispatch("register/login1").then((res) => {
           if (res.token) {
             next();
@@ -80,7 +80,7 @@ router.beforeEach((to, from, next) => {
 
           }
         });
-      // })
+      })
     }
   }
   //   if(getOpenId()){

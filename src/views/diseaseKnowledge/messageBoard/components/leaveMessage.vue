@@ -12,7 +12,7 @@
         show-word-limit
       />
       <div style="display:flex;flex-wrap: wrap;">
-        <div style="display:flex;flex-wrap: wrap;" v-if="images.imgSrc.length>0">
+        <div style="display:flex;flex-wrap: wrap; margin-left: 8px;" v-if="images.imgSrc.length>0">
           <div class="van-uploader__preview" v-for="(item,index) in images.imgSrc" :key="index">
             <van-image
               width="2.72rem"
@@ -29,7 +29,7 @@
           </div>
         </div>
 
-        <div class="van-uploader">
+        <div class="van-uploader" v-if="images.imgSrc.length<4">
           <div class="van-uploader__upload">
             <i class="van-icon van-icon-photograph van-uploader__upload-icon"></i>
             <div class="van-uploader__input" @click="openChooseImage()"></div>
@@ -155,7 +155,7 @@ export default {
       if (ua.match(/MicroMessenger/i) == "micromessenger") {
         this.getSignature(response.url);
       } else {
-        this.getSignature(windows.location.href);
+        this.getSignature(window.location.href);
       }
     });
 
