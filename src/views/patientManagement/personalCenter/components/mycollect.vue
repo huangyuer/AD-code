@@ -97,7 +97,7 @@ export default {
             isStar: true
           }
         });
-      } else if (item.menu == "常用药物" || item.menu == "关爱行动") {
+      } else if (item.menu == "诊疗方法" || item.menu == "关爱行动") {
         this.$router.push({
           path: "/DetailInfo",
           name: "DetailInfo",

@@ -24,6 +24,7 @@
           @change="onChange"
         >
           <van-swipe-item v-if="!istouchable">
+            <svg-icon iconClass="logo" class="logo"></svg-icon>
             <div class="swipediv">{{ firstquestion.questions[0].title }}</div>
             <radio-box
               :list="firstquestion.questions[0].options"
@@ -299,6 +300,7 @@ export default {
 </script>
 <style lang="less" scoped>
 @aaa: ~">>>";
+
 .TestWapper {
   position: relative;
   height: 100vh;
@@ -354,6 +356,11 @@ export default {
       box-shadow: 0px 0.04rem 0.02rem 0px rgba(195, 223, 214, 1);
       box-sizing: border-box;
       overflow-y: auto;
+      .logo {
+        width: 1.6rem !important;
+        height: 1.32rem !important;
+        margin: 0.6rem auto;
+      }
     }
     .custom-indicator {
       position: absolute;
@@ -378,7 +385,6 @@ export default {
     color: rgba(51, 51, 51, 1);
     line-height: 0.42rem;
     text-align: left;
-    padding-top: 1.58rem;
     width: 88%;
     margin: 0 auto;
   }

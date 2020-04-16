@@ -1,5 +1,6 @@
 <template>
   <div class="register">
+    <svg-icon iconClass="logo" class="logo"></svg-icon>
     <div class="register-box" v-if="showRe">
       <van-field v-model="tel" type="tel" placeholder="请输入手机号" />
       <van-field v-model="sms" center clearable placeholder="请输入短信验证码">
@@ -145,6 +146,11 @@ export default {
 </script>
 <style lang="less" scoped>
 @aaa: ~">>>";
+.logo {
+  width: 1.6rem !important;
+  height: 1.32rem !important;
+  margin: 0.4rem auto 0.2rem;
+}
 .register {
   display: flex;
   align-items: center;

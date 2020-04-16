@@ -111,7 +111,7 @@ export default new Router({
                 import ("@/views/medicationGuidance/medicationInstructions"),
             name: "MedicationInstructions",
             meta: {
-                title: "常用药物",
+                title: "诊疗方法",
                 index: 1
             }
         },
@@ -121,7 +121,7 @@ export default new Router({
                 import ("@/components/DetailInfo"),
             name: "DetailInfo",
             meta: {
-                title: "常用药物",
+                title: "诊疗方法",
                 index: 3
             }
         },
