@@ -543,4 +543,7 @@ export default {
   font-size: 0.32rem;
   background-color: #fff;
 }
+@{aaa}.dialog-content {
+  color: #999999 !important;
+}
 </style>
