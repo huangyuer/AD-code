@@ -9,7 +9,12 @@ import {
   getOpenId,
   setOpenId,
   setToken,
-  removeToken
+  removeToken,
+  setCode,
+  getCode,
+  removeCode,
+  GetQueryString,
+  GetUrlParame
 } from "@/utils/auth";
 import router from "@/router";
 // import router, { resetRouter } from '@/router'
@@ -35,21 +40,26 @@ const mutations = {
 
 const actions = {
   getOpenIdApi({ commit }) {
-    const AppId = "wx91701d2b2f9ed162"; // 测试公众号平台的APPID，第1步那个链接里
-    const { code = "" } = qs.parse(window.location.search); // 获取当前页面地址中的code参数的值
-    const local = window.location.href; // 对当前地址用encodeURIComponent进行编码
-    // 如果code是''，说明还没有授权，访问下面连接，用户同意授权，获取code
-    if (code === "") {
-      // console.log("获取微信code：", encodeURIComponent(local, "UTF-8"));
-      window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${AppId}&redirect_uri=${encodeURIComponent(
-        local,
-        "UTF-8"
-      )}&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect`;
-    } else {
+    if (!GetQueryString("code")&&!getCode()) {
+      const AppId = "wx91701d2b2f9ed162"; // 测试公众号平台的APPID，第1步那个链接里
+     
+      // const code=window.location.search; // 获取当前页面地址中的code参数的值
+      const local = window.location.href; // 对当前地址用encodeURIComponent进行编码
+      // 如果code是''，说明还没有授权，访问下面连接，用户同意授权，获取code
+     
+        // console.log("获取微信code：", encodeURIComponent(local, "UTF-8"));
+        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${AppId}&redirect_uri=${encodeURIComponent(
+          local,
+          "UTF-8"
+        )}&response_type=code&scope=snsapi_base&state=1&connect_redirect=1#wechat_redirect`;
+      } 
+    else {
+      let code=GetUrlParame('code')
+      setCode(code)
       console.log("code", code);
       return new Promise((resolve, reject) => {
         getOpenIdApi({
-          code: code
+          code: GetUrlParame('code')
         })
           .then(response => {
             const { data } = response;
@@ -64,6 +74,36 @@ const actions = {
       });
     }
   },
+  // getOpenIdApi({ commit }) {
+  //   const AppId = "wx91701d2b2f9ed162"; // 测试公众号平台的APPID，第1步那个链接里
+  //   const { code = "" } = qs.parse(window.location.search); // 获取当前页面地址中的code参数的值
+  //   const local = window.location.href; // 对当前地址用encodeURIComponent进行编码
+  //   // 如果code是''，说明还没有授权，访问下面连接，用户同意授权，获取code
+  //   if (code === "") {
+  //     // console.log("获取微信code：", encodeURIComponent(local, "UTF-8"));
+  //     window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${AppId}&redirect_uri=${encodeURIComponent(
+  //       local,
+  //       "UTF-8"
+  //     )}&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect`;
+  //   } else {
+  //     console.log("code", code);
+  //     return new Promise((resolve, reject) => {
+  //       getOpenIdApi({
+  //         code: code
+  //       })
+  //         .then(response => {
+  //           const { data } = response;
+  //           commit("SET_OPENID", data.openId);
+  //           setOpenId(data.openId);
+  //           resolve();
+  //           console.log("----ddd", response);
+  //         })
+  //         .catch(error => {
+  //           reject(error);
+  //         });
+  //     });
+  //   }
+  // },
   sendValidateCode({ commit }, phone) {
     return new Promise((resolve, reject) => {
       sendValidateCode({

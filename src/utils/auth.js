@@ -27,3 +27,41 @@ export function setOpenId(OpenId) {
 export function removeOpenId() {
   return Cookies.remove(OpenIdKey)
 }
+
+const codeKey = 'Admin-codeId'
+export function getCode() {
+  return Cookies.get(codeKey)
+}
+
+export function setCode(code) {
+  return Cookies.set(codeKey, code)
+}
+
+export function removeCode() {
+  return Cookies.remove(codeKey)
+}
+
+
+
+export function GetQueryString(name){
+  var reg=new RegExp('(^|&)'+name+'=([^&]*)(&|$)','i');
+  var r=window.location.search.substr(1).match(reg);
+  if(r!=null){
+      return unescape(r[2]);
+  }
+  return null;
+}
+//截取code
+export function GetUrlParame(parameName){
+    var params=window.location.search
+    if(params.indexOf(parameName)>-1){
+        var paramValue=''
+        paramValue=params.substring(params.indexOf(parameName),params.length)
+        if(paramValue.indexOf('&'>-1)){
+            paramValue=paramValue.substring(0,paramValue.indexOf("&"))
+            paramValue=paramValue.replace(parameName+'=','')
+            return paramValue
+        }
+        return ''
+    }
+}
