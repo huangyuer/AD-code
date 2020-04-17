@@ -161,6 +161,7 @@ export default {
     color: rgba(102, 102, 102, 1);
     line-height: 0.4rem;
     text-align: center;
+    min-height: 5rem;
     .header {
       font-size: 0.3rem;
       font-family: "PingFangSC-Medium";
@@ -188,11 +189,11 @@ export default {
   font-weight: 500;
   color: rgba(255, 255, 255, 1);
   line-height: 0.8rem;
-  margin-top: auto;
-  margin-bottom: 2.4rem;
-  position: absolute;
-  bottom: 0;
-  left: calc(50% - 3rem);
+  // margin-top: auto;
+  margin-bottom: 0.8rem;
+  // position: absolute;
+  // bottom: 0;
+  // left: calc(50% - 3rem);
 }
 .titledetail {
   font-size: 0.28rem;
@@ -200,12 +201,12 @@ export default {
   font-weight: 400;
   color: #999999;
   text-align: center;
-  margin-top: auto;
-  width: 5rem;
-  margin-bottom: 0.84rem;
-  position: absolute;
-  bottom: 0;
-  left: calc(50% - 2.5rem);
+  // margin-top: auto;
+  // width: 5rem;
+  // margin-bottom: 0.84rem;
+  // position: absolute;
+  // bottom: 0;
+  // left: calc(50% - 2.5rem);
   > b {
     color: #ff755a;
     font-weight: 500;

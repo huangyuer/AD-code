@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="tips">
-            <b class="first">友情提示：</b>就诊时，携带
+            <b class="colorred">*</b>就诊时，携带
             <b class="colorred">药盒</b>并展示
             <b class="colorred">自评报告</b>，有助于医生评估病情。
           </div>
@@ -264,17 +264,13 @@ export default {
         }
       }
       .tips {
-        font-size: 0.28rem;
+        font-size: 0.24rem;
         // font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        color: rgba(51, 51, 51, 1);
+        color: #666666;
         padding-top: 0.2rem;
         padding-bottom: 0.6rem;
         border-top: 0.02rem solid #e5e5e5;
-        > .first {
-          color: #333333;
-          font-weight: 600;
-        }
         > .colorred {
           color: #ff755a;
           font-weight: 500;

@@ -39,7 +39,10 @@
           >{{ answerLog.conclusion.answer }}</b>
         </div>
         <div v-if="answerLog.adReason.length != 0">
-          <div class="title">问题原因：</div>
+          <div class="title">
+            主要症状
+            <b class="color9">(近一周)</b>：
+          </div>
           <div v-for="(item, index) in answerLog.adReason" :key="index">
             <div class="result-one">
               {{ item.msg.split("[]")[0] }}
@@ -71,6 +74,10 @@
             </div>
           </div>
         </div>
+        <div class="linkback" @click="linkpage()">
+          <span>查看评估历史</span>
+          <img :src="require('@/assets/up.png')" />
+        </div>
         <div class="tip">
           <b>*</b>可向您的主治医生出示测试结果，以便医生更好了解特应性皮炎对您造成的影响
         </div>
@@ -99,6 +106,9 @@ export default {
     this.getAnswerLog();
   },
   methods: {
+    linkpage() {
+      this.$router.push({ path: "/assesshistory" });
+    },
     getBLen(str) {
       if (str == null) return 0;
       if (typeof str != "string") {
@@ -200,6 +210,10 @@ export default {
         color: rgba(0, 153, 102, 1);
         margin-top: 0.4rem;
         margin-bottom: 0.2rem;
+        > .color9 {
+          color: #999999;
+          font-weight: normal;
+        }
       }
       .med-title {
         font-size: 0.28rem;
@@ -275,6 +289,24 @@ export default {
           &.islong {
             width: 6rem;
           }
+        }
+      }
+      .linkback {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0.4rem;
+        span {
+          font-size: 0.24rem;
+          font-weight: 400;
+          color: rgba(0, 153, 102, 1);
+          text-decoration: underline;
+        }
+        img {
+          width: 0.28rem;
+          height: 0.28rem;
+          transform: rotate(90deg);
+          margin-left: 0.12rem;
         }
       }
       .tip {

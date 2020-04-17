@@ -163,7 +163,7 @@ export default {
     align-items: center;
     border-bottom: 0.02rem solid #e5e5e5;
     span {
-      font-size: 0.3rem;
+      font-size: 0.28rem;
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 500;
       color: rgba(51, 51, 51, 1);

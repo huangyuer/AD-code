@@ -66,7 +66,9 @@
       <!-- 任务列表 -->
       <div class="tipitem task" ref="taskitemlist">
         <div class="tipitem-header">
-          <span>任务列表</span>
+          <span>
+            <svg-icon iconClass="tuoyuan" class="tuoyuan"></svg-icon>任务列表
+          </span>
           <span ref="text" @click="isshoeAll()">显示全部</span>
         </div>
         <div class="itemlist">
@@ -79,7 +81,9 @@
                   'font-size28': true,
                 }"
               >{{ item.name }}（{{ item.num }}/{{ item.limit }}）</div>
-              <div class="btnpage whitenone">{{ item.status }}</div>
+              <div
+                :class="{btnpage:true,whitenone:true,color7:item.status == '未完成'}"
+              >{{ item.status }}</div>
             </div>
           </div>
         </div>
@@ -89,7 +93,9 @@
       <!-- 我的收藏 -->
       <div class="tipitem">
         <div class="tipitem-header">
-          <span>我的收藏</span>
+          <span>
+            <svg-icon iconClass="tuoyuan" class="tuoyuan"></svg-icon>我的收藏
+          </span>
           <span @click="toPagemycollect()">
             更多
             <img :src="require('@/assets/up.png')" />
@@ -110,15 +116,17 @@
       <!-- 自我评估 -->
       <div class="tipitem">
         <div class="tipitem-header">
-          <span>自我评估</span>
-          <span @click="toPagetesthistory()">
-            查看历史
+          <span>
+            <svg-icon iconClass="tuoyuan" class="tuoyuan"></svg-icon>自我评估
+          </span>
+          <span @click="todiseaseTest()">
+            去评估
             <img :src="require('@/assets/up.png')" />
           </span>
         </div>
         <div class="itemlist">
-          <div class="iteminner">
-            <div class="color52 font-size28" v-if="Object.keys(answerLogs).length>0">
+          <div class="iteminner" v-if="Object.keys(answerLogs).length>0">
+            <div class="color52 font-size28">
               <div
                 class="color3 font-size30 fmmedium"
               >{{ user.name != "" ? user.name : user.nickName }}</div>
@@ -127,9 +135,9 @@
                 <b class="color009966 fmmedium">{{ answerLogs.score }}分</b>
               </div>
             </div>
-            <div style="font-size:.28rem" v-else>您还没有进行评估</div>
-            <div class="btnpage" @click="todiseaseTest()">去评估</div>
+            <div class="btnpage" @click="toPagetesthistory()">查看报告</div>
           </div>
+          <div style="font-size:.28rem" v-else>您还没有进行评估</div>
         </div>
       </div>
     </div>
@@ -137,11 +145,17 @@
       <!-- 我的留言板 -->
       <div class="tipitem">
         <div class="tipitem-header">
-          <span>我的留言板</span>
+          <span>
+            <svg-icon iconClass="tuoyuan" class="tuoyuan"></svg-icon>我的留言板
+          </span>
+          <span @click="toPageleavemessage()">
+            去留言
+            <img :src="require('@/assets/up.png')" />
+          </span>
         </div>
         <div class="itemlist">
-          <div class="iteminner">
-            <div class="color52 font-size28" v-if="Object.keys(msglist).length > 0">
+          <div class="iteminner" v-if="Object.keys(msglist).length > 0">
+            <div class="color52 font-size28">
               <div class="color3 font-size30 fmmedium">
                 {{ msglist.sex }}
                 <span
@@ -154,9 +168,9 @@
                 <b class="color009966 fmmedium">{{ msglist.before }}</b>
               </div>
             </div>
-            <div style="font-size:.28rem" v-else>您还没有进行留言</div>
-            <div class="btnpage" @click="toPageleavemessage()">去留言</div>
+            <div class="btnpage" @click="toPagelookmessage()">查看留言</div>
           </div>
+          <div style="font-size:.28rem" v-else>您还没有进行留言</div>
         </div>
       </div>
     </div>
@@ -215,14 +229,23 @@ export default {
     toPagemycollect() {
       this.$router.push({ path: "/myCollect" });
     },
-    toPagetesthistory() {
-      this.$router.push({ path: "/assesshistory" });
-    },
     todiseaseTest() {
       this.$router.push({ path: "/diseaseTest" });
     },
+    toPagetesthistory() {
+      this.$router.push({
+        path: "/assesshistory/assessDetail?id=" + this.answerLogs._id
+      });
+    },
     toPageleavemessage() {
       this.$router.push({ path: "/messageBoard/leaveMessage" });
+    },
+    toPagelookmessage() {
+      this.$router.push({
+        path: "/MessageDetail",
+        name: "MessageDetail",
+        params: { msgItem: this.msglist }
+      });
     },
     getTasks() {
       this.$store
@@ -320,6 +343,11 @@ export default {
 </script>
 <style lang="less" scoped>
 @aaa: ~">>>";
+.tuoyuan {
+  width: 0.2rem !important;
+  height: 0.2rem !important;
+  margin-right: 0.12rem;
+}
 @{aaa} .dialog {
   padding: 0.4rem 0.3rem 0.6rem 0.3rem !important;
 }
@@ -485,6 +513,8 @@ export default {
           font-family: "PingFangSC-Medium";
           font-weight: 500;
           color: rgba(36, 36, 36, 1);
+          display: flex;
+          align-items: center;
         }
         span:nth-child(2) {
           font-size: 0.26rem;
@@ -553,6 +583,10 @@ export default {
             border: 0.02rem solid rgba(216, 216, 216, 1);
             color: #999999;
             background: #ffffff;
+            &.color7 {
+              color: #ff755a;
+              border: 0.02rem solid #ff755a;
+            }
           }
           &.greeTo {
             border: 0.02rem solid #009966;

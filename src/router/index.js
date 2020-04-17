@@ -247,7 +247,7 @@ export default new Router({
             name: 'assessDetail',
             meta: {
                 title: "评估详情",
-                index: 3
+                index: 2
             }
         },
         {

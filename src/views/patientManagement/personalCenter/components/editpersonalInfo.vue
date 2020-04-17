@@ -217,9 +217,14 @@ export default {
     },
     checkAll() {},
     onChange(value) {
+      var botton = document.getElementsByClassName(
+        "van-slider__button-wrapper"
+      )[0];
       if (value == 0) {
         this.$set(this.form, "level", "轻度");
+        botton.style.right = "-0.22rem";
       } else if (value == 50) {
+        botton.style.right = "0";
         document
           .getElementsByClassName("van-slider__bar")[0]
           .classList.add("backgroundColor50");
@@ -234,6 +239,7 @@ export default {
         }
         this.$set(this.form, "level", "中度");
       } else {
+        botton.style.right = "0.22rem";
         if (
           document
             .getElementsByClassName("van-slider__bar")[0]
@@ -395,7 +401,7 @@ export default {
     justify-content: space-between;
     color: #333333;
     font-size: 0.28rem;
-    width: 6rem;
+    width: 6.8rem;
     margin: 0.12rem 0.32rem 0.32rem 0.32rem;
   }
 }
@@ -403,7 +409,7 @@ export default {
   position: relative;
   cursor: pointer;
   margin: 0 0.32rem 0.16rem 0.32rem;
-  width: 6rem;
+  width: 6.8rem;
   height: 0.16rem;
   background: #cdcdcd;
   box-shadow: 0px 0.04rem 0.08rem 0px rgba(103, 103, 103, 0.5);
@@ -444,6 +450,9 @@ export default {
     rgba(0, 153, 102, 1) 100%
   );
   box-shadow: 0px 0.04rem 0.08rem 0px rgba(58, 170, 133, 1);
+  right: -0.22rem;
+}
+@{aaa}.van-slider__button-wrapper {
   right: -0.22rem;
 }
 .baseinfo {

@@ -39,33 +39,32 @@
         <!-- </van-sticky> -->
       </div>
       <div class="hospitalContent">
-        <div
-          class="hospitalItem"
-          v-if="itemlist.length>0"
-          v-for="(itemss, key) in itemlist"
-          :key="key"
-          @click="toPageDetail(itemss)"
-        >
-          <!-- <template v-for='items in item'>
-          <template  v-for='(itemss, indexs) in items'>-->
-          <!-- <td>{{itemss}}</td> -->
-          <div class="left">
-            <div class="hospitalIndex">{{key+1}}</div>
-            <div class="hospitaldetail">
-              <div class="hospitalname">
-                {{itemss.name}}
-                <span class="top" v-if="itemss.isAd">首推</span>
-                <span class="hot" v-if="itemss.isZd && !itemss.isAd">热门</span>
+        <div v-if="itemlist.length>0">
+          <div
+            class="hospitalItem"
+            v-for="(itemss, key) in itemlist"
+            :key="key"
+            @click="toPageDetail(itemss)"
+          >
+            <div class="left">
+              <div class="hospitalIndex">{{key+1}}</div>
+              <div class="hospitaldetail">
+                <div class="hospitalname">
+                  {{itemss.name}}
+                  <span class="top" v-if="itemss.isAd">首推</span>
+                  <span class="hot" v-if="itemss.isZd && !itemss.isAd">热门</span>
+                </div>
+                <div class="hospitaladdress">{{itemss.address}}</div>
               </div>
-              <div class="hospitaladdress">{{itemss.address}}</div>
+            </div>
+            <div class="right">
+              <svg-icon iconClass="daohang" class="dao-hang"></svg-icon>
+              <span>{{itemss.distance}}</span>
             </div>
           </div>
-          <div class="right">
-            <svg-icon iconClass="daohang" class="dao-hang"></svg-icon>
-            <span>{{itemss.distance}}</span>
-          </div>
-          <!-- </template>
-          </template>-->
+        </div>
+        <div v-else>
+          <van-loading type="spinner" color="#C4C4C4" size="30" />
         </div>
       </div>
     </div>
@@ -326,5 +325,17 @@ export default {
 }
 .van-popup--bottom {
   top: 50%;
+}
+@{aaa}.van-loading {
+  position: relative;
+  color: #c8c9cc;
+  font-size: 0;
+  vertical-align: middle;
+  text-align: center;
+  height: calc(50vh - 1.16rem);
+  margin-top: -1.16rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

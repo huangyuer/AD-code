@@ -9,7 +9,7 @@
       />
     </div>
     <div class="TestWapper-List">
-      <div :class="{ swiperInner: true, swiperesult: isShowresult }">
+      <div :class="{ swiperInner: true, swiperesult: isShowresult || !istouchable }">
         <van-swipe
           v-if="Object.keys(firstquestion).length != 0"
           :class="{ 'my-swipe': true, myswiperesult: isShowresult }"
@@ -30,7 +30,7 @@
               :list="firstquestion.questions[0].options"
               @nextToPageradiobox="nextToPageradiobox"
             ></radio-box>
-            <div class="groupnext" @click="openquestion()" style="margin-top: 1.82rem;">开始答题</div>
+            <div class="groupnext" @click="openquestion()" style="margin-top: 1.8rem;">开始答题</div>
           </van-swipe-item>
           <van-swipe-item v-if="changeFirstval == '否' || changeFirstval == '不清楚'">
             <div v-if="!isShowresult">
@@ -320,18 +320,24 @@ export default {
     .swiperInner {
       position: relative;
       width: 100%;
-      height: 11.46rem;
+      height: calc(100vh - 1rem);
       border-radius: 0.2rem;
+      padding-top: 0.6rem;
       background: #ffffff;
+      box-sizing: border-box;
       &.swiperesult {
         height: 10rem;
       }
+      // &.swiperone {
+      //   height: calc(100vh - 2.6rem);
+      // }
     }
     .swiperWapper {
       position: relative;
       width: 100%;
-      margin-top: 0.6rem;
-      height: calc(100% - 2.32rem);
+      // margin-top: 0.6rem;
+      margin-bottom: 0.6rem;
+      height: calc(100% - 1rem);
       border-radius: 0.2rem;
       background: #ffffff;
       overflow-y: auto;
@@ -341,12 +347,13 @@ export default {
   @{aaa}.my-swipe {
     position: relative;
     width: 100%;
-    margin-top: 0.6rem;
-    height: calc(100% - 2.32rem);
+    // margin-top: 0.6rem;
+    height: 100%;
     border-radius: 0.2rem;
     background: #ffffff;
+    box-sizing: border-box;
     &.myswiperesult {
-      height: calc(100% - 1rem);
+      // height: calc(100% - 1rem);
     }
     .van-swipe-item {
       color: #fff;
@@ -356,10 +363,12 @@ export default {
       box-shadow: 0px 0.04rem 0.02rem 0px rgba(195, 223, 214, 1);
       box-sizing: border-box;
       overflow-y: auto;
+      padding-bottom: 0.4rem;
+      border-radius: 0.2rem;
       .logo {
         width: 1.6rem !important;
         height: 1.32rem !important;
-        margin: 0.6rem auto;
+        margin: 0rem auto 0.6rem;
       }
     }
     .custom-indicator {

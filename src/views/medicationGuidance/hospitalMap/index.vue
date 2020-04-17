@@ -223,7 +223,7 @@ export default {
 
       // }
       var x = this.accSub(this.x, 0.0005 * (18 - zoom) * 10);
-      var y = this.accSub(this.y, 0.0003 * (18 - zoom) * 10);
+      var y = this.accSub(this.y, 0.0006 * (18 - zoom) * 10);
       var point = new BMap.Point(x, y);
       map.centerAndZoom(point, zoom);
       //创建标注点
@@ -294,7 +294,7 @@ export default {
         this.hispitalDetail.x,
         this.hispitalDetail.y
       );
-      map.centerAndZoom(pointstart, 12);
+      map.centerAndZoom(pointstart, 11);
       //创建自定义图标
       var myIcon = new BMap.Icon(
         require("../../../assets/dingwei.png"),
@@ -540,7 +540,7 @@ export default {
     top: 0;
     width: 100%;
     .searchwapper {
-      position: fixed;
+      // position: fixed;
       z-index: 1;
       width: 100%;
       background: #ffffff;
