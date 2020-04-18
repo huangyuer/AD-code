@@ -69,6 +69,8 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@aaa: ~">>>";
+
 .wapperItemInfo {
   width: 100%;
   .header {
@@ -94,6 +96,11 @@ export default {
     font-family: "PingFangSC-Regular";
     font-size: 0.28rem;
     padding: 0.32rem 0.32rem;
+    @{aaa}.ql-editor {
+      img {
+        width: 100% !important;
+      }
+    }
   }
 }
 </style>
