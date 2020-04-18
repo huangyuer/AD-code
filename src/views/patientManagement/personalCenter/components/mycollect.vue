@@ -14,11 +14,11 @@
     </div>
     <div class="patient-like">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <div v-for="item in getmystars" :key="item.id">
+        <div v-for="(item,key) in getmystars" :key="item.id">
           <div class="like-item" @click="topageDetail(item)">
             <div class="like-content">
               <div class="like-text">{{ item.title }}</div>
-              <div class="like-btn">
+              <div class="like-btn" @click.stop="closelikebtn(item,key)">
                 <div>
                   <svg-icon iconClass="heart" class="icon"></svg-icon>
                   <span>收藏</span>
@@ -83,6 +83,17 @@ export default {
     },
     likeBtn(val) {
       val.isStar = !val.isStar;
+    },
+    closelikebtn(item, key) {
+      this.$set(this.getmystars, key, "");
+      let params = { starId: item.starId };
+      this.$store.dispatch("common/unStar", params).then(res => {
+        Toast({
+          message: res,
+          icon: "like-o"
+        });
+        this.getmystars.splice(key, 1);
+      });
     },
     topageDetail(item) {
       console.log("item==>", item);
@@ -235,6 +246,10 @@ export default {
       color: rgba(5, 15, 43, 1);
       height: 0.8rem;
       line-height: 0.8rem;
+      max-width: 5.5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .like-btn {
       display: flex;

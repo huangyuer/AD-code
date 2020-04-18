@@ -6,9 +6,7 @@
     </div>
     <div class="content">
       <!-- <van-image  /> -->
-      <div class="ql-editor" v-html="this.article.contentHtml">
-      {{ this.article.contentHtml }}
-      </div>
+      <div class="ql-editor" v-html="this.article.contentHtml">{{ this.article.contentHtml }}</div>
     </div>
     <like-and-forward
       :like="this.$route.query.like"
@@ -95,7 +93,7 @@ export default {
   .content {
     font-family: "PingFangSC-Regular";
     font-size: 0.28rem;
-    padding: 0 0.32rem;
+    padding: 0.32rem 0.32rem;
   }
 }
 </style>

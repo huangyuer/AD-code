@@ -64,7 +64,7 @@
           </div>
         </div>
         <div v-else>
-          <van-loading type="spinner" color="#C4C4C4" size="30" />
+          <van-loading type="spinner" color="#C4C4C4" size="30" vertical>医院位置获取中</van-loading>
         </div>
       </div>
     </div>

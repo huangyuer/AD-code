@@ -24,7 +24,7 @@
               <svg-icon v-if="item.answer == '是'" iconClass="gouxuan2" class="icon"></svg-icon>
               <svg-icon v-if="item.answer == '否'" iconClass="guanbi" class="icon"></svg-icon>
               <svg-icon v-if="item.answer == '不清楚'" iconClass="wenhao" class="icon"></svg-icon>
-              <span>{{ item.title }}</span>
+              <span>{{index+1+'.'+ item.title }}</span>
             </div>
           </div>
         </div>
@@ -79,7 +79,8 @@
           <img :src="require('@/assets/up.png')" />
         </div>
         <div class="tip">
-          <b>*</b>可向您的主治医生出示测试结果，以便医生更好了解特应性皮炎对您造成的影响
+          <b>*</b>
+          可向您的主治医生出示测试结果，以便医生更好了解{{answerLog.isAd=="是"?'特应性皮炎':'皮肤疾病'}}对您造成的影响
         </div>
       </div>
     </div>

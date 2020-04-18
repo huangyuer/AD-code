@@ -65,7 +65,11 @@
           </div>
         </div>
         <div class="address">
-          <div class="colordeep margin6" v-if="address.recipient == '' ">你还未添加收货地址</div>
+          <div
+            class="colordeep margin6"
+            style="font-size:.28rem"
+            v-if="address.recipient == '' "
+          >你还未添加收货地址</div>
           <div v-else>
             <div class="margin6">
               <span class="colordeep">

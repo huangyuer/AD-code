@@ -7,10 +7,10 @@
         <b>分</b>
       </div>
       <div class="tip">
-        <span v-if="result.addScore == ''" class="spanlevel"></span>
-        <span v-if="parseInt(result.addScore) >= 0" class="spanup">+{{ result.addScore }}</span>
-        <span v-if="parseInt(result.addScore) < 0" class="spandown">-{{ result.addScore }}</span>
-        <span v-if="result.addScore != ''" class="title">较均值</span>
+        <span v-if="parseInt(result.addScore) > 0" class="spanup">+{{ result.addScore }}</span>
+        <span v-else-if="result.addScore == '' || parseInt(result.addScore) == 0" class="spanlevel"></span>
+        <span v-else-if="parseInt(result.addScore) < 0" class="spandown">{{ result.addScore }}</span>
+        <span v-if="result.addScore == '' || parseInt(result.addScore) == 0" class="title">较均值</span>
       </div>
     </div>
     <div class="time">{{ result.date }}</div>

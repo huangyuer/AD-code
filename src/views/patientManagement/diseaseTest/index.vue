@@ -137,6 +137,10 @@ export default {
   },
   created() {
     this.getQuestions();
+    document.body.style.overflow = "hidden";
+  },
+  destroyed() {
+    document.body.style.overflow = "auto";
   },
   mounted() {},
   methods: {
@@ -340,7 +344,7 @@ export default {
       height: calc(100% - 1rem);
       border-radius: 0.2rem;
       background: #ffffff;
-      overflow-y: auto;
+      overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
     }
   }
@@ -362,7 +366,7 @@ export default {
       background-color: #ffffff;
       box-shadow: 0px 0.04rem 0.02rem 0px rgba(195, 223, 214, 1);
       box-sizing: border-box;
-      overflow-y: auto;
+      overflow-y: scroll;
       padding-bottom: 0.4rem;
       border-radius: 0.2rem;
       .logo {

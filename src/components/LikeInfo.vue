@@ -91,6 +91,10 @@ export default {
       color: rgba(5, 15, 43, 1);
       height: 0.8rem;
       line-height: 0.8rem;
+      max-width: 5.5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .like-btn {
       display: flex;

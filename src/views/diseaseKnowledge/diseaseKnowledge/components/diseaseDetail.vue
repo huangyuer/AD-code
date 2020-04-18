@@ -88,6 +88,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@aaa: ~">>>";
 .wapperItemInfo {
   width: 100%;
   height: 100%;
@@ -108,12 +109,18 @@ export default {
       font-family: "PingFangSC-Regular";
       line-height: 0.4rem;
       font-size: 0.28rem;
+      margin-top: 0.1rem;
     }
   }
   .content {
     font-family: "PingFangSC-Regular";
     font-size: 0.28rem;
-    padding: 0 0.32rem;
+    padding: 0.32rem 0.32rem;
+    @{aaa}.ql-editor {
+      img {
+        width: 100% !important;
+      }
+    }
   }
   .more-btn {
     width: 6.4rem;

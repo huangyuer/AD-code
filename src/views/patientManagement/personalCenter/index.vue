@@ -29,22 +29,25 @@
         </div>
         <div class="right">
           <span>最近评估：</span>
-          <span class="deg">{{ answerLogs.score }}</span>
-          <svg-icon
-            iconClass="jiantoushangseng"
-            v-if="parseInt(answerLogs.addScore) > 0"
-            class="iconjiantou"
-          ></svg-icon>
-          <svg-icon
-            iconClass="jiantouchiping"
-            v-else-if="answerLogs.addScore == '' || parseInt(answerLogs.addScore) == 0"
-            class="iconjiantou"
-          ></svg-icon>
-          <svg-icon
-            iconClass="jiantouxiajiang"
-            v-else-if="parseInt(answerLogs.addScore) < 0"
-            class="iconjiantou"
-          ></svg-icon>
+          <div v-if="Object.keys(answerLogs).length>0" style="display:flex;align-item:center;">
+            <span class="deg">{{ answerLogs.score }}</span>
+            <svg-icon
+              iconClass="jiantoushangseng"
+              v-if="parseInt(answerLogs.addScore) > 0"
+              class="iconjiantou"
+            ></svg-icon>
+            <svg-icon
+              iconClass="jiantouchiping"
+              v-else-if="answerLogs.addScore == '' || parseInt(answerLogs.addScore) == 0"
+              class="iconjiantou"
+            ></svg-icon>
+            <svg-icon
+              iconClass="jiantouxiajiang"
+              v-else-if="parseInt(answerLogs.addScore) < 0"
+              class="iconjiantou"
+            ></svg-icon>
+          </div>
+          <span class="deg" v-else>无</span>
         </div>
       </div>
       <div class="bottom">
@@ -57,7 +60,7 @@
           fit="cover"
           width="100%"
           height=".18rem"
-          style="position: absolute; bottom: -0.1rem; z-index: -1;"
+          style="position: absolute; bottom: -0.1rem; z-index: -1;opacity:.8"
           :src="require('@/assets/tuoyuanxing.png')"
         />
       </div>
