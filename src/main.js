@@ -63,7 +63,7 @@ router.beforeEach((to, from, next) => {
         }
       });
     } else {
-        // setOpenId('oiqI3whHXikr12gjRdg2Ynh4yYJM')
+        // setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
       store.dispatch('register/getOpenIdApi').then(() => {
         store.dispatch("register/login1").then((res) => {
           if (res.token) {

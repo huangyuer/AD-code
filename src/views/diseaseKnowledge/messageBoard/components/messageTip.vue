@@ -55,7 +55,7 @@ export default {
     font-size: 0.28rem;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
-    color: rgba(51, 51, 51, 1);
+    color: #999999;
     position: relative;
     &::after {
       content: "";

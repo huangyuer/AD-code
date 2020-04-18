@@ -6,7 +6,7 @@
           <img :src="item.headImg" alt />
           <div class="sex-age">
             <span>{{item.sex}}</span>
-            <span>{{item.age}}</span>
+            <span>{{item.age}}岁</span>
           </div>
         </div>
         <span>{{item.before}}</span>

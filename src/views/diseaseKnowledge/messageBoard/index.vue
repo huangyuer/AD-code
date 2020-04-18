@@ -89,6 +89,7 @@ export default {
       this.$store
         .dispatch("diseaseKnowledge/delLeaveMsg", { id: id })
         .then(data => {
+          this.lvMsgList=[]
           this.getLeaveMsgList();
           Toast(data);
         })
