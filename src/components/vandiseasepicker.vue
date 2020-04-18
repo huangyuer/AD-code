@@ -50,6 +50,7 @@ export default {
   created() {
     this.$store.dispatch("diseaseKnowledge/getLvMsgSelect").then(data => {
       this.columns = data.type;
+      this.columns.push("无");
     });
   },
   mounted() {
