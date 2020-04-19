@@ -9,7 +9,6 @@
       <div class="tip">
         <span v-if="parseInt(result.addScore) > 0" class="spanup">+1</span>
         <span v-else-if="parseInt(result.addScore) === 0" class="spanup">+0</span>
-        <span v-else-if="result.addScore === ''" class="spanlevel"></span>
         <span v-else-if="parseInt(result.addScore) < 0" class="spandown">-2</span>
         <span v-if="result.addScore !== ''" class="title">较均值</span>
       </div>
