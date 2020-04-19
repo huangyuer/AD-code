@@ -60,6 +60,18 @@ export default new Router({
             }
         },
         {
+            path: "/patientDetail",
+            component: () =>
+                import (
+                    "@/views/diseaseKnowledge/diseaseKnowledge/components/diseaseDetail.vue"
+                ),
+            name: "PatientDetail",
+            meta: {
+                title: "患者故事",
+                index: 3
+            }
+        },
+        {
             path: "/patientStory",
             component: () =>
                 import ("@/views/diseaseKnowledge/patientStory"),

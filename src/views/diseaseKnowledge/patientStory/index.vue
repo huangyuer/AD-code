@@ -125,7 +125,7 @@ export default {
       this.diseaseInfo = [];
       this.params.page = 1;
       this.finished = false;
-      this.getArticles();
+      // this.getArticles();
     },
     onClear() {
       this.params.title = "";
@@ -166,9 +166,13 @@ export default {
     likeItem(info) {
       console.log("======", info);
       this.$router.push({
-        path: "/diseaseDetail",
-        name: "DiseaseDetail",
+        path: "/patientDetail",
+        name: "PatientDetail",
         query: { id: info._id, like: true, forward: true, isStar: info.isStar },
+        meta: {
+                title: "患者故事",
+                index: 3
+            }
       });
     },
   },
