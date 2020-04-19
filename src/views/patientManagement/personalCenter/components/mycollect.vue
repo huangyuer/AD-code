@@ -108,7 +108,7 @@ export default {
             isStar: true
           }
         });
-      } else if (item.menu == "诊疗方法" || item.menu == "关爱行动") {
+      } else if (item.menu == "诊疗方法") {
         this.$router.push({
           path: "/DetailInfo",
           name: "DetailInfo",
@@ -116,6 +116,28 @@ export default {
             id: item.starId,
             like: true,
             forward: false,
+            isStar: true
+          }
+        });
+      } else if (item.menu == "关爱行动") {
+        this.$router.push({
+          path: "/caringActionDetailInfo",
+          name: "caringActionDetailInfo",
+          query: {
+            id: item.starId,
+            like: true,
+            forward: false,
+            isStar: true
+          }
+        });
+      } else if (item.menu == "患者故事") {
+        this.$router.push({
+          path: "/patientDetail",
+          name: "patientDetail",
+          query: {
+            id: item.starId,
+            like: true,
+            forward: true,
             isStar: true
           }
         });

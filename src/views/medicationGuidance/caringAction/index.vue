@@ -96,8 +96,8 @@ export default {
         window.location.href = item.link;
       } else {
         this.$router.push({
-          path: "/DetailInfo",
-          name: "DetailInfo",
+          path: "/caringActionDetailInfo",
+          name: "caringActionDetailInfo",
           query: {
             id: item._id,
             like: true,

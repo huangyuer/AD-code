@@ -10,7 +10,7 @@
     </div>
     <van-slider
       v-model="value"
-      :step="100 / (dataitem.options.length - 1)"
+      :step="step"
       bar-height=".16rem"
       active-color="linear-gradient(90deg,rgba(0,153,102,1) 0%,rgba(242,169,0,1) 52%,rgba(255,63,15,1) 100%)"
       @change="onChange"
@@ -37,10 +37,39 @@ export default {
   },
   data() {
     return {
-      value: 0
+      value: 0,
+      step: 0
     };
   },
+  created() {
+    this.step = 100 / (this.dataitem.options.length - 1);
+  },
   methods: {
+    changeStep(index, value) {
+      if (index == 1) {
+        if (value == 25) {
+          this.value = 20;
+        } else if (value == 50) {
+          this.value = 42;
+        } else if (value == 75) {
+          this.value = 65;
+        }
+      } else if (index == 2) {
+        if (value == 25) {
+          this.value = 33;
+        } else if (value == 50) {
+          this.value = 53;
+        } else if (value == 75) {
+          this.value = 75;
+        }
+      } else if (index == 3 || index == 5 || index == 6) {
+        if (value == 25) {
+          this.value = 35;
+        } else if (value == 50) {
+          this.value = 56;
+        }
+      }
+    },
     onChange(value) {
       var step = 100 / (this.dataitem.options.length - 1);
       var index = value / step;
@@ -54,10 +83,12 @@ export default {
         var botton = document.getElementsByClassName(
           "van-slider__button-wrapper"
         )[this.index - 1];
+        this.changeStep(this.index - 1, value);
       } else {
         var botton = document.getElementsByClassName(
           "van-slider__button-wrapper"
         )[this.index - 4];
+        this.changeStep(this.index - 4, value);
       }
       if (value == 100) {
         botton.style.right = "0.22rem";

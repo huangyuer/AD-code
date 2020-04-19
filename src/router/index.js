@@ -148,6 +148,16 @@ export default new Router({
             }
         },
         {
+            path: "/caringActionDetailInfo",
+            component: () =>
+                import ("@/components/DetailInfo"),
+            name: "caringActionDetailInfo",
+            meta: {
+                title: "关爱行动",
+                index: 3
+            }
+        },
+        {
             path: "/diseaseTest",
             component: () =>
                 import ("@/views/patientManagement/diseaseTest"),
