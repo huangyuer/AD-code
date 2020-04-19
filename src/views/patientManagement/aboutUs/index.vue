@@ -41,7 +41,7 @@ export default {
     p {
       margin: 0;
       padding: 0;
-      line-height: 1.5;
+      line-height: 1.8;
       text-indent: 2em;
     }
   }
