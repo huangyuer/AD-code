@@ -107,7 +107,10 @@
         <div class="itemlist">
           <div v-if="stars.length > 0">
             <div class="iteminner fmregular" v-for="(item, index) in stars" :key="index">
-              <div v-if="index < 3" class="color52 font-size28 overflowhidden">{{ item.title }}</div>
+              <div
+                v-if="index < 3"
+                class="color52 font-size28 overflowhidden"
+              >{{ item.title }}测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章</div>
               <div v-if="index < 3" class="coloracadaf font-size28">{{ item.date }}</div>
             </div>
           </div>
@@ -606,7 +609,7 @@ export default {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            width: 5.5rem;
+            width: 5rem;
           }
         }
       }
