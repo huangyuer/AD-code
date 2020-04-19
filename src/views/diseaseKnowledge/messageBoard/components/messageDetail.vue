@@ -7,7 +7,7 @@
           <img :src="item.headImg" alt />
           <div class="sex-age">
             <span>{{item.sex}}</span>
-            <span>{{item.age}}</span>
+            <span>{{item.age}}岁</span>
           </div>
         </div>
         <span>{{item.before}}</span>
@@ -18,6 +18,7 @@
       </div>
       <div class="message-body">{{item.description}}</div>
       <div class="message-img">
+        <!-- <img src="../../../../assets/avatar.png" alt=""> -->
         <img
           v-for="(img,index) in item.images"
           :key="img.id"
@@ -134,12 +135,14 @@ export default {
   }
   .message-img {
     display: flex;
-    margin-top: 0.32rem;
+    margin-top: 0.18rem;
     margin-left: 0.17rem;
+    flex-wrap: wrap;
     img {
       width: 3.28rem;
       height: 2.4rem;
-      margin: 0 0.15rem;
+      margin: 0.14rem 0.15rem;
+      object-fit: cover;
     }
   }
 }

@@ -52,7 +52,7 @@ router.beforeEach((to, from, next) => {
         if (res.token) {
           next();
         } else {
-          if (Object.is(to.name, 'DiseaseDetail') || Object.is(to.name, 'videoDetail')) {
+          if (Object.is(to.name, 'DiseaseDetail') || Object.is(to.name, 'PatientDetail') || Object.is(to.name, 'videoDetail')) {
             next()
           } else {
             router.push({
@@ -63,7 +63,7 @@ router.beforeEach((to, from, next) => {
         }
       });
     } else {
-        // setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
+      // setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
       store.dispatch('register/getOpenIdApi').then(() => {
         store.dispatch("register/login1").then((res) => {
           if (res.token) {
