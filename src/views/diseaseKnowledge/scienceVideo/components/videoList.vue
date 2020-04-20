@@ -17,17 +17,8 @@
       <sort-attribute :name="'发布时间'" @sortway="sortway"></sort-attribute>
       <sort-attribute :name="'点击次数'" @sortway="sortway"></sort-attribute>
     </div>
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <science-item
-        :itemlist="videoList"
-        @likeBtn="likeBtn"
-        @toPageVideodetail="toPageVideodetail"
-      ></science-item>
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <science-item :itemlist="videoList" @likeBtn="likeBtn" @toPageVideodetail="toPageVideodetail"></science-item>
     </van-list>
   </div>
 </template>
@@ -51,12 +42,12 @@ export default {
         limit: 10,
         title: String,
         sort: String,
-        desc: false,
+        desc: false
       },
       total: 0,
       loading: false,
       finished: false,
-      videoList: [],
+      videoList: []
     };
   },
   mounted() {
@@ -114,7 +105,7 @@ export default {
     getMenuSelect() {
       this.$store
         .dispatch("common/getMenuSelect", this.$route.meta.title)
-        .then((data) => {
+        .then(data => {
           let menus = this.$store.getters.menuList.selects[0].tags;
           for (var i = 0; i < menus.length; i++) {
             let obj = {};
@@ -123,7 +114,7 @@ export default {
             this.option.push(obj);
           }
         })
-        .catch((e) => {
+        .catch(e => {
           // if (e) {
           //   Toast(e);
           // }
@@ -132,7 +123,7 @@ export default {
     onLoad() {
       this.$store
         .dispatch("diseaseKnowledge/getVideos", this.form)
-        .then((data) => {
+        .then(data => {
           this.videoList = this.videoList.concat(
             this.$store.getters.videoList.videos
           );
@@ -147,7 +138,7 @@ export default {
             this.form.page = this.form.page + 1;
           }
         })
-        .catch((e) => {
+        .catch(e => {
           // if (e) {
           //   Toast(e);
           // }
@@ -159,7 +150,7 @@ export default {
     toPageVideodetail(item) {
       this.$store
         .dispatch("diseaseKnowledge/upVideoClickNum", item._id)
-        .then((data) => {
+        .then(data => {
           this.$router.push({
             path: "/scienceVideo/videoList/videoDetail",
             name: "videoDetail",
@@ -167,17 +158,17 @@ export default {
               id: item._id,
               like: true,
               forward: true,
-              isStar: item.isStar,
-            },
+              isStar: item.isStar
+            }
           });
         })
-        .catch((e) => {
+        .catch(e => {
           // if (e) {
           //   Toast(e);
           // }
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -186,5 +177,6 @@ export default {
 }
 .dropdownwapper {
   overflow: hidden;
+  background-color: #ffffff;
 }
 </style>

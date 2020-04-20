@@ -326,8 +326,9 @@ export default {
       width: 100%;
       height: calc(100vh - 1rem);
       border-radius: 0.2rem;
-      padding-top: 0.6rem;
-      background: #ffffff;
+      padding: 0.6rem 0 0 0;
+      border: 0;
+      background-color: #ffffff;
       box-sizing: border-box;
       &.swiperesult {
         height: 10rem;
@@ -343,7 +344,7 @@ export default {
       margin-bottom: 0.6rem;
       height: calc(100% - 1rem);
       border-radius: 0.2rem;
-      background: #ffffff;
+      background-color: #ffffff;
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
     }
@@ -354,7 +355,7 @@ export default {
     // margin-top: 0.6rem;
     height: 100%;
     border-radius: 0.2rem;
-    background: #ffffff;
+    background-color: #ffffff;
     box-sizing: border-box;
     &.myswiperesult {
       // height: calc(100% - 1rem);
@@ -434,7 +435,7 @@ export default {
 .wrapperblock {
   width: 4.8rem;
   height: 3.8rem;
-  background: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 0.08rem;
   padding: 0 0.72rem;
   box-sizing: border-box;
@@ -455,7 +456,7 @@ export default {
   .btn {
     width: 3rem;
     height: 0.72rem;
-    background: rgba(0, 153, 102, 1);
+    background-color: rgba(0, 153, 102, 1);
     border-radius: 0.4rem;
     font-size: 0.28rem;
     text-align: center;

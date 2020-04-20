@@ -58,7 +58,7 @@ export default {
     height: 0.28rem;
     border: 0;
     background-image: url("../assets/up.png");
-    background-size: 100%;
+    background-size: 100% 100%;
     transform: rotate(180deg);
     top: calc(50% - 0.05rem);
     right: -0.1rem;
@@ -68,6 +68,7 @@ export default {
     transform: rotate(0);
     top: calc(50% - 0.15rem);
     background-image: url("../assets/upgreen.png");
+    background-size: 100% 100%;
   }
 }
 @{aaa}.van-dropdown-menu__item {
@@ -93,5 +94,7 @@ export default {
 @{aaa}.van-dropdown-item__content {
   padding-top: 0.22rem;
   padding-bottom: 0.36rem;
+  box-sizing: border-box;
+  background-color: #ffffff;
 }
 </style>
