@@ -9,7 +9,12 @@
       />
     </div>
     <div class="TestWapper-List">
-      <div :class="{ swiperInner: true, swiperesult: isShowresult || !istouchable }">
+      <div
+        :class="{
+          swiperInner: true,
+          swiperesult: isShowresult || !istouchable
+        }"
+      >
         <van-swipe
           v-if="Object.keys(firstquestion).length != 0"
           :class="{ 'my-swipe': true, myswiperesult: isShowresult }"
@@ -30,16 +35,34 @@
               :list="firstquestion.questions[0].options"
               @nextToPageradiobox="nextToPageradiobox"
             ></radio-box>
-            <div class="groupnext" @click="openquestion()" style="margin-top: 1.8rem;">开始答题</div>
+            <div
+              class="groupnext"
+              @click="openquestion()"
+              style="margin-top: 1.8rem;"
+            >
+              开始答题
+            </div>
           </van-swipe-item>
-          <van-swipe-item v-if="changeFirstval == '否' || changeFirstval == '不清楚'">
-            <div v-if="!isShowresult">
-              <div v-for="(item, index) in nextquestionA.questions" :key="index">
-                <radio-box-item :index="index" :dataitem="item" @radiobox="radiobox"></radio-box-item>
+          <van-swipe-item
+            v-if="changeFirstval == '否' || changeFirstval == '不清楚'"
+          >
+            <div v-if="!isShowresult" style="padding-top:.6rem">
+              <div
+                v-for="(item, index) in nextquestionA.questions"
+                :key="index"
+              >
+                <radio-box-item
+                  :index="index"
+                  :dataitem="item"
+                  @radiobox="radiobox"
+                ></radio-box-item>
               </div>
               <div v-if="noFirstquestion">
                 <div class="slidertitle">{{ nextquestion.tag }}</div>
-                <div v-for="(item, index) in nextquestion.questions" :key="index">
+                <div
+                  v-for="(item, index) in nextquestion.questions"
+                  :key="index"
+                >
                   <slider-box-item
                     v-if="item.type == 'radio'"
                     :index="index + 4"
@@ -60,7 +83,7 @@
               <result-info :dataresult="levelresult"></result-info>
             </div>
           </van-swipe-item>
-          <van-swipe-item v-if="!noFirstquestion">
+          <van-swipe-item v-if="!noFirstquestion" style="padding-top:.6rem">
             <div v-if="!isShowresult">
               <div class="slidertitle">{{ nextquestion.tag }}</div>
               <div v-for="(item, index) in nextquestion.questions" :key="index">
@@ -91,7 +114,9 @@
         <div class="wrapper" @click.stop>
           <div class="wrapperblock">
             <div class="title">温馨提示</div>
-            <div class="contain">建议您前往医院进一步确诊是否为特应性皮炎。</div>
+            <div class="contain">
+              建议您前往医院进一步确诊是否为特应性皮炎。
+            </div>
             <div class="btn" @click="tipnext()">继续答题</div>
           </div>
         </div>
@@ -326,7 +351,7 @@ export default {
       width: 100%;
       height: calc(100vh - 1rem);
       border-radius: 0.2rem;
-      padding: 0.6rem 0 0 0;
+      // padding: 0.6rem 0 0 0;
       border: 0;
       background-color: #ffffff;
       box-sizing: border-box;
@@ -373,7 +398,7 @@ export default {
       .logo {
         width: 1.6rem !important;
         height: 1.32rem !important;
-        margin: 0rem auto 0.6rem;
+        margin: 0.6rem auto 0.6rem;
       }
     }
     .custom-indicator {
