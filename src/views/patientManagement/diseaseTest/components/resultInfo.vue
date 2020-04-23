@@ -7,9 +7,15 @@
         <b>分</b>
       </div>
       <div class="tip">
-        <span v-if="parseInt(result.addScore) > 0" class="spanup">+{{result.addScore}}</span>
-        <span v-else-if="parseInt(result.addScore) === 0" class="spanup">+{{result.addScore}}</span>
-        <span v-else-if="parseInt(result.addScore) < 0" class="spandown">{{result.addScore}}</span>
+        <span v-if="parseInt(result.addScore) > 0" class="spanup"
+          >+{{ result.addScore }}</span
+        >
+        <span v-else-if="parseInt(result.addScore) === 0" class="spanup"
+          >+{{ result.addScore }}</span
+        >
+        <span v-else-if="parseInt(result.addScore) < 0" class="spandown">{{
+          result.addScore
+        }}</span>
         <span v-if="result.addScore !== ''" class="title">较均值</span>
       </div>
     </div>
@@ -61,6 +67,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .resultWapper {
+  padding-top: 0.6rem;
   .degtitle {
     font-weight: 500;
     line-height: initial;

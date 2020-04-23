@@ -6,7 +6,9 @@
       :content="'【关爱自己，从自我评估开始。】是否进一步了解您的皮肤状况？'"
       :isClose="false"
     >
-      <div slot="confirmButton" class="dialog-confirm" @click="confirmBtn">前往自我评估</div>
+      <div slot="confirmButton" class="dialog-confirm" @click="confirmBtn">
+        前往自我评估
+      </div>
       <div slot="closeButton" @click="closeBtn">
         <svg-icon iconClass="register-close" class="close-icon"></svg-icon>
       </div>
@@ -15,21 +17,27 @@
     <div class="header">
       <div class="top">
         <div class="left">
-          <van-image round fit="cover" width="1.32rem" height="1.32rem" :src="user.headImg" />
+          <van-image
+            round
+            fit="cover"
+            width="1.32rem"
+            height="1.32rem"
+            :src="user.headImg"
+          />
           <div class="nameitem">
             <div class="name">
               {{ user.name != "" ? user.name : user.nickName }}
-              <span
-                class="pagetoinfo"
-                @click="toPagepersonalInfo()"
-              >查看</span>
+              <span class="pagetoinfo" @click="toPagepersonalInfo()">查看</span>
             </div>
             <div class="phone">{{ user.phone }}</div>
           </div>
         </div>
         <div class="right">
           <span>最近评估：</span>
-          <div v-if="Object.keys(answerLogs).length>0" style="display:flex;align-item:center;">
+          <div
+            v-if="Object.keys(answerLogs).length > 0"
+            style="display:flex;align-item:center;"
+          >
             <span class="deg">{{ answerLogs.score }}</span>
             <svg-icon
               iconClass="jiantoushangseng"
@@ -38,7 +46,9 @@
             ></svg-icon>
             <svg-icon
               iconClass="jiantouchiping"
-              v-else-if="answerLogs.addScore == '' || parseInt(answerLogs.addScore) == 0"
+              v-else-if="
+                answerLogs.addScore == '' || parseInt(answerLogs.addScore) == 0
+              "
               class="iconjiantou"
             ></svg-icon>
             <svg-icon
@@ -81,12 +91,20 @@
                 :class="{
                   color9: item.status == '已完成',
                   color3: item.status == '未完成',
-                  'font-size28': true,
+                  'font-size28': true
                 }"
-              >{{ item.name }}（{{ item.num }}/{{ item.limit }}）</div>
+              >
+                {{ item.name }}（{{ item.num }}/{{ item.limit }}）
+              </div>
               <div
-                :class="{btnpage:true,whitenone:true,color7:item.status == '未完成'}"
-              >{{ item.status }}</div>
+                :class="{
+                  btnpage: true,
+                  whitenone: true,
+                  color7: item.status == '未完成'
+                }"
+              >
+                {{ item.status }}
+              </div>
             </div>
           </div>
         </div>
@@ -106,12 +124,15 @@
         </div>
         <div class="itemlist">
           <div v-if="stars.length > 0">
-            <div class="iteminner fmregular" v-for="(item, index) in stars" :key="index">
-              <div
-                v-if="index < 3"
-                class="color52 font-size28 overflowhidden"
-              >{{ item.title }}测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章</div>
-              <div v-if="index < 3" class="coloracadaf font-size28">{{ item.date }}</div>
+            <div v-for="(item, index) in stars" :key="index">
+              <div class="iteminner fmregular" v-if="index < 3">
+                <div class="color52 font-size28 overflowhidden">
+                  {{
+                    item.title
+                  }}测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章
+                </div>
+                <div class="coloracadaf font-size28">{{ item.date }}</div>
+              </div>
             </div>
           </div>
           <div style="font-size:.28rem" v-else>您还没有进行收藏</div>
@@ -131,11 +152,11 @@
           </span>
         </div>
         <div class="itemlist">
-          <div class="iteminner" v-if="Object.keys(answerLogs).length>0">
+          <div class="iteminner" v-if="Object.keys(answerLogs).length > 0">
             <div class="color52 font-size28">
-              <div
-                class="color3 font-size30 fmmedium"
-              >{{ user.name != "" ? user.name : user.nickName }}</div>
+              <div class="color3 font-size30 fmmedium">
+                {{ user.name != "" ? user.name : user.nickName }}
+              </div>
               <div class="color3 font-size28 fmregular">
                 您最近一次评估程度为
                 <b class="color009966 fmmedium">{{ answerLogs.score }}分</b>
@@ -167,7 +188,8 @@
                 <span
                   style="margin-left: 0.16rem;"
                   class="color6 font-size28 fmregular"
-                >{{ msglist.age }}岁</span>
+                  >{{ msglist.age }}岁</span
+                >
               </div>
               <div class="color3 font-size28 fmregular">
                 您最近一次留言时间为
