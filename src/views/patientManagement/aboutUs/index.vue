@@ -14,6 +14,7 @@
     </div>
 
     <svg-icon iconClass="logo" class="logo"></svg-icon>
+    <svg-icon iconClass="user-term" class="user-term"></svg-icon>
   </div>
 </template>
 <script>
@@ -30,8 +31,20 @@ export default {
   height: 1.32rem !important;
   margin: 0rem auto 0.6rem;
   position: absolute;
-  bottom: 0.2rem;
+  bottom: 1.84rem;
   left: calc(50% - 0.8rem);
+}
+.user-term {
+  width: 100vw !important;
+  height: 0.6rem !important;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+@media screen and (min-width: 390px) and (max-width: 650px) {
+  .logo {
+    bottom: 1.2rem;
+  }
 }
 .about-us {
   height: 100vh;

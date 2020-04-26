@@ -13,12 +13,17 @@
       </div>
     </div>
     <div class="patient-like">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <div v-for="(item,key) in getmystars" :key="item.id">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <div v-for="(item, key) in getmystars" :key="item.id">
           <div class="like-item" @click="topageDetail(item)">
             <div class="like-content">
               <div class="like-text">{{ item.title }}</div>
-              <div class="like-btn" @click.stop="closelikebtn(item,key)">
+              <div class="like-btn" @click.stop="closelikebtn(item, key)">
                 <div>
                   <svg-icon iconClass="heart" class="icon"></svg-icon>
                   <span>收藏</span>
@@ -133,12 +138,11 @@ export default {
       } else if (item.menu == "患者故事") {
         this.$router.push({
           path: "/patientDetail",
-          name: "patientDetail",
-          query: {
-            id: item.starId,
-            like: true,
-            forward: true,
-            isStar: true
+          name: "PatientDetail",
+          query: { id: item.starId, like: true, forward: true, isStar: true },
+          meta: {
+            title: "患者故事",
+            index: 3
           }
         });
       } else {

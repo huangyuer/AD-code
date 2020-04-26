@@ -1,35 +1,49 @@
 <template>
-  <div class="wapperItemInfo">
-    <div class="header">
-      <div class="title">{{ this.article.title }}</div>
-      <div class="time">{{ this.article.date }}</div>
+  <div>
+    <div
+      class="wapperItemInfo"
+      v-if="Object.keys(article).length > 0 || !vloading"
+    >
+      <div class="header">
+        <div class="title">{{ this.article.title }}</div>
+        <div class="time">{{ this.article.date }}</div>
+      </div>
+      <div class="content">
+        <!-- <van-image  /> -->
+        <div class="ql-editor" v-html="this.article.contentHtml">
+          {{ this.article.contentHtml }}
+        </div>
+      </div>
+      <like-and-forward
+        v-if="flag"
+        :like="this.$route.query.like"
+        :forward="this.$route.query.forward"
+        :starId="this.$route.query.id"
+        :isStar="this.$route.query.isStar"
+        :path="this.$route.path"
+        @likeBtn="likeBtn"
+        @forwardBtn="forwardBtn"
+      ></like-and-forward>
+      <van-over-lay
+        :show="showoverlay"
+        @isShowOverlay="isShowOverlay"
+      ></van-over-lay>
+      <div class="more-btn" v-if="!flag" @click="register">
+        查看更多内容，请点击注册
+      </div>
     </div>
-    <div class="content">
-      <!-- <van-image  /> -->
-      <div class="ql-editor" v-html="this.article.contentHtml">{{ this.article.contentHtml }}</div>
-    </div>
-    <like-and-forward
-      v-if="flag"
-      :like="this.$route.query.like"
-      :forward="this.$route.query.forward"
-      :starId="this.$route.query.id"
-      :isStar="this.$route.query.isStar"
-      :path="this.$route.path"
-      @likeBtn="likeBtn"
-      @forwardBtn="forwardBtn"
-    ></like-and-forward>
-    <van-over-lay :show="showoverlay" @isShowOverlay="isShowOverlay"></van-over-lay>
-    <div class="more-btn" v-if="!flag" @click="register">查看更多内容，请点击注册</div>
+    <vant-loading v-else></vant-loading>
   </div>
 </template>
 <script>
 import LikeAndForward from "@/components/LikeAndForward";
 import VanOverLay from "@/components/overlay";
+import VantLoading from "@/components//loading";
 import { Toast } from "vant";
 import { getToken } from "@/utils/auth";
 export default {
   name: "DiseaseDetail",
-  components: { LikeAndForward, VanOverLay },
+  components: { LikeAndForward, VanOverLay, VantLoading },
   beforeRouteLeave(to, form, next) {
     next();
     this.addOutPageLog();
@@ -39,7 +53,8 @@ export default {
       id: "",
       article: "",
       showoverlay: false,
-      flag: true
+      flag: true,
+      vloading: true
     };
   },
   created() {
@@ -48,6 +63,7 @@ export default {
     this.$store
       .dispatch("common/getArticle", this.$route.query.id)
       .then(data => {
+        this.vloading = false;
         this.article = this.$store.getters.articleDetail.article;
       })
       .catch(e => {

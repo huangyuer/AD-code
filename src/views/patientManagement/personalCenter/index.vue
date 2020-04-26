@@ -198,7 +198,7 @@
             </div>
             <div class="btnpage" @click="toPagelookmessage()">查看留言</div>
           </div>
-          <div style="font-size:.28rem" v-else>您还没有进行留言</div>
+          <div style="font-size:.28rem" v-else>您没有更多已发布的留言</div>
         </div>
       </div>
     </div>

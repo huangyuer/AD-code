@@ -84,7 +84,7 @@ export default {
   }
 }
 @{aaa}.van-overlay {
-  top: 0.01rem;
+  top: 0.03rem;
 }
 @{aaa} .van-cell:not(:last-child)::after {
   border: 0;

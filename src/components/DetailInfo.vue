@@ -1,33 +1,43 @@
 <template>
-  <div class="wapperItemInfo">
-    <div class="header">
-      <div class="title">{{ this.article.title }}</div>
-      <div class="time">{{ this.article.date }}</div>
+  <div>
+    <div
+      class="wapperItemInfo"
+      v-if="Object.keys(article).length > 0 || !vloading"
+    >
+      <div class="header">
+        <div class="title">{{ this.article.title }}</div>
+        <div class="time">{{ this.article.date }}</div>
+      </div>
+      <div class="content">
+        <!-- <van-image  /> -->
+        <div class="ql-editor" v-html="this.article.contentHtml">
+          {{ this.article.contentHtml }}
+        </div>
+      </div>
+      <like-and-forward
+        :like="this.$route.query.like"
+        :forward="this.$route.query.forward"
+        :starId="this.$route.query.id"
+        :isStar="this.$route.query.isStar"
+        @likeBtn="likeBtn"
+        @forwardBtn="forwardBtn"
+      ></like-and-forward>
     </div>
-    <div class="content">
-      <!-- <van-image  /> -->
-      <div class="ql-editor" v-html="this.article.contentHtml">{{ this.article.contentHtml }}</div>
-    </div>
-    <like-and-forward
-      :like="this.$route.query.like"
-      :forward="this.$route.query.forward"
-      :starId="this.$route.query.id"
-      :isStar="this.$route.query.isStar"
-      @likeBtn="likeBtn"
-      @forwardBtn="forwardBtn"
-    ></like-and-forward>
+    <vant-loading v-else></vant-loading>
   </div>
 </template>
 <script>
 import LikeAndForward from "@/components/LikeAndForward";
+import VantLoading from "@/components//loading";
 import { Toast } from "vant";
 export default {
   name: "DiseaseDetail",
-  components: { LikeAndForward },
+  components: { LikeAndForward, VantLoading },
   data() {
     return {
       id: "",
-      article: ""
+      article: "",
+      vloading: true
     };
   },
   beforeRouteLeave(to, form, next) {
@@ -38,6 +48,7 @@ export default {
     this.$store
       .dispatch("common/getArticle", this.$route.query.id)
       .then(data => {
+        this.vloading = false;
         this.article = this.$store.getters.articleDetail.article;
       })
       .catch(e => {

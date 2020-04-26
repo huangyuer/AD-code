@@ -9,7 +9,7 @@
     <van-list
       v-model="loading"
       :finished="finished"
-      finished-text="没有更多了"
+      finished-text="您没有更多已发布的留言"
       @load="onLoad"
     >
       <message-info
@@ -89,7 +89,7 @@ export default {
       this.$store
         .dispatch("diseaseKnowledge/delLeaveMsg", { id: id })
         .then(data => {
-          this.lvMsgList=[]
+          this.lvMsgList = [];
           this.getLeaveMsgList();
           Toast(data);
         })
