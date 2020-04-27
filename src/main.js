@@ -8,18 +8,14 @@ import "./assets/icons";
 import Vant from "vant";
 import "vant/lib/index.css";
 import Axios from "axios";
-import {
-  Toast
-} from "vant";
+import { Toast } from "vant";
 
 import VueWechatTitle from "vue-wechat-title";
 import qs from "qs";
 Vue.prototype.$qs = qs;
 
 import "./assets/font_1686774_85lo9chzwmt/iconfont.css";
-import {
-  Icon
-} from "vant";
+import { Icon } from "vant";
 import {
   setOpenId,
   getOpenId,
@@ -37,50 +33,68 @@ Axios.defaults.baseURL = "/api";
 Axios.defaults.headers.post["Content-Type"] = "application/json";
 Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
-  console.log("--------1")
-
+  // console.log("--------1");
+  setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
   if (to.meta.title) {
     window.document.title = to.meta.title;
   }
-  if (Object.is(to.name, 'Register')) {
-    next();
-    return
+  if (Object.is(to.name, "Register")) {
+    if (getOpenId()) {
+      console.log("opendID---1", getOpenId());
+      next();
+      return;
+    } else {
+      store.dispatch("register/getOpenIdApi").then(() => {
+        console.log("opendID---2", getOpenId());
+        next();
+        return;
+      });
+    }
   } else {
     // next();
     if (getOpenId()) {
-      store.dispatch("register/login1").then((res) => {
+      store.dispatch("register/login1").then(res => {
         if (res.token) {
           next();
         } else {
-          if (Object.is(to.name, 'DiseaseDetail') || Object.is(to.name, 'PatientDetail') || Object.is(to.name, 'videoDetail')) {
-            next()
+          if (
+            Object.is(to.name, "DiseaseDetail") ||
+            Object.is(to.name, "PatientDetail") ||
+            Object.is(to.name, "videoDetail")
+          ) {
+            console.log("Detail1");
+            next();
           } else {
             router.push({
-              name: 'Register'
-            })
-            return
+              name: "Register"
+            });
+            return;
           }
         }
       });
     } else {
-      // setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
-      store.dispatch('register/getOpenIdApi').then(() => {
-        store.dispatch("register/login1").then((res) => {
-          if (res.token) {
-            next();
-          } else {
-            if (Object.is(to.name, 'DiseaseDetail') || Object.is(to.name, 'videoDetail')) {
-              next()
+      if (
+        Object.is(to.name, "DiseaseDetail") ||
+        Object.is(to.name, "PatientDetail") ||
+        Object.is(to.name, "videoDetail")
+      ) {
+        next();
+        console.log("Detail2");
+      } else {
+        // setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
+        store.dispatch("register/getOpenIdApi").then(() => {
+          store.dispatch("register/login1").then(res => {
+            if (res.token) {
+              next();
             } else {
               router.push({
-                name: 'Register'
-              })
-              return
+                name: "Register"
+              });
+              return;
             }
-
-          }
+          });
         });
-      })
+      }
     }
   }
   //   if(getOpenId()){
@@ -106,11 +120,9 @@ router.beforeEach((to, from, next) => {
   // next();
 
   // }
-
 });
 
 Vue.config.productionTip = false;
-
 
 // const AppId = "wx23922f116d0212aa"; // 测试公众号平台的APPID，第1步那个链接里
 // const { code = "" } = qs.parse(window.location.search); // 获取当前页面地址中的code参数的值
@@ -124,7 +136,7 @@ Vue.config.productionTip = false;
 //     "UTF-8"
 //   )}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect`;
 //   removeOpenId()
-//   setOpenId(code);   
+//   setOpenId(code);
 // } else {
 //   removeOpenId()
 //   setOpenId(code);
@@ -140,7 +152,6 @@ new Vue({
   },
   template: "<App/>"
 });
-
 
 // setOpenId('oiqI3whHXikr12gjRdg2Ynh4yYJM')
 // if (!getOpenId()) {
