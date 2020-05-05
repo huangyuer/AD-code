@@ -1,8 +1,17 @@
 <template>
   <div>
-    <van-tabs line-width="1.4rem" @change="change" v-model="active" title-active-color="#009966">
-      <van-tab v-for="(index, key) in itemTabcontent" :key="key" :title="index.type">
-        <div ref="vansList" class="vansList" v-if="index.tags.length!=0">
+    <van-tabs
+      line-width="1.4rem"
+      @change="change"
+      v-model="active"
+      title-active-color="#009966"
+    >
+      <van-tab
+        v-for="(index, key) in itemTabcontent"
+        :key="key"
+        :title="index.type"
+      >
+        <div ref="vansList" class="vansList" v-if="index.tags.length != 0">
           <div
             ref="tablecontent"
             :class="{
@@ -12,7 +21,9 @@
             v-for="(item, k) in index.tags"
             :key="k"
             @click="tocurrentTag(item, k, key)"
-          >{{ item }}</div>
+          >
+            {{ item }}
+          </div>
         </div>
       </van-tab>
     </van-tabs>
@@ -39,14 +50,17 @@ export default {
     },
     tocurrentTag(item, k, key) {
       this.current.length = this.itemTabcontent.length;
+      this.current = [];
       if (
         this.$refs.vansList[key].children[k].classList.contains("activeTag")
       ) {
-        this.$set(this.current, key, "");
+        // this.$set(this.current, key, "");
+        this.current[key] = "";
         this.$emit("tocurrentTag", "");
         this.$emit("currentFuc", this.itemTabcontent.length, "", key);
       } else {
-        this.$set(this.current, key, item);
+        this.current[key] = item;
+        // this.$set(this.current, key, item);
         this.$emit("tocurrentTag", item);
         this.$emit("currentFuc", this.itemTabcontent.length, item, key);
       }

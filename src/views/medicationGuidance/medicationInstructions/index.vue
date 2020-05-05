@@ -75,7 +75,8 @@ export default {
     change(name, title) {
       this.acticalList = [];
       this.form.childMenu = title;
-      this.form.tag = this.current[name];
+      // this.form.tag = this.current[name];
+      this.form.tag = "";
       this.form.page = 1;
       this.finished = false;
     },
