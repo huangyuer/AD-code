@@ -46,11 +46,13 @@ export default {
   },
   methods: {
     change(name, title) {
+      this.current = [];
       this.$emit("change", name, title);
     },
     tocurrentTag(item, k, key) {
-      this.current.length = this.itemTabcontent.length;
+      // this.current.length = this.itemTabcontent.length;
       this.current = [];
+      console.log("huangdan", this.current);
       if (
         this.$refs.vansList[key].children[k].classList.contains("activeTag")
       ) {

@@ -1,8 +1,12 @@
 <template>
-  <div class="productinfowapper" style="color:#000000" v-if="Object.keys(item).length!=0">
+  <div
+    class="productinfowapper"
+    style="color:#000000"
+    v-if="Object.keys(item).length != 0"
+  >
     <div class="imageheader">
       <van-swipe :loop="true" :show-indicator="false" :initial-swipe="0">
-        <van-swipe-item v-for="(index,key) in item.goodsImg" :key="key">
+        <van-swipe-item v-for="(index, key) in item.goodsImg" :key="key">
           <van-image
             width="3rem"
             height="3rem"
@@ -12,7 +16,9 @@
           />
         </van-swipe-item>
         <template #indicator>
-          <div class="custom-indicator">{{ current + 1 }}/{{item.goodsImg.length}}</div>
+          <div class="custom-indicator">
+            {{ current + 1 }}/{{ item.goodsImg.length }}
+          </div>
         </template>
       </van-swipe>
     </div>
@@ -42,8 +48,17 @@ export default {
   created() {
     this.score = this.$route.query.score;
     this.getGoodsDetail();
+    this.upGoodsCkNum();
   },
   methods: {
+    upGoodsCkNum() {
+      this.$store
+        .dispatch("patientManagement/upGoodsCkNum", this.$route.query.id)
+        .then(response => {
+          console.log("response");
+        })
+        .catch(e => {});
+    },
     getGoodsDetail() {
       this.$store
         .dispatch("patientManagement/getGoodsDetail", this.$route.query.id)
