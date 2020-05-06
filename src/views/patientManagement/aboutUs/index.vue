@@ -13,7 +13,7 @@
       </p>
     </div>
 
-    <svg-icon iconClass="logo" class="logo"></svg-icon>
+    <svg-icon iconClass="logo1" class="logo1"></svg-icon>
     <svg-icon iconClass="user-term" class="user-term"></svg-icon>
   </div>
 </template>
@@ -26,12 +26,12 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.logo {
-  width: 1.6rem !important;
-  height: 1.32rem !important;
-  margin: 0rem auto 0.6rem;
+.logo1 {
+  width: 1.4rem !important;
+  height: .96rem !important;
+  // margin: 0rem auto 0.6rem;
   position: absolute;
-  bottom: 1.84rem;
+  bottom: 1.80rem;
   left: calc(50% - 0.8rem);
 }
 .user-term {
@@ -42,7 +42,7 @@ export default {
   left: 0;
 }
 @media screen and (min-width: 390px) and (max-width: 650px) {
-  .logo {
+  .logo1 {
     bottom: 1.2rem;
   }
 }
