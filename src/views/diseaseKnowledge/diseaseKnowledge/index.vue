@@ -16,7 +16,7 @@
       </div>-->
     </div>
     <div class="category-box">
-      <van-tabs sticky @click="changeTab" title-active-color="#009966" line-width="1.4rem">
+      <van-tabs sticky @click="changeTab" title-active-color="#009966" line-width="1.4rem" :ellipsis="false">
         <van-tab v-for="item in itemTabcontent" :title="item.type" :key="item.id"></van-tab>
         <div class="patient-like">
           <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
@@ -228,7 +228,7 @@ export default {
   }
   @{aaa}.van-tab {
     text-align: center;
-    width: 1.4rem;
+    min-width: 1.4rem;
     float: left;
     flex: none;
     font-size: 0.3rem;

@@ -89,7 +89,7 @@ export default new Router({
                 ),
             name: "MessageBoard",
             meta: {
-                title: "留言板",
+                title: "患者心声",
                 index: 1
             }
         },
