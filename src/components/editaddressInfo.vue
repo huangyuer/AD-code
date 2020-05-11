@@ -1,10 +1,6 @@
 <template>
   <div>
-    <van-field
-      v-model="form.recipient"
-      placeholder="收货人"
-      input-align="left"
-    />
+    <van-field v-model="form.recipient" placeholder="收货人" input-align="left" />
     <van-field v-model="form.phone" placeholder="手机号码" input-align="left" />
     <van-areas
       :formvalue="place"
@@ -14,11 +10,7 @@
       @IsshowArea="IsshowArea"
       @onConfirm="onConfirm"
     ></van-areas>
-    <van-field
-      v-model="form.detail"
-      input-align="left"
-      placeholder="详细地址：如道路、门牌号、小区、楼洞号，单元"
-    />
+    <van-field v-model="form.detail" input-align="left" placeholder="详细地址：如道路、门牌号、小区、楼洞号，单元" />
     <div class="saveEdit" @click="BtnupMyAddress()">保存</div>
   </div>
 </template>
@@ -34,11 +26,20 @@ export default {
         province: "",
         city: "",
         area: "",
-        detail: "",
+        detail: ""
       },
       place: "",
       address: {},
+      fromrouter: ""
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.fromrouter = from;
+      if (from.path == "/ProductInfo") {
+        vm.$store.commit("patientManagement/SET_PROTOEDITADDRESS", true);
+      }
+    });
   },
   created() {
     this.getMyAddress();
@@ -52,12 +53,11 @@ export default {
       this.form.province = value[0].name;
       this.form.city = value[1].name;
       this.form.area = value[2].name;
-      console.log("form", this.form);
     },
     getMyAddress() {
       this.$store
         .dispatch("patientManagement/getMyAddress")
-        .then((data) => {
+        .then(data => {
           this.address = this.$store.getters.getmyaddress.address;
           if (this.address.recipient == "") {
             this.$route.meta.title = "添加收货地址";
@@ -72,7 +72,7 @@ export default {
           this.place = this.form.province + this.form.city + this.form.area;
           this.form.detail = this.address.detail;
         })
-        .catch((e) => {
+        .catch(e => {
           // console.log(e);
           // if(e){
           //   Toast(e);
@@ -95,22 +95,36 @@ export default {
       }
       this.$store
         .dispatch("patientManagement/upMyAddress", this.form)
-        .then((data) => {
-          Toast("保存成功");
-          if (this.$store.getters.produceinfoToeditaddress) {
+        .then(data => {
+          // Toast("保存成功");
+          console.log(
+            "this.$store.getters.produceinfoToeditaddress",
+            this.$store.getters.produceinfoToeditaddress
+          );
+          if (
+            this.$store.getters.produceinfoToeditaddress &&
+            this.fromrouter.path == "/ProductInfo"
+          ) {
             this.$store.commit("patientManagement/SET_SAVEADDRESS", true);
+            this.$router.push({
+              path: this.fromrouter.path,
+              query: this.fromrouter.query
+            });
+          } else {
+            this.$router.push({
+              path: this.fromrouter.path
+            });
           }
-          this.$router.go(-1);
         })
-        .catch((e) => {
+        .catch(e => {
           // console.log(e);
           // if(e){
           //   Toast(e);
           // }
         });
-    },
+    }
   },
-  components: { VanAreas },
+  components: { VanAreas }
 };
 </script>
 <style lang="less" scoped>

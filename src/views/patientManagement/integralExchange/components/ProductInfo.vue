@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="productinfowapper"
-    style="color:#000000"
-    v-if="Object.keys(item).length != 0"
-  >
+  <div class="productinfowapper" style="color:#000000" v-if="Object.keys(item).length != 0">
     <div class="imageheader">
       <van-swipe :loop="true" :show-indicator="false" :initial-swipe="0">
         <van-swipe-item v-for="(index, key) in item.goodsImg" :key="key">
@@ -16,9 +12,7 @@
           />
         </van-swipe-item>
         <template #indicator>
-          <div class="custom-indicator">
-            {{ current + 1 }}/{{ item.goodsImg.length }}
-          </div>
+          <div class="custom-indicator">{{ current + 1 }}/{{ item.goodsImg.length }}</div>
         </template>
       </van-swipe>
     </div>
@@ -44,6 +38,17 @@ export default {
       item: {},
       current: 0
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (from.path == "/editaddressInfo" && vm.$store.getters.IssaveAddress) {
+        console.log("from", from, vm);
+        vm.$store.commit("patientManagement/SET_ISSUBMITEXCHANGE", true);
+      }
+      //因为当钩子执行前，组件实例还没被创建
+      // vm 就是当前组件的实例相当于上面的 this，所以在 next 方法里你就可以把 vm 当 this 来用了。
+      console.log(vm); //当前组件的实例
+    });
   },
   created() {
     this.score = this.$route.query.score;
@@ -76,15 +81,13 @@ export default {
         Toast("积分不足");
         return;
       }
-      if (
-        !this.item.isVirtual &&
-        !this.$store.getters.IssaveAddress.IsSubmitExchange
-      ) {
+      console.log(
+        "this.$store.getters.IssaveAddress.IsSubmitExchange",
+        this.$store.getters.IsSubmitExchange
+      );
+      if (!this.item.isVirtual && !this.$store.getters.IsSubmitExchange) {
         this.$router.push({ path: "/editaddressInfo" });
-      } else if (
-        !this.item.isVirtual &&
-        this.$store.getters.IssaveAddress.IsSubmitExchange
-      ) {
+      } else if (!this.item.isVirtual && this.$store.getters.IsSubmitExchange) {
         this.form.goods = id;
         this.getMyAddress();
       } else {

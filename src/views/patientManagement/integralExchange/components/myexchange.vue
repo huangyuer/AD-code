@@ -5,7 +5,7 @@
         <div class="vanimge">
           <svg-icon v-if="item.icon=='电子券'" iconClass="quan" class="quan"></svg-icon>
           <svg-icon v-else-if="item.icon=='专家视频'" iconClass="kechengxiaoshou" class="quan"></svg-icon>
-          <svg-icon v-else-if="item.icon=='电子书'" iconClass="zuxun" class="quan"></svg-icon>
+          <svg-icon v-else-if="item.icon=='电子书'" iconClass="zixun" class="quan"></svg-icon>
         </div>
         <div class="center">
           <div class="title">{{ item.name }}</div>
