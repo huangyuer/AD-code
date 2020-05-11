@@ -41,7 +41,7 @@ Axios.defaults.headers.post["Content-Type"] = "application/json";
 Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
   // console.log("--------1");
-  setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
+  // setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
   if (to.meta.title) {
     window.document.title = to.meta.title;
   }
