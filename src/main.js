@@ -8,14 +8,19 @@ import "./assets/icons";
 import Vant from "vant";
 import "vant/lib/index.css";
 import Axios from "axios";
-import { Toast } from "vant";
+import Vconsole from 'vconsole'
+import {
+  Toast
+} from "vant";
 
 import VueWechatTitle from "vue-wechat-title";
 import qs from "qs";
 Vue.prototype.$qs = qs;
 
 import "./assets/font_1686774_85lo9chzwmt/iconfont.css";
-import { Icon } from "vant";
+import {
+  Icon
+} from "vant";
 import {
   setOpenId,
   getOpenId,
@@ -23,6 +28,8 @@ import {
   removeOpenId,
   setToken
 } from "@/utils/auth";
+let vConsole = new Vconsole()
+Vue.use(vConsole)
 Vue.use(Icon);
 
 Vue.use(Vant);
