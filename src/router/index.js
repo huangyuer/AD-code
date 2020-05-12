@@ -277,7 +277,7 @@ export default new Router({
             component: () =>
                 import ("@/views/diseaseKnowledge/scienceVideo"),
             meta: {
-                title: "视频动态",
+                title: "科普视频",
                 index: 1
             }
         }, {
