@@ -8,7 +8,6 @@ import "./assets/icons";
 import Vant from "vant";
 import "vant/lib/index.css";
 import Axios from "axios";
-import Vconsole from 'vconsole'
 import {
   Toast
 } from "vant";
@@ -28,8 +27,6 @@ import {
   removeOpenId,
   setToken
 } from "@/utils/auth";
-let vConsole = new Vconsole()
-Vue.use(vConsole)
 Vue.use(Icon);
 
 Vue.use(Vant);

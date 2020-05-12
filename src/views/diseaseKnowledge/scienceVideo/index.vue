@@ -102,7 +102,7 @@ export default {
           if (this.$store.getters.videoList.videos.length < 5) {
             this.videoList = this.$store.getters.videoList.videos;
           } else {
-            for (var i; i < 4; i++) {
+            for (var i = 0; i < 4; i++) {
               this.videoList = this.videoList.concat(
                 this.$store.getters.videoList.videos[i]
               );
