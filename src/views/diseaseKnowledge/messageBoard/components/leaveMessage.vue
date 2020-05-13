@@ -287,7 +287,7 @@ export default {
           console.log("data", response);
           wx.config({
             debug: false,
-            appId: "wx91701d2b2f9ed162",
+            appId: "wx8ef854b5878d3b8d",
             timestamp: response.data.timestamp,
             nonceStr: response.data.nonce_str,
             signature: response.data.signature,

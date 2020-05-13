@@ -20,7 +20,7 @@
             :src="
               LiveList.coverImg.length>0
                 ? LiveList.coverImg[0].httpUrl
-                : 'https://img.yzcdn.cn/vant/cat.jpeg'
+                : ''
             "
           />
           <svg-icon iconClass="bofang" class="playicon"></svg-icon>

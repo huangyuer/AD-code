@@ -15,7 +15,7 @@
             :src="
               videoitem.coverImg != []
                 ? videoitem.coverImg[0].httpUrl
-                : 'https://img.yzcdn.cn/vant/cat.jpeg'
+                : ''
             "
           />
         </div>
@@ -138,23 +138,23 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-  .more-btn {
-    width: 6.4rem;
-    height: 0.8rem;
-    background: rgba(0, 157, 117, 1);
-    box-shadow: 0 0.04rem 0.08rem 0 rgba(0, 153, 102, 0.5);
-    border-radius: 0.4rem;
-    font-size: 0.3rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 1);
-    line-height: 0.8rem;
-    text-align: center;
-    position: fixed;
-    margin: auto;
-    left: 0;
-    right: 0;
-    bottom: 0.8rem;
-  }
+.more-btn {
+  width: 6.4rem;
+  height: 0.8rem;
+  background: rgba(0, 157, 117, 1);
+  box-shadow: 0 0.04rem 0.08rem 0 rgba(0, 153, 102, 0.5);
+  border-radius: 0.4rem;
+  font-size: 0.3rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  line-height: 0.8rem;
+  text-align: center;
+  position: fixed;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 0.8rem;
+}
 .wapperItemInfo {
   width: 100%;
   height: 100%;

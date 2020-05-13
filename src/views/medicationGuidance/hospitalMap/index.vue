@@ -1,6 +1,7 @@
 <template>
   <div class="HospitalMapWapper">
     <!-- <svg-icon iconClass='xiala' className='icon'></svg-icon> -->
+
     <div class="MapCenter">
       <!-- <div class="searchdiv" @click="searchpage()"></div> -->
       <div style="padding-top:.4rem;line-height:0"></div>
@@ -334,6 +335,16 @@ export default {
     },
     //跳转第三方
     togoNavPARTAction(name) {
+      // var userAgent = navigator.userAgent;
+      // var url = "",
+      //   downUrl = "";
+      // if (userAgent.indexOf("Android") > -1) {
+      //   url = "XXXXX"; //安卓版App地址，由安卓同事提供
+      //   downUrl = "XXXXXXXXX"; //安卓版App下载地址，由安卓同事提供
+      // } else {
+      //   url = "XXXXXX://"; //IOS版App地址，由IOS同事提供
+      //   downUrl = "XXXXXXXXXXXX"; //IOS版App下载地址，由IOS同事提供
+      // }
       if (name == "高德地图") {
         var url =
           "https://gaode.com/dir?from[name]=我的位置&from[lnglat]=" +
@@ -347,6 +358,7 @@ export default {
           "," +
           this.hispitalDetail.y +
           "&policy=1&type=car";
+        window.location.href = url;
       } else if (name == "百度地图") {
         var url =
           "http://api.map.baidu.com/direction?origin=latlng:" +
@@ -356,7 +368,12 @@ export default {
           "|name:我的位置&destination=" +
           this.hispitalDetail.name +
           "&mode=driving&region=上海&output=html&src=webapp.baidu.openAPIdemo";
+        window.location.href = url;
       } else {
+        var u = navigator.userAgent,
+          app = navigator.appVersion;
+        var isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //g
+        var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
         var url =
           "https://apis.map.qq.com/uri/v1/routeplan?type=bus&from=我的位置&fromcoord=" +
           this.y +
@@ -369,28 +386,35 @@ export default {
           "," +
           this.hispitalDetail.x +
           "&policy=1&referer=adcode";
+        if (isAndroid) {
+          window.location.href = url;
+        }
+        if (isIOS) {
+          var iframe = document.createElement("iframe");
+          iframe.src = url;
+          document.body.appendChild(iframe);
+          iframe.style.width = "100%";
+          iframe.style.height = "100vh";
+          iframe.style.position = "fixed";
+          iframe.style.top = "0";
+          iframe.style.zIndex = "200000";
+        }
+        // var url =
+        //   "https://apis.map.qq.com/tools/geolocation?key=RZ4BZ-2PF3G-GZZQT-IP5TY-TZJOJ-RXB6H&referer=myapp";
+        // var iframe = document.createElement("iframe");
+        // iframe.src = url;
+        // document.body.appendChild(iframe);
+        // iframe.style.width = "100%";
+        // iframe.style.height = "100vh";
+        // iframe.style.position = "fixed";
+        // iframe.style.top = "0";
+        // iframe.style.zIndex = "200000";
+        // console.log("iframe", iframe);
+        // var url =
+        //   "https://apis.map.qq.com/tools/routeplan/sword=故宫博物院&spointx=116.45925&spointy=39.907534&eword=中国技术交易大厦&epointx=116.30759&epointy=39.98411?referer=myapp&key=RZ4BZ-2PF3G-GZZQT-IP5TY-TZJOJ-RXB6H";
+        // ifr.src = url;
+        // document.body.appendChild(ifr);
       }
-      window.location.href = url;
-      // window.location.href =
-      //   "baidumap://map/direction?origin=name:我的位置|latlng:" +
-      //   this.y +
-      //   "," +
-      //   this.x +
-      //   "&destination=" +
-      //   this.hispitalDetail.name +
-      //   "&mode=transit&sy=3&index=0&target=1&src=ios.baidu.openAPIdemo";
-      // window.location.href =
-      //   "iosamap://path?sourceApplication=applicationName&sid=BGVIS1&slat=" +
-      //   this.y +
-      //   "&slon=" +
-      //   this.x +
-      //   "&sname=我的位置&did=BGVIS2&dlat=" +
-      //   this.hispitalDetail.y +
-      //   "&dlon=" +
-      //   this.hispitalDetail.x +
-      //   "&dname=" +
-      //   this.hispitalDetail.name +
-      //   "&dev=0&t=0";
     },
     //选择距离范围
     typePickeropen() {

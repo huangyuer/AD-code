@@ -13,7 +13,7 @@
             :src="
               index.coverImg.length != 0
                 ? index.coverImg[0].httpUrl
-                : 'https://img.yzcdn.cn/vant/cat.jpeg'
+                : ''
             "
             fit="cover"
           />
