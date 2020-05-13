@@ -53,11 +53,13 @@ const actions = {
       window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${AppId}&redirect_uri=${encodeURIComponent(
           local,
           "UTF-8"
-        )}&response_type=code&scope=snsapi_base&state=1&connect_redirect=1#wechat_redirect`;
+        )}&response_type=code&scope=snsapi_base#wechat_redirect`;
+      console.log("codeherf", window.location.href);
     } else {
+      console.log("code", code);
       let code = GetUrlParame('code')
       setCode(code)
-      console.log("code", code);
+      console.log("codeformatter----", code);
       return new Promise((resolve, reject) => {
         getOpenIdApi({
             code: GetUrlParame('code')

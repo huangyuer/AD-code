@@ -11,7 +11,9 @@ import Axios from "axios";
 import {
   Toast
 } from "vant";
-
+import Vconsole from 'vconsole'
+let vConsole = new Vconsole()
+Vue.use(vConsole)
 import VueWechatTitle from "vue-wechat-title";
 import qs from "qs";
 Vue.prototype.$qs = qs;
