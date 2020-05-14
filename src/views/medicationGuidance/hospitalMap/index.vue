@@ -375,7 +375,7 @@ export default {
         var isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //g
         var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
         var url =
-          "https://apis.map.qq.com/uri/v1/routeplan?type=bus&from=我的位置&fromcoord=" +
+          "https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=我的位置&fromcoord=" +
           this.y +
           "," +
           this.x +
@@ -385,19 +385,15 @@ export default {
           this.hispitalDetail.y +
           "," +
           this.hispitalDetail.x +
-          "&policy=1&referer=adcode";
+          "&coord_type=1&policy=1&referer=adcode";
         if (isAndroid) {
           window.location.href = url;
         }
         if (isIOS) {
-          var iframe = document.createElement("iframe");
-          iframe.src = url;
-          document.body.appendChild(iframe);
-          iframe.style.width = "100%";
-          iframe.style.height = "100vh";
-          iframe.style.position = "fixed";
-          iframe.style.top = "0";
-          iframe.style.zIndex = "200000";
+          this.$router.replace({
+            path: "/map",
+            query: { x: this.x, y: this.y, hispitalDetail: this.hispitalDetail }
+          });
         }
         // var url =
         //   "https://apis.map.qq.com/tools/geolocation?key=RZ4BZ-2PF3G-GZZQT-IP5TY-TZJOJ-RXB6H&referer=myapp";

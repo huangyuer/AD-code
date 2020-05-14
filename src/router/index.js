@@ -317,6 +317,16 @@ export default new Router({
                 title: "我的位置",
                 index: 2
             }
+        },
+        {
+            path: '/map',
+            component: () =>
+                import ("@/views/medicationGuidance/hospitalMap/components/map"),
+            name: 'map',
+            meta: {
+                title: "导航",
+                index: 2
+            }
         }
     ]
 });
