@@ -63,7 +63,8 @@
             </div>
           </div>
         </div>
-        <div v-else>
+        <div class="van-loading size" v-else-if="itemlist.length==0 && !loading">此范围内无目标医院</div>
+        <div v-if="loading">
           <van-loading type="spinner" color="#C4C4C4" size="30" vertical>医院位置获取中</van-loading>
         </div>
       </div>
@@ -85,11 +86,16 @@ export default {
     hospitals: {
       type: Array,
       default: []
+    },
+    isloading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       isShow: false,
+      loading: false,
       typePicker: false,
       container: null,
       startx: 0,
@@ -142,6 +148,9 @@ export default {
     },
     hospitals: function(val) {
       this.itemlist = val;
+    },
+    isloading: function(val) {
+      this.loading = val;
     }
   }
 };
@@ -337,5 +346,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  &.size {
+    font-size: 0.3rem;
+  }
 }
 </style>

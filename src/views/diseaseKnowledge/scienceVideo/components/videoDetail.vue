@@ -106,6 +106,7 @@ export default {
             return;
           }
           this.videoitem = response.data.video;
+          this.$route.meta.title = this.videoitem.title;
           this.iframe = this.videoitem.video[0].httpUrl;
         })
         .catch(e => {
@@ -170,6 +171,9 @@ export default {
     flex-direction: column;
     justify-content: center;
     border-bottom: 0.02rem solid #e5e5e5;
+    .title {
+      width: 80%;
+    }
     .time {
       color: #acadaf;
       font-family: "PingFangSC-Regular";
@@ -187,11 +191,11 @@ export default {
       margin-bottom: 0.54rem;
       video {
         width: 100%;
-        height: 2.8rem;
+        height: 3.8rem;
         object-fit: cover;
       }
       .container {
-        height: 2.8rem;
+        height: 3.8rem;
       }
       .playicon {
         position: absolute;

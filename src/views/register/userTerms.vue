@@ -1,17 +1,11 @@
 <template>
   <div class="user-terms">
-    <div class="user-terms-header">
-      AD患者之家用户知情同意书
-    </div>
+    <div class="user-terms-header">中国AD康复之家用户知情同意书</div>
     <div class="user-terms-body">
       <p class="title">一、我们如何收集和使用您的个人信息</p>
-      <p>
-        我们会遵循正当，合法，必要的原则，出于本政策所述的以下目的，收集和使用您在使用我们服务过程中主动提供或因使用我们产品和/或服务而产生的个人信息。如果我们要将您的信息用于本政策未载明的其他用途，或基于特定目的将收集来的信息用于其他目的，我们将以合理的方式向您告知，并在使用前再次征得您的同意。
-      </p>
+      <p>我们会遵循正当，合法，必要的原则，出于本政策所述的以下目的，收集和使用您在使用我们服务过程中主动提供或因使用我们产品和/或服务而产生的个人信息。如果我们要将您的信息用于本政策未载明的其他用途，或基于特定目的将收集来的信息用于其他目的，我们将以合理的方式向您告知，并在使用前再次征得您的同意。</p>
       <p class="title term-margin">1.账号注册</p>
-      <p>
-        当您注册时，我们将收集您的姓名，年龄，手机号等信息，以便为您提供快捷的登录服务，同时未帮您完成注册功能，我们还将收集您的问答信息，以为您提供AD患者之家的初始服务。
-      </p>
+      <p>当您注册时，我们将收集您的姓名，年龄，手机号等信息，以便为您提供快捷的登录服务，同时未帮您完成注册功能，我们还将收集您的问答信息，以为您提供AD患者之家的初始服务。</p>
       <p class="title term-margin">2.向您提供产品和/或服务</p>
       <p>
         <span class="title">2.1</span> 向您提供信息浏览，发布和收藏及分享功能。
@@ -30,16 +24,16 @@ export default {
   data() {
     return {};
   },
-  methods:{
-      termsBtn(){
-          this.$router.push({
+  methods: {
+    termsBtn() {
+      this.$router.push({
         name: "Register",
         path: "/register",
         params: {
           userTerm: true
         }
       });
-      }
+    }
   }
 };
 </script>

@@ -24,6 +24,7 @@
           :show="show"
           :typeValue="typeValue"
           :hospitals="hospitals"
+          :isloading="isloading"
           @toHostipalDetail="toHostipalDetail"
           @typePickeropen="typePickeropen"
         ></hospital-list>
@@ -102,6 +103,7 @@ export default {
         address: String,
         distance: Number
       },
+      isloading: false,
       hospitals: [],
       hispitalDetail: {},
       doctors: [],
@@ -435,6 +437,7 @@ export default {
       }
       this.typeValue = value;
       this.typePicker = false;
+      this.isloading = true;
       this.getNearHospitals(map);
     },
     //打开医院详情
@@ -513,6 +516,7 @@ export default {
       this.$store
         .dispatch("medicationGuidance/getNearHospitals", this.params)
         .then(res => {
+          this.isloading = false;
           this.hospitals = res.data.hospitals;
           this.mapHospitalLocation(map);
           this.vloading = false;

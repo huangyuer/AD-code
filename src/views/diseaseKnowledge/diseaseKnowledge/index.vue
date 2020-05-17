@@ -16,8 +16,15 @@
       </div>-->
     </div>
     <div class="category-box">
-      <van-tabs sticky @click="changeTab" title-active-color="#009966" line-width="1.4rem" :ellipsis="false">
-        <van-tab v-for="item in itemTabcontent" :title="item.type" :key="item.id"></van-tab>
+      <van-tabs
+        sticky
+        @click="changeTab"
+        title-active-color="#009966"
+        line-width="1.4rem"
+        :ellipsis="false"
+        v-model="activeTabName"
+      >
+        <van-tab v-for="item in itemTabcontent" :name="item.type" :title="item.type" :key="item.id"></van-tab>
         <div class="patient-like">
           <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
             <div v-for="item in diseaseInfo" :key="item.id">
@@ -44,6 +51,7 @@ export default {
       loading: false,
       finished: false,
       total: 0,
+      activeTabName: "",
       params: {
         menu: this.$route.meta.title,
         childMenu: String,
@@ -56,58 +64,6 @@ export default {
       curTab: "",
       category: ["特应性皮炎", "银屑病"],
       diseaseInfo: [],
-      // diseaseInfo: [
-      //   {
-      //     title: "中毒性表皮坏死松解型药疹",
-      //     time: "2020-02-26",
-      //     isHeart: true
-      //   },
-      //   {
-      //     title: "中毒性表皮坏死松解型药疹",
-      //     time: "2020-02-26",
-      //     isHeart: true
-      //   },
-      //   {
-      //     title: "中毒性表皮坏死松解型药疹",
-      //     time: "2020-02-26",
-      //     isHeart: true
-      //   },
-      //   {
-      //     title: "中毒性表皮坏死松解型药疹",
-      //     time: "2020-02-26",
-      //     isHeart: true
-      //   },
-      //   {
-      //     title: "中毒性表皮坏死松解型药疹",
-      //     time: "2020-02-26",
-      //     isHeart: true
-      //   },
-      //   {
-      //     title: "中毒性表皮坏死松解型药疹",
-      //     time: "2020-02-26",
-      //     isHeart: true
-      //   },
-      //   {
-      //     title: "中毒性表皮坏死松解型药疹",
-      //     time: "2020-02-26",
-      //     isHeart: true
-      //   },
-      //   {
-      //     title: "中毒性表皮坏死松解型药疹",
-      //     time: "2020-02-26",
-      //     isHeart: true
-      //   },
-      //   {
-      //     title: "中毒性表皮坏死松解型药疹",
-      //     time: "2020-02-26",
-      //     isHeart: true
-      //   },
-      //   {
-      //     title: "中毒性表皮坏死松解型药疹",
-      //     time: "2020-02-26",
-      //     isHeart: true
-      //   }
-      // ],
       option: [
         { text: "全部商品", value: "0" },
         { text: "新款商品", value: "1" },
@@ -115,17 +71,29 @@ export default {
       ]
     };
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (from.path != "/diseaseDetail") {
+        localStorage.removeItem("tabNum");
+      }
+    });
+  },
   created() {
     this.$store
       .dispatch("common/getMenuSelect", this.$route.meta.title)
       .then(() => {
         this.itemTabcontent = this.$store.getters.menuList.selects;
-        this.$set(
-          this.params,
-          "childMenu",
-          this.$store.getters.menuList.selects[0].type
-        );
-        // this.changeTab(null,this.itemTabcontent[0].type)
+        if (localStorage.getItem("tabNum")) {
+          this.$set(this.params, "childMenu", localStorage.getItem("tabNum"));
+          this.activeTabName = localStorage.getItem("tabNum");
+        } else {
+          this.$set(
+            this.params,
+            "childMenu",
+            this.$store.getters.menuList.selects[0].type
+          );
+          this.activeTabName = this.$store.getters.menuList.selects[0].type;
+        }
         this.onLoad();
       })
       .catch(e => {
@@ -133,6 +101,7 @@ export default {
       });
     console.log("------ss", this.$route.meta.title);
   },
+  mounted() {},
   methods: {
     onSearch(value) {
       this.params.title = value;
@@ -159,6 +128,7 @@ export default {
       this.diseaseInfo = [];
       this.$set(this.params, "childMenu", title);
       this.$set(this.params, "page", 1);
+      localStorage.setItem("tabNum", title);
       this.finished = false;
       this.getArticles();
     },

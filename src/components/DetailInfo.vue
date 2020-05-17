@@ -1,18 +1,13 @@
 <template>
   <div>
-    <div
-      class="wapperItemInfo"
-      v-if="Object.keys(article).length > 0 || !vloading"
-    >
+    <div class="wapperItemInfo" v-if="Object.keys(article).length > 0 || !vloading">
       <div class="header">
         <div class="title">{{ this.article.title }}</div>
         <div class="time">{{ this.article.date }}</div>
       </div>
       <div class="content">
         <!-- <van-image  /> -->
-        <div class="ql-editor" v-html="this.article.contentHtml">
-          {{ this.article.contentHtml }}
-        </div>
+        <div class="ql-editor" v-html="this.article.contentHtml">{{ this.article.contentHtml }}</div>
       </div>
       <like-and-forward
         :like="this.$route.query.like"
@@ -96,6 +91,10 @@ export default {
     flex-direction: column;
     justify-content: center;
     border-bottom: 0.02rem solid #e5e5e5;
+    .title {
+      font-size: 0.32rem;
+      color: #009966;
+    }
     .time {
       color: #acadaf;
       font-family: "PingFangSC-Regular";

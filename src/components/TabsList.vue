@@ -1,15 +1,11 @@
 <template>
   <div>
-    <van-tabs
-      line-width="1.4rem"
-      @change="change"
-      v-model="active"
-      title-active-color="#009966"
-    >
+    <van-tabs line-width="1.4rem" @change="change" v-model="active" title-active-color="#009966">
       <van-tab
         v-for="(index, key) in itemTabcontent"
         :key="key"
         :title="index.type"
+        :name="index.type"
       >
         <div ref="vansList" class="vansList" v-if="index.tags.length != 0">
           <div
@@ -21,9 +17,7 @@
             v-for="(item, k) in index.tags"
             :key="k"
             @click="tocurrentTag(item, k, key)"
-          >
-            {{ item }}
-          </div>
+          >{{ item }}</div>
         </div>
       </van-tab>
     </van-tabs>
@@ -35,6 +29,10 @@ export default {
     itemTabcontent: {
       type: Array,
       default: []
+    },
+    activeTabName: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -66,6 +64,12 @@ export default {
         this.$emit("tocurrentTag", item);
         this.$emit("currentFuc", this.itemTabcontent.length, item, key);
       }
+    }
+  },
+  watch: {
+    activeTabName(val) {
+      console.log("val", val);
+      this.active = val;
     }
   }
 };

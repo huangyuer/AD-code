@@ -11,9 +11,9 @@ import Axios from "axios";
 import {
     Toast
 } from "vant";
-import Vconsole from 'vconsole'
-let vConsole = new Vconsole()
-Vue.use(vConsole)
+// import Vconsole from 'vconsole'
+// let vConsole = new Vconsole()
+// Vue.use(vConsole)
 import VueWechatTitle from "vue-wechat-title";
 import qs from "qs";
 Vue.prototype.$qs = qs;
@@ -40,12 +40,14 @@ Axios.defaults.headers.post["Content-Type"] = "application/json";
 Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
     // console.log("--------1");
-    // setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
+    setOpenId("oQEE8wgh7QVhrNi4f6frjxI_qiAw");
     if (to.meta.title) {
         window.document.title = to.meta.title;
     }
     if (Object.is(to.name, "Register")) {
-        if (getOpenId()) {
+        if (getOpenId() || Object.is(from.name, "DiseaseDetail") ||
+            Object.is(from.name, "PatientDetail") ||
+            Object.is(from.name, "videoDetail")) {
             console.log("opendID---1", getOpenId());
             next();
             return;

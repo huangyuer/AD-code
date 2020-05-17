@@ -12,6 +12,7 @@
         <div class="dropdownwapper">
           <tabs-list
             :itemTabcontent="itemTabcontent"
+            :activeTabName="activeTabName"
             @change="change"
             @tocurrentTag="tocurrentTag"
             @currentFuc="currentFuc"
@@ -40,6 +41,7 @@ export default {
       finished: false,
       acticalList: [],
       itemTabcontent: [],
+      activeTabName: "",
       form: {
         menu: this.$route.meta.title,
         childMenu: String,
@@ -49,12 +51,23 @@ export default {
         limit: 10
       },
       total: 0,
-      current: []
+      current: [],
+      onloadIs: false
     };
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (from.path != "/DetailInfo") {
+        localStorage.removeItem("tabNum");
+      }
+    });
+  },
   created() {
-    this.finished = true;
+    // this.finished = true;
     this.getMenuSelect();
+  },
+  mounted() {
+    // this.onloadIs = true;
   },
   methods: {
     likeBtn(value) {
@@ -76,6 +89,8 @@ export default {
       this.acticalList = [];
       this.form.childMenu = title;
       // this.form.tag = this.current[name];
+      this.onloadIs = true;
+      localStorage.setItem("tabNum", title);
       this.form.tag = "";
       this.form.page = 1;
       this.finished = false;
@@ -94,6 +109,7 @@ export default {
       this.$store
         .dispatch("common/getArticles", this.form)
         .then(data => {
+          this.onloadIs = true;
           this.acticalList = this.acticalList.concat(
             this.$store.getters.articlesList.articles
           );
@@ -108,32 +124,32 @@ export default {
             this.form.page = this.form.page + 1;
           }
         })
-        .catch(e => {
-          // if(e){
-          //   Toast(e);
-          // }
-        });
+        .catch(e => {});
     },
     getMenuSelect() {
       this.$store
         .dispatch("common/getMenuSelect", this.$route.meta.title)
         .then(data => {
           this.itemTabcontent = this.$store.getters.menuList.selects;
-          this.$set(
-            this.form,
-            "childMenu",
-            this.$store.getters.menuList.selects[0].type
-          );
-          this.finished = false;
+          if (localStorage.getItem("tabNum")) {
+            this.$set(this.form, "childMenu", localStorage.getItem("tabNum"));
+            this.activeTabName = localStorage.getItem("tabNum");
+          } else {
+            this.$set(
+              this.form,
+              "childMenu",
+              this.$store.getters.menuList.selects[0].type
+            );
+            this.activeTabName = this.$store.getters.menuList.selects[0].type;
+          }
+          this.getArticles();
         })
-        .catch(e => {
-          // if(e){
-          //   Toast(e);
-          // }
-        });
+        .catch(e => {});
     },
     onLoad() {
-      this.getArticles();
+      if (this.onloadIs) {
+        this.getArticles();
+      }
     }
   },
   components: { SearchInput, TabsList, InstructionsItem }

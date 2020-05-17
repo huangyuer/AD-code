@@ -9,7 +9,7 @@
     <van-list
       v-model="loading"
       :finished="finished"
-      finished-text="您没有更多已发布的留言"
+      finished-text="欢迎您在这里记录下属于自己的皮肤日记"
       @load="onLoad"
     >
       <message-info
