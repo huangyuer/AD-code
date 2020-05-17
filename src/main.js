@@ -50,12 +50,12 @@ router.beforeEach((to, from, next) => {
             Object.is(from.name, "videoDetail")) {
             console.log("opendID---1", getOpenId());
             next();
-            return;
+            // return;
         } else {
             store.dispatch("register/getOpenIdApi").then(() => {
                 console.log("opendID---2", getOpenId());
                 next();
-                return;
+                // return;
             });
         }
     } else {
@@ -86,8 +86,10 @@ router.beforeEach((to, from, next) => {
                 Object.is(to.name, "PatientDetail") ||
                 Object.is(to.name, "videoDetail")
             ) {
+              store.dispatch("register/getOpenIdApi").then(() => {
                 next();
                 console.log("Detail2");
+            });
             } else {
                 // setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
                 store.dispatch("register/getOpenIdApi").then(() => {

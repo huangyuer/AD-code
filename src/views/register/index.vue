@@ -20,7 +20,7 @@
       <div class="register-btn" @click="registerBtn">注册</div>
     </div>
     <div class="user-terms" v-else>
-      <div class="user-terms-header">AD之家用户知情同意书</div>
+      <div class="user-terms-header">中国AD康复之家用户知情同意书</div>
       <div class="user-terms-body">
         <p class="title">一、我们如何收集和使用您的个人信息</p>
         <p>我们会遵循正当，合法，必要的原则，出于本政策所述的以下目的，收集和使用您在使用我们服务过程中主动提供或因使用我们产品和/或服务而产生的个人信息。如果我们要将您的信息用于本政策未载明的其他用途，或基于特定目的将收集来的信息用于其他目的，我们将以合理的方式向您告知，并在使用前再次征得您的同意。</p>
