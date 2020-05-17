@@ -1,6 +1,6 @@
 <template>
-  <div class="myexchangeWapper" v-if="logs.length!=0">
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+  <div class="myexchangeWapper">
+    <van-list v-model="loading" :finished="finished" finished-text="您还未进行兑换" @load="onLoad">
       <div class="excahngeItem" v-for="(item, index) in logs" :key="index">
         <div class="vanimge">
           <svg-icon v-if="item.icon=='电子券'" iconClass="quan" class="quan"></svg-icon>
@@ -14,7 +14,7 @@
             <span class="cardtime">| {{ item.date }}</span>
           </div>
         </div>
-        <div class="rightBtn" @click="checkcode(item._id)">立即使用</div>
+        <div class="rightBtn" @click="checkcode(item._id)">{{item.icon=='入场券'?'立即使用':'查看详情'}}</div>
       </div>
     </van-list>
   </div>
@@ -57,11 +57,7 @@ export default {
             this.logsform.page = this.logsform.page + 1;
           }
         })
-        .catch(e => {
-          // if(e){
-          //   Toast(e);
-          // }
-        });
+        .catch(e => {});
     },
     onLoad() {
       this.getExchangeLogs();

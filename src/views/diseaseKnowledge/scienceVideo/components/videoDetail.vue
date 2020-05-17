@@ -65,6 +65,10 @@ export default {
     next();
     this.addOutPageLog();
   },
+  beforeRouteEnter(to, from, next) {
+    window.document.title = to.query.title;
+    next(vm => {});
+  },
   data() {
     return {
       videoitem: {},

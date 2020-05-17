@@ -8,18 +8,9 @@
       @onClear="onClear"
     ></search-input>
     <div class="patient-like">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div v-for="item in diseaseInfo" :key="item.id">
-          <like-info
-            :info="item"
-            @likeBtn="likeBtn"
-            @likeItem="likeItem"
-          ></like-info>
+          <like-info :info="item" @likeBtn="likeBtn" @likeItem="likeItem"></like-info>
         </div>
       </van-list>
     </div>
@@ -41,10 +32,10 @@ export default {
       params: {
         menu: this.$route.meta.title,
         page: 1,
-        limit: 10,
+        limit: 10
       },
       category: ["特应性皮炎", "银屑病"],
-      diseaseInfo: [],
+      diseaseInfo: []
       // diseaseInfo: [
       //   {
       //     title: "中毒性表皮坏死松解型药疹",
@@ -110,10 +101,10 @@ export default {
     };
   },
   watch: {
-    diseaseInfo: function (val) {
+    diseaseInfo: function(val) {
       console.log("val", val);
       this.diseaseInfo = val;
-    },
+    }
   },
   methods: {
     onLoad() {
@@ -153,7 +144,7 @@ export default {
             this.params.page = this.params.page + 1;
           }
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
         });
     },
@@ -168,14 +159,20 @@ export default {
       this.$router.push({
         path: "/patientDetail",
         name: "PatientDetail",
-        query: { id: info._id, like: true, forward: true, isStar: info.isStar },
+        query: {
+          id: info._id,
+          title: info.title,
+          like: true,
+          forward: true,
+          isStar: info.isStar
+        },
         meta: {
-                title: "患者故事",
-                index: 3
-            }
+          title: "患者故事",
+          index: 3
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>

@@ -121,7 +121,13 @@ export default {
       this.$router.push({
         path: "/diseaseDetail",
         name: "DiseaseDetail",
-        query: { id: info._id, like: true, forward: true, isStar: info.isStar }
+        query: {
+          id: info._id,
+          title: info.title,
+          like: true,
+          forward: true,
+          isStar: info.isStar
+        }
       });
     },
     changeTab(name, title) {

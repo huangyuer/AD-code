@@ -17,17 +17,8 @@
       <sort-attribute :name="'发布时间'" @sortway="sortway"></sort-attribute>
       <sort-attribute :name="'点击次数'" @sortway="sortway"></sort-attribute>
     </div>
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <science-item
-        :itemlist="videoList"
-        @likeBtn="likeBtn"
-        @toPageVideodetail="toPageVideodetail"
-      ></science-item>
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <science-item :itemlist="videoList" @likeBtn="likeBtn" @toPageVideodetail="toPageVideodetail"></science-item>
     </van-list>
   </div>
 </template>
@@ -165,6 +156,7 @@ export default {
             name: "videoDetail",
             query: {
               id: item._id,
+              title: item.title,
               like: true,
               forward: true,
               isStar: item.isStar

@@ -504,15 +504,11 @@ export default {
           this.mapMyLocation(map, 13);
           this.getNearHospitals(map);
         })
-        .catch(e => {
-          // Toast({
-          //   message: e,
-          //   position: "top"
-          // });
-        });
+        .catch(e => {});
     },
     //获取附近医院
     getNearHospitals(map) {
+      this.isloading = true;
       this.$store
         .dispatch("medicationGuidance/getNearHospitals", this.params)
         .then(res => {
