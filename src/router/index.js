@@ -34,7 +34,9 @@ export default new Router({
                 import ("@/views/medicationGuidance/hospitalMap"),
             name: "HospitalMap",
             meta: {
-                title: "医院地图"
+                keepAlive: true,
+                title: "医院地图",
+                index: 1
             }
         },
         {
@@ -327,6 +329,16 @@ export default new Router({
                 title: "导航",
                 index: 2
             }
-        }
+        },
+        {
+            path: '/hospitalIntro',
+            component: () =>
+                import ("@/views/medicationGuidance/hospitalMap/components/hospitalIntro"),
+            name: 'HospitalIntro',
+            meta: {
+                title: "医院/科室介绍",
+                index: 2
+            }
+        },
     ]
 });

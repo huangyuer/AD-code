@@ -8,7 +8,11 @@
         <svg-icon iconClass="gengduo" class="gengduo"></svg-icon>
       </span>
     </div>
-    <science-item :itemlist="videoList" @likeBtn="likeBtn" @toPageVideodetail="toPageVideodetail"></science-item>
+    <science-item
+      :itemlist="videoList"
+      @likeBtn="likeBtn"
+      @toPageVideodetail="toPageVideodetail"
+    ></science-item>
     <div v-if="LiveList">
       <div class="title">视频直播</div>
       <div class="Link">
@@ -18,9 +22,7 @@
             height="2.8rem"
             fit="cover"
             :src="
-              LiveList.coverImg.length>0
-                ? LiveList.coverImg[0].httpUrl
-                : ''
+              LiveList.coverImg.length > 0 ? LiveList.coverImg[0].httpUrl : ''
             "
           />
           <svg-icon iconClass="bofang" class="playicon"></svg-icon>
@@ -93,7 +95,7 @@ export default {
       if (liveItem.liveAdd) {
         window.location.href = liveItem.liveAdd;
       } else {
-        Toast("直播不存在");
+        Toast("请在公众号推文中查询相应直播预告扫码观看");
       }
     },
     getVideos() {

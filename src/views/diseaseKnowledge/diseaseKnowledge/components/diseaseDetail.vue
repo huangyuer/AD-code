@@ -1,13 +1,18 @@
 <template>
   <div>
-    <div class="wapperItemInfo" v-if="Object.keys(article).length > 0 || !vloading">
+    <div
+      class="wapperItemInfo"
+      v-if="Object.keys(article).length > 0 || !vloading"
+    >
       <div class="header">
         <div class="title">{{ this.article.title }}</div>
         <div class="time">{{ this.article.date }}</div>
       </div>
       <div class="content">
         <!-- <van-image  /> -->
-        <div class="ql-editor" v-html="this.article.contentHtml">{{ this.article.contentHtml }}</div>
+        <div class="ql-editor" v-html="this.article.contentHtml">
+          {{ this.article.contentHtml }}
+        </div>
       </div>
       <like-and-forward
         v-if="flag"
@@ -19,8 +24,13 @@
         @likeBtn="likeBtn"
         @forwardBtn="forwardBtn"
       ></like-and-forward>
-      <van-over-lay :show="showoverlay" @isShowOverlay="isShowOverlay"></van-over-lay>
-      <div class="more-btn" v-if="!flag" @click="register">查看更多内容，请点击注册</div>
+      <van-over-lay
+        :show="showoverlay"
+        @isShowOverlay="isShowOverlay"
+      ></van-over-lay>
+      <div class="more-btn" v-if="!flag" @click="register">
+        查看更多内容，请点击注册
+      </div>
     </div>
     <vant-loading v-else></vant-loading>
     <van-image-preview v-model="showImgPre" :images="images" @change="onChange">
@@ -38,7 +48,7 @@ import { getToken } from "@/utils/auth";
 export default {
   name: "DiseaseDetail",
   components: { LikeAndForward, VanOverLay, VantLoading },
-  beforeRouteLeave(to, form, next) {
+  beforeRouteLeave(to, from, next) {
     next();
     this.addOutPageLog();
   },

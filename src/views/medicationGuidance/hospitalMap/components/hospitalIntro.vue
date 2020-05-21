@@ -1,12 +1,9 @@
 <template>
   <div>
-    <div
-      class="wapperItemInfo"
-      v-if="Object.keys(article).length > 0 || !vloading"
-    >
+    <div class="wapperItemInfo" v-if="!vloading">
       <div class="header">
-        <div class="title">{{ this.article.title }}</div>
-        <div class="time">{{ this.article.date }}</div>
+        <div class="title">{{ this.article.name }}</div>
+        <div class="time">{{ this.article.address }}</div>
       </div>
       <div class="content">
         <!-- <van-image  /> -->
@@ -14,25 +11,16 @@
           {{ this.article.contentHtml }}
         </div>
       </div>
-      <like-and-forward
-        :like="this.$route.query.like"
-        :forward="this.$route.query.forward"
-        :starId="this.$route.query.id"
-        :isStar="this.$route.query.isStar"
-        @likeBtn="likeBtn"
-        @forwardBtn="forwardBtn"
-      ></like-and-forward>
     </div>
     <vant-loading v-else></vant-loading>
   </div>
 </template>
 <script>
-import LikeAndForward from "@/components/LikeAndForward";
 import VantLoading from "@/components//loading";
 import { Toast } from "vant";
 export default {
-  name: "DiseaseDetail",
-  components: { LikeAndForward, VantLoading },
+  name: "HospitalIntro",
+  components: { VantLoading },
   data() {
     return {
       id: "",
@@ -40,41 +28,21 @@ export default {
       vloading: true
     };
   },
-  beforeRouteLeave(to, form, next) {
-    next();
-    this.addOutPageLog();
-  },
   created() {
-    this.$store
-      .dispatch("common/getArticle", this.$route.query.id)
-      .then(data => {
-        this.vloading = false;
-        this.article = this.$store.getters.articleDetail.article;
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    console.log("created");
+    this.init();
   },
-  mounted() {},
   methods: {
-    addOutPageLog() {
+    init() {
       this.$store
-        .dispatch("common/addOutPageLog", this.$route.meta.title)
-        .then(response => {
-          console.log("response===========", response);
+        .dispatch("medicationGuidance/getHospital", this.$route.query.id)
+        .then(res => {
+          this.vloading = false;
+          this.article = res.data.hospital;
         })
         .catch(e => {
-          // if (e) {
-          //   Toast(e);
-          // }
+          console.log(e);
         });
-    },
-    likeBtn() {
-      this.de;
-      console.log("-----d");
-    },
-    forwardBtn() {
-      console.log("-----dsssdfsdfadsadf");
     }
   }
 };

@@ -7,7 +7,11 @@
     v-if="isShow"
     ref="vanpopup"
   >
-    <div class="hospitalDetailWapper" @touchstart="touchstart" @touchmove="touchmove">
+    <div
+      class="hospitalDetailWapper"
+      @touchstart="touchstart"
+      @touchmove="touchmove"
+    >
       <!-- <div class="whiteskr"></div> -->
       <div class="exceptwhite">
         <div class="headerTol">
@@ -24,9 +28,9 @@
                   :src="require('../../../../assets/zu-2.png')"
                 />-->
                 <svg-icon iconClass="zu-2" class="zu-2"></svg-icon>
-                <span>{{hispitalItem.name}}</span>
+                <span>{{ hispitalItem.name }}</span>
               </div>
-              <div class="hp-phone">{{hispitalItem.address}}</div>
+              <div class="hp-phone">{{ hispitalItem.address }}</div>
               <div class="hp-distance">
                 <!-- <van-image
                   width=".2rem"
@@ -34,7 +38,7 @@
                   :src="require('../../../../assets/tuoyuan.png')"
                 />-->
                 <svg-icon iconClass="tuoyuan" class="tuoyuan"></svg-icon>
-                <span>距离您{{hispitalItem.distance}}</span>
+                <span>距离您{{ hispitalItem.distance }}</span>
               </div>
             </div>
             <div class="hp-btn" @click="goNav()">
@@ -46,27 +50,39 @@
             <b class="colorred">药盒</b>并展示
             <b class="colorred">自评报告</b>，有助于医生评估病情。
           </div>
+          <div class="hospitalContentname">医院介绍</div>
+          <div class="hospitalIntro">
+            <div class="text" v-html="hospitalItemIntro.contentHtml">
+              {{ hospitalItemIntro.contentHtml }}
+              <div class="hideIntro"></div>
+            </div>
+            <div class="clicktoageIntro" @click="toIntro()">查看更多详情 ></div>
+          </div>
           <div class="hospitalContentname">医生列表</div>
           <div class="doctorList">
-            <div class="doctorItem" v-for="(item, key) in doctoritem" :key="key">
+            <div
+              class="doctorItem"
+              v-for="(item, key) in doctoritem"
+              :key="key"
+            >
               <div class="doc-top">
                 <svg-icon iconClass="doctor" class="doctor"></svg-icon>
                 <div class="doc-detail">
                   <div class="doc-name">
-                    {{item.name}}
+                    {{ item.name }}
                     <span class="split">|</span>
-                    <b>{{item.sex}}</b>
+                    <b>{{ item.sex }}</b>
                   </div>
                   <div class="doc-work">
-                    {{item.department}}
+                    {{ item.department }}
                     <span class="split">|</span>
-                    {{item.position}}
+                    {{ item.position }}
                   </div>
                 </div>
               </div>
               <div class="doc-major">
                 <b>擅长领域：</b>
-                {{item.skill}}
+                {{ item.skill }}
               </div>
             </div>
           </div>
@@ -92,13 +108,20 @@ export default {
       default: function() {
         return {};
       }
+    },
+    hospitalIntro: {
+      type: Object,
+      default: function() {
+        return {};
+      }
     }
   },
   data() {
     return {
       isShow: false,
       doctoritem: [],
-      hispitalItem: {}
+      hispitalItem: {},
+      hospitalItemIntro: {}
     };
   },
   mounted() {
@@ -114,6 +137,9 @@ export default {
     hispitalDetail: function(val) {
       this.hispitalItem = val;
       console.log("val", val);
+    },
+    hospitalIntro: function(val) {
+      this.hospitalItemIntro = val;
     }
   },
   methods: {
@@ -126,6 +152,14 @@ export default {
       var bottom = document.getElementsByClassName("van-popup--bottom")[0];
       this.isShow = false;
       this.$emit("closedetailNav");
+    },
+    toIntro() {
+      console.log("this.hospitalItemIntro", this.hospitalItemIntro);
+      this.$router.push({
+        path: "/hospitalIntro",
+        name: "HospitalIntro",
+        query: { id: this.hospitalItemIntro.id }
+      });
     },
     touchstart(e) {
       // touchstart(e);
@@ -180,6 +214,7 @@ export default {
           bottom: 0.24rem;
           width: 0.8rem;
           height: 0.1rem;
+
           background: rgba(216, 216, 216, 1);
           border-radius: 0.11rem;
         }
@@ -195,6 +230,37 @@ export default {
         line-height: initial;
         padding-bottom: 0.16rem;
         border-bottom: 0.02rem solid #e5e5e5;
+      }
+      .hospitalIntro {
+        font-size: 0.28rem;
+        padding: 0.2rem 0;
+        color: #666666;
+        line-height: 0.4rem;
+        overflow: hidden;
+        box-sizing: border-box;
+        .text {
+          max-height: 1.6rem;
+          overflow: hidden;
+          position: relative;
+        }
+      }
+      .hideIntro {
+        position: absolute;
+        width: 100%;
+        background-image: -webkit-linear-gradient(
+          90deg,
+          #ffffff 0,
+          rgba(241, 241, 241, 0.5) 100%
+        );
+        // border-radius: 0.4rem;
+        height: 60%;
+        bottom: -0.1rem;
+      }
+      .clicktoageIntro {
+        text-align: center;
+        color: #999999;
+        font-size: 0.24rem;
+        margin-top: 0.1rem;
       }
       .todaohangItem {
         display: flex;
