@@ -34,6 +34,7 @@
           :show="showDetail"
           :doctors="doctors"
           :hispitalDetail="hispitalDetail"
+          :hospitalIntro="hospitalIntro"
           @goNav="goNav"
           @closedetailNav="closedetailNav"
         ></hospital-detail>
@@ -106,6 +107,7 @@ export default {
       isloading: false,
       hospitals: [],
       hispitalDetail: {},
+      hospitalIntro: {},
       doctors: [],
       showactionsheet: false,
       actions: [
@@ -121,7 +123,10 @@ export default {
     };
   },
   created() {
-    console.log("this.$route.params.item", this.$route.params.item);
+    console.log(
+      "this.$route.params.item222222222222222222222222222222222",
+      this.$route.params.item
+    );
     if (this.$route.params.item != undefined) {
       var address =
         this.$route.params.item.province +
@@ -327,9 +332,7 @@ export default {
       this.showactionsheet = bool;
     },
     onSelectAction(active, name) {
-      console.log("huangdandandjdujdjjdjddjdddkkd", active, name);
       this.showactionsheet = false;
-      // this.$emit("togoNavPART", active.name);
       this.togoNavPARTAction(active.name);
     },
     onCancel() {
@@ -337,16 +340,6 @@ export default {
     },
     //跳转第三方
     togoNavPARTAction(name) {
-      // var userAgent = navigator.userAgent;
-      // var url = "",
-      //   downUrl = "";
-      // if (userAgent.indexOf("Android") > -1) {
-      //   url = "XXXXX"; //安卓版App地址，由安卓同事提供
-      //   downUrl = "XXXXXXXXX"; //安卓版App下载地址，由安卓同事提供
-      // } else {
-      //   url = "XXXXXX://"; //IOS版App地址，由IOS同事提供
-      //   downUrl = "XXXXXXXXXXXX"; //IOS版App下载地址，由IOS同事提供
-      // }
       if (name == "高德地图") {
         var url =
           "https://gaode.com/dir?from[name]=我的位置&from[lnglat]=" +
@@ -397,21 +390,6 @@ export default {
             query: { x: this.x, y: this.y, hispitalDetail: this.hispitalDetail }
           });
         }
-        // var url =
-        //   "https://apis.map.qq.com/tools/geolocation?key=RZ4BZ-2PF3G-GZZQT-IP5TY-TZJOJ-RXB6H&referer=myapp";
-        // var iframe = document.createElement("iframe");
-        // iframe.src = url;
-        // document.body.appendChild(iframe);
-        // iframe.style.width = "100%";
-        // iframe.style.height = "100vh";
-        // iframe.style.position = "fixed";
-        // iframe.style.top = "0";
-        // iframe.style.zIndex = "200000";
-        // console.log("iframe", iframe);
-        // var url =
-        //   "https://apis.map.qq.com/tools/routeplan/sword=故宫博物院&spointx=116.45925&spointy=39.907534&eword=中国技术交易大厦&epointx=116.30759&epointy=39.98411?referer=myapp&key=RZ4BZ-2PF3G-GZZQT-IP5TY-TZJOJ-RXB6H";
-        // ifr.src = url;
-        // document.body.appendChild(ifr);
       }
     },
     //选择距离范围
@@ -446,6 +424,7 @@ export default {
       this.$route.meta.title = "医院详情";
       this.show = bool;
       this.hispitalDetail = val;
+      this.getHospital(val.hospital);
       this.getDoctors(val.hospital);
       setTimeout(() => {
         this.showDetail = !this.show;
@@ -459,16 +438,6 @@ export default {
       this.showDetail = val;
       this.showNav = true;
       this.drawPolyline();
-      //拿到经纬度医院的
-      // var localSearch = new BMap.LocalSearch(map, {
-      //   renderOptions: {
-      //     pageCapacity: 8,
-      //     autoViewport: true,
-      //     selectFirstResult: false
-      //   }
-      // });
-      // localSearch.enableAutoViewport();
-      // this.searchByStationName(localSearch);
     },
     showPopup() {
       this.ii = true;
@@ -523,6 +492,14 @@ export default {
           //   position: "top"
           // });
         });
+    },
+    getHospital(id) {
+      this.$store
+        .dispatch("medicationGuidance/getHospital", id)
+        .then(res => {
+          this.hospitalIntro = res.data.hospital;
+        })
+        .catch(e => {});
     },
     //获取医院医生
     getDoctors(id) {

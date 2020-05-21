@@ -41,12 +41,15 @@ const mutations = {
 const actions = {
     getOpenIdApi({
         commit
-    }) {
+    }, params) {
+        const {
+            local
+        } = params
         if (!GetQueryString("code") && !getCode()) {
             const AppId = "wx8ef854b5878d3b8d"; // 测试公众号平台的APPID，第1步那个链接里
 
             // const code=window.location.search; // 获取当前页面地址中的code参数的值
-            const local = window.location.href; // 对当前地址用encodeURIComponent进行编码
+            // const local = window.location.href; // 对当前地址用encodeURIComponent进行编码
             // 如果code是''，说明还没有授权，访问下面连接，用户同意授权，获取code
 
             // console.log("获取微信code：", encodeURIComponent(local, "UTF-8"));
@@ -102,14 +105,16 @@ const actions = {
         const {
             phone,
             validateCode,
-            invCode
+            invCode,
+            identity
         } = params;
         return new Promise((resolve, reject) => {
             register({
                     phone: phone,
                     validateCode: validateCode,
                     openId: getOpenId(),
-                    invCode: invCode
+                    invCode: invCode,
+                    identity: identity
                 })
                 .then(response => {
                     const {
