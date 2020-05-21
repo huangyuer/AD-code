@@ -1,12 +1,44 @@
 <template>
   <div class="register">
     <div class="register-box" v-if="showRe">
-      <svg-icon iconClass="logo" class="logo"></svg-icon>
+      <!-- <svg-icon iconClass="logo" class="logo"></svg-icon> -->
       <van-field v-model="tel" type="tel" placeholder="请输入手机号" />
       <van-field v-model="sms" center clearable placeholder="请输入短信验证码">
         <div slot="button" class="sms-btn" v-show="show" @click="getSms">获取验证码</div>
         <div slot="button" class="sms-btn" v-show="!show">{{ count }}</div>
       </van-field>
+      <van-collapse v-model="activeNames">
+        <van-collapse-item name="1">
+          <template #title>
+            <div style="font-size: 0.28rem;font-weight: 400;color: #999999;">您的身份是？</div>
+          </template>
+          <template #right-icon>
+            <div style="font-size: 0.24rem;font-weight: 400;color: #009966">
+              <span style="margin-right:2px">展开</span>
+              <svg-icon iconClass="fold" class="fold"></svg-icon>
+            </div>
+          </template>
+       <van-radio-group v-model="radio" direction="horizontal">
+  <van-radio name="1">
+    单选框 1
+    <template #icon="props">
+      <div style="width:.4rem;height:.4rem;border-radius: 100%;background:#CDCDCD;display: flex; align-items: center;justify-content: center;">
+        <div style="width:.14rem;height:.14rem;border-radius: 100%;background:#fff;"></div>
+      </div>
+      <!-- <img class="img-icon" :src="props.checked ? activeIcon : inactiveIcon" /> -->
+    </template>
+  </van-radio>
+  <van-radio name="2">
+    单选框 2
+    <template #icon="props">
+      ddd
+      <!-- <img class="img-icon" :src="props.checked ? activeIcon : inactiveIcon" /> -->
+    </template>
+  </van-radio>
+</van-radio-group>
+        </van-collapse-item>
+        
+      </van-collapse>
       <van-field v-model="invite" placeholder="请输入邀请码（选填）" />
       <div class="register-agree">
         <div @click="agreeBtn">
@@ -20,7 +52,7 @@
       <div class="register-btn" @click="registerBtn">注册</div>
     </div>
     <div class="user-terms" v-else>
-      <div class="user-terms-header">AD之家用户知情同意书</div>
+      <div class="user-terms-header">中国AD康复之家用户知情同意书</div>
       <div class="user-terms-body">
         <p class="title">一、我们如何收集和使用您的个人信息</p>
         <p>我们会遵循正当，合法，必要的原则，出于本政策所述的以下目的，收集和使用您在使用我们服务过程中主动提供或因使用我们产品和/或服务而产生的个人信息。如果我们要将您的信息用于本政策未载明的其他用途，或基于特定目的将收集来的信息用于其他目的，我们将以合理的方式向您告知，并在使用前再次征得您的同意。</p>
@@ -60,7 +92,10 @@ export default {
       timer: null,
       count: "",
       show: true,
-      showRe: true
+      showRe: true,
+      activeNames: ["1"],
+      radio: '1',
+
     };
   },
   methods: {
