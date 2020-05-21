@@ -111,12 +111,13 @@
       <div class="baseinfo">您近两个月疾病严重度是？</div>
       <div class="sliderbox">
         <div class="header">
+          <span>无</span>
           <span>轻度</span>
           <span>中度</span>
           <span>严重</span>
         </div>
         <van-slider
-          :step="50"
+          :step="100/3"
           v-model="level"
           bar-height=".16rem"
           active-color="linear-gradient(90deg,rgba(0, 153, 102, 1) 0%,rgba(242, 169, 0, 1) 52%,rgba(255, 63, 15, 1) 100%);"
@@ -178,17 +179,14 @@ export default {
       this.$set(this.form, "time", this.user.diaTime);
       this.$set(this.form, "level", this.user.level);
       if (this.user.level == "轻度") {
-        this.level = 0;
+        this.level = 100/3;
       } else if (this.user.level == "中度") {
-        this.level = 50;
-        document
-          .getElementsByClassName("van-slider__bar")[0]
-          .classList.add("backgroundColor50");
+        this.level = 100/3*2;
       } else if (this.user.level == "严重") {
         this.level = 100;
-        document
-          .getElementsByClassName("van-slider__bar")[0]
-          .classList.add("backgroundColor100");
+        // document
+        //   .getElementsByClassName("van-slider__bar")[0]
+        //   .classList.add("backgroundColor100");
       } else {
         this.level = 0;
       }
@@ -221,7 +219,7 @@ export default {
         "van-slider__button-wrapper"
       )[0];
       if (value == 0) {
-        this.$set(this.form, "level", "轻度");
+        this.$set(this.form, "level", "无");
         botton.style.right = "-0.22rem";
       } else if (value == 50) {
         botton.style.right = "0";
