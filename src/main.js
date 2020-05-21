@@ -40,7 +40,10 @@ Axios.defaults.headers.post["Content-Type"] = "application/json";
 Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
     // console.log("--------1");
-    // setOpenId("oQEE8wgh7QVhrNi4f6frjxI_qiAw");
+    setOpenId("oQEE8wgh7QVhrNi4f6frjxI_qiAw");
+    let params = {
+        local: window.location.host + to.path
+    }
     if (to.meta.title) {
         window.document.title = to.meta.title;
     }
@@ -52,7 +55,7 @@ router.beforeEach((to, from, next) => {
             next();
             // return;
         } else {
-            store.dispatch("register/getOpenIdApi").then(() => {
+            store.dispatch("register/getOpenIdApi",params).then(() => {
                 console.log("opendID---2", getOpenId());
                 next();
                 // return;
@@ -86,13 +89,13 @@ router.beforeEach((to, from, next) => {
                 Object.is(to.name, "PatientDetail") ||
                 Object.is(to.name, "videoDetail")
             ) {
-              store.dispatch("register/getOpenIdApi").then(() => {
+              store.dispatch("register/getOpenIdApi",params).then(() => {
                 next();
                 console.log("Detail2");
             });
             } else {
                 // setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
-                store.dispatch("register/getOpenIdApi").then(() => {
+                store.dispatch("register/getOpenIdApi",params).then(() => {
                     store.dispatch("register/login1").then(res => {
                         if (res.token) {
                             next();

@@ -1,12 +1,44 @@
 <template>
   <div class="register">
     <div class="register-box" v-if="showRe">
-      <svg-icon iconClass="logo" class="logo"></svg-icon>
+      <!-- <svg-icon iconClass="logo" class="logo"></svg-icon> -->
       <van-field v-model="tel" type="tel" placeholder="请输入手机号" />
       <van-field v-model="sms" center clearable placeholder="请输入短信验证码">
         <div slot="button" class="sms-btn" v-show="show" @click="getSms">获取验证码</div>
         <div slot="button" class="sms-btn" v-show="!show">{{ count }}</div>
       </van-field>
+      <van-collapse v-model="activeNames">
+        <van-collapse-item name="1">
+          <template #title>
+            <div style="font-size: 0.28rem;font-weight: 400;color: #999999;">您的身份是？</div>
+          </template>
+          <template #right-icon>
+            <div style="font-size: 0.24rem;font-weight: 400;color: #009966">
+              <span style="margin-right:2px">展开</span>
+              <svg-icon iconClass="fold" class="fold"></svg-icon>
+            </div>
+          </template>
+       <van-radio-group v-model="radio" direction="horizontal">
+  <van-radio name="1">
+    单选框 1
+    <template #icon="props">
+      <div style="width:.4rem;height:.4rem;border-radius: 100%;background:#CDCDCD;display: flex; align-items: center;justify-content: center;">
+        <div style="width:.14rem;height:.14rem;border-radius: 100%;background:#fff;"></div>
+      </div>
+      <!-- <img class="img-icon" :src="props.checked ? activeIcon : inactiveIcon" /> -->
+    </template>
+  </van-radio>
+  <van-radio name="2">
+    单选框 2
+    <template #icon="props">
+      ddd
+      <!-- <img class="img-icon" :src="props.checked ? activeIcon : inactiveIcon" /> -->
+    </template>
+  </van-radio>
+</van-radio-group>
+        </van-collapse-item>
+        
+      </van-collapse>
       <van-field v-model="invite" placeholder="请输入邀请码（选填）" />
       <div class="register-agree">
         <div @click="agreeBtn">
@@ -60,7 +92,10 @@ export default {
       timer: null,
       count: "",
       show: true,
-      showRe: true
+      showRe: true,
+      activeNames: ["1"],
+      radio: '1',
+
     };
   },
   methods: {
