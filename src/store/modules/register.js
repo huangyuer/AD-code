@@ -42,7 +42,9 @@ const actions = {
     getOpenIdApi({
         commit
     }, params) {
-        const { local } = params
+        const {
+            local
+        } = params
         if (!GetQueryString("code") && !getCode()) {
             const AppId = "wx8ef854b5878d3b8d"; // 测试公众号平台的APPID，第1步那个链接里
 
@@ -103,14 +105,16 @@ const actions = {
         const {
             phone,
             validateCode,
-            invCode
+            invCode,
+            identity
         } = params;
         return new Promise((resolve, reject) => {
             register({
                     phone: phone,
                     validateCode: validateCode,
                     openId: getOpenId(),
-                    invCode: invCode
+                    invCode: invCode,
+                    identity: identity
                 })
                 .then(response => {
                     const {
