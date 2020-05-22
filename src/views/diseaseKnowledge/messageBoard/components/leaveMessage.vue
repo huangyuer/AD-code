@@ -152,12 +152,15 @@ export default {
       console.log("data22", response.url);
 
       var ua = navigator.userAgent.toLowerCase();
-      if (ua.match(/MicroMessenger/i) == "micromessenger") {
-        this.getSignature(response.url);
-      } else {
-        this.getSignature(window.location.href);
-      }
+      // if (ua.match(/MicroMessenger/i) == "micromessenger") {
+      //   this.getSignature(response.url);
+      // } else {
+      //   this.getSignature(window.location.href);
+      // }
     });
+    const herf= encodeURIComponent(window.location.href,"UTF-8")
+    this.getSignature(herf);
+
 
     this.$store.dispatch("diseaseKnowledge/getLvMsgSelect").then(data => {
       this.typeColumns = data.type;

@@ -306,6 +306,7 @@ export default new Router({
             path: "/aboutUs",
             component: () =>
                 import ("@/views/patientManagement/aboutUs"),
+                name: 'AboutUs',
             meta: {
                 title: "关于我们",
                 index: 1

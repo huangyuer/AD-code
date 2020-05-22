@@ -109,10 +109,10 @@
       </div>
     </div>
     <div class="selecthistory">
-      <div class="baseinfo">您近两个月疾病严重度是？</div>
+      <div class="baseinfo">您（或亲属）近两个月疾病严重度是？</div>
       <div class="sliderbox">
         <div class="header">
-          <span>无</span>
+          <span>无症状</span>
           <span>轻度</span>
           <span>中度</span>
           <span>严重</span>

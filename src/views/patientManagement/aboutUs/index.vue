@@ -47,11 +47,11 @@ export default {
   bottom: 0;
   left: 0;
 }
-@media screen and (min-width: 390px) and (max-width: 650px) {
-  .logo1 {
-    bottom: 1.2rem;
-  }
-}
+// @media screen and (min-width: 390px) and (max-width: 650px) {
+//   .logo1 {
+//     bottom: 1.2rem;
+//   }
+// }
 .about-us {
   height: 100vh;
   position: relative;
