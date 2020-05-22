@@ -176,7 +176,10 @@ export default {
     justify-content: center;
     border-bottom: 0.02rem solid #e5e5e5;
     .title {
-      width: 80%;
+      // width: 80%;
+      padding:0 0.32rem;
+      text-align: left;
+      word-break: break-all;
     }
     .time {
       color: #acadaf;

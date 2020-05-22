@@ -97,6 +97,7 @@
           </div>
         </van-checkbox-group>
         <van-checkbox
+          v-if="medications[medications.length - 1]"
           :name="medications[medications.length - 1].name"
           ref="checkboxes"
           @click="checkAll"

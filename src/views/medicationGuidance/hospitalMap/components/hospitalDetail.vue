@@ -56,7 +56,8 @@
               {{ hospitalItemIntro.contentHtml }}
               <div class="hideIntro"></div>
             </div>
-            <div class="clicktoageIntro" @click="toIntro()">查看更多详情 ></div>
+            <div class="clicktoageIntro" @click="toIntro()" v-if="hospitalItemIntro.contentHtml">查看更多详情 ></div>
+            <div class="clicktoageIntro" v-else>暂无医院介绍</div>
           </div>
           <div class="hospitalContentname">医生列表</div>
           <div class="doctorList">

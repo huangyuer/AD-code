@@ -42,17 +42,19 @@ const actions = {
     getOpenIdApi({
         commit
     }, params) {
-        const {
-            local
-        } = params
+        // const {
+        //     local
+        // } = params
         if (!GetQueryString("code") && !getCode()) {
             const AppId = "wx8ef854b5878d3b8d"; // 测试公众号平台的APPID，第1步那个链接里
 
             // const code=window.location.search; // 获取当前页面地址中的code参数的值
-            // const local = window.location.href; // 对当前地址用encodeURIComponent进行编码
+            const local = window.location.href; // 对当前地址用encodeURIComponent进行编码
             // 如果code是''，说明还没有授权，访问下面连接，用户同意授权，获取code
 
             // console.log("获取微信code：", encodeURIComponent(local, "UTF-8"));
+            // console.log("-----f-f-e",local,window.location.href)
+            // return
             window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${AppId}&redirect_uri=${encodeURIComponent(
           local,
           "UTF-8"

@@ -90,7 +90,7 @@
       <div class="register-btn" @click="registerBtn">注册</div>
     </div>
     <div class="user-terms" v-else>
-      <div class="user-terms-header">中国AD康复之家用户知情同意书</div>
+      <div class="user-terms-header">中国AD之家用户知情同意书</div>
       <div class="user-terms-body">
         <p class="title">一、我们如何收集和使用您的个人信息</p>
         <p>
@@ -98,16 +98,16 @@
         </p>
         <p class="title term-margin">1.账号注册</p>
         <p>
-          当您注册时，我们将收集您的手机号,邀请码等信息，以便为您提供快捷的登录服务。同时为帮您完成注册功能，我们还将为您提供用户知情同意书，以便您加以了解，并为您提供AD之家的初始服务。
+          当您注册时，我们将收集您的手机号,邀请码等信息，以便为您提供快捷的登录服务。同时为帮您完成注册功能，我们还将为您提供用户知情同意书，以便您加以了解，并为您提供中国AD之家的初始服务。
         </p>
-        <p class="title term-margin">2.向您提供产品和/或服务</p>
+        <p class="title term-margin">2.向您提供产品和/或服务 </p>
         <p>
           <span class="title">2.1</span>
           向您提供信息浏览，发布和收藏及分享功能。
         </p>
         <p>
           <span class="title">2.2</span>
-          为了向您提供我们最核心的信息展示服务并向您推荐可能感兴趣的相关文章，我们会收集您的浏览记录（如您的收藏，浏览）和点击操作（如收藏，提交，浏览，筛选，分享）其中您的浏览记录和点击操作记录属于个人敏感信息，但属于AD之家提供信息展示及信息发布服务所必须信息。
+          为了向您提供我们最核心的信息展示服务并向您推荐可能感兴趣的相关文章，我们会收集您的浏览记录（如您的收藏，浏览）和点击操作（如收藏，提交，浏览，筛选，分享）其中您的浏览记录和点击操作记录属于个人敏感信息，但属于中国AD之家提供信息展示及信息发布服务所必须信息。
         </p>
       </div>
       <div class="user-terms-btn" @click="termsBtnAgree">我以阅读并同意</div>
