@@ -22,8 +22,8 @@ event:recentClear,onChange
         <span class="clear" @click="recentClear" v-if="recentSearch.type!='搜索结果'">清除</span>
       </div>
       <div
-        v-for="item in searchResult"
-        :key="item"
+        v-for="(item,index) in searchResult"
+        :key="index"
         class="recent-search-li"
         @click="recentItem(item)"
       >
@@ -38,7 +38,7 @@ event:recentClear,onChange
 <script>
 import { Toast } from "vant";
 export default {
-  name: "SearchInput",
+  name: "searchPage",
   data() {
     return {
       value: "",

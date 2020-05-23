@@ -90,7 +90,7 @@
               <div
                 :class="{
                   color9: item.status == '已完成',
-                  color3: item.status == '未完成',
+                  color3: item.status == '未完成'  || item.status == '去完成',
                   'font-size28': true
                 }"
               >
@@ -100,8 +100,10 @@
                 :class="{
                   btnpage: true,
                   whitenone: true,
-                  color7: item.status == '未完成'
+                  color7: item.status == '未完成',
+                  colorgreen:item.status == '去完成'
                 }"
+                @click="topageTask(item)"
               >
                 {{ item.status }}
               </div>
@@ -247,6 +249,34 @@ export default {
       this.$router.push({
         path: "/diseaseTest"
       });
+    },
+    topageTask(item){
+      if(item.limit>item.num){
+      switch (item.name) {
+        case '首次完成自我评估':
+            this.$router.push({ path: "/diseaseTest" });
+            break;
+        case '自我评估':
+            this.$router.push({ path: "/diseaseTest" });
+            break;
+        case '完善个人信息':
+            this.$router.push({ path: "/personalInfo" });
+            break;
+        case '查看推文/视频':
+            this.$router.push({ path: "/scienceVideo" });
+            break;
+        case '查找专业医院':
+            this.$router.push({ path: "/hospitalMap" });
+            break;
+        case '留言板':
+            this.$router.push({ path: "/messageBoard/leaveMessage" });
+            break;
+        case '邀请AD好友':
+            this.$router.push({ path: "/personalInfo" });
+        default: ''
+      }
+      }
+
     },
     toPagepersonalInfo() {
       this.$router.push({ path: "/personalInfo" });
@@ -614,6 +644,10 @@ export default {
             &.color7 {
               color: #ff755a;
               border: 0.02rem solid #ff755a;
+            }
+            &.colorgreen{
+              color:#009966;
+              border: 0.02rem solid #009966;
             }
           }
           &.greeTo {

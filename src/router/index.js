@@ -37,7 +37,7 @@ export default new Router({
             meta: {
                 keepAlive: true,
                 title: "医院地图",
-                index: 1
+                index: 2
             }
         },
         {
@@ -46,6 +46,7 @@ export default new Router({
                 import ("@/views/diseaseKnowledge/diseaseKnowledge"),
             name: "DiseaseKnowledge",
             meta: {
+                keepAlive:true,
                 title: "疾病知识",
                 index: 1
             }
@@ -126,6 +127,7 @@ export default new Router({
                 import ("@/views/medicationGuidance/medicationInstructions"),
             name: "MedicationInstructions",
             meta: {
+                keepAlive: true,
                 title: "诊疗方法",
                 index: 1
             }
@@ -281,7 +283,7 @@ export default new Router({
                 import ("@/views/diseaseKnowledge/scienceVideo"),
             meta: {
                 title: "科普视频",
-                index: 1
+                index: 2
             }
         }, {
             path: "/scienceVideo/videoList",
@@ -289,7 +291,7 @@ export default new Router({
                 import ("@/views/diseaseKnowledge/scienceVideo/components/videoList"),
             meta: {
                 title: "科普视频",
-                index: 2
+                index: 3
             }
         },
         {
@@ -299,7 +301,7 @@ export default new Router({
             name: "videoDetail",
             meta: {
                 title: "科普视频",
-                index: 3
+                index: 4
             }
         },
         {
@@ -319,7 +321,7 @@ export default new Router({
             name: 'searchPage',
             meta: {
                 title: "我的位置",
-                index: 2
+                index: 3
             }
         },
         {
@@ -329,7 +331,7 @@ export default new Router({
             name: 'map',
             meta: {
                 title: "导航",
-                index: 2
+                index: 3
             }
         },
         {
@@ -339,7 +341,7 @@ export default new Router({
             name: 'HospitalIntro',
             meta: {
                 title: "医院/科室介绍",
-                index: 2
+                index: 3
             }
         },
     ]

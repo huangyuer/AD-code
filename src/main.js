@@ -11,7 +11,7 @@ import Axios from "axios";
 import {
     Toast
 } from "vant";
-// import Vconsole from 'vconsole'
+import Vconsole from 'vconsole'
 // let vConsole = new Vconsole()
 // Vue.use(vConsole)
 import VueWechatTitle from "vue-wechat-title";
@@ -41,6 +41,7 @@ Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
     // console.log("--------1");
     // setOpenId("oQEE8wgh7QVhrNi4f6frjxI_qiAw");
+    window.sessionStorage.setItem('firstUrl',window.location.href)
     let params = {
         local: window.location.host + to.path
     }

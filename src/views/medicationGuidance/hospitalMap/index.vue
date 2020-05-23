@@ -141,6 +141,31 @@ export default {
       this.getMyLocation();
     }
   },
+watch:{
+// '$route.params'(val,oldVal){
+// console.log("----a-sa-s-a-",val)
+// }
+  $route(to, from) {
+      if(from.path=='/searchPage'){
+        if (this.$route.params.item != undefined) {
+              var address =
+                this.$route.params.item.province +
+                this.$route.params.item.city +
+                this.$route.params.item.address;
+              this.valuesearch = address;
+              console.log("this.valuesearch", this.valuesearch);
+              this.$set(this.params, "address", address);
+              this.x = this.$route.params.item.x;
+              this.y = this.$route.params.item.y;
+              var map = new BMap.Map("allmap");
+              this.mapMyLocation(map, 13);
+              this.getNearHospitals(map);
+            } else {
+              this.getMyLocation();
+            }
+      }
+    }
+},
   mounted() {
     this.show = true;
     if (this.$route.params.item != undefined) {
@@ -481,16 +506,15 @@ export default {
       this.$store
         .dispatch("medicationGuidance/getNearHospitals", this.params)
         .then(res => {
+          console.log("res",res);
           this.isloading = false;
           this.hospitals = res.data.hospitals;
           this.mapHospitalLocation(map);
           this.vloading = false;
         })
         .catch(e => {
-          // Toast({
-          //   message: e,
-          //   position: "top"
-          // });
+          this.isloading = false;
+          this.hospitals =[];
         });
     },
     getHospital(id) {

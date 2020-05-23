@@ -42,6 +42,7 @@ export default {
       acticalList: [],
       itemTabcontent: [],
       activeTabName: "",
+      activeTabChild: "",
       form: {
         menu: this.$route.meta.title,
         childMenu: String,
@@ -58,7 +59,8 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (from.path != "/DetailInfo") {
-        localStorage.removeItem("tabNum");
+        // localStorage.removeItem("tabNum");
+        // localStorage.removeItem("tabChild");
       }
     });
   },
@@ -90,7 +92,7 @@ export default {
       this.form.childMenu = title;
       // this.form.tag = this.current[name];
       this.onloadIs = true;
-      localStorage.setItem("tabNum", title);
+      // localStorage.setItem("tabNum", title);
       this.form.tag = "";
       this.form.page = 1;
       this.finished = false;
@@ -98,6 +100,7 @@ export default {
     tocurrentTag(item) {
       this.acticalList = [];
       this.form.tag = item;
+      // localStorage.setItem("tabChild", item);
       this.form.page = 1;
       this.finished = false;
     },
@@ -131,17 +134,21 @@ export default {
         .dispatch("common/getMenuSelect", this.$route.meta.title)
         .then(data => {
           this.itemTabcontent = this.$store.getters.menuList.selects;
-          if (localStorage.getItem("tabNum")) {
-            this.$set(this.form, "childMenu", localStorage.getItem("tabNum"));
-            this.activeTabName = localStorage.getItem("tabNum");
-          } else {
+          // if (localStorage.getItem("tabNum")) {
+          //   this.$set(this.form, "childMenu", localStorage.getItem("tabNum"));
+          //   this.activeTabName = localStorage.getItem("tabNum");
+          // } else {
             this.$set(
               this.form,
               "childMenu",
               this.$store.getters.menuList.selects[0].type
             );
             this.activeTabName = this.$store.getters.menuList.selects[0].type;
-          }
+          // }
+          // if (localStorage.getItem("tabChild")) {
+          //   this.$set(this.form, "tag", localStorage.getItem("tabChild"));
+          //   this.activeTabChild = localStorage.getItem("tabChild");
+          // }
           this.getArticles();
         })
         .catch(e => {});

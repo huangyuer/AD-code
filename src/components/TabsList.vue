@@ -10,13 +10,13 @@
         <div ref="vansList" class="vansList" v-if="index.tags.length != 0">
           <div
             ref="tablecontent"
+            v-for="(item, k) in index.tags"
+            :key="k"
             :class="{
               'vans-tableContent': true,
               activeTag: current[key] == item
             }"
-            v-for="(item, k) in index.tags"
-            :key="k"
-            @click="tocurrentTag(item, k, key)"
+            @click="tocurrentTag(item, k, key,index.tags)"
           >{{ item }}</div>
         </div>
       </van-tab>
@@ -33,13 +33,18 @@ export default {
     activeTabName: {
       type: String,
       default: ""
-    }
+    },
+    activeTabChild: {
+      type: String,
+      default: ""
+    },
   },
   data() {
     return {
       active: "",
       activeTag: "",
-      current: []
+      current: [],
+      indexParent:0,
     };
   },
   methods: {
@@ -47,30 +52,34 @@ export default {
       this.current = [];
       this.$emit("change", name, title);
     },
-    tocurrentTag(item, k, key) {
-      // this.current.length = this.itemTabcontent.length;
+    tocurrentTag(item, k, key,t) {
       this.current = [];
-      console.log("huangdan", this.current);
       if (
         this.$refs.vansList[key].children[k].classList.contains("activeTag")
       ) {
-        // this.$set(this.current, key, "");
         this.current[key] = "";
         this.$emit("tocurrentTag", "");
         this.$emit("currentFuc", this.itemTabcontent.length, "", key);
       } else {
         this.current[key] = item;
         // this.$set(this.current, key, item);
-        this.$emit("tocurrentTag", item);
+        this.$emit("tocurrentTag", item,key);
         this.$emit("currentFuc", this.itemTabcontent.length, item, key);
       }
     }
   },
   watch: {
-    activeTabName(val) {
-      console.log("val", val);
-      this.active = val;
-    }
+    // activeTabName(val) {
+    //   console.log("val", val);
+    //   this.active = val;
+    //   this.indexParent = this.itemTabcontent.indexOf(val);
+    //   if(localStorage.getItem("tabChild")){
+    //     console.log("fssssssssssssssssssssssssssssssssssss");
+    //     this.$set(this.current,this.indexParent,localStorage.getItem("tabChild"))
+    //     // this.current[this.indexParent] = localStorage.getItem("tabChild");
+    //     console.log("this.current[this.indexParent]",this.current[this.indexParent]);
+    //   }
+    // },
   }
 };
 </script>

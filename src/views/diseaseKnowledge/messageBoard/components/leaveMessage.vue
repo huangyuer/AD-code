@@ -158,7 +158,9 @@ export default {
       //   this.getSignature(window.location.href);
       // }
     });
-    const herf= encodeURIComponent(window.location.href,"UTF-8")
+    // const herf= encodeURIComponent(window.location.href,"UTF-8")
+    const herf=window.sessionStorage.getItem('firstUrl')
+    console.log("------herf",herf)
     this.getSignature(herf);
 
 

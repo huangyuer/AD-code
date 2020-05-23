@@ -74,7 +74,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (from.path != "/diseaseDetail") {
-        localStorage.removeItem("tabNum");
+        // localStorage.removeItem("tabNum");
       }
     });
   },
@@ -83,17 +83,17 @@ export default {
       .dispatch("common/getMenuSelect", this.$route.meta.title)
       .then(() => {
         this.itemTabcontent = this.$store.getters.menuList.selects;
-        if (localStorage.getItem("tabNum")) {
-          this.$set(this.params, "childMenu", localStorage.getItem("tabNum"));
-          this.activeTabName = localStorage.getItem("tabNum");
-        } else {
+        // if (localStorage.getItem("tabNum")) {
+        //   this.$set(this.params, "childMenu", localStorage.getItem("tabNum"));
+        //   this.activeTabName = localStorage.getItem("tabNum");
+        // } else {
           this.$set(
             this.params,
             "childMenu",
             this.$store.getters.menuList.selects[0].type
           );
           this.activeTabName = this.$store.getters.menuList.selects[0].type;
-        }
+        // }
         this.onLoad();
       })
       .catch(e => {
@@ -102,6 +102,7 @@ export default {
     console.log("------ss", this.$route.meta.title);
   },
   mounted() {},
+
   methods: {
     onSearch(value) {
       this.params.title = value;
@@ -134,7 +135,7 @@ export default {
       this.diseaseInfo = [];
       this.$set(this.params, "childMenu", title);
       this.$set(this.params, "page", 1);
-      localStorage.setItem("tabNum", title);
+      // localStorage.setItem("tabNum", title);
       this.finished = false;
       this.getArticles();
     },
