@@ -147,22 +147,47 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("diseaseKnowledge/getLvMsgUrl").then(response => {
-      console.log("data", window.location.href);
-      console.log("data22", response.url);
+    // this.$store.dispatch("diseaseKnowledge/getLvMsgUrl").then(response => {
+    //   console.log("data", window.location.href);
+    //   console.log("data22", response.url);
 
-      var ua = navigator.userAgent.toLowerCase();
-      // if (ua.match(/MicroMessenger/i) == "micromessenger") {
-      //   this.getSignature(response.url);
-      // } else {
-      //   this.getSignature(window.location.href);
-      // }
-    });
+    //   var ua = navigator.userAgent.toLowerCase();
+    //   // if (ua.match(/MicroMessenger/i) == "micromessenger") {
+    //   //   this.getSignature(response.url);
+    //   // } else {
+    //   //   this.getSignature(window.location.href);
+    //   // }
+    // });
+
+    var equipmentType = "";
+    var agent = navigator.userAgent.toLowerCase();
+    var android = agent.indexOf("android");
+    var iphone = agent.indexOf("iphone");
+    var ipad = agent.indexOf("ipad");
+    if (android != -1) {
+      // equipmentType = "android";
+      // alert("111111")
+      this.getSignature(window.location.href);
+    }
+    if (iphone != -1 || ipad != -1) {
+      // equipmentType = "ios";
+      //  alert("2222")
+      const herf = window.sessionStorage.getItem("firstUrl");
+      console.log("------herf", herf);
+      this.getSignature(herf);
+    }
+    // var ua = navigator.userAgent.toLowerCase();
+    // if (ua.match(/MicroMessenger/i) == "micromessenger") {
+    //   const herf = window.sessionStorage.getItem("firstUrl");
+    //   console.log("------herf", herf);
+    //   this.getSignature(herf);
+    // } else {
+    //   this.getSignature(window.location.href);
+    // }
     // const herf= encodeURIComponent(window.location.href,"UTF-8")
-    const herf=window.sessionStorage.getItem('firstUrl')
-    console.log("------herf",herf)
-    this.getSignature(herf);
-
+    // const herf=window.sessionStorage.getItem('firstUrl')
+    // console.log("------herf",herf)
+    // this.getSignature(herf);
 
     this.$store.dispatch("diseaseKnowledge/getLvMsgSelect").then(data => {
       this.typeColumns = data.type;

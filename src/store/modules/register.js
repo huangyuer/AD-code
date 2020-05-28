@@ -45,7 +45,8 @@ const actions = {
         // const {
         //     local
         // } = params
-        if (!GetQueryString("code") && !getCode()) {
+        var code = GetQueryString('code');
+        if (code==null ||code=='') {
             const AppId = "wx8ef854b5878d3b8d"; // 测试公众号平台的APPID，第1步那个链接里
 
             // const code=window.location.search; // 获取当前页面地址中的code参数的值
@@ -59,15 +60,17 @@ const actions = {
           local,
           "UTF-8"
         )}&response_type=code&scope=snsapi_base#wechat_redirect`;
+            code = GetQueryString('code');
             console.log("codeherf", window.location.href);
         } else {
             console.log("code", code);
-            let code = GetUrlParame('code')
-            setCode(code)
+            code = GetUrlParame('code')
+            if(!code)return
+            setCode(code)    
             console.log("codeformatter----", code);
             return new Promise((resolve, reject) => {
                 getOpenIdApi({
-                        code: GetUrlParame('code')
+                        code: code
                     })
                     .then(response => {
                         const {

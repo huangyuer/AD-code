@@ -292,7 +292,7 @@ export default {
             font-weight: 400;
             color: rgba(84, 84, 84, 1);
             line-height: initial;
-            margin: 0.08rem 0;
+            margin: 0.08rem .05rem 0.08rem 0;
           }
           .hp-distance {
             font-size: 0.28rem;
@@ -309,6 +309,7 @@ export default {
         }
         .hp-btn {
           width: 1.4rem;
+          min-width: 1.4rem;
           height: 0.44rem;
           border-radius: 0.4rem;
           border: 0.02rem solid rgba(0, 153, 102, 1);
