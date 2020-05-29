@@ -24,7 +24,7 @@ const getters = {
     getstarmenus: state => state.patientManagement.getstarmenus,
     //获取我的收藏
     getmystars: state => state.patientManagement.getmystars,
-    //自我评估
+    //疾病评估
     getquesion: state => state.patientManagement.getquesion,
     //获得我的地址
     getmyaddress: state => state.patientManagement.getmyaddress,

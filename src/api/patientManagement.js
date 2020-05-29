@@ -29,7 +29,7 @@ export function getMyStars(data) {
     data
   })
 }
-//自我评估
+//疾病评估
 export function getQuestions(data) {
   return request({
     url: '/getQuestions',
@@ -37,7 +37,7 @@ export function getQuestions(data) {
     data
   })
 }
-//自我评估提交问卷
+//疾病评估提交问卷
 export function submitAnswer(data) {
   return request({
     url: '/submitAnswer',

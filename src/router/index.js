@@ -168,7 +168,7 @@ export default new Router({
                 import ("@/views/patientManagement/diseaseTest"),
             name: "diseaseTest",
             meta: {
-                title: "自我评估",
+                title: "疾病评估",
                 index: 2
             }
         },

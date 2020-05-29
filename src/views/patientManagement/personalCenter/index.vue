@@ -3,11 +3,11 @@
     <Dialog
       :show="diaLogShow"
       :title="'恭喜！您已完成注册！'"
-      :content="'【关爱自己，从自我评估开始。】是否进一步了解您的皮肤状况？'"
+      :content="'【关爱自己，从疾病评估开始。】是否进一步了解您的皮肤状况？'"
       :isClose="false"
     >
       <div slot="confirmButton" class="dialog-confirm" @click="confirmBtn">
-        前往自我评估
+        前往疾病评估
       </div>
       <div slot="closeButton" @click="closeBtn">
         <svg-icon iconClass="register-close" class="close-icon"></svg-icon>
@@ -142,11 +142,11 @@
       </div>
     </div>
     <div class="tipList">
-      <!-- 自我评估 -->
+      <!-- 疾病评估 -->
       <div class="tipitem">
         <div class="tipitem-header">
           <span>
-            <svg-icon iconClass="tuoyuan" class="tuoyuan"></svg-icon>自我评估
+            <svg-icon iconClass="tuoyuan" class="tuoyuan"></svg-icon>疾病评估
           </span>
           <span @click="todiseaseTest()">
             去评估
@@ -253,10 +253,10 @@ export default {
     topageTask(item){
       if(item.limit>item.num){
       switch (item.name) {
-        case '首次完成自我评估':
+        case '首次完成疾病评估':
             this.$router.push({ path: "/diseaseTest" });
             break;
-        case '自我评估':
+        case '疾病评估':
             this.$router.push({ path: "/diseaseTest" });
             break;
         case '完善个人信息':
