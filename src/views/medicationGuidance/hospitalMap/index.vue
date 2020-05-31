@@ -65,6 +65,18 @@
         @select="onSelectAction"
         @cancel="onCancel"
       />
+      <van-overlay :show="showNoSetLocation" @click="show = false">
+        <div class="showNoSetLocationwrapper" @click.stop>
+          <div class="block">
+            <div class="title">温馨提示</div>
+            <div class="content">
+              建议您前往公众号“
+              <b>设置</b>”中打开“
+              <b>提供位置信息</b>”功能并点击确定，以便为您提供附近医院信息。
+            </div>
+          </div>
+        </div>
+      </van-overlay>
     </div>
   </div>
 </template>
@@ -110,6 +122,7 @@ export default {
       hospitalIntro: {},
       doctors: [],
       showactionsheet: false,
+      showNoSetLocation: false,
       actions: [
         {
           name: "腾讯地图",
@@ -141,31 +154,31 @@ export default {
       this.getMyLocation();
     }
   },
-watch:{
-// '$route.params'(val,oldVal){
-// console.log("----a-sa-s-a-",val)
-// }
-  $route(to, from) {
-      if(from.path=='/searchPage'){
+  watch: {
+    // '$route.params'(val,oldVal){
+    // console.log("----a-sa-s-a-",val)
+    // }
+    $route(to, from) {
+      if (from.path == "/searchPage") {
         if (this.$route.params.item != undefined) {
-              var address =
-                this.$route.params.item.province +
-                this.$route.params.item.city +
-                this.$route.params.item.address;
-              this.valuesearch = address;
-              console.log("this.valuesearch", this.valuesearch);
-              this.$set(this.params, "address", address);
-              this.x = this.$route.params.item.x;
-              this.y = this.$route.params.item.y;
-              var map = new BMap.Map("allmap");
-              this.mapMyLocation(map, 13);
-              this.getNearHospitals(map);
-            } else {
-              this.getMyLocation();
-            }
+          var address =
+            this.$route.params.item.province +
+            this.$route.params.item.city +
+            this.$route.params.item.address;
+          this.valuesearch = address;
+          console.log("this.valuesearch", this.valuesearch);
+          this.$set(this.params, "address", address);
+          this.x = this.$route.params.item.x;
+          this.y = this.$route.params.item.y;
+          var map = new BMap.Map("allmap");
+          this.mapMyLocation(map, 13);
+          this.getNearHospitals(map);
+        } else {
+          this.getMyLocation();
+        }
       }
     }
-},
+  },
   mounted() {
     this.show = true;
     if (this.$route.params.item != undefined) {
@@ -490,13 +503,17 @@ watch:{
       this.$store
         .dispatch("medicationGuidance/getMyLocation")
         .then(res => {
-          this.x = parseFloat(res.data.location.x);
-          this.y = parseFloat(res.data.location.y);
-          this.$set(this.params, "x", res.data.location.x);
-          this.$set(this.params, "y", res.data.location.y);
           var map = new BMap.Map("allmap");
-          this.mapMyLocation(map, 13);
-          this.getNearHospitals(map);
+          if (!res.data.location.x && !res.data.location.y) {
+            this.showNoSetLocation = true;
+          } else {
+            this.x = parseFloat(res.data.location.x);
+            this.y = parseFloat(res.data.location.y);
+            this.$set(this.params, "x", res.data.location.x);
+            this.$set(this.params, "y", res.data.location.y);
+            this.mapMyLocation(map, 13);
+            this.getNearHospitals(map);
+          }
         })
         .catch(e => {});
     },
@@ -506,7 +523,7 @@ watch:{
       this.$store
         .dispatch("medicationGuidance/getNearHospitals", this.params)
         .then(res => {
-          console.log("res",res);
+          console.log("res", res);
           this.isloading = false;
           this.hospitals = res.data.hospitals;
           this.mapHospitalLocation(map);
@@ -514,7 +531,7 @@ watch:{
         })
         .catch(e => {
           this.isloading = false;
-          this.hospitals =[];
+          this.hospitals = [];
         });
     },
     getHospital(id) {
@@ -682,5 +699,36 @@ watch:{
   border-bottom-right-radius: 0.2rem;
   margin-left: 0.2rem;
   top: 0.25rem;
+}
+.showNoSetLocationwrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  .block {
+    width: 5.6rem;
+    background-color: #fff;
+    border-radius: 0.08rem;
+    .title {
+      font-size: 0.3rem;
+      font-weight: 500;
+      color: rgba(51, 51, 51, 1);
+      line-height: initial;
+      margin: 0.4rem 0 0.16rem 0;
+      text-align: center;
+    }
+    .content {
+      margin: 0 0.8rem;
+      font-size: 0.28rem;
+      color: #666666;
+      line-height: 0.4rem;
+      font-weight: 500;
+      padding-bottom: 1.02rem;
+      > b {
+        color: #009966;
+        font-weight: normal;
+      }
+    }
+  }
 }
 </style>

@@ -46,7 +46,7 @@ export default new Router({
                 import ("@/views/diseaseKnowledge/diseaseKnowledge"),
             name: "DiseaseKnowledge",
             meta: {
-                keepAlive:true,
+                keepAlive: true,
                 title: "疾病知识",
                 index: 1
             }
@@ -183,6 +183,16 @@ export default new Router({
             }
         },
         {
+            path: "/addEmail",
+            component: () =>
+                import ("@/views/patientManagement/integralExchange/components/addEmail"),
+            name: "addEmail",
+            meta: {
+                title: "添加收件邮箱",
+                index: 3
+            }
+        },
+        {
             path: "/productInfo",
             component: () =>
                 import ("@/views/patientManagement/integralExchange/components/ProductInfo"),
@@ -308,7 +318,7 @@ export default new Router({
             path: "/aboutUs",
             component: () =>
                 import ("@/views/patientManagement/aboutUs"),
-                name: 'AboutUs',
+            name: 'AboutUs',
             meta: {
                 title: "关于我们",
                 index: 1

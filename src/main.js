@@ -41,7 +41,7 @@ Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
     // console.log("--------1");
     // setOpenId("oQEE8wgh7QVhrNi4f6frjxI_qiAw");
-    window.sessionStorage.setItem('firstUrl',window.location.href)
+    window.sessionStorage.setItem('firstUrl', window.location.href)
     let params = {
         local: window.location.host + to.path
     }

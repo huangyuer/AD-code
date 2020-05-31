@@ -33,7 +33,10 @@ export default {
       score: {},
       form: {
         goods: String,
-        address: String
+        address: String,
+        email: String,
+        name: String,
+        phone: String
       },
       item: {},
       current: 0
@@ -90,6 +93,8 @@ export default {
       } else if (!this.item.isVirtual && this.$store.getters.IsSubmitExchange) {
         this.form.goods = id;
         this.getMyAddress();
+      } else if (this.item.isVirtual && this.item.type == "电子书") {
+        this.$router.push({ path: "/addEmail", query: { id: id } });
       } else {
         this.form.goods = id;
         this.exchangeGoods();
