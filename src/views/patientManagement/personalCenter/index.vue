@@ -677,7 +677,7 @@ export default {
         -webkit-transition: all 0.5s; /* Safari 和 Chrome */
         -o-transition: all 0.5s; /* Opera */
         &.heightauto {
-          max-height: 6rem;
+          max-height: 11rem;
         }
       }
     }
