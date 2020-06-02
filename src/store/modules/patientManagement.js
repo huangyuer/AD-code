@@ -300,7 +300,10 @@ const actions = {
     return new Promise((resolve, reject) => {
       exchangeGoods({
           goods: question.goods,
-          address: question.address
+          address: question.address,
+          email:question.email,
+          phone:question.phone,
+          name:question.name,
         })
         .then(response => {
           resolve(response);

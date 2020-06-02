@@ -34,9 +34,9 @@ export default {
       form: {
         goods: String,
         address: String,
-        email: String,
-        name: String,
-        phone: String
+        email: '',
+        name: '',
+        phone: ''
       },
       item: {},
       current: 0

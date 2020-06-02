@@ -1,7 +1,7 @@
 <template>
   <div class="addEmailWapper">
     <van-field v-model="form.name" placeholder="收件人" input-align="left" />
-    <van-field v-model="form.phone" placeholder="手机号码" input-align="left" />
+    <van-field v-model="form.phone" type="tel" placeholder="手机号码" input-align="left" />
     <van-field v-model="form.email" placeholder="邮箱号码" input-align="left" />
     <div class="saveEdit" @click="BtnupMyAddress()">发送</div>
   </div>
@@ -12,11 +12,11 @@ export default {
   data() {
     return {
       form: {
-        goods: String,
-        address: String,
-        email: String,
-        name: String,
-        phone: String
+        goods: '',
+        address: '',
+        email: '',
+        name: '',
+        phone: ''
       }
     };
   },
@@ -35,6 +35,11 @@ export default {
       var re = /^[1][3,4,5,7,8,9][0-9]{9}$/;
       if (!re.test(this.form.phone)) {
         Toast("手机号码有误，请重填");
+        return;
+      }
+      var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+      if(!reg.test(this.form.email)){
+        Toast("邮箱号码有误，请重填");
         return;
       }
       this.$store
