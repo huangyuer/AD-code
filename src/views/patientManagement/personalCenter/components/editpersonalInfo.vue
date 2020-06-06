@@ -56,7 +56,9 @@
       @IsshowDisease="IsshowDisease"
     ></van-disease-picker>
     <van-time-picker
-      :formvalue="form.time"
+      :formvalue.sync="form.time"
+      :noTouch.sync="noTouch"
+      :noselectFirst.sync="noselectFirst"
       :formtype="'year'"
       :formlabel="'首次确诊年份'"
       :formplaceholder="''"
@@ -65,7 +67,9 @@
       @IsshowTime="IsdiaTime"
     ></van-time-picker>
     <van-hospital-picker
-      :formvalue="form.hospital"
+      :formvalue.sync="form.hospital"
+      :noTouch.sync="noTouch"
+      :noselectFirst.sync="noselectFirst"
       :formtype="'year-month'"
       :formlabel="'上次就诊医院'"
       :formplaceholder="''"
@@ -171,7 +175,9 @@ export default {
       checkedmediEnd: false,
       address: {},
       user: {},
-      silderBar: ""
+      silderBar: "",
+      noTouch:false,
+      noselectFirst:false,
     };
   },
   mounted() {
@@ -203,6 +209,17 @@ export default {
       } else {
         this.level = 0;
       }
+      if(this.user.disease=='无'){
+        this.noTouch=true;
+        this.noselectFirst=false;
+      }else if(this.user.disease==''){
+        this.noTouch=true;
+        this.noselectFirst=true;
+        console.log("this.noselectFirst",this.noselectFirst);
+      }else{
+        this.noTouch=false;
+        this.noselectFirst=false;
+      }
     },
     onConfirmplace(values) {
       this.$set(this.form, "province", values[0].name);
@@ -219,6 +236,18 @@ export default {
     },
     IsshowDisease(value) {
       this.$set(this.form, "disease", value);
+      if(value=='无'){
+        this.noTouch=true;
+        this.noselectFirst=false;
+        this.$set(this.form, "time", '');
+        this.$set(this.form, "hospital", '');
+      }else if(value==''){
+        this.noTouch=true;
+        this.noselectFirst=true;
+      }else{
+        this.noTouch=false;
+        this.noselectFirst=false;
+      }
     },
     IsshowArea(value) {
       this.$set(this.form, "showArea", value);

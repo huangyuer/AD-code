@@ -8,7 +8,7 @@
       :label="formlabel"
       :placeholder="formplaceholder"
       :input-align="forminputalign"
-      @click="isFirstEnter ? (showSex = true) : (showSex = false)"
+      @click="clickSelect()"
     />
     <img v-if="isFirstEnter" src="../assets/up.png" />
     <van-popup v-model="showSex" position="bottom">
@@ -20,9 +20,11 @@
     <van-popup v-model="showhospital" position="bottom">
       <van-picker show-toolbar  :columns="hospitalList" @cancel="showhospital = false" @confirm="onConfirmhospital" />
     </van-popup>
+    <div v-show="isselected"></div>
   </div>
 </template>
 <script>
+import { Toast } from 'vant';
 export default {
   props: {
     formvalue: {
@@ -44,7 +46,15 @@ export default {
     isFirstEnter: {
       type: Boolean,
       default: true
-    }
+    },
+    noTouch:{
+      type: Boolean,
+      default: false
+    },
+    noselectFirst:{
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -55,6 +65,7 @@ export default {
       value: "",
       address:[],
       hospitalList:[],
+      isselected:false,
     };
   },
   created() {
@@ -72,10 +83,25 @@ export default {
       }
     });
   },
+  watch:{
+    formvalue(val){
+      this.value=val;
+    },
+  },
   mounted() {
     this.value = this.formvalue;
   },
   methods: {
+    clickSelect(){
+      if(this.isFirstEnter && !this.noTouch){
+        this.showdate = true;
+      }else{
+        this.showdate = false;
+      }
+      if(this.noselectFirst){
+        Toast('用户先选择确诊疾病');
+      }
+    },
     onConfirm(val) {
       if(val=='无'){
         this.value = val;

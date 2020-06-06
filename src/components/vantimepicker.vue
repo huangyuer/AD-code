@@ -14,7 +14,7 @@
       :label="formlabel"
       :placeholder="formplaceholder"
       :input-align="forminputalign"
-      @click="isFirstEnter ? (showdate = true) : (showdate = false)"
+      @click="clickSelect()"
     />
     <img v-if="isFirstEnter" src="../assets/up.png" />
     <van-popup v-model="showdate" position="bottom">
@@ -31,6 +31,7 @@
   </div>
 </template>
 <script>
+import { Toast } from 'vant';
 export default {
   props: {
     formvalue: {
@@ -60,7 +61,15 @@ export default {
     isFirstEnter: {
       type: Boolean,
       default: true
-    }
+    },
+    noTouch:{
+      type: Boolean,
+      default: false,
+    },
+    noselectFirst:{
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -69,8 +78,14 @@ export default {
       minDate: new Date(1920, 0, 1),
       maxDate: new Date(),
       currentDate: new Date(),
-      value: ""
+      value: "",
+      isSelected:false,
     };
+  },
+  watch:{
+    formvalue(val){
+      this.value=val;
+    },
   },
   mounted() {
     var year = this.nowdate.getFullYear();
@@ -80,6 +95,16 @@ export default {
     this.value = this.formvalue;
   },
   methods: {
+    clickSelect(){
+      if(this.isFirstEnter && !this.noTouch){
+        this.showdate = true;
+      }else{
+        this.showdate = false;
+      }
+      if(this.noselectFirst){
+        Toast('用户先选择确诊疾病');
+      }
+    },
     onConfirm(value) {
       var d = new Date(value);
       if (this.formtype == "date") {
@@ -96,9 +121,8 @@ export default {
         //   d.getFullYear() +
         //   "-" +
         //   (d.getMonth() + 1 < 10 ? "0" + (d.getMonth() + 1) : d.getMonth() + 1);
-        var datetime = d.getFullYear();
+        var datetime = d.getFullYear().toString();
       }
-
       this.showdate = false;
       this.value = datetime;
       this.$emit("IsshowTime", datetime);
