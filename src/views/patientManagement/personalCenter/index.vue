@@ -27,7 +27,7 @@
           <div class="nameitem">
             <div class="name">
               {{ user.name != "" ? user.name : user.nickName }}
-              <span class="pagetoinfo" @click="toPagepersonalInfo()">查看</span>
+              <span class="pagetoinfo" @click="toPagepersonalInfo()">个人信息</span>
             </div>
             <div class="phone">{{ user.phone }}</div>
           </div>

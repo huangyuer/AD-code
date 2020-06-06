@@ -72,6 +72,8 @@ export default {
       var day = this.getPassFormatDate(i);
       this.xall.push(day);
     }
+    this.xall.reverse();
+    console.log("this.xall",this.xall);
   },
   methods: {
     toDetailassess(item) {
@@ -93,6 +95,7 @@ export default {
           var day = this.getPassFormatDate(i);
           this.xall.push(day);
         }
+        this.xall.reverse();
         this.$set(this.getAnswerLogChart, "startDate", getLastMonth().last);
         this.$set(this.getAnswerLogChart, "endDate", getLastMonth().now);
         this.$set(this.getAnswerLog, "startDate", getLastMonth().last);
@@ -110,6 +113,7 @@ export default {
           var day = this.getPassFormatDate(i);
           this.xall.push(day);
         }
+        this.xall.reverse();
         this.$set(this.getAnswerLogChart, "startDate", getLast3Month().last);
         this.$set(this.getAnswerLogChart, "endDate", getLast3Month().now);
         this.$set(this.getAnswerLog, "startDate", getLast3Month().last);
@@ -127,6 +131,7 @@ export default {
           var day = this.getPassFormatDate(i);
           this.xall.push(day);
         }
+        this.xall.reverse();
         this.$set(this.getAnswerLogChart, "startDate", getLastYear().last);
         this.$set(this.getAnswerLogChart, "endDate", getLastYear().now);
         this.$set(this.getAnswerLog, "startDate", getLastYear().last);
