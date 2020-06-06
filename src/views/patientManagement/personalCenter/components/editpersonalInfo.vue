@@ -64,6 +64,15 @@
       :isFirstEnter="isFirstEnter || !user.hasOwnProperty('diaTime') || user.diaTime==''"
       @IsshowTime="IsdiaTime"
     ></van-time-picker>
+    <van-hospital-picker
+      :formvalue="form.hospital"
+      :formtype="'year-month'"
+      :formlabel="'上次就诊医院'"
+      :formplaceholder="''"
+      :forminputalign="'right'"
+      :isFirstEnter="isFirstEnter || !user.hasOwnProperty('hospital') || user.hospital==''"
+      @IsshowHospital="IsshowHospital"
+    ></van-hospital-picker>
     <div class="selecthistory">
       <div v-if="!isSelectmedical">
         <div class="baseinfo history">
@@ -134,6 +143,7 @@ import VanAreas from "@/components/vanareas.vue";
 import VanTimePicker from "@/components/vantimepicker.vue";
 import VanSexPicker from "@/components/vansexpicker";
 import VanDiseasePicker from "@/components/vandiseasepicker";
+import VanHospitalPicker from "@/components/vanhospitalpicker"
 import { Toast } from "vant";
 export default {
   data() {
@@ -148,6 +158,7 @@ export default {
         showArea: false,
         disease: "",
         time: "",
+        hospital:'',
         level: "无"
       },
       level: 0,
@@ -178,6 +189,7 @@ export default {
       this.$set(this.form, "area", this.user.city);
       this.$set(this.form, "disease", this.user.disease);
       this.$set(this.form, "time", this.user.diaTime);
+      this.$set(this.form, "hospital", this.user.hospital);
       this.$set(this.form, "level", this.user.level);
       if (this.user.level == "轻度") {
         this.level = 100/3;
@@ -210,6 +222,9 @@ export default {
     },
     IsshowArea(value) {
       this.$set(this.form, "showArea", value);
+    },
+    IsshowHospital(value){
+      this.$set(this.form, "hospital", value);
     },
     onCheckGroup(name) {
       console.log("this.result====>", this.result);
@@ -274,6 +289,7 @@ export default {
         city: this.form.area,
         disease: this.form.disease,
         diaTime: this.form.time,
+        hospital:this.form.hospital,
         medications: this.result,
         level: this.form.level
       };
@@ -348,7 +364,7 @@ export default {
       }
     }
   },
-  components: { VanAreas, VanTimePicker, VanSexPicker, VanDiseasePicker }
+  components: { VanAreas, VanTimePicker, VanSexPicker, VanDiseasePicker,VanHospitalPicker }
 };
 </script>
 <style lang="less" scoped>

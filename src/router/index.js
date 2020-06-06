@@ -290,7 +290,7 @@ export default new Router({
         {
             path: "/scienceVideo",
             component: () =>
-                import ("@/views/diseaseKnowledge/scienceVideo"),
+                import ("@/views/diseaseKnowledge/scienceVideo/components/videoList"),
             meta: {
                 title: "科普视频",
                 index: 2
@@ -298,7 +298,7 @@ export default new Router({
         }, {
             path: "/scienceVideo/videoList",
             component: () =>
-                import ("@/views/diseaseKnowledge/scienceVideo/components/videoList"),
+                import ("@/views/diseaseKnowledge/scienceVideo"),
             meta: {
                 title: "科普视频",
                 index: 3

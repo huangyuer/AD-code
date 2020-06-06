@@ -77,6 +77,20 @@ export function upMyInfo(data) {
     data
   })
 }
+export function getHospAddress(data){
+  return request({
+    url: '/getHospAddress',
+    method: 'post',
+    data
+  })
+}
+export function getHospByAddress(data){
+  return request({
+    url: '/getHospByAddress',
+    method: 'post',
+    data
+  })
+}
 //更新收货地址
 export function upMyAddress(data) {
   return request({

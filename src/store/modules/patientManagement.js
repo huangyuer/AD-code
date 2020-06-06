@@ -10,6 +10,8 @@ import {
   getMyAddress,
   upMyInfo,
   upMyAddress,
+  getHospAddress,
+  getHospByAddress,
   delMyInfo,
   getGoods,
   exchangeGoods,
@@ -237,6 +239,7 @@ const actions = {
           city: question.city,
           disease: question.disease,
           diaTime: question.diaTime,
+          hospital:question.hospital,
           medications: question.medications,
           level: question.level
         })
@@ -260,6 +263,35 @@ const actions = {
           area: question.area,
           detail: question.detail
         })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getHospAddress({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      getHospAddress()
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getHospByAddress({
+    commit
+  }, question) {
+    return new Promise((resolve, reject) => {
+      getHospByAddress({
+        province:question.province,
+        city:question.city
+      })
         .then(response => {
           resolve(response);
         })
