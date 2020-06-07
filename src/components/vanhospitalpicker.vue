@@ -20,7 +20,6 @@
     <van-popup v-model="showhospital" position="bottom">
       <van-picker show-toolbar  :columns="hospitalList" @cancel="showhospital = false" @confirm="onConfirmhospital" />
     </van-popup>
-    <div v-show="isselected"></div>
   </div>
 </template>
 <script>
@@ -65,7 +64,6 @@ export default {
       value: "",
       address:[],
       hospitalList:[],
-      isselected:false,
     };
   },
   created() {
@@ -85,7 +83,7 @@ export default {
   },
   watch:{
     formvalue(val){
-      this.value=val;
+      this.value=val; 
     },
   },
   mounted() {
@@ -94,9 +92,9 @@ export default {
   methods: {
     clickSelect(){
       if(this.isFirstEnter && !this.noTouch){
-        this.showdate = true;
+        this.showSex = true;
       }else{
-        this.showdate = false;
+        this.showSex = false;
       }
       if(this.noselectFirst){
         Toast('用户先选择确诊疾病');

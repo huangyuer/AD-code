@@ -79,7 +79,6 @@ export default {
       maxDate: new Date(),
       currentDate: new Date(),
       value: "",
-      isSelected:false,
     };
   },
   watch:{
