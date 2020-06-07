@@ -4,6 +4,9 @@
     <van-field v-model="form.phone" type="tel" placeholder="手机号码" input-align="left" />
     <van-field v-model="form.email" placeholder="邮箱号码" input-align="left" />
     <div class="saveEdit" @click="BtnupMyAddress()">发送</div>
+    <van-overlay :show="showloading" class="loadingicon">
+        <van-loading color="#009966" />
+    </van-overlay>
   </div>
 </template>
 <script>
@@ -17,7 +20,8 @@ export default {
         email: '',
         name: '',
         phone: ''
-      }
+      },
+      showloading:false,
     };
   },
   mounted() {},
@@ -42,15 +46,19 @@ export default {
         Toast("邮箱号码有误，请重填");
         return;
       }
+      this.showloading=true;
       this.$store
         .dispatch("patientManagement/exchangeGoods", this.form)
         .then(response => {
+          this.showloading=false;
           Toast(response.msg);
           setTimeout(() => {
             this.$router.push({ path: "/myexchange" });
           }, 500);
         })
-        .catch(e => {});
+        .catch(e => {
+          this.showloading=false;
+        });
     }
   }
 };
@@ -105,5 +113,10 @@ export default {
   line-height: 0.8rem;
   text-align: center;
   margin: 0.6rem auto 0.36rem;
+}
+.loadingicon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
