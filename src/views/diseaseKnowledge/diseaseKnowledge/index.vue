@@ -188,6 +188,9 @@ export default {
 }
 .disease-search {
   padding-top: 0.4rem;
+  @{aaa}.seach-input{
+    margin: 0;
+  }
 }
 .patient-like {
   display: flex;
