@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="center" @click="pageInfo(item)">
-          <van-image width="100%" height="2.6rem" :src="item.coverImg[0].httpUrl" fit="cover" />
+          <van-image width="100%" height="2.6rem" :src="item.coverImg[0]&&item.coverImg[0].httpUrl" fit="cover" />
         </div>
         <div class="bottom">{{ item.date }}</div>
       </div>

@@ -60,7 +60,7 @@
             <div class="clicktoageIntro" v-else>暂无医院介绍</div>
           </div>
           <div class="hospitalContentname">医生列表</div>
-          <div class="doctorList">
+          <div class="doctorList" v-if="doctoritem.length>0">
             <div
               class="doctorItem"
               v-for="(item, key) in doctoritem"
@@ -87,6 +87,7 @@
               </div>
             </div>
           </div>
+          <div class="hospitalIntro clicktoageIntro" v-else>暂无医生介绍</div>
         </div>
       </div>
     </div>
