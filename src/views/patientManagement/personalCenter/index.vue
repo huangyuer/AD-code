@@ -6,9 +6,7 @@
       :content="'【关爱自己，从疾病评估开始。】是否进一步了解您的皮肤状况？'"
       :isClose="false"
     >
-      <div slot="confirmButton" class="dialog-confirm" @click="confirmBtn">
-        前往疾病评估
-      </div>
+      <div slot="confirmButton" class="dialog-confirm" @click="confirmBtn">前往疾病评估</div>
       <div slot="closeButton" @click="closeBtn">
         <svg-icon iconClass="register-close" class="close-icon"></svg-icon>
       </div>
@@ -17,27 +15,21 @@
     <div class="header">
       <div class="top">
         <div class="left">
-          <van-image
-            round
-            fit="cover"
-            width="1.32rem"
-            height="1.32rem"
-            :src="user.headImg"
-          />
+          <van-image round fit="cover" width="1.32rem" height="1.32rem" :src="user.headImg" />
           <div class="nameitem">
             <div class="name">
               {{ user.name != "" ? user.name : user.nickName }}
-              <span class="pagetoinfo" @click="toPagepersonalInfo()">个人信息</span>
+              <span
+                class="pagetoinfo"
+                @click="toPagepersonalInfo()"
+              >个人信息</span>
             </div>
             <div class="phone">{{ user.phone }}</div>
           </div>
         </div>
         <div class="right">
           <span>最近评估：</span>
-          <div
-            v-if="Object.keys(answerLogs).length > 0"
-            style="display:flex;align-item:center;"
-          >
+          <div v-if="Object.keys(answerLogs).length > 0" style="display:flex;align-item:center;">
             <span class="deg">{{ answerLogs.score }}</span>
             <svg-icon
               iconClass="jiantoushangseng"
@@ -93,9 +85,7 @@
                   color3: item.status == '未完成'  || item.status == '去完成',
                   'font-size28': true
                 }"
-              >
-                {{ item.name }}（{{ item.num }}/{{ item.limit }}）
-              </div>
+              >{{ item.name }}（{{ item.num }}/{{ item.limit }}）</div>
               <div
                 :class="{
                   btnpage: true,
@@ -104,9 +94,7 @@
                   colorgreen:item.status == '去完成'
                 }"
                 @click="topageTask(item)"
-              >
-                {{ item.status }}
-              </div>
+              >{{ item.status }}</div>
             </div>
           </div>
         </div>
@@ -130,8 +118,8 @@
               <div class="iteminner fmregular" v-if="index < 3">
                 <div class="color52 font-size28 overflowhidden">
                   {{
-                    item.title
-                  }}测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章测试文章
+                  item.title
+                  }}
                 </div>
                 <div class="coloracadaf font-size28">{{ item.date }}</div>
               </div>
@@ -156,9 +144,9 @@
         <div class="itemlist">
           <div class="iteminner" v-if="Object.keys(answerLogs).length > 0">
             <div class="color52 font-size28">
-              <div class="color3 font-size30 fmmedium">
-                {{ user.name != "" ? user.name : user.nickName }}
-              </div>
+              <div
+                class="color3 font-size30 fmmedium"
+              >{{ user.name != "" ? user.name : user.nickName }}</div>
               <div class="color3 font-size28 fmregular">
                 您最近一次评估程度为
                 <b class="color009966 fmmedium">{{ answerLogs.score }}分</b>
@@ -190,8 +178,7 @@
                 <span
                   style="margin-left: 0.16rem;"
                   class="color6 font-size28 fmregular"
-                  >{{ msglist.age }}岁</span
-                >
+                >{{ msglist.age }}岁</span>
               </div>
               <div class="color3 font-size28 fmregular">
                 您最近一次留言时间为
@@ -250,33 +237,33 @@ export default {
         path: "/diseaseTest"
       });
     },
-    topageTask(item){
-      if(item.limit>item.num){
-      switch (item.name) {
-        case '首次完成疾病评估':
+    topageTask(item) {
+      if (item.limit > item.num) {
+        switch (item.name) {
+          case "首次完成疾病评估":
             this.$router.push({ path: "/diseaseTest" });
             break;
-        case '疾病评估':
+          case "疾病评估":
             this.$router.push({ path: "/diseaseTest" });
             break;
-        case '完善个人信息':
+          case "完善个人信息":
             this.$router.push({ path: "/personalInfo" });
             break;
-        case '查看推文/视频':
+          case "查看推文/视频":
             this.$router.push({ path: "/scienceVideo" });
             break;
-        case '查找专业医院':
+          case "查找专业医院":
             this.$router.push({ path: "/hospitalMap" });
             break;
-        case '留言板':
+          case "留言板":
             this.$router.push({ path: "/messageBoard/leaveMessage" });
             break;
-        case '邀请AD好友':
+          case "邀请AD好友":
             this.$router.push({ path: "/personalInfo" });
-        default: ''
+          default:
+            "";
+        }
       }
-      }
-
     },
     toPagepersonalInfo() {
       this.$router.push({ path: "/personalInfo" });
@@ -645,8 +632,8 @@ export default {
               color: #ff755a;
               border: 0.02rem solid #ff755a;
             }
-            &.colorgreen{
-              color:#009966;
+            &.colorgreen {
+              color: #009966;
               border: 0.02rem solid #009966;
             }
           }

@@ -88,7 +88,7 @@ export default {
         );
         this.activeTabName = this.$store.getters.menuList.selects[0].type;
         // }
-        this.onLoad();
+        // this.onLoad();
       })
       .catch(e => {
         console.log(e);
@@ -103,7 +103,7 @@ export default {
       this.diseaseInfo = [];
       this.params.page = 1;
       this.finished = false;
-      this.getArticles();
+      // this.getArticles();
     },
     onClear() {
       this.params.title = "";
@@ -131,7 +131,7 @@ export default {
       this.$set(this.params, "page", 1);
       // localStorage.setItem("tabNum", title);
       this.finished = false;
-      this.getArticles();
+      // this.getArticles();
     },
     getArticles() {
       this.$store
@@ -177,7 +177,7 @@ export default {
 </script>
 <style lang="less" scoped>
 @aaa: ~">>>";
-@{aaa}.category-box .van-sticky{
+@{aaa}.category-box .van-sticky {
   background: #ffffff;
 }
 .disease-content {
@@ -188,7 +188,7 @@ export default {
 }
 .disease-search {
   padding-top: 0.4rem;
-  @{aaa}.seach-input{
+  @{aaa}.seach-input {
     margin: 0;
   }
 }
