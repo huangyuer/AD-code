@@ -62,7 +62,8 @@ export default {
         { text: "全部商品", value: "0" },
         { text: "新款商品", value: "1" },
         { text: "活动商品", value: "2" }
-      ]
+      ],
+      onloadIs: false
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -87,6 +88,7 @@ export default {
           this.$store.getters.menuList.selects[0].type
         );
         this.activeTabName = this.$store.getters.menuList.selects[0].type;
+        this.getArticles();
         // }
         // this.onLoad();
       })
@@ -131,12 +133,14 @@ export default {
       this.$set(this.params, "page", 1);
       // localStorage.setItem("tabNum", title);
       this.finished = false;
+      this.onloadIs = true;
       // this.getArticles();
     },
     getArticles() {
       this.$store
         .dispatch("common/getArticles", this.params)
         .then(() => {
+          this.onloadIs = true;
           this.diseaseInfo = this.diseaseInfo.concat(
             this.$store.getters.articlesList.articles
           );
@@ -157,7 +161,9 @@ export default {
         });
     },
     onLoad() {
-      this.getArticles();
+      if (this.onloadIs) {
+        this.getArticles();
+      }
       // this.changeTab(null,this.itemTabcontent[0].type)
     },
     likeBtn(val) {
