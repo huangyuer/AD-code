@@ -97,7 +97,7 @@ export default {
         this.showSex = false;
       }
       if(this.noselectFirst){
-        Toast('请您先选择确诊疾病');
+        Toast('用户先选择确诊疾病');
       }
     },
     onConfirm(val) {
