@@ -1,38 +1,32 @@
 <template>
   <div class="disease-content">
-    <div class="disease-search">
-      <search-input :placeholder="'搜索关键字'" @onSearch="onSearch" @onClear="onClear"></search-input>
-
-      <!-- <div class="category-box">
-
-        <dropdown-menu
-          :option="option"
-          :value="value"
-          @DropdownchangeValue="DropdownchangeValue"
-        ></dropdown-menu>
-        <div v-for="item in category" :key="item.id" class="category-li">
-          {{ item }}
-        </div>
-      </div>-->
-    </div>
     <div class="category-box">
-      <van-tabs
-        sticky
-        @click="changeTab"
-        title-active-color="#009966"
-        line-width="1.4rem"
-        :ellipsis="false"
-        v-model="activeTabName"
-      >
-        <van-tab v-for="item in itemTabcontent" :name="item.type" :title="item.type" :key="item.id"></van-tab>
-        <div class="patient-like">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-            <div v-for="item in diseaseInfo" :key="item.id">
-              <like-info :info="item" @likeBtn="likeBtn" @likeItem="likeItem"></like-info>
-            </div>
-          </van-list>
+      <van-sticky>
+        <div class="disease-search">
+          <search-input :placeholder="'搜索关键字'" @onSearch="onSearch" @onClear="onClear"></search-input>
         </div>
-      </van-tabs>
+        <van-tabs
+          @click="changeTab"
+          title-active-color="#009966"
+          line-width="1.4rem"
+          :ellipsis="false"
+          v-model="activeTabName"
+        >
+          <van-tab
+            v-for="item in itemTabcontent"
+            :name="item.type"
+            :title="item.type"
+            :key="item.id"
+          ></van-tab>
+        </van-tabs>
+      </van-sticky>
+      <div class="patient-like">
+        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+          <div v-for="item in diseaseInfo" :key="item.id">
+            <like-info :info="item" @likeBtn="likeBtn" @likeItem="likeItem"></like-info>
+          </div>
+        </van-list>
+      </div>
     </div>
   </div>
 </template>
@@ -87,14 +81,14 @@ export default {
         //   this.$set(this.params, "childMenu", localStorage.getItem("tabNum"));
         //   this.activeTabName = localStorage.getItem("tabNum");
         // } else {
-          this.$set(
-            this.params,
-            "childMenu",
-            this.$store.getters.menuList.selects[0].type
-          );
-          this.activeTabName = this.$store.getters.menuList.selects[0].type;
+        this.$set(
+          this.params,
+          "childMenu",
+          this.$store.getters.menuList.selects[0].type
+        );
+        this.activeTabName = this.$store.getters.menuList.selects[0].type;
         // }
-        this.onLoad();
+        // this.onLoad();
       })
       .catch(e => {
         console.log(e);
@@ -109,7 +103,7 @@ export default {
       this.diseaseInfo = [];
       this.params.page = 1;
       this.finished = false;
-      this.getArticles();
+      // this.getArticles();
     },
     onClear() {
       this.params.title = "";
@@ -137,7 +131,7 @@ export default {
       this.$set(this.params, "page", 1);
       // localStorage.setItem("tabNum", title);
       this.finished = false;
-      this.getArticles();
+      // this.getArticles();
     },
     getArticles() {
       this.$store
@@ -183,20 +177,26 @@ export default {
 </script>
 <style lang="less" scoped>
 @aaa: ~">>>";
+@{aaa}.category-box .van-sticky {
+  background: #ffffff;
+}
 .disease-content {
-  overflow: hidden;
-  height: 100vh;
+  // overflow: hidden;
+  // height: 100vh;
   display: flex;
   flex-direction: column;
 }
 .disease-search {
   padding-top: 0.4rem;
+  @{aaa}.seach-input {
+    margin: 0;
+  }
 }
 .patient-like {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  overflow: auto;
+  // flex: 1;
+  // overflow: auto;
 }
 .category-box {
   @{aaa} .van-sticky {
@@ -235,7 +235,6 @@ export default {
     }
   }
   @{aaa} .van-sticky {
-    margin-top: 0.1rem;
     margin-bottom: 0.4rem;
   }
 
