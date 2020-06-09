@@ -46,6 +46,7 @@
       :forward="this.$route.query.forward"
       :starId="this.$route.query.id"
       :isStar="this.$route.query.isStar"
+      :title="this.$route.query.menu"
       @likeBtn="likeBtn"
       @forwardBtn="forwardBtn"
     ></like-and-forward>

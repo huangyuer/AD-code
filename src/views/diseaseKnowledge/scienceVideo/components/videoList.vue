@@ -157,6 +157,7 @@ export default {
             query: {
               id: item._id,
               title: item.title,
+              menu: this.$route.meta.title,
               like: true,
               forward: true,
               isStar: item.isStar

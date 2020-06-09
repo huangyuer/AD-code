@@ -73,6 +73,7 @@ export default {
             name: "videoDetail",
             query: {
               id: item._id,
+              menu: this.$route.meta.title,
               title: item.title,
               like: true,
               forward: true,

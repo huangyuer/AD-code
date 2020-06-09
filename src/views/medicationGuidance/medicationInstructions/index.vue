@@ -35,6 +35,7 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
+      flag: false,
       placeholder: "搜索关键字",
       searchinputvalue: "",
       loading: false,
@@ -61,12 +62,23 @@ export default {
       if (from.path != "/DetailInfo") {
         // localStorage.removeItem("tabNum");
         // localStorage.removeItem("tabChild");
+      }else {
+        vm.flag = !vm.flag;
       }
     });
   },
   created() {
     // this.finished = true;
     this.getMenuSelect();
+  },
+    watch: {
+
+    flag: function(val, oldval) {
+      console.log('--====22121');
+      this.acticalList = [];
+      this.form.page = 1;
+      this.getArticles();
+    }
   },
   mounted() {
     // this.onloadIs = true;

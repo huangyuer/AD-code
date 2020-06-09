@@ -21,6 +21,7 @@
         :starId="this.$route.query.id"
         :isStar="this.$route.query.isStar"
         :path="this.$route.path"
+        :title="this.$route.query.menu"
         @likeBtn="likeBtn"
         @forwardBtn="forwardBtn"
       ></like-and-forward>
@@ -114,7 +115,11 @@ export default {
         .then(response => {})
         .catch(e => {});
     },
-    likeBtn() {
+    likeBtn(val) {
+      // if(val){
+      this.$emit('likeBtn',val)
+
+      // }
       console.log("-----d");
     },
     forwardBtn() {

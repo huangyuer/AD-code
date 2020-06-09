@@ -107,6 +107,8 @@ export default {
           path: "/scienceVideo/videoList/videoDetail",
           name: "videoDetail",
           query: {
+            menu:'科普视频',
+            title:item.title,
             id: item.starId,
             like: true,
             forward: true,
@@ -118,6 +120,8 @@ export default {
           path: "/DetailInfo",
           name: "DetailInfo",
           query: {
+            menu:'诊疗方法',
+            title:item.title,
             id: item.starId,
             like: true,
             forward: false,
@@ -129,6 +133,8 @@ export default {
           path: "/caringActionDetailInfo",
           name: "caringActionDetailInfo",
           query: {
+            menu:'关爱行动',
+            title:item.title,
             id: item.starId,
             like: true,
             forward: false,
@@ -139,7 +145,7 @@ export default {
         this.$router.push({
           path: "/patientDetail",
           name: "PatientDetail",
-          query: { id: item.starId, like: true, forward: true, isStar: true },
+          query: { title:item.title,menu:'患者故事',id: item.starId, like: true, forward: true, isStar: true },
           meta: {
             title: "患者故事",
             index: 3
@@ -150,6 +156,8 @@ export default {
           path: "/diseaseDetail",
           name: "DiseaseDetail",
           query: {
+            title:item.title,
+            menu:'疾病知识',
             id: item.starId,
             like: true,
             forward: true,

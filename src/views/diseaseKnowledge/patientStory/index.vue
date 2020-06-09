@@ -161,6 +161,7 @@ export default {
         name: "PatientDetail",
         query: {
           id: info._id,
+          menu: this.$route.meta.title,
           title: info.title,
           like: true,
           forward: true,

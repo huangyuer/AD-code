@@ -81,6 +81,7 @@ export default {
           path: "/DetailInfo",
           name: "DetailInfo",
           query: {
+            menu:'诊疗方法',
             id: index._id,
             like: true,
             forward: false,

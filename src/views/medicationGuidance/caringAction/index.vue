@@ -99,6 +99,7 @@ export default {
           path: "/caringActionDetailInfo",
           name: "caringActionDetailInfo",
           query: {
+            menu:'关爱行动',
             id: item._id,
             like: true,
             forward: false,

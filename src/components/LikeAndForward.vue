@@ -31,6 +31,10 @@ export default {
       // type: Boolean,
       default: true
     },
+    title:{
+      type: String,
+      default: ""
+    },
     starId: {
       type: String,
       default: ""
@@ -52,7 +56,7 @@ export default {
     likeBtn() {
       if (!this.isLike) {
         let params = {
-          menu: this.$route.meta.title,
+          menu: this.title,
           starId: this.starId
         };
         this.$store.dispatch("common/star", params).then(res => {
