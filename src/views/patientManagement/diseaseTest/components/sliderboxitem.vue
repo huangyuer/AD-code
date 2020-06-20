@@ -111,7 +111,7 @@ export default {
     justify-content: space-between;
     color: #333333;
     font-size: 0.28rem;
-    width: 6rem;
+    width: 100%;
     margin: 0.28rem auto;
   }
   .swipediv {
@@ -127,7 +127,7 @@ export default {
 .van-slider {
   position: relative;
   margin: 0 auto 0.62rem;
-  width: 6rem;
+  width: 100%;
   height: 0.16rem;
   background: #cdcdcd;
   box-shadow: 0 0.04rem 0.08rem 0 rgba(103, 103, 103, 0.5);
