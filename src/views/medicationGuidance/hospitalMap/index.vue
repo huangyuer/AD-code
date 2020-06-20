@@ -155,9 +155,6 @@ export default {
     }
   },
   watch: {
-    // '$route.params'(val,oldVal){
-    // console.log("----a-sa-s-a-",val)
-    // }
     $route(to, from) {
       if (from.path == "/searchPage") {
         if (this.$route.params.item != undefined) {
@@ -166,18 +163,20 @@ export default {
             this.$route.params.item.city +
             this.$route.params.item.address;
           this.valuesearch = address;
-          console.log("this.valuesearch", this.valuesearch);
           this.$set(this.params, "address", address);
           this.x = this.$route.params.item.x;
           this.y = this.$route.params.item.y;
           var map = new BMap.Map("allmap");
+          this.show = true;
+          this.showDetail = !this.show;
           this.mapMyLocation(map, 13);
           this.getNearHospitals(map);
         } else {
           this.getMyLocation();
         }
       }
-    }
+    },
+
   },
   mounted() {
     this.show = true;
