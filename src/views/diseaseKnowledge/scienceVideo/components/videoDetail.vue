@@ -115,9 +115,6 @@ export default {
           this.iframe = this.videoitem.video[0].httpUrl;
         })
         .catch(e => {
-          // if (e) {
-          //   Toast(e);
-          // }
         });
     },
     isIframe() {
@@ -125,6 +122,10 @@ export default {
         this.isvideo = false;
         document.getElementsByClassName("container")[0].innerHTML = this.iframe;
         document.getElementsByClassName("playicon")[0].style.display = "none";
+        this.$nextTick(() => {
+          document.getElementsByClassName('container')[0].children[0].setAttribute("width",'100%');
+          document.getElementsByClassName('container')[0].children[0].setAttribute("height",'100%');
+        })
       } else {
         document.getElementsByClassName("playicon")[0].style.display = "none";
         this.isvideo = true;
