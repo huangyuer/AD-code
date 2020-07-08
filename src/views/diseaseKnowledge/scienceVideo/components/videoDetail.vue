@@ -5,8 +5,8 @@
       <div class="time">{{ videoitem.date }}</div>
     </div>
     <div class="content">
-      <div class="LinkItem" @click="isIframe">
-        <div ref="container" class="container" v-if="!isvideo">
+      <div class="LinkItem" v-if="!isLive" @click="isIframe">
+        <div ref="container" class="container" v-if="!isLive && !isvideo">
           <!-- <div v-html="tt"></div> -->
           <van-image
             width="100%"
@@ -20,12 +20,33 @@
           />
         </div>
         <video
-          v-else
+          v-else-if="!isLive && isvideo"
           :src="videoitem.video[0].httpUrl"
           controls="controls"
           autoplay
           style
         >您的浏览器不支持 video 标签。</video>
+        <van-image
+          class="playicon"
+          width=".48rem"
+          height=".48rem"
+          fit="cover"
+          :src="require('../../../../assets/play.png')"
+        />
+      </div>
+      <div class="LinkItem" v-if="!isvideo && isLive" >
+        <div @click="toPageLive">
+          <van-image
+            width="100%"
+            height="100%"
+            fit="cover"
+            :src="
+              videoitem.coverImg != []
+                ? videoitem.coverImg[0].httpUrl
+                : ''
+            "
+          />
+        </div>
         <van-image
           class="playicon"
           width=".48rem"
@@ -74,6 +95,7 @@ export default {
     return {
       videoitem: {},
       isvideo: false,
+      isLive: false,
       iframe: "",
       showoverlay: false,
       flag: true
@@ -110,12 +132,22 @@ export default {
             Toast(response.msg);
             return;
           }
-          this.videoitem = response.data.video;
-          this.$route.meta.title = this.videoitem.title;
-          this.iframe = this.videoitem.video[0].httpUrl;
+          this.datadetail(response);
         })
-        .catch(e => {
-        });
+    },
+    async datadetail(response) {
+      this.videoitem = response.data.video;
+      this.$route.meta.title = this.videoitem.title;
+      this.iframe = this.videoitem.video[0].httpUrl;
+      const islive = await this.isLivePage()
+    },
+    isLivePage() {
+      return new Promise((resolve, reject)=>{
+        if (!this.iframe.includes("ad.kurite.com") && !this.iframe.toString().includes("iframe")) {
+          this.isLive = true;
+          resolve(this.isLive)
+        }
+      })
     },
     isIframe() {
       if (this.iframe.indexOf("iframe") != -1) {
@@ -126,10 +158,16 @@ export default {
           document.getElementsByClassName('container')[0].children[0].setAttribute("width",'100%');
           document.getElementsByClassName('container')[0].children[0].setAttribute("height",'100%');
         })
-      } else {
+      } else if (this.iframe.indexOf("ad.kurite.com") != -1) {
         document.getElementsByClassName("playicon")[0].style.display = "none";
         this.isvideo = true;
+      } else {
+        this.isLive = true;
       }
+    },
+    toPageLive() {
+      console.log("fsfsffddddddswswss");
+      window.location.href = this.iframe;
     },
     likeBtn() {
       console.log("-----d");
