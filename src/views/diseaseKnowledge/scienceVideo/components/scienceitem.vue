@@ -49,7 +49,11 @@ export default {
       }
     },
     toPageVideodetail(item) {
-      this.$emit("toPageVideodetail", item);
+      if (!item.video[0].httpUrl.includes("ad.kurite.com") && !item.video[0].httpUrl.includes("iframe")) {
+        window.location.href = item.video[0].httpUrl
+      } else {
+        this.$emit("toPageVideodetail", item);
+      }
     }
   },
   props: {
@@ -116,10 +120,11 @@ export default {
     border: 0.02rem solid #f3f3f3;
     margin: 0 auto;
     box-sizing: border-box;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.24rem;
     .header {
-      height: 0.7rem;
+      height: 0.68rem;
       padding: 0.2rem 0.2rem;
+      box-sizing: border-box;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -144,6 +149,8 @@ export default {
     .center {
       overflow: hidden;
       line-height: 0;
+      border-top: 0.02rem solid #F3F3F3;
+      border-bottom: 0.02rem solid #F3F3F3;
     }
     .bottom {
       padding: 0 0.2rem;

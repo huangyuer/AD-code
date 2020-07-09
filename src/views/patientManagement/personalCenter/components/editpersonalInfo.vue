@@ -198,16 +198,31 @@ export default {
       this.$set(this.form, "hospital", this.user.hospital);
       this.$set(this.form, "level", this.user.level);
       if (this.user.level == "轻度") {
-        this.level = 100/3;
+        this.level = 34;
       } else if (this.user.level == "中度") {
-        this.level = 100/3*2;
+         this.$nextTick(() => {
+        var botton = document.getElementsByClassName(
+            "van-slider__button-wrapper"
+          )[0];
+          botton.style.right = "0";
+        this.level = 67;
+      });
       } else if (this.user.level == "严重") {
-        this.level = 100;
-        // document
-        //   .getElementsByClassName("van-slider__bar")[0]
-        //   .classList.add("backgroundColor100");
+        this.$nextTick(() => {
+          var botton = document.getElementsByClassName(
+            "van-slider__button-wrapper"
+          )[0];
+          botton.style.right = "0.22rem";
+          this.level = 100;
+        })
       } else {
+        this.$nextTick(() => {
+         var botton = document.getElementsByClassName(
+            "van-slider__button-wrapper"
+          )[0];
+        botton.style.right = "-0.22rem";
         this.level = 0;
+        })
       }
       if(this.user.disease=='无'){
         this.noTouch=true;
@@ -215,7 +230,6 @@ export default {
       }else if(this.user.disease==''){
         this.noTouch=true;
         this.noselectFirst=true;
-        console.log("this.noselectFirst",this.noselectFirst);
       }else{
         this.noTouch=false;
         this.noselectFirst=false;
@@ -264,37 +278,43 @@ export default {
         "van-slider__button-wrapper"
       )[0];
       if (value == 0) {
+        this.level = 0;
         this.$set(this.form, "level", "无");
         botton.style.right = "-0.22rem";
-      } else if (value == 50) {
+      } else if (value > 0 && value < 35) {
+        this.level = 37;
         botton.style.right = "0";
-        document
-          .getElementsByClassName("van-slider__bar")[0]
-          .classList.add("backgroundColor50");
-        if (
-          document
-            .getElementsByClassName("van-slider__bar")[0]
-            .classList.contains("backgroundColor100")
-        ) {
-          document
-            .getElementsByClassName("van-slider__bar")[0]
-            .classList.remove("backgroundColor100");
-        }
+        this.$set(this.form, "level", "轻度");
+      } else if (value > 50 && value < 68) {
+        this.level = 67;
+        botton.style.right = "0";
+        // document
+        //   .getElementsByClassName("van-slider__bar")[0]
+        //   .classList.add("backgroundColor50");
+        // if (
+        //   document
+        //     .getElementsByClassName("van-slider__bar")[0]
+        //     .classList.contains("backgroundColor100")
+        // ) {
+        //   document
+        //     .getElementsByClassName("van-slider__bar")[0]
+        //     .classList.remove("backgroundColor100");
+        // }
         this.$set(this.form, "level", "中度");
       } else {
         botton.style.right = "0.22rem";
-        if (
-          document
-            .getElementsByClassName("van-slider__bar")[0]
-            .classList.contains("backgroundColor50")
-        ) {
-          document
-            .getElementsByClassName("van-slider__bar")[0]
-            .classList.remove("backgroundColor50");
-        }
-        document
-          .getElementsByClassName("van-slider__bar")[0]
-          .classList.add("backgroundColor100");
+        // if (
+        //   document
+        //     .getElementsByClassName("van-slider__bar")[0]
+        //     .classList.contains("backgroundColor50")
+        // ) {
+        //   document
+        //     .getElementsByClassName("van-slider__bar")[0]
+        //     .classList.remove("backgroundColor50");
+        // }
+        // document
+        //   .getElementsByClassName("van-slider__bar")[0]
+        //   .classList.add("backgroundColor100");
         this.$set(this.form, "level", "严重");
       }
     },
@@ -357,11 +377,6 @@ export default {
           }
           this.init();
         })
-        .catch(e => {
-          // if(e){
-          //   Toast(e);
-          // }
-        });
     }
   },
   watch: {
