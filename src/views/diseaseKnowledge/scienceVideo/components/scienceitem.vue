@@ -16,7 +16,9 @@
         <div class="center" @click="toPageVideodetail(item)">
           <van-image width="100%" height="2.6rem" :src="item.coverImg[0].httpUrl" fit="cover" />
         </div>
-        <div class="bottom">{{ item.title }}</div>
+        <div class="bottom">
+          {{ item.title }}
+        </div>
       </div>
   </div>
 </template>
@@ -132,10 +134,10 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        font-size: 0.3rem;
+        font-size: 0.28rem;
         font-family: "PingFangSC-Regular";
         font-weight: 400;
-        color: #acadaf;
+        color: #666666;
         flex: 9;
       }
       .right {
@@ -153,58 +155,17 @@ export default {
       border-bottom: 0.02rem solid #F3F3F3;
     }
     .bottom {
-      padding: 0 0.2rem;
-      font-size: 0.28rem;
-      color: rgba(5, 15, 43, 1);
+      margin: 0.2rem 0.2rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      font-size: 0.3rem;
+      color: #050f2b;
       text-align: left;
-      height: 0.7rem;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
+      box-sizing: border-box;
     }
   }
-  // .scienceitem {
-  //   width: 3.3rem;
-  //   height: 3.2rem;
-  //   background: rgba(255, 255, 255, 1);
-  //   border-radius: 0.08rem;
-  //   border: 0.02rem solid rgba(243, 243, 243, 1);
-  //   padding: 0.2rem 0.15rem;
-  //   box-sizing: border-box;
-  //   line-height: 0;
-  //   margin: 0.12rem 0.13rem;
-  //   float: left;
-  //   position: relative;
-  //   .title {
-  //     font-size: 0.28rem;
-  //     font-family: "PingFangSC-Regular";
-  //     font-weight: 400;
-  //     color: rgba(5, 15, 43, 1);
-  //     margin-top: 0.28rem;
-  //     line-height: initial;
-  //     overflow: hidden;
-  //     text-overflow: ellipsis;
-  //     white-space: nowrap;
-  //   }
-  //   .chakancontent {
-  //     font-size: 0.28rem;
-  //     font-family: "PingFangSC-Regular";
-  //     font-weight: 400;
-  //     color: rgba(172, 173, 175, 1);
-  //     display: flex;
-  //     align-items: center;
-  //     line-height: initial;
-  //     span {
-  //       display: flex;
-  //       align-items: center;
-  //       img {
-  //         width: 0.32rem;
-  //         height: 0.24rem;
-  //         margin-left: 0.24rem;
-  //         margin-right: 0.06rem;
-  //       }
-  //     }
-  //   }
-  // }
 }
 </style>

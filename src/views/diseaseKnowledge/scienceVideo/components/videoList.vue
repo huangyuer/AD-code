@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="videoWapper">
     <search-input
       class="searchinput"
       :value="searchinputvalue"
@@ -17,9 +17,11 @@
       <sort-attribute :name="'发布时间'" @sortway="sortway"></sort-attribute>
       <sort-attribute :name="'点击次数'" @sortway="sortway"></sort-attribute>
     </div>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <science-item :itemlist="videoList" @likeBtn="likeBtn" @toPageVideodetail="toPageVideodetail"></science-item>
-    </van-list>
+    <div style="margin-top:.4rem">
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <science-item :itemlist="videoList" @likeBtn="likeBtn" @toPageVideodetail="toPageVideodetail"></science-item>
+     </van-list>
+    </div>
   </div>
 </template>
 <script>
@@ -174,6 +176,12 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@aaa: ~">>>";
+.videoWapper{
+  @{aaa} .van-dropdown-menu__bar {
+    height: auto;
+  }
+}
 .searchinput {
   margin: 0.4rem 0 0.28rem;
 }
