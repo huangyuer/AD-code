@@ -73,10 +73,9 @@ export default {
       this.$set(this.form, "tag", this.option[val].text);
       this.videoList = [];
       this.$set(this.form, "page", 1);
-      this.finished = false;
+      this.onLoad();
     },
     sortway(val, name) {
-      console.log("------------val", val);
       this.videoList = [];
       if (val == "asc") {
         if (name == "发布时间") {
@@ -116,11 +115,6 @@ export default {
             this.option.push(obj);
           }
         })
-        .catch(e => {
-          // if (e) {
-          //   Toast(e);
-          // }
-        });
     },
     onLoad() {
       this.$store
@@ -138,13 +132,9 @@ export default {
             return;
           } else {
             this.form.page = this.form.page + 1;
+            this.finished = false;
           }
         })
-        .catch(e => {
-          // if (e) {
-          //   Toast(e);
-          // }
-        });
     },
     likeBtn(val) {
       val.isStar = !val.isStar;
