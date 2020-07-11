@@ -77,6 +77,16 @@ export default {
     forwardBtn() {
       console.log("-----dsssdfsdfadsadf");
     }
+  },
+  watch: {
+   $route: {
+      deep: true,
+      handler(to, from) {
+        if (to.query.menu =='关爱行动') {
+          this.$$route.meta.title = to.query.title;
+        }
+      }
+    }
   }
 };
 </script>

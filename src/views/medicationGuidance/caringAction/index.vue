@@ -100,6 +100,7 @@ export default {
           name: "caringActionDetailInfo",
           query: {
             menu:'关爱行动',
+            title: item.title,
             id: item._id,
             like: true,
             forward: false,
