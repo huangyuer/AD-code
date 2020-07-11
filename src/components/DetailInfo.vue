@@ -41,6 +41,13 @@ export default {
       vloading: true
     };
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (to.query.menu =='关爱行动') {
+        window.document.title = to.query.title;
+      }
+    });
+  },
   beforeRouteLeave(to, form, next) {
     next();
     this.addOutPageLog();
@@ -78,16 +85,6 @@ export default {
       console.log("-----dsssdfsdfadsadf");
     }
   },
-  watch: {
-   $route: {
-      deep: true,
-      handler(to, from) {
-        if (to.query.menu =='关爱行动') {
-          this.$$route.meta.title = to.query.title;
-        }
-      }
-    }
-  }
 };
 </script>
 <style lang="less" scoped>

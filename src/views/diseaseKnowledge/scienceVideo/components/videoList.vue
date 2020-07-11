@@ -60,13 +60,13 @@ export default {
       this.form.title = value;
       this.videoList = [];
       this.form.page = 1;
-      this.finished = false;
+      this.onLoad();
     },
     onClear() {
       this.form.title = "";
       this.videoList = [];
       this.form.page = 1;
-      this.finished = false;
+      this.onLoad();
     },
     DropdownchangeValue(val) {
       console.log("----d", val);
@@ -82,24 +82,24 @@ export default {
           this.$set(this.form, "sort", "时间");
           this.$set(this.form, "desc", false);
           this.$set(this.form, "page", 1);
-          this.finished = false;
+          this.onLoad();
         } else if (name == "点击次数") {
           this.$set(this.form, "sort", "点击");
           this.$set(this.form, "desc", false);
           this.$set(this.form, "page", 1);
-          this.finished = false;
+          this.onLoad();
         }
       } else {
         if (name == "发布时间") {
           this.$set(this.form, "sort", "时间");
           this.$set(this.form, "desc", true);
           this.$set(this.form, "page", 1);
-          this.finished = false;
+          this.onLoad();
         } else if (name == "点击次数") {
           this.$set(this.form, "sort", "点击");
           this.$set(this.form, "desc", true);
           this.$set(this.form, "page", 1);
-          this.finished = false;
+          this.onLoad();
         }
       }
     },
