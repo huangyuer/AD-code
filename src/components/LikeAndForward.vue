@@ -5,11 +5,11 @@ event:likeBtn,forwardBtn
 
 <template>
   <div class="like-forward">
-    <div v-if="like" @click="likeBtn">
-      <svg-icon v-show="isLike" iconClass="like-btn" class="like-icon"></svg-icon>
-      <svg-icon v-show="!isLike" iconClass="likeGrey-btn" class="like-icon"></svg-icon>
+    <div v-if="JSON.parse(like)" @click="likeBtn">
+      <svg-icon v-show="JSON.parse(isLike)" iconClass="like-btn" class="like-icon"></svg-icon>
+      <svg-icon v-show="!JSON.parse(isLike)" iconClass="likeGrey-btn" class="like-icon"></svg-icon>
     </div>
-    <div v-if="forward" @click="forwardBtn">
+    <div v-if="JSON.parse(forward)" @click="forwardBtn">{{forward}}
       <svg-icon iconClass="forward-btn" class="forward-icon"></svg-icon>
     </div>
   </div>
