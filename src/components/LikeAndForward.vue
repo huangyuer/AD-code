@@ -9,7 +9,7 @@ event:likeBtn,forwardBtn
       <svg-icon v-show="JSON.parse(isLike)" iconClass="like-btn" class="like-icon"></svg-icon>
       <svg-icon v-show="!JSON.parse(isLike)" iconClass="likeGrey-btn" class="like-icon"></svg-icon>
     </div>
-    <div v-if="JSON.parse(forward)" @click="forwardBtn">{{forward}}
+    <div v-if="JSON.parse(forward)" @click="forwardBtn">
       <svg-icon iconClass="forward-btn" class="forward-icon"></svg-icon>
     </div>
   </div>
