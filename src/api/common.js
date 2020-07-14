@@ -55,3 +55,10 @@ export function getSignature(data) {
         data
     })
 }
+export function getTempHtml(data) {
+    return request({
+        url: '/getTempHtml',
+        method: 'post',
+        data
+    })
+}

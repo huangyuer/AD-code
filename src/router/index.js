@@ -12,6 +12,15 @@ export default new Router({
             component: HelloWorld
         },
         {
+            path: "/template.html",
+            name: "templateHtml",
+            component:() =>
+            import ("@/components/templateHtml.vue"),
+            meta: {
+                title: ""
+            }
+        },
+        {
             path: "/register",
             component: () =>
                 import ("@/views/register"),
