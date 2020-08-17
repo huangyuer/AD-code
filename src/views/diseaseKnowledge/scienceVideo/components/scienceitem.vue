@@ -52,6 +52,7 @@ export default {
     },
     toPageVideodetail(item) {
       if (!item.video[0].httpUrl.includes("ad.kurite.com") && !item.video[0].httpUrl.includes("iframe")) {
+        this.$store.dispatch("diseaseKnowledge/upVideoClickNum", item._id)
         window.location.href = item.video[0].httpUrl
       } else {
         this.$emit("toPageVideodetail", item);
