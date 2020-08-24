@@ -4,9 +4,7 @@
       <svg-icon iconClass="logo" class="logo"></svg-icon>
       <van-field v-model="tel" type="tel" placeholder="请输入手机号" />
       <van-field v-model="sms" center clearable placeholder="请输入短信验证码">
-        <div slot="button" class="sms-btn" v-show="show" @click="getSms">
-          获取验证码
-        </div>
+        <div slot="button" class="sms-btn" v-show="show" @click="getSms">获取验证码</div>
         <div slot="button" class="sms-btn" v-show="!show">{{ count }}</div>
       </van-field>
       <van-collapse v-model="activeNames" :border="false">
@@ -14,20 +12,13 @@
           <template #title>
             <div
               style="font-size: 0.28rem;font-weight: 400;color: #999999;"
-              :class="{ collapseActive: activeNames[0] }"
-            >
-              您的身份是？
-            </div>
+              :class="{ collapseActive: activeNames.length>0 }"
+            >您的身份是？</div>
           </template>
           <template #right-icon>
             <div style="font-size: 0.24rem;font-weight: 400;color: #009966">
-              <span v-if="activeNames[0]" style="margin-right:2px">收起</span>
-              <span v-else style="margin-right:2px">展开</span>
-              <svg-icon
-                iconClass="fold"
-                class="fold"
-                :class="{ foldActive: activeNames[0] }"
-              ></svg-icon>
+              <span v-html="activeNames.length>0?'收起':'展开'" style="margin-right:2px"></span>
+              <svg-icon iconClass="fold" class="fold" :class="{ foldActive: activeNames.length>0}"></svg-icon>
             </div>
           </template>
           <van-radio-group v-model="radio" direction="horizontal">
@@ -72,11 +63,7 @@
       </van-collapse>
       <div class="register-agree">
         <div @click="agreeBtn">
-          <svg-icon
-            iconClass="gouxuan"
-            class="icon"
-            :class="{ active: flag }"
-          ></svg-icon>
+          <svg-icon iconClass="gouxuan" class="icon" :class="{ active: flag }"></svg-icon>
         </div>
         <div class="agree-tip">
           我已阅读并同意
@@ -84,7 +71,8 @@
         </div>
       </div>
       <div class="invite-box">
-        <span>如有邀请码请填写</span> <van-field v-model="invite" />
+        <span>如有邀请码请填写</span>
+        <van-field v-model="invite" />
       </div>
 
       <div class="register-btn" @click="registerBtn">注册</div>
@@ -93,14 +81,10 @@
       <div class="user-terms-header">中国AD之家用户知情同意书</div>
       <div class="user-terms-body">
         <p class="title">一、我们如何收集和使用您的个人信息</p>
-        <p>
-          我们会遵循正当，合法，必要的原则，出于本政策所述的以下目的，收集和使用您在使用我们服务过程中主动提供或因使用我们产品和/或服务而产生的个人信息。如果我们要将您的信息用于本政策未载明的其他用途，或基于特定目的将收集来的信息用于其他目的，我们将以合理的方式向您告知，并在使用前再次征得您的同意。
-        </p>
+        <p>我们会遵循正当，合法，必要的原则，出于本政策所述的以下目的，收集和使用您在使用我们服务过程中主动提供或因使用我们产品和/或服务而产生的个人信息。如果我们要将您的信息用于本政策未载明的其他用途，或基于特定目的将收集来的信息用于其他目的，我们将以合理的方式向您告知，并在使用前再次征得您的同意。</p>
         <p class="title term-margin">1.账号注册</p>
-        <p>
-          当您注册时，我们将收集您的手机号,邀请码等信息，以便为您提供快捷的登录服务。同时为帮您完成注册功能，我们还将为您提供用户知情同意书，以便您加以了解，并为您提供中国AD之家的初始服务。
-        </p>
-        <p class="title term-margin">2.向您提供产品和/或服务 </p>
+        <p>当您注册时，我们将收集您的手机号,邀请码等信息，以便为您提供快捷的登录服务。同时为帮您完成注册功能，我们还将为您提供用户知情同意书，以便您加以了解，并为您提供中国AD之家的初始服务。</p>
+        <p class="title term-margin">2.向您提供产品和/或服务</p>
         <p>
           <span class="title">2.1</span>
           向您提供信息浏览，发布和收藏及分享功能。
@@ -120,25 +104,30 @@ import {
   getOpenId,
   setOpenId,
   setToken,
-  removeToken
-} from "@/utils/auth";
-import Dialog from "@/components/Dialog";
+  removeToken,
+} from '@/utils/auth';
+import Dialog from '@/components/Dialog';
 export default {
-  name: "Register",
+  name: 'Register',
   components: { Dialog },
   data() {
     return {
-      tel: "",
-      sms: "",
-      invite: "",
+      tel: '',
+      sms: '',
+      invite: '',
       flag: false,
       timer: null,
-      count: "",
+      count: '',
       show: true,
       showRe: true,
       activeNames: [],
-      radio: ""
+      radio: '',
     };
+  },
+  watch: {
+    activeNames(val) {
+      console.log('----', this.activeNames.length);
+    },
   },
   methods: {
     termsBtn() {
@@ -179,11 +168,11 @@ export default {
     },
     getSms() {
       this.$store
-        .dispatch("register/sendValidateCode", this.tel)
-        .then(data => {
+        .dispatch('register/sendValidateCode', this.tel)
+        .then((data) => {
           this.getOpenId();
         })
-        .catch(e => {
+        .catch((e) => {
           // if(e){
           //   this.$toast(e);
           // }
@@ -191,7 +180,7 @@ export default {
     },
     registerBtn() {
       if (!this.flag) {
-        this.$toast("注册需勾选用户知情同意书");
+        this.$toast('注册需勾选用户知情同意书');
         return;
       }
       let params = {
@@ -199,31 +188,31 @@ export default {
         validateCode: parseInt(this.sms),
         openId: this.$store.getters.openId,
         invCode: this.invite,
-        identity: this.radio
+        identity: this.radio,
       };
       this.$store
-        .dispatch("register/register", params)
-        .then(data => {
+        .dispatch('register/register', params)
+        .then((data) => {
           this.$router.push({
-            name: "personalCenter",
-            path: "/personalCenter",
+            name: 'personalCenter',
+            path: '/personalCenter',
             params: {
-              diaLogShow: true
-            }
+              diaLogShow: true,
+            },
           });
         })
-        .catch(e => {
-          console.log("----s1", e);
+        .catch((e) => {
+          console.log('----s1', e);
           // if(e){
           //   this.$toast(e);
           // }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
-@aaa: ~">>>";
+@aaa: ~'>>>';
 .logo {
   width: 1.6rem !important;
   height: 1.32rem !important;
@@ -375,7 +364,7 @@ export default {
 .user-terms-header {
   width: 100%;
   height: 1.2rem;
-  background-image: url("../../assets/user-term.png");
+  background-image: url('../../assets/user-term.png');
   background-size: 100%;
   font-size: 0.4rem;
   font-family: PingFangSC-Medium, PingFang SC;
