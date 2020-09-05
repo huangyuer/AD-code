@@ -3,7 +3,7 @@
     data-v-0c38f854
     data-v-6f539d17
     class="van-popup van-popup--bottom"
-    style="z-index: 2008;"
+    style="z-index: 1;"
     v-if="isShow"
     ref="vanpopup"
   >
@@ -22,21 +22,11 @@
           <div class="todaohangItem">
             <div class="right">
               <div class="hp-address">
-                <!-- <van-image
-                  width=".3rem"
-                  height=".36rem"
-                  :src="require('../../../../assets/zu-2.png')"
-                />-->
                 <svg-icon iconClass="zu-2" class="zu-2"></svg-icon>
                 <span>{{ hispitalItem.name }}</span>
               </div>
               <div class="hp-phone">{{ hispitalItem.address }}</div>
               <div class="hp-distance">
-                <!-- <van-image
-                  width=".2rem"
-                  height=".2rem"
-                  :src="require('../../../../assets/tuoyuan.png')"
-                />-->
                 <svg-icon iconClass="tuoyuan" class="tuoyuan"></svg-icon>
                 <span>距离您{{ hispitalItem.distance }}</span>
               </div>
@@ -44,6 +34,10 @@
             <div class="hp-btn" @click="goNav()">
               <svg-icon iconClass="daohang" class="daohang"></svg-icon>导航
             </div>
+          </div>
+          <div class="canSign">
+            <div class="canSign__btn" :class="{'disabled': canSign === false }" @click="hospitalSign()">立即签到</div>
+            <div class="canSign__text">距目的地200米内签到可得积分</div>
           </div>
           <div class="tips">
             <b class="colorred">*</b>就诊时，携带
@@ -94,6 +88,7 @@
   </div>
 </template>
 <script>
+import { Toast } from 'vant';
 import { touchstart, touchmove } from "./touch";
 export default {
   props: {
@@ -123,7 +118,8 @@ export default {
       isShow: false,
       doctoritem: [],
       hispitalItem: {},
-      hospitalItemIntro: {}
+      hospitalItemIntro: {},
+      canSign: null
     };
   },
   mounted() {
@@ -141,7 +137,8 @@ export default {
       console.log("val", val);
     },
     hospitalIntro: function(val) {
-      this.hospitalItemIntro = val;
+      this.hospitalItemIntro = val.hospital;
+      this.canSign = val.canSign;
     }
   },
   methods: {
@@ -156,12 +153,26 @@ export default {
       this.$emit("closedetailNav");
     },
     toIntro() {
-      console.log("this.hospitalItemIntro", this.hospitalItemIntro);
       this.$router.push({
         path: "/hospitalIntro",
         name: "HospitalIntro",
         query: { id: this.hospitalItemIntro.id }
       });
+    },
+    hospitalSign() {
+      this.$store
+        .dispatch("medicationGuidance/hospitalSign", this.hospitalItemIntro.id)
+        .then(res => {
+          this.canSign = false;
+          Toast({
+            message: '签到成功',
+          });
+        })
+        .catch(error => {
+          Toast({
+            message: error,
+          });
+        });
     },
     touchstart(e) {
       // touchstart(e);
@@ -330,6 +341,31 @@ export default {
             height: 0.24rem;
             fill: #ffffff !important;
           }
+        }
+      }
+      .canSign {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0.28rem 0;
+        border-top: 0.01rem solid #e5e5e5;
+        &__btn {
+          width: 1.6rem;
+          height: 0.6rem;
+          background: #F2A900;
+          border-radius: 0.4rem;
+          color: #ffffff;
+          font-size: 0.24rem;
+          text-align: center;
+          line-height: 0.6rem;
+          &.disabled {
+            background: #C8C8C8;
+          }
+        }
+        &__text {
+          color: #666666;
+          font-size: 0.29rem;
+          padding-left: 0.24rem;
         }
       }
       .tips {

@@ -3,6 +3,7 @@ import {
     getNearHospitals,
     getHospital,
     getDoctors,
+    hospitalSign,
     searchAddress,
 } from "@/api/medicationGuidance";
 const state = {
@@ -66,6 +67,21 @@ const actions = {
         return new Promise((resolve, reject) => {
             getDoctors({
                     hospital: params
+                })
+                .then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    },
+    hospitalSign({
+        commit
+    }, params) {
+        return new Promise((resolve, reject) => {
+            hospitalSign({
+                    id: params
                 })
                 .then(response => {
                     resolve(response);

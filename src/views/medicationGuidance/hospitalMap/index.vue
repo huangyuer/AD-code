@@ -136,10 +136,6 @@ export default {
     };
   },
   created() {
-    console.log(
-      "this.$route.params.item222222222222222222222222222222222",
-      this.$route.params.item
-    );
     if (this.$route.params.item != undefined) {
       var address =
         this.$route.params.item.province +
@@ -537,7 +533,7 @@ export default {
       this.$store
         .dispatch("medicationGuidance/getHospital", id)
         .then(res => {
-          this.hospitalIntro = res.data.hospital;
+          this.hospitalIntro = res.data;
         })
         .catch(e => {});
     },

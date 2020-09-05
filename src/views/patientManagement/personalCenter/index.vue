@@ -260,6 +260,9 @@ export default {
             break;
           case "邀请AD好友":
             this.$router.push({ path: "/personalInfo" });
+          case "热门医院签到":
+            this.$router.push({ path: "/hospitalMap" });
+            break;
           default:
             "";
         }

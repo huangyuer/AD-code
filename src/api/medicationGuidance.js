@@ -27,6 +27,13 @@ export function getDoctors(data) {
         data
     })
 }
+export function hospitalSign(data) {
+    return request({
+        url: '/hospitalSign',
+        method: 'post',
+        data
+    })
+}
 export function searchAddress(data) {
     return request({
         url: '/searchAddress',
