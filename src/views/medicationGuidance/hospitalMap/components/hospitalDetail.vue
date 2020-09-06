@@ -37,7 +37,7 @@
           </div>
           <div class="canSign">
             <div class="canSign__btn" :class="{'disabled': canSign === false }" @click="hospitalSign()">立即签到</div>
-            <div class="canSign__text">距目的地200米内签到可得积分</div>
+            <div class="canSign__text">距目的地500米内签到可得积分</div>
           </div>
           <div class="tips">
             <b class="colorred">*</b>就诊时，携带
