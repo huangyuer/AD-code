@@ -31,14 +31,14 @@
   </div>
 </template>
 <script>
-import LikeInfo from '@/components/LikeInfo';
-import SearchInput from '@/components/SearchInput';
-import DropdownMenu from '@/components/DropdownMenu';
+import LikeInfo from "@/components/LikeInfo";
+import SearchInput from "@/components/SearchInput";
+import DropdownMenu from "@/components/DropdownMenu";
 
-import { Toast } from 'vant';
+import { Toast } from "vant";
 
 export default {
-  name: 'DiseaseKnowledge',
+  name: "DiseaseKnowledge",
   components: { LikeInfo, SearchInput, DropdownMenu },
   data() {
     return {
@@ -46,41 +46,41 @@ export default {
       loading: false,
       finished: false,
       total: 0,
-      activeTabName: '',
+      activeTabName: "",
       params: {
         menu: this.$route.meta.title,
         childMenu: String,
         title: String,
         page: 1,
-        limit: 10
+        limit: 10,
       },
-      value: '0',
+      value: "0",
       itemTabcontent: [],
-      curTab: '',
-      category: ['特应性皮炎', '银屑病'],
+      curTab: "",
+      category: ["特应性皮炎", "银屑病"],
       diseaseInfo: [],
       option: [
-        { text: '全部商品', value: '0' },
-        { text: '新款商品', value: '1' },
-        { text: '活动商品', value: '2' }
+        { text: "全部商品", value: "0" },
+        { text: "新款商品", value: "1" },
+        { text: "活动商品", value: "2" },
       ],
-      onloadIs: false
+      onloadIs: false,
     };
   },
   beforeRouteEnter(to, from, next) {
-    next(vm => {
-      if (from.path != '/diseaseDetail') {
+    next((vm) => {
+      if (from.path != "/diseaseDetail") {
         // localStorage.removeItem("tabNum");
       } else {
         // self.getArticles()
         vm.flag = !vm.flag;
-        console.log('--====', vm);
+        console.log("--====", vm);
       }
     });
   },
   created() {
     this.$store
-      .dispatch('common/getMenuSelect', this.$route.meta.title)
+      .dispatch("common/getMenuSelect", this.$route.meta.title)
       .then(() => {
         this.itemTabcontent = this.$store.getters.menuList.selects;
         // if (localStorage.getItem("tabNum")) {
@@ -89,7 +89,7 @@ export default {
         // } else {
         this.$set(
           this.params,
-          'childMenu',
+          "childMenu",
           this.$store.getters.menuList.selects[0].type
         );
         this.activeTabName = this.$store.getters.menuList.selects[0].type;
@@ -97,10 +97,10 @@ export default {
         // }
         // this.onLoad();
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
-    console.log('------ss', this.$route.meta.title);
+    console.log("------ss", this.$route.meta.title);
   },
   methods: {
     onSearch(value) {
@@ -111,38 +111,40 @@ export default {
       // this.getArticles();
     },
     onClear() {
-      this.params.title = '';
+      this.params.title = "";
       this.diseaseInfo = [];
       this.params.page = 1;
       this.finished = false;
     },
     likeItem(info) {
-      console.log('======', info);
+      console.log("======", info);
       this.$router.push({
-        path: '/diseaseDetail',
-        name: 'DiseaseDetail',
+        path: "/diseaseDetail",
+        name: "DiseaseDetail",
         query: {
           id: info._id,
           title: info.title,
           menu: this.$route.meta.title,
           like: true,
           forward: true,
-          isStar: info.isStar
-        }
+          isStar: info.isStar,
+        },
       });
     },
     changeTab(name, title) {
       this.diseaseInfo = [];
-      this.$set(this.params, 'childMenu', title);
-      this.$set(this.params, 'page', 1);
+      this.$set(this.params, "childMenu", title);
+      this.$set(this.params, "page", 1);
       // localStorage.setItem("tabNum", title);
       this.finished = false;
-      this.onloadIs = true;
-      // this.getArticles();
+      this.onloadIs = false;
+      this.getArticles();
     },
     getArticles() {
+      this.loading = true;
+
       this.$store
-        .dispatch('common/getArticles', this.params)
+        .dispatch("common/getArticles", this.params)
         .then(() => {
           this.onloadIs = true;
           this.diseaseInfo = this.diseaseInfo.concat(
@@ -160,7 +162,7 @@ export default {
             this.params.page = this.params.page + 1;
           }
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
@@ -173,27 +175,27 @@ export default {
     likeBtn(val) {
       // this.changeTab(this.curTab)
       val.isStar = !val.isStar;
-      console.log('-----------ere--');
+      console.log("-----------ere--");
       // this.$set(this.diseaseInfo,'isStar',!this.diseaseInfo.isStar)
       // this.diseaseInfo.isStar=!this.diseaseInfo.isStar
-    }
+    },
   },
   watch: {
-    diseaseInfo: function(val) {
-      console.log('val', val);
+    diseaseInfo: function (val) {
+      console.log("val", val);
       this.diseaseInfo = val;
     },
-    flag: function(val, oldval) {
-      console.log('--====22121');
+    flag: function (val, oldval) {
+      console.log("--====22121");
       this.diseaseInfo = [];
       this.params.page = 1;
       this.getArticles();
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
-@aaa: ~'>>>';
+@aaa: ~">>>";
 @{aaa}.category-box .van-sticky {
   background: #ffffff;
 }
@@ -247,7 +249,7 @@ export default {
   }
   @{aaa}.van-tabs__wrap {
     &:after {
-      content: '';
+      content: "";
       border-top: 0;
     }
   }
