@@ -192,11 +192,23 @@ export default {
       });
     },
     hospitalSign() {
+      if (!this.canSign) {
+        Toast({
+          message: '500米内才能签到',
+        });
+        return;
+      }
       let fileId = '';
       for (const key in this.images.imgId) {
         if (this.images.imgId.hasOwnProperty(key)) {
           fileId = this.images.imgId[key];
         }
+      }
+      if (fileId == '') {
+        Toast({
+          message: '请先上传图片',
+        });
+        return;
       }
       let params = {
         hospital: this.hospitalItemIntro.id,

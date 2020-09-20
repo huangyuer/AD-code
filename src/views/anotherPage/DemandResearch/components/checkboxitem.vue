@@ -67,6 +67,9 @@ export default {
     font-family: PingFangSC-Regular, PingFang SC;
   }
 }
+@{aaa}.van-icon {
+  position: static;
+}
 @{aaa}.van-checkbox {
   margin-top: 0.12rem;
   margin-bottom: 0.12rem;

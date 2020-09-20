@@ -9,19 +9,17 @@
       />
     </div>
     <div class="TestWapper-List">
-      <div
-        :class="{
-          swiperInner: true,
-        }"
-      >
-        <div v-if="!isShowresult && personalQuestion.qsList" style="padding-top:.6rem">
+      <div class="swiperInner">
+        <div style="padding-top:.6rem">
             <div class="group-title">{{personalQuestion.group}}</div>
             <radio-box-item
+            v-if="personalQuestion.qsList"
             :dataitem="personalQuestion.qsList[0]"
             :index="1"
             @radiobox="radiobox"
             ></radio-box-item>
             <van-areas
+            v-if="personalQuestion.qsList"
             :dataitem="personalQuestion.qsList[1]"
             :formvalue="place"
             :formplaceholder="'请选择所在地区'"
@@ -37,9 +35,9 @@
                 ></check-box-item>
             </div>
             <div class="group-title">{{researchQuestion.group}}</div>
-            <div v-for="(item, index) in researchQuestion.qsList" :key="index">
+            <div v-for="(tip, index) in researchQuestion.qsList" :key="tip._id">
                 <radio-box-item
-                :dataitem="item"
+                :dataitem="tip"
                 :index="index"
                 @radiobox="radiobox"
                 ></radio-box-item>
@@ -72,8 +70,8 @@ export default {
       levelresult: {}
     };
   },
-  created() {
-    this.getQuestions();
+  async created() {
+    await this.getQuestions();
     document.body.style.overflow = "hidden";
   },
   destroyed() {

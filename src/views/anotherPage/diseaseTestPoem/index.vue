@@ -15,19 +15,7 @@
           swiperesult: isShowresult
         }"
       >
-        <van-swipe
-          v-if="poemQuestion.length > 0"
-          :class="{ 'my-swipe': true, myswiperesult: isShowresult }"
-          ref="myswiper"
-          :loop="false"
-          :show-indicator="false"
-          :initial-swipe="0"
-          indicator-color="white"
-          vertical
-          :stop-propagation="false"
-          @change="onChange"
-        >
-          <van-swipe-item>
+        
             <div v-if="!isShowresult" style="padding-top:.6rem">
                 <div class="slidertitle">在过去一周内：</div>
                 <div
@@ -42,11 +30,9 @@
                 </div>
                 <div class="groupnext" @click="submitAnswer()">提交</div>
             </div>
-            <div v-show="isShowresult">
+            <div v-show="isShowresult" style="text-align: center">
               <result-info :dataresult="levelresult"></result-info>
             </div>
-          </van-swipe-item>
-        </van-swipe>
       </div>
     </div>
   </div>
@@ -161,6 +147,8 @@ export default {
       border: 0;
       background-color: #ffffff;
       box-sizing: border-box;
+      padding-bottom: 0.4rem;
+      overflow: scroll;
       &.swiperesult {
         height: 10rem;
       }

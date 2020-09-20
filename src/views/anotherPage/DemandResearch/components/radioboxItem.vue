@@ -5,9 +5,9 @@
       <van-radio-group v-model="radio" direction="horizontal">
         <van-radio
           class="radioItem"
-          :name="index"
+          :name="item.Option"
           v-for="(item, index) in dataitem.options"
-          :key="index"
+          :key="item.Option"
           @click="toggle(dataitem, index)"
         >
           {{ item.Option }}
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     toggle(dataitem, index) {
-      this.radio = index;
+      // this.radio = index;
       this.$emit(
         "radiobox",
         dataitem,
@@ -80,7 +80,7 @@ export default {
   @{aaa}.van-radio__icon{
     width: 0.4rem;
     height: 0.4rem;
-    line-height: 0;
+    // line-height: 0;
   }
   .detail {
     font-size: 0.24rem;
@@ -108,25 +108,23 @@ export default {
     }
   }
   .defaultCheck {
-    background: #cdcdcd;
-    display: inline-block;
+    background-color: #cdcdcd;
     width: 0.4rem;
     height: 0.4rem;
-    position: relative;
     border-radius: 50%;
     line-height: 0;
+    text-align: center;
     &.activeCheck {
-      background: #009966;
+      background-color: #009966;
     }
     .inner {
-      position: absolute;
       border-radius: 50%;
       line-height: 0;
-      top: calc(50% - 0.07rem);
-      left: calc(50% - 0.07rem);
       width: 0.14rem;
       height: 0.14rem;
-      background: #ffffff;
+      background-color: #ffffff;
+      display: inline-block;
+      margin-top: .13rem;
     }
   }
 }

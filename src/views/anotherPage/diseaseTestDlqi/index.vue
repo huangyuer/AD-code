@@ -15,7 +15,7 @@
           swiperesult: isShowresult
         }"
       >
-        <van-swipe
+        <!-- <van-swipe
           v-if="poemQuestion.length > 0"
           :class="{ 'my-swipe': true, myswiperesult: isShowresult }"
           ref="myswiper"
@@ -26,8 +26,8 @@
           vertical
           :stop-propagation="false"
           @change="onChange"
-        >
-          <van-swipe-item>
+        > -->
+          <!-- <van-swipe-item> -->
             <div v-if="!isShowresult" style="padding-top:.6rem">
                 <div
                   v-for="(item, index) in poemQuestion"
@@ -41,11 +41,11 @@
                 </div>
                 <div class="groupnext" @click="submitAnswer()">提交</div>
             </div>
-            <div v-show="isShowresult">
+            <div v-show="isShowresult" style="text-align: center;">
               <result-info :dataresult="levelresult"></result-info>
             </div>
-          </van-swipe-item>
-        </van-swipe>
+          <!-- </van-swipe-item> -->
+        <!-- </van-swipe> -->
       </div>
     </div>
   </div>
@@ -160,6 +160,8 @@ export default {
       border: 0;
       background-color: #ffffff;
       box-sizing: border-box;
+      padding-bottom: 0.4rem;
+      overflow: scroll;
       &.swiperesult {
         height: 10rem;
       }
