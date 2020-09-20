@@ -146,7 +146,9 @@ const actions = {
     commit
   }, question) {
     return new Promise((resolve, reject) => {
-      getQuestions()
+      getQuestions({
+        name: question
+      })
         .then(response => {
           const {
             msg,

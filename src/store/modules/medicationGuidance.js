@@ -81,7 +81,8 @@ const actions = {
     }, params) {
         return new Promise((resolve, reject) => {
             hospitalSign({
-                    id: params
+                    hospital: params.hospital,
+                    file    : params.file
                 })
                 .then(response => {
                     resolve(response);

@@ -39,6 +39,33 @@
             <div class="canSign__btn" :class="{'disabled': canSign === false }" @click="hospitalSign()">立即签到</div>
             <div class="canSign__text">距目的地500米内签到可得积分</div>
           </div>
+          <div class="canSign-uploadImg" v-if="canSign">
+            <span class="canSign-uploadImg-title">请上传该医院皮肤科当日挂号单完成签到</span>
+            <div style="display:flex;flex-wrap: wrap;padding-top: 0.24rem">
+              <div class="van-uploader__preview" v-for="(item, index) in images.imgSrc" :key="index">
+                <van-image
+                  width="2.72rem"
+                  height="2rem"
+                  style="line-height:0;border-radius:.2rem;overflow:hidden"
+                  fit="cover"
+                  :src="item"
+                  @click="openImagePreview(index)"
+                />
+                <i
+                  class="van-icon van-icon-clear van-uploader__preview-delete"
+                  @click="deletedataImage(index)"
+                ></i>
+              </div>
+
+              <div class="van-uploader" v-if="images.imgSrc.length < 1">
+                <div class="van-uploader__upload">
+                  <i class="van-icon van-icon-photograph van-uploader__upload-icon"></i>
+                  <div class="van-uploader__input" @click="setChooseImage()"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="canSign-line"></div>
           <div class="tips">
             <b class="colorred">*</b>就诊时，携带
             <b class="colorred">药盒</b>并展示
@@ -88,7 +115,7 @@
   </div>
 </template>
 <script>
-import { Toast } from 'vant';
+import { Toast, ImagePreview } from 'vant';
 import { touchstart, touchmove } from "./touch";
 export default {
   props: {
@@ -119,7 +146,12 @@ export default {
       doctoritem: [],
       hispitalItem: {},
       hospitalItemIntro: {},
-      canSign: null
+      canSign: null,
+      images: {
+        localId: [],
+        imgId: [],
+        imgSrc: []
+      },
     };
   },
   mounted() {
@@ -160,8 +192,18 @@ export default {
       });
     },
     hospitalSign() {
+      let fileId = '';
+      for (const key in this.images.imgId) {
+        if (this.images.imgId.hasOwnProperty(key)) {
+          fileId = this.images.imgId[key];
+        }
+      }
+      let params = {
+        hospital: this.hospitalItemIntro.id,
+        file: fileId,
+      };
       this.$store
-        .dispatch("medicationGuidance/hospitalSign", this.hospitalItemIntro.id)
+        .dispatch("medicationGuidance/hospitalSign", params)
         .then(res => {
           this.canSign = false;
           Toast({
@@ -173,6 +215,70 @@ export default {
             message: error,
           });
         });
+    },
+    setChooseImage() {
+      let _this = this;
+      if (this.images.imgSrc.length == 1) {
+        Toast("最多可传1张图片");
+        return;
+      }
+      wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
+        success: function(res) {
+          _this.images.localId = res.localIds;
+          if (_this.images.localId.length == 0) {
+            Toast("请先选择图片");
+            return;
+          }
+          var length = _this.images.localId.length;
+          for (var i = 0; i < length; i++) {
+            wx.getLocalImgData({
+              localId: _this.images.localId[i],
+              success: function(res) {
+                var localData = res.localData;
+                let imageBase64 = "";
+                if (localData.indexOf("data:image") == 0) {
+                  //苹果的直接赋值，默认生成'data:image/jpeg;base64,'的头部拼接
+                  imageBase64 = localData;
+                } else {
+                  //此处是安卓中的唯一得坑！在拼接前需要对localData进行换行符的全局替换
+                  //此时一个正常的base64图片路径就完美生成赋值到img的src中了
+                  imageBase64 = "data:image/jpeg;base64," + localData;
+                }
+                imageBase64 = imageBase64
+                  .replace(/\r|\n/g, "")
+                  .replace("data:image/jgp", "data:image/jpeg");
+                console.log("uploadBase64File", imageBase64);
+                _this.$store
+                  .dispatch("diseaseKnowledge/uploadBase64File", imageBase64)
+                  .then(data => {
+                    console.log("uploadBase64File=>data", data);
+                    _this.images.imgSrc.push(imageBase64);
+                    _this.images.imgId.push(data.id);
+                  })
+                  .catch(e => {});
+              }
+            });
+          }
+        },
+        fail() {
+          alert("获取失败");
+        }
+      });
+    },
+    openImagePreview(index) {
+      ImagePreview({
+        images: this.images.imgSrc,
+        startPosition: index,
+        onClose() {
+        }
+      });
+    },
+    deletedataImage(index) {
+      this.images.imgSrc.splice(index, 1);
+      this.images.imgId.splice(index, 1);
     },
     touchstart(e) {
       // touchstart(e);
@@ -347,7 +453,7 @@ export default {
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        padding: 0.28rem 0;
+        padding: 0.28rem 0 0 0;
         border-top: 0.01rem solid #e5e5e5;
         &__btn {
           width: 1.6rem;
@@ -367,6 +473,26 @@ export default {
           font-size: 0.29rem;
           padding-left: 0.24rem;
         }
+      }
+      .canSign-uploadImg {
+        width: 100%;
+        height: 3.2rem;
+        border-radius: .04rem;
+        border: .02rem solid #E5E5E5;
+        box-sizing: border-box;
+        padding: 0.32rem 0 0.28rem 0;
+        margin-top: 0.32rem;
+        .canSign-uploadImg-title {
+          font-size: .28rem;
+          font-weight: 400;
+          color: #333333;
+          padding: 0 0 0 0.32rem;
+        }
+      }
+      .canSign-line {
+        width: 100%;
+        border-bottom: 0.02rem solid #e5e5e5;
+        padding-top: 0.32rem;
       }
       .tips {
         font-size: 0.24rem;
@@ -450,5 +576,41 @@ export default {
 }
 .van-popup--bottom {
   top: 0;
+}
+@{aaa} .van-uploader__upload {
+  width: 1.32rem;
+  height: 1.32rem;
+  border: 0;
+  background-image: url("../../../../assets/upload.png");
+  background-size: 100%;
+  margin: 0;
+  border-radius: 0;
+  background-color: transparent;
+  margin-top: 0.11rem;
+  margin-left: 0.11rem;
+}
+@{aaa} .van-uploader__upload-icon {
+  &::before {
+    content: "";
+  }
+}
+@{aaa} .van-uploader {
+  margin: 0 0.17rem;
+}
+@{aaa} .van-uploader__preview {
+  margin: 0.11rem;
+}
+@{aaa} .van-uploader__preview-image {
+  width: 2.72rem;
+  height: 2rem;
+}
+@{aaa} .van-image__img {
+  // height: auto;
+  // object-fit: initial !important;
+}
+@{aaa}.van-uploader__preview-delete {
+  color: #cccccc;
+  font-size: 0.32rem;
+  background-color: #fff;
 }
 </style>

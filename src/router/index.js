@@ -363,5 +363,35 @@ export default new Router({
                 index: 3
             }
         },
+        {
+            path: '/DemandResearch',
+            component: () =>
+                import ("@/views/anotherPage/DemandResearch"),
+            name: 'demandResearch',
+            meta: {
+                title: "特应性皮炎患者需求调研（AD之家）",
+                index: 1
+            }
+        },
+        {
+            path: '/diseaseTestPoem',
+            component: () =>
+                import ("@/views/anotherPage/diseaseTestPoem"),
+            name: 'diseaseTestPoem',
+            meta: {
+                title: "POEM(患者湿疹自我检查评分量表）",
+                index: 1
+            }
+        },
+        {
+            path: '/diseaseTestDlqi',
+            component: () =>
+                import ("@/views/anotherPage/diseaseTestDlqi"),
+            name: 'diseaseTestDlqi',
+            meta: {
+                title: "DLQI(AD患者生活质量评估）",
+                index: 1
+            }
+        }
     ]
 });
