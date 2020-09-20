@@ -51,8 +51,7 @@ router.beforeEach((to, from, next) => {
     if (Object.is(to.name, "Register")) {
         if (getOpenId() || Object.is(from.name, "DiseaseDetail") ||
             Object.is(from.name, "PatientDetail") ||
-            Object.is(from.name, "videoDetail") || Object.is(from.name, "templateHtml") ||
-            Object.is(from.name, "demandResearch")) {
+            Object.is(from.name, "videoDetail") || Object.is(from.name, "templateHtml")) {
             console.log("opendID---1", getOpenId());
             next();
             // return;
@@ -74,8 +73,7 @@ router.beforeEach((to, from, next) => {
                         Object.is(to.name, "DiseaseDetail") ||
                         Object.is(to.name, "PatientDetail") ||
                         Object.is(to.name, "videoDetail") ||
-                        Object.is(to.name, "templateHtml") ||
-                        Object.is(to.name, "demandResearch")
+                        Object.is(to.name, "templateHtml")
                     ) {
                         console.log("Detail1");
                         next();
@@ -92,9 +90,7 @@ router.beforeEach((to, from, next) => {
                 Object.is(to.name, "DiseaseDetail") ||
                 Object.is(to.name, "PatientDetail") ||
                 Object.is(to.name, "videoDetail") ||
-                Object.is(to.name, "templateHtml") ||
-                Object.is(to.name, "demandResearch")
-
+                Object.is(to.name, "templateHtml")
             ) {
                 store.dispatch("register/getOpenIdApi", params).then(() => {
                     next();
