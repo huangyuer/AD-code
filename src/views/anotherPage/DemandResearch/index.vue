@@ -57,6 +57,7 @@ import CheckBoxItem from "./components/checkboxitem";
 import { Toast } from "vant";
 
 export default {
+  name:'demandResearch',
   data() {
     return {
       isShowresult: false, //是否显示诊断结果

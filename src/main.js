@@ -9,7 +9,7 @@ import Vant from "vant";
 import "vant/lib/index.css";
 import Axios from "axios";
 import {
-  Toast
+    Toast
 } from "vant";
 import Vconsole from 'vconsole'
 // let vConsole = new Vconsole()
@@ -20,14 +20,14 @@ Vue.prototype.$qs = qs;
 
 import "./assets/font_1686774_85lo9chzwmt/iconfont.css";
 import {
-  Icon
+    Icon
 } from "vant";
 import {
-  setOpenId,
-  getOpenId,
-  getToken,
-  removeOpenId,
-  setToken
+    setOpenId,
+    getOpenId,
+    getToken,
+    removeOpenId,
+    setToken
 } from "@/utils/auth";
 Vue.use(Icon);
 
@@ -39,103 +39,107 @@ Axios.defaults.baseURL = "/api";
 Axios.defaults.headers.post["Content-Type"] = "application/json";
 Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
-  // console.log("--------1");
-  // setOpenId("oQEE8wgh7QVhrNi4f6frjxI_qiAw");
-  window.sessionStorage.setItem('firstUrl', window.location.href)
-  let params = {
-    local: window.location.host + to.path
-  }
-  if (to.meta.title) {
-    window.document.title = to.meta.title;
-  }
-  if (Object.is(to.name, "Register")) {
-    if (getOpenId() || Object.is(from.name, "DiseaseDetail") ||
-      Object.is(from.name, "PatientDetail") ||
-      Object.is(from.name, "videoDetail") || Object.is(from.name, "templateHtml")) {
-      console.log("opendID---1", getOpenId());
-      next();
-      // return;
-    } else {
-      store.dispatch("register/getOpenIdApi", params).then(() => {
-        console.log("opendID---2", getOpenId());
-        next();
-        // return;
-      });
+    // console.log("--------1");
+    // setOpenId("oQEE8wgh7QVhrNi4f6frjxI_qiAw");
+    window.sessionStorage.setItem('firstUrl', window.location.href)
+    let params = {
+        local: window.location.host + to.path
     }
-  } else {
-    // next();
-    if (getOpenId()) {
-      store.dispatch("register/login1").then(res => {
-        if (res.token) {
-          next();
-        } else {
-          if (
-            Object.is(to.name, "DiseaseDetail") ||
-            Object.is(to.name, "PatientDetail") ||
-            Object.is(to.name, "videoDetail") ||
-            Object.is(to.name, "templateHtml")
-          ) {
-            console.log("Detail1");
+    if (to.meta.title) {
+        window.document.title = to.meta.title;
+    }
+    if (Object.is(to.name, "Register")) {
+        if (getOpenId() || Object.is(from.name, "DiseaseDetail") ||
+            Object.is(from.name, "PatientDetail") ||
+            Object.is(from.name, "videoDetail") || Object.is(from.name, "templateHtml") ||
+            Object.is(from.name, "demandResearch")) {
+            console.log("opendID---1", getOpenId());
             next();
-          } else {
-            router.push({
-              name: "Register"
+            // return;
+        } else {
+            store.dispatch("register/getOpenIdApi", params).then(() => {
+                console.log("opendID---2", getOpenId());
+                next();
+                // return;
             });
-            return;
-          }
         }
-      });
     } else {
-      if (
-        Object.is(to.name, "DiseaseDetail") ||
-        Object.is(to.name, "PatientDetail") ||
-        Object.is(to.name, "videoDetail") ||
-        Object.is(to.name, "templateHtml")
-      ) {
-        store.dispatch("register/getOpenIdApi", params).then(() => {
-          next();
-          console.log("Detail2");
-        });
-      } else {
-        // setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
-        store.dispatch("register/getOpenIdApi", params).then(() => {
-          store.dispatch("register/login1").then(res => {
-            if (res.token) {
-              next();
+        // next();
+        if (getOpenId()) {
+            store.dispatch("register/login1").then(res => {
+                if (res.token) {
+                    next();
+                } else {
+                    if (
+                        Object.is(to.name, "DiseaseDetail") ||
+                        Object.is(to.name, "PatientDetail") ||
+                        Object.is(to.name, "videoDetail") ||
+                        Object.is(to.name, "templateHtml") ||
+                        Object.is(to.name, "demandResearch")
+                    ) {
+                        console.log("Detail1");
+                        next();
+                    } else {
+                        router.push({
+                            name: "Register"
+                        });
+                        return;
+                    }
+                }
+            });
+        } else {
+            if (
+                Object.is(to.name, "DiseaseDetail") ||
+                Object.is(to.name, "PatientDetail") ||
+                Object.is(to.name, "videoDetail") ||
+                Object.is(to.name, "templateHtml") ||
+                Object.is(to.name, "demandResearch")
+
+            ) {
+                store.dispatch("register/getOpenIdApi", params).then(() => {
+                    next();
+                    console.log("Detail2");
+                });
             } else {
-              router.push({
-                name: "Register"
-              });
-              return;
+                // setOpenId('oiqI3whGt9CxL7N-oXeUdGR_6JZ4')
+                store.dispatch("register/getOpenIdApi", params).then(() => {
+                    store.dispatch("register/login1").then(res => {
+                        if (res.token) {
+                            next();
+                        } else {
+                            router.push({
+                                name: "Register"
+                            });
+                            return;
+                        }
+                    });
+                });
             }
-          });
-        });
-      }
+        }
     }
-  }
-  //   if(getOpenId()){
-  //     store.dispatch("register/login1").then((res) => {
-  //        if(res.token){
-  //         next();
-  //        }else{
-  //         // if(Object.is(to.name,'Register')) {
-  //        }
-  //     });
-  //   }
+    //   if(getOpenId()){
+    //     store.dispatch("register/login1").then((res) => {
+    //        if(res.token){
+    //         next();
+    //        }else{
+    //         // if(Object.is(to.name,'Register')) {
+    //        }
+    //     });
+    //   }
 
-  //   if(getOpenId()) {
-  //     next();
-  //   }else {
-  //     // router.push({name:'Register'})
-  //   }
+    //   if(getOpenId()) {
+    //     next();
+    //   }else {
+    //     // router.push({name:'Register'})
+    //   }
 
-  // if(!getToken()){
-  //     // console.log("======ss")
-  //     next({ path: '/register' })
-  // }else{
-  // next();
+    // if(!getToken()){
+    //     // console.log("======ss")
+    //     next({ path: '/register' })
+    // }else{
+    // next();
 
-  // }
+    // }
 });
 
 Vue.config.productionTip = false;
@@ -160,13 +164,13 @@ Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
-  el: "#app",
-  router,
-  store,
-  components: {
-    App
-  },
-  template: "<App/>"
+    el: "#app",
+    router,
+    store,
+    components: {
+        App
+    },
+    template: "<App/>"
 });
 
 // setOpenId('oiqI3whHXikr12gjRdg2Ynh4yYJM')

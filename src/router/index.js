@@ -14,8 +14,8 @@ export default new Router({
         {
             path: "/template.html",
             name: "templateHtml",
-            component:() =>
-            import ("@/components/templateHtml.vue"),
+            component: () =>
+                import ("@/components/templateHtml.vue"),
             meta: {
                 title: ""
             }
@@ -380,7 +380,7 @@ export default new Router({
             name: 'diseaseTestPoem',
             meta: {
                 title: "POEM(患者湿疹自我检查评分量表）",
-                index: 1
+                index: 2
             }
         },
         {
@@ -390,6 +390,16 @@ export default new Router({
             name: 'diseaseTestDlqi',
             meta: {
                 title: "DLQI(AD患者生活质量评估）",
+                index: 2
+            }
+        },
+        {
+            path: '/anotherTest',
+            component: () =>
+                import ("@/views/anotherPage"),
+            name: 'anotherPage',
+            meta: {
+                title: "疾病评估",
                 index: 1
             }
         }
