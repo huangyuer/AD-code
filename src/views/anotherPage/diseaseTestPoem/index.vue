@@ -29,7 +29,7 @@
         >
           <van-swipe-item>
             <div v-if="!isShowresult" style="padding-top:.6rem">
-                <div class="slidertitle">{{ nextquestion.tag }}</div>
+                <div class="slidertitle">在过去一周内：</div>
                 <div
                   v-for="(item, index) in poemQuestion"
                   :key="index">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="groupnext" @click="submitAnswer()">提交</div>
             </div>
-            <div v-else>
+            <div v-show="isShowresult">
               <result-info :dataresult="levelresult"></result-info>
             </div>
           </van-swipe-item>
@@ -122,8 +122,8 @@ export default {
         .dispatch("patientManagement/submitAnswer", this.detail)
         .then(response => {
           Toast(response.msg);
-          this.isShowresult = true;
           this.levelresult = response.data;
+          this.isShowresult = true;
         })
     }
   },

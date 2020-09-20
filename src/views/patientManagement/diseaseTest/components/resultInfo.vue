@@ -61,6 +61,7 @@ export default {
   watch: {
     dataresult: function(val, oldval) {
       this.result = val;
+      console.log("this.result", this.result);
     }
   }
 };
