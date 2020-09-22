@@ -93,11 +93,14 @@ export default {
         this.detail.splice(index, 1, objradio);
       }
     },
-    radiobox(item, current, key) {
+    radiobox(item, current, key, officialAccount) {
       var objradio = {};
       objradio["question"] = item._id;
       objradio["answers"] = {};
       objradio.answers[current] = 0;
+      if (officialAccount) {
+        objradio.answers[officialAccount] = 0;
+      }
       var index = this.detail.findIndex(element => {
         return element.question == item._id
       })

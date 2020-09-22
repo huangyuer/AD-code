@@ -75,7 +75,7 @@ export default {
   margin-bottom: 0.12rem;
   width: 100%;
   border: 0.02rem solid #e5e5e5;
-  height: .8rem;
+  min-height: .8rem;
   background: #FFFFFF;
   border-radius: .04rem;
   padding-left: 0.24rem;
@@ -107,5 +107,6 @@ export default {
   color: rgba(51, 51, 51, 1);
   line-height: initial;
   text-align: left;
+  padding: 0.05rem 0;
 }
 </style>

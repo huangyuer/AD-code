@@ -8,9 +8,24 @@
           :name="item.Option"
           v-for="(item, index) in dataitem.options"
           :key="item.Option"
-          @click="toggle(dataitem, index)"
-        >
+          @click="toggle(dataitem, index)">
           {{ item.Option }}
+          <input ref="s4Input" 
+          v-model="officialAccount"
+          @input="onInput" 
+          maxlength="30" v-if="dataitem.style == 's4' && index == 4" type="text" 
+          style="border: 0;
+            width: 85%;
+            margin-right: .7rem;
+            border-bottom: 0.02rem solid #333333;
+            background-color: #ffffff;
+            font-size: 0.28rem;
+            border-radius: 0;
+            box-shadow: 0;
+            text-index: 0;
+            height: 0.3rem;
+            padding-left: 0;"
+            />
           <template #icon="props">
             <div :class="{ defaultCheck: true, activeCheck: props.checked }">
               <div class="inner"></div>
@@ -38,18 +53,35 @@ export default {
   data() {
     return {
       radio: "",
+      officialAccount: '',
+      itemIndex: 0
     };
   },
   methods: {
     toggle(dataitem, index) {
-      // this.radio = index;
+      this.itemIndex = index;
+      if (dataitem.style == 's4' && index == 4) {
+        this.$refs.s4Input[0].focus();
+      } else if (dataitem.style == 's4' && index != 4){
+        this.officialAccount = '';
+      }
       this.$emit(
         "radiobox",
         dataitem,
         dataitem.options[index].Option,
-        this.index
+        this.index,
+        this.officialAccount
       );
     },
+    onInput() {
+      this.$emit(
+        "radiobox",
+        this.dataitem,
+        this.dataitem.options[this.itemIndex].Option,
+        this.index,
+        this.officialAccount
+      );
+    }
   },
 };
 </script>
@@ -73,6 +105,7 @@ export default {
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
+    padding: 0.05rem 0;
   }
   @{aaa}.van-radio--horizontal {
     // margin-right: 0.6rem;
@@ -100,7 +133,7 @@ export default {
     line-height: initial;
     .radioItem {
       width: 100%;
-      height: .8rem;
+      min-height: .8rem;
       padding-left: 0.24rem;
       border-radius: 0.04rem;
       border: .02rem solid #E5E5E5;
