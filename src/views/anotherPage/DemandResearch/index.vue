@@ -156,6 +156,11 @@ export default {
 </script>
 <style lang="less" scoped>
 @aaa: ~">>>";
+@{aaa}.van-picker__mask {
+position: absolute;
+    top: 1px;
+    left: 0;
+}
 .TestWapper {
   position: relative;
   height: 100vh;
