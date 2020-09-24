@@ -147,8 +147,24 @@ export default {
         .then(response => {
             Toast(response.msg);
             this.levelresult = response.data;
+            this.closePage();
         })
-    }
+    },
+    closePage(){
+      setTimeout(() => {
+
+        //安卓手机
+        document.addEventListener(
+            "WeixinJSBridgeReady",
+            function() {
+                WeixinJSBridge.call("closeWindow");
+            },
+            false
+        );
+        //ios手机
+        WeixinJSBridge.call("closeWindow");
+      }, 2500);
+    },
   },
   components: {
     RadioBoxItem,

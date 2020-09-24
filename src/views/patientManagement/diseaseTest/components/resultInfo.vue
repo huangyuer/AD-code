@@ -28,6 +28,10 @@
     <div class="titledetail" v-if="result.addScore !== ''">
       <b>*</b>较均值：此次测试前2周得分的均值
     </div>
+    <div class="titledetail" v-if="type === 'poem' || type === 'dlqi'">
+      <b>*</b>最新权威中国AD患者自测可参考ADCT评估
+      <div class="titledetail__toGo" @click="togoDiseaseText()">建议前往 <svg-icon iconClass="gengduo" class="gengduo"></svg-icon></div>
+    </div>
   </div>
 </template>
 <script>
@@ -38,6 +42,10 @@ export default {
       default: function() {
         return {};
       }
+    },
+    type: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -55,7 +63,14 @@ export default {
   mounted() {},
   methods: {
     topagePersonalCenter() {
-      this.$router.push({ path: "/personalCenter" });
+      if ( this.type === 'poem' || this.type === 'dlqi') {
+        this.$router.push({ path: "/anotherTest" });
+      } else {
+        this.$router.push({ path: "/personalCenter" });
+      }
+    },
+    togoDiseaseText() {
+      this.$router.push({ path: "/diseaseTest" });
     }
   },
   watch: {
@@ -67,6 +82,11 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.gengduo {
+  width: 0.16rem !important;
+  height: 0.28rem !important;
+  margin-left: 0.12rem;
+}
 .resultWapper {
   padding-top: 0.6rem;
   .degtitle {
@@ -219,6 +239,16 @@ export default {
   > b {
     color: #ff755a;
     font-weight: 500;
+  }
+  &__toGo {
+    color: #009966;
+    font-size: .24rem;
+    text-align: center;
+    text-decoration: underline;
+    margin-top: 0.16rem;
+    img {
+      margin-left: .5rem;
+    }
   }
 }
 </style>

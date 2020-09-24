@@ -31,7 +31,7 @@
                 <div class="groupnext" @click="submitAnswer()">提交</div>
             </div>
             <div v-show="isShowresult" style="text-align: center">
-              <result-info :dataresult="levelresult"></result-info>
+              <result-info :dataresult="levelresult" :type="'poem'"></result-info>
             </div>
       </div>
     </div>

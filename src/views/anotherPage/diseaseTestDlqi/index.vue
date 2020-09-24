@@ -42,7 +42,7 @@
                 <div class="groupnext" @click="submitAnswer()">提交</div>
             </div>
             <div v-show="isShowresult" style="text-align: center;">
-              <result-info :dataresult="levelresult"></result-info>
+              <result-info :dataresult="levelresult" :type="'dlqi'"></result-info>
             </div>
           <!-- </van-swipe-item> -->
         <!-- </van-swipe> -->
