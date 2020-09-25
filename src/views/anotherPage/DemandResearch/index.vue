@@ -10,7 +10,7 @@
     </div>
     <div class="TestWapper-List">
       <div class="swiperInner">
-        <div style="padding-top:.6rem">
+        <div v-if="!isShowresult" style="padding-top:.6rem">
             <div class="group-title">{{personalQuestion.group}}</div>
             <radio-box-item
             v-if="personalQuestion.qsList"
@@ -44,6 +44,13 @@
             </div>
             <div class="submit" @click="submitAnswer">提交</div>
         </div>
+        <div v-show="isShowresult" style="text-align: center">
+          <div class="" style="padding-top:1.6rem;">
+            <div style="margin: 0 auto;font-size:.44rem;border-radius:50%;color:#ffffff;background:#009966;width:0.8rem;height:.88rem;text-align:center;line-height:.88rem">✓</div>
+            <div style="margin-top:0.22rem;font-size:.32rem;color:#333333">提交成功！</div>
+            <div style="color: #666666;font-size: .28rem;margin-top: .28rem;text-align: center">您的资料已提交成功，感谢您参与调研！</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -52,6 +59,7 @@
 import RadioBoxItem from "./components/radioboxItem";
 import VanAreas from "./components/vanareas";
 import CheckBoxItem from "./components/checkboxitem";
+import ResultInfo from "../../patientManagement/diseaseTest/components/resultInfo"
 import { Toast } from "vant";
 
 export default {
@@ -147,7 +155,8 @@ export default {
         .then(response => {
             Toast(response.msg);
             this.levelresult = response.data;
-            this.closePage();
+            this.isShowresult = true;
+            // this.closePage();
         })
     },
     closePage(){
@@ -169,7 +178,8 @@ export default {
   components: {
     RadioBoxItem,
     CheckBoxItem,
-    VanAreas
+    VanAreas,
+    ResultInfo
   }
 };
 </script>

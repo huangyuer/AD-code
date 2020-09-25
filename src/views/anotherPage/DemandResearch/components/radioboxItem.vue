@@ -23,7 +23,7 @@
             border-radius: 0;
             box-shadow: 0;
             text-index: 0;
-            height: 0.3rem;
+            height: 0.25rem;
             padding-left: 0;"
             />
           <template #icon="props">
@@ -105,7 +105,7 @@ export default {
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
-    padding: 0.05rem 0;
+    padding: 0.1rem 0;
   }
   @{aaa}.van-radio--horizontal {
     // margin-right: 0.6rem;
