@@ -46,7 +46,9 @@
         </div>
         <div v-show="isShowresult" style="text-align: center">
           <div class="" style="padding-top:1.6rem;">
-            <div style="margin: 0 auto;font-size:.44rem;border-radius:50%;color:#ffffff;background:#009966;width:0.8rem;height:.88rem;text-align:center;line-height:.88rem">✓</div>
+            <div style="margin: 0 auto;">
+              <svg-icon iconClass="success" class="icon"></svg-icon>
+            </div>
             <div style="margin-top:0.22rem;font-size:.32rem;color:#333333">提交成功！</div>
             <div style="color: #666666;font-size: .28rem;margin-top: .28rem;text-align: center">您的资料已提交成功，感谢您参与调研！</div>
           </div>
@@ -185,6 +187,12 @@ export default {
 </script>
 <style lang="less" scoped>
 @aaa: ~">>>";
+.icon {
+  width: 0.8rem!important;
+  height: 0.8rem!important;
+  margin: 0 auto;
+  display: block;
+}
 @{aaa}.van-picker__mask {
 position: absolute;
     top: 1px;
