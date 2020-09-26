@@ -134,7 +134,7 @@
       <div class="tipitem">
         <div class="tipitem-header">
           <span>
-            <svg-icon iconClass="tuoyuan" class="tuoyuan"></svg-icon>疾病评估
+            <svg-icon iconClass="tuoyuan" class="tuoyuan"></svg-icon>疾病评估（ADCT）
           </span>
           <span @click="todiseaseTest()">
             去评估
