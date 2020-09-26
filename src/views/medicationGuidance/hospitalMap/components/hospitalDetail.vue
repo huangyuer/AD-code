@@ -36,10 +36,10 @@
             </div>
           </div>
           <div class="canSign">
-            <div class="canSign__btn" :class="{'disabled': canSign === false }" @click="hospitalSign()">立即签到</div>
+            <div class="canSign__btn" :class="{'disabled': parseInt(hispitalItem.distanceM) > 500 }" @click="hospitalSign()">立即签到</div>
             <div class="canSign__text">距目的地500米内签到可得积分</div>
           </div>
-          <div class="canSign-uploadImg" v-if="canSign">
+          <div class="canSign-uploadImg" v-if="parseInt(hispitalItem.distanceM) <= 500">
             <span class="canSign-uploadImg-title">请上传该医院皮肤科当日挂号单完成签到</span>
             <div style="display:flex;flex-wrap: wrap;padding-top: 0.24rem">
               <div class="van-uploader__preview" v-for="(item, index) in images.imgSrc" :key="index">
@@ -146,7 +146,7 @@ export default {
       doctoritem: [],
       hispitalItem: {},
       hospitalItemIntro: {},
-      canSign: null,
+      
       images: {
         localId: [],
         imgId: [],
@@ -166,11 +166,9 @@ export default {
     },
     hispitalDetail: function(val) {
       this.hispitalItem = val;
-      console.log("val", val);
     },
     hospitalIntro: function(val) {
       this.hospitalItemIntro = val.hospital;
-      this.canSign = val.canSign;
     }
   },
   methods: {
@@ -192,7 +190,7 @@ export default {
       });
     },
     hospitalSign() {
-      if (!this.canSign) {
+      if (parseInt(this.hispitalItem.distanceM) > 500) {
         Toast({
           message: '500米内才能签到',
         });
@@ -217,7 +215,6 @@ export default {
       this.$store
         .dispatch("medicationGuidance/hospitalSign", params)
         .then(res => {
-          this.canSign = false;
           Toast({
             message: '签到成功',
           });
