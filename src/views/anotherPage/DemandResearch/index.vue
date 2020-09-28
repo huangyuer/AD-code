@@ -127,13 +127,19 @@ export default {
       var index = this.detail.findIndex(element => {
         return element.question == dataItem._id
       })
-      result.forEach(element => {
-        objradio.answers[element] = 0;
-      });
+      if (result.length > 0) {
+        result.forEach(element => {
+          objradio.answers[element] = 0;
+        });
+      } 
       if (index === -1) {
         this.detail.push(objradio);
       } else {
-        this.detail.splice(index, 1, objradio);
+        if (JSON.stringify(objradio.answers) == "{}") {
+          this.detail.splice(index, 1);
+        } else {
+          this.detail.splice(index, 1, objradio);
+        }
       }
     },
     getQuestions() {
