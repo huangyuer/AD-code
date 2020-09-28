@@ -369,7 +369,7 @@ export default new Router({
                 import ("@/views/anotherPage/DemandResearch"),
             name: 'demandResearch',
             meta: {
-                title: "特应性皮炎患者需求调研（AD之家）",
+                title: "特应性皮炎患者问卷调研（AD之家）",
                 index: 1
             }
         },
