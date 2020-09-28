@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="canSign">
-            <div class="canSign__btn" :class="{'disabled': parseInt(hispitalItem.distanceM) > 500 }" @click="hospitalSign()">立即签到</div>
+            <div class="canSign__btn" :class="{'disabled': !canSign}" @click="hospitalSign()">立即签到</div>
             <div class="canSign__text">距目的地500米内签到可得积分</div>
           </div>
           <div class="canSign-uploadImg" v-if="parseInt(hispitalItem.distanceM) <= 500">
@@ -117,6 +117,7 @@
 <script>
 import { Toast, ImagePreview } from 'vant';
 import { touchstart, touchmove } from "./touch";
+import qs from "qs";
 export default {
   props: {
     show: {
@@ -146,13 +147,32 @@ export default {
       doctoritem: [],
       hispitalItem: {},
       hospitalItemIntro: {},
-      
+      canSign: null,
       images: {
         localId: [],
         imgId: [],
         imgSrc: []
       },
     };
+  },
+  created() {
+    var equipmentType = "";
+    var agent = navigator.userAgent.toLowerCase();
+    var android = agent.indexOf("android");
+    var iphone = agent.indexOf("iphone");
+    var ipad = agent.indexOf("ipad");
+    if (android != -1) {
+      // equipmentType = "android";
+      // alert("111111")
+      this.getSignature(window.location.href);
+    }
+    if (iphone != -1 || ipad != -1) {
+      // equipmentType = "ios";
+      //  alert("2222")
+      const herf = window.sessionStorage.getItem("firstUrl");
+      console.log("------herf", herf);
+      this.getSignature(herf);
+    }
   },
   mounted() {
     this.isShow = this.show;
@@ -169,6 +189,7 @@ export default {
     },
     hospitalIntro: function(val) {
       this.hospitalItemIntro = val.hospital;
+      this.canSign = val.canSign;
     }
   },
   methods: {
@@ -190,24 +211,18 @@ export default {
       });
     },
     hospitalSign() {
-      if (parseInt(this.hispitalItem.distanceM) > 500) {
-        Toast({
-          message: '500米内才能签到',
-        });
-        return;
-      }
       let fileId = '';
       for (const key in this.images.imgId) {
         if (this.images.imgId.hasOwnProperty(key)) {
           fileId = this.images.imgId[key];
         }
       }
-      if (fileId == '') {
-        Toast({
-          message: '请先上传图片',
-        });
-        return;
-      }
+      // if (fileId == '') {
+      //   Toast({
+      //     message: '请先上传图片',
+      //   });
+      //   return;
+      // }
       let params = {
         hospital: this.hospitalItemIntro.id,
         file: fileId,
@@ -215,6 +230,7 @@ export default {
       this.$store
         .dispatch("medicationGuidance/hospitalSign", params)
         .then(res => {
+          this.canSign = false;
           Toast({
             message: '签到成功',
           });
@@ -224,6 +240,39 @@ export default {
             message: error,
           });
         });
+    },
+    getSignature(url) {
+      this.$store
+        .dispatch("common/getSignature", url)
+        .then(response => {
+          console.log("data", response);
+          wx.config({
+            debug: false,
+            appId: "wx8ef854b5878d3b8d",
+            timestamp: response.data.timestamp,
+            nonceStr: response.data.nonce_str,
+            signature: response.data.signature,
+            jsApiList: ["checkJsApi", "chooseImage", "getLocalImgData"]
+          });
+          wx.ready(function() {
+            wx.checkJsApi({
+              jsApiList: ["getLocalImgData"], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+              success: function(res) {
+                console.log("getsuccess");
+              },
+              fail() {
+                console.log("getfail");
+              }
+            });
+          });
+          wx.error(function(res) {
+            console.log("error", res);
+          });
+          wx.success(function(res) {
+            console.log("success", res);
+          });
+        })
+        .catch(e => {});
     },
     setChooseImage() {
       let _this = this;
