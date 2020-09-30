@@ -364,7 +364,7 @@ export default new Router({
             }
         },
         {
-            path: '/DemandResearch',
+            path: '/demandResearchs',
             component: () =>
                 import ("@/views/anotherPage/DemandResearch"),
             name: 'demandResearch',
