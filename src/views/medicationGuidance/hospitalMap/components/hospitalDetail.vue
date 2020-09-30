@@ -57,7 +57,7 @@
                 ></i>
               </div>
 
-              <div class="van-uploader" v-if="images.imgSrc.length < 1">
+              <div class="van-uploader" v-if="images.imgSrc.length < 5">
                 <div class="van-uploader__upload">
                   <i class="van-icon van-icon-photograph van-uploader__upload-icon"></i>
                   <div class="van-uploader__input" @click="setChooseImage()"></div>
@@ -276,12 +276,13 @@ export default {
     },
     setChooseImage() {
       let _this = this;
-      if (this.images.imgSrc.length == 1) {
-        Toast("最多可传1张图片");
+      var count = 5 - this.images.imgSrc.length;
+      if (count == 0) {
+        Toast("最多可传5张图片");
         return;
       }
       wx.chooseImage({
-        count: 1, // 默认9
+        count: count, // 默认5
         sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
         success: function(res) {
