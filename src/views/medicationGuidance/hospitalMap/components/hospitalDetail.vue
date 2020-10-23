@@ -238,8 +238,8 @@ export default {
             });
             return this.$store.dispatch("medicationGuidance/hospSignCheck", this.hospitalItemIntro.id)
           }).then(signCheck => {
-            this.$set(this.hospitalSignCheck,'canSign', signCheck.canSign);
-            this.$set(this.hospitalSignCheck,'msg', signCheck.msg);
+            this.$set(this.hospitalSignCheck,'canSign', signCheck.data.canSign);
+            this.$set(this.hospitalSignCheck,'msg', signCheck.data.msg);
           })
       }
     },
