@@ -4,6 +4,7 @@ import {
     getHospital,
     getDoctors,
     hospitalSign,
+    hospSignCheck,
     searchAddress,
 } from "@/api/medicationGuidance";
 const state = {
@@ -83,6 +84,21 @@ const actions = {
             hospitalSign({
                     hospital: params.hospital,
                     file    : params.file
+                })
+                .then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    },
+    hospSignCheck({
+        commit
+    }, hospital) {
+        return new Promise((resolve, reject) => {
+            hospSignCheck({
+                    hospital: hospital
                 })
                 .then(response => {
                     resolve(response);

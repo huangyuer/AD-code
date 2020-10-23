@@ -34,6 +34,13 @@ export function hospitalSign(data) {
         data
     })
 }
+export function hospSignCheck(data) {
+    return request({
+        url: '/hospSignCheck',
+        method: 'post',
+        data
+    })
+}
 export function searchAddress(data) {
     return request({
         url: '/searchAddress',

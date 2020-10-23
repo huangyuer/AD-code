@@ -36,11 +36,11 @@
             </div>
           </div>
           <div class="canSign">
-            <div class="canSign__btn" :class="{'disabled': !canSign}" @click="hospitalSign()">立即签到</div>
-            <div class="canSign__text">距目的地500米内签到可得积分</div>
+            <div class="canSign__btn" :class="{'disabled': !hospitalSignCheck.canSign}" @click="hospitalSign()">立即签到</div>
+            <div class="canSign__text">{{hospitalSignCheck.msg}}</div>
           </div>
-          <div class="canSign-uploadImg" v-if="parseInt(hispitalItem.distanceM) <= 500">
-            <span class="canSign-uploadImg-title">请上传该医院皮肤科当日挂号单完成签到</span>
+          <div class="canSign-uploadImg" v-if="parseInt(hispitalItem.distanceM) <= 500 && hospitalSignCheck.canSign">
+            <span class="canSign-uploadImg-title">请上传该医院皮肤科当日挂号单和就诊结果完成签到</span>
             <div style="display:flex;flex-wrap: wrap;padding-top: 0.24rem">
               <div class="van-uploader__preview" v-for="(item, index) in images.imgSrc" :key="index">
                 <van-image
@@ -139,6 +139,12 @@ export default {
       default: function() {
         return {};
       }
+    },
+    hospitalSignInfo: {
+      type: Object,
+      default: function() {
+        return {};
+      }
     }
   },
   data() {
@@ -147,7 +153,7 @@ export default {
       doctoritem: [],
       hispitalItem: {},
       hospitalItemIntro: {},
-      canSign: null,
+      hospitalSignCheck: null,
       images: {
         localId: [],
         imgId: [],
@@ -189,7 +195,9 @@ export default {
     },
     hospitalIntro: function(val) {
       this.hospitalItemIntro = val.hospital;
-      this.canSign = val.canSign;
+    },
+    hospitalSignInfo: function(val) {
+      this.hospitalSignCheck = val;
     }
   },
   methods: {
@@ -230,7 +238,7 @@ export default {
       this.$store
         .dispatch("medicationGuidance/hospitalSign", params)
         .then(res => {
-          this.canSign = false;
+          this.$set(hospitalSignCheck,'canSign', false);
           Toast({
             message: '签到成功',
           });
@@ -539,13 +547,12 @@ export default {
         border-radius: .04rem;
         border: .02rem solid #E5E5E5;
         box-sizing: border-box;
-        padding: 0.32rem 0 0.28rem 0;
+        padding: 0.32rem 0.32rem 0.28rem 0.32rem;
         margin-top: 0.32rem;
         .canSign-uploadImg-title {
           font-size: .28rem;
           font-weight: 400;
           color: #333333;
-          padding: 0 0 0 0.32rem;
         }
       }
       .canSign-line {
@@ -654,7 +661,7 @@ export default {
   }
 }
 @{aaa} .van-uploader {
-  margin: 0 0.17rem;
+  margin: 0;
 }
 @{aaa} .van-uploader__preview {
   margin: 0.11rem;

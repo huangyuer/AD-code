@@ -35,6 +35,7 @@
           :doctors="doctors"
           :hispitalDetail="hispitalDetail"
           :hospitalIntro="hospitalIntro"
+          :hospitalSignInfo="hospitalSignInfo"
           @goNav="goNav"
           @closedetailNav="closedetailNav"
         ></hospital-detail>
@@ -120,6 +121,7 @@ export default {
       hospitals: [],
       hispitalDetail: {},
       hospitalIntro: {},
+      hospitalSignInfo: {},
       doctors: [],
       showactionsheet: false,
       showNoSetLocation: false,
@@ -459,6 +461,7 @@ export default {
       this.hispitalDetail = val;
       this.getHospital(val.hospital);
       this.getDoctors(val.hospital);
+      this.hospSignCheck(val.hospital);
       setTimeout(() => {
         this.showDetail = !this.show;
       }, 300);
@@ -536,6 +539,18 @@ export default {
           this.hospitalIntro = res.data;
         })
         .catch(e => {});
+    },
+    hospSignCheck(id) {
+      this.$store
+        .dispatch("medicationGuidance/hospSignCheck", id)
+        .then(res => {
+          this.hospitalSignInfo = res.data;
+        })
+        .catch(error => {
+          Toast({
+            message: error,
+          });
+        });
     },
     //获取医院医生
     getDoctors(id) {
