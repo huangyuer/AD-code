@@ -83,7 +83,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             hospitalSign({
                     hospital: params.hospital,
-                    file    : params.file
+                    files: params.files
                 })
                 .then(response => {
                     resolve(response);

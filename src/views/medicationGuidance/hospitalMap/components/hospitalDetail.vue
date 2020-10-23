@@ -219,21 +219,15 @@ export default {
       });
     },
     hospitalSign() {
-      let fileId = '';
+      let fileId = [];
       for (const key in this.images.imgId) {
         if (this.images.imgId.hasOwnProperty(key)) {
-          fileId = this.images.imgId[key];
+          fileId.push(this.images.imgId[key]);
         }
       }
-      // if (fileId == '') {
-      //   Toast({
-      //     message: '请先上传图片',
-      //   });
-      //   return;
-      // }
       let params = {
         hospital: this.hospitalItemIntro.id,
-        file: fileId,
+        files: fileId,
       };
       this.$store
         .dispatch("medicationGuidance/hospitalSign", params)
@@ -543,7 +537,7 @@ export default {
       }
       .canSign-uploadImg {
         width: 100%;
-        height: 3.2rem;
+        min-height: 3.2rem;
         border-radius: .04rem;
         border: .02rem solid #E5E5E5;
         box-sizing: border-box;
