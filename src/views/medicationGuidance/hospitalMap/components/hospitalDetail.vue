@@ -219,29 +219,29 @@ export default {
       });
     },
     hospitalSign() {
-      let fileId = [];
-      for (const key in this.images.imgId) {
-        if (this.images.imgId.hasOwnProperty(key)) {
-          fileId.push(this.images.imgId[key]);
+      if (this.hospitalSignCheck.canSign) {
+        let fileId = [];
+        for (const key in this.images.imgId) {
+          if (this.images.imgId.hasOwnProperty(key)) {
+            fileId.push(this.images.imgId[key]);
+          }
         }
+        let params = {
+          hospital: this.hospitalItemIntro.id,
+          files: fileId,
+        };
+        this.$store
+          .dispatch("medicationGuidance/hospitalSign", params)
+          .then(res => {
+            Toast({
+              message: '签到成功',
+            });
+            return this.$store.dispatch("medicationGuidance/hospSignCheck", this.hospitalItemIntro.id)
+          }).then(signCheck => {
+            this.$set(this.hospitalSignCheck,'canSign', signCheck.canSign);
+            this.$set(this.hospitalSignCheck,'msg', signCheck.msg);
+          })
       }
-      let params = {
-        hospital: this.hospitalItemIntro.id,
-        files: fileId,
-      };
-      this.$store
-        .dispatch("medicationGuidance/hospitalSign", params)
-        .then(res => {
-          this.$set(hospitalSignCheck,'canSign', false);
-          Toast({
-            message: '签到成功',
-          });
-        })
-        .catch(error => {
-          Toast({
-            message: error,
-          });
-        });
     },
     getSignature(url) {
       this.$store

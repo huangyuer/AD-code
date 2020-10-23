@@ -546,11 +546,6 @@ export default {
         .then(res => {
           this.hospitalSignInfo = res.data;
         })
-        .catch(error => {
-          Toast({
-            message: error,
-          });
-        });
     },
     //获取医院医生
     getDoctors(id) {
@@ -560,10 +555,6 @@ export default {
           this.doctors = res.data.doctors;
         })
         .catch(e => {
-          //  Toast({
-          //   message: e,
-          //   position: "top"
-          // });
         });
     }
   }
