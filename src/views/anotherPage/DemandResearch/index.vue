@@ -153,8 +153,17 @@ export default {
         .catch(e => {});
     },
     submitAnswer() {
-      console.log("this.detail",this.detail);
-      if (this.detail.length < 7) {
+     const total =
+        (this.personalQuestion.qsList
+          ? this.personalQuestion.qsList.length
+          : 0) +
+        (this.demandQuestion.qsList ? this.demandQuestion.qsList.length : 0) +
+        (this.researchQuestion.qsList
+          ? this.researchQuestion.qsList.length
+          : 0);
+      console.log("this.detail", total);
+      
+      if (this.detail.length < total) {
         Toast('请完成先完成调研再提交哦');
         return
       }
