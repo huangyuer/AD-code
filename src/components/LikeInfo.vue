@@ -77,7 +77,7 @@ export default {
     /* height: 8px; */
     width: 0.08rem;
     height: 0.8rem;
-    background: rgba(0, 153, 102, 1);
+    // background: rgba(0, 153, 102, 1);
     border-radius: 0.04rem;
   }
   .like-content {

@@ -71,7 +71,7 @@ export default {
     position: absolute;
     width: 0.08rem;
     height: 0.8rem;
-    background: rgba(0, 153, 102, 1);
+    // background: rgba(0, 153, 102, 1);
     border-radius: 4px;
   }
   .message-top {
