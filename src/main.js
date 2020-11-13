@@ -39,6 +39,7 @@ Axios.defaults.baseURL = "/api";
 Axios.defaults.headers.post["Content-Type"] = "application/json";
 Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
+    
     // console.log("--------1");
     // setOpenId("oQEE8wgh7QVhrNi4f6frjxI_qiAw");
     window.sessionStorage.setItem('firstUrl', window.location.href)
