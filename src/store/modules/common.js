@@ -88,7 +88,9 @@ const actions = {
           tag: question.tag,
           title: question.title,
           page: question.page,
-          limit: question.limit
+          limit: question.limit,
+          province: question.province,
+          city: question.city,
         })
         .then(response => {
           const {
@@ -96,7 +98,7 @@ const actions = {
             data
           } = response;
           commit("SET_ARTICLES", data);
-          resolve(msg);
+          resolve(data);
         })
         .catch(error => {
           reject(error);
