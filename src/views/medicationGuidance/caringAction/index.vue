@@ -9,7 +9,7 @@
           @onSearch="onSearch"
           @onClear="onClear"
         ></search-input>
-        <div style="overflow: hidden">
+        <div style="overflow: hidden;padding-top: 0.28rem;padding-bottom: 0.4rem;">
         <van-dropdown-menu active-color="#009966">
           <van-dropdown-item
             v-model="currentProvince"
@@ -298,7 +298,7 @@ export default {
   }
 }
 @{aaa} .van-dropdown-menu__item {
-  padding-right: 0.56rem;
+  padding-right: 0.20rem;
   font-family: "PingFangSC-Medium";
 }
 @{aaa} .van-dropdown-menu__title {

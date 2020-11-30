@@ -108,7 +108,7 @@ export default {
       this.diseaseInfo = [];
       this.params.page = 1;
       this.finished = false;
-      // this.getArticles();
+      this.getArticles();
     },
     onClear() {
       this.params.title = "";
